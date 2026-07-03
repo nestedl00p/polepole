@@ -1,0 +1,5 @@
+# Tested on Python 3.13. faster-whisper 1.2.x pulls ctranslate2 4.8+ (has 3.13 wheels).
+faster-whisper==1.2.1
+fastapi==0.138.2
+uvicorn[standard]==0.49.0
+python-multipart==0.0.32

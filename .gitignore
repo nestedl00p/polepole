@@ -1,0 +1,43 @@
+# .NET
+bin/
+obj/
+*.user
+*.db
+*.db-shm
+*.db-wal
+
+# Node / frontend
+node_modules/
+dist/
+build/
+.vite/
+
+# Expo mobile
+.expo/
+.expo-shared/
+web-build/
+
+# Generated cloud-TTS audio cache
+backend/SwahiliCourse.Api/App_Data/tts-cache/
+
+# Python Whisper sidecar
+whisper-service/.venv/
+**/__pycache__/
+*.py[cod]
+whisper-service/models/
+
+# Secrets / local config (never commit)
+.env
+.env.*
+!.env.example
+appsettings.*.Local.json
+secrets.json
+.claude/settings.local.json
+
+# Editor / OS
+.vs/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.log
