@@ -9,7 +9,10 @@ import SentenceBuilder from './SentenceBuilder';
 import PronunciationDrill from './PronunciationDrill';
 
 // Renders a single lesson content block.
-// Block types: heading, paragraph, callout, list, table, dialogue, verbBuilder, possessiveBuilder.
+// Static types: heading, paragraph, callout, list, table, dialogue.
+// Interactive types: verbBuilder, possessiveBuilder, questionBuilder,
+// adjectiveBuilder, nounSorter, sentenceBuilder, pronunciationDrill.
+// New block types must be registered BOTH here and in the web ContentBlock.jsx.
 export default function ContentBlock({ block }) {
   switch (block.type) {
     case 'verbBuilder':

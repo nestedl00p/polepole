@@ -77,7 +77,7 @@ export default function QuizPage() {
             {result.passed ? (
               <>
                 <button className="btn btn-primary" onClick={() => navigate('/')}>Back to dashboard →</button>
-                {lesson.id < 30 && (
+                {lesson.id < 31 && (
                   <button className="btn btn-gold" onClick={() => navigate(`/lesson/${lesson.id + 1}`)}>
                     Next lesson →
                   </button>

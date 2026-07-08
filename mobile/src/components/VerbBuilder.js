@@ -137,6 +137,8 @@ export default function VerbBuilder({ block = {} }) {
     }
   }
 
+  const word = pieces.map((p) => p.text).join('');
+
   const subjStep = {
     accent: mode === 'negative' ? 'neg' : 'sub',
     label: mode === 'negative' ? '1 · Who is NOT doing it?' : '1 · Who is doing it?',

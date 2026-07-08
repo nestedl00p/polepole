@@ -97,7 +97,7 @@ export default function QuizScreen({ route, navigation }) {
             {result.passed ? (
               <>
                 <Button title="Back to dashboard →" onPress={() => navigation.navigate('Tabs')} />
-                {lesson.id < 30 && (
+                {lesson.id < 31 && (
                   <Button
                     title="Next lesson →"
                     variant="gold"
