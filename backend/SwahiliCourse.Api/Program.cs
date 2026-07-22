@@ -11,8 +11,22 @@ var builder = WebApplication.CreateBuilder(args);
 System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
 // --- Services ---
-builder.Services.AddDbContext<AppDbContext>(opt =>
-    opt.UseSqlite(builder.Configuration.GetConnectionString("Default") ?? "Data Source=swahili.db"));
+// SQLite location. In a container the working directory is ephemeral, so set
+// DataDir (e.g. /home/data on Azure App Service, a mounted volume elsewhere) to
+// a persistent path — the DB is created there and survives restarts. Falls back
+// to the configured connection string / local file for dev.
+var dataDir = builder.Configuration["DataDir"];
+string connectionString;
+if (!string.IsNullOrWhiteSpace(dataDir))
+{
+    Directory.CreateDirectory(dataDir);
+    connectionString = $"Data Source={Path.Combine(dataDir, "swahili.db")}";
+}
+else
+{
+    connectionString = builder.Configuration.GetConnectionString("Default") ?? "Data Source=swahili.db";
+}
+builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlite(connectionString));
 
 builder.Services.AddSingleton<LessonCatalog>();
 builder.Services.AddScoped<TokenService>();
@@ -76,10 +90,22 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors(CorsPolicy);
+
+// Serve the built React frontend (copied into wwwroot in the Docker image) so the
+// whole app runs from a single origin in production — no CORS, no separate host.
+// Harmless in local dev where wwwroot is empty (the frontend runs on Vite instead).
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-app.MapGet("/", () => "Swahili Course API is running. See /swagger for docs.");
+// Liveness probe for the host platform (Azure health check, etc.).
+app.MapGet("/healthz", () => Results.Ok(new { status = "ok" }));
+
+// SPA fallback: any non-API, non-file route returns index.html so client-side
+// routing works on refresh/deep-link. No-op in dev (no index.html present).
+app.MapFallbackToFile("index.html");
 
 app.Run();

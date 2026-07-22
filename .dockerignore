@@ -1,0 +1,21 @@
+# Keep the build context small and avoid copying host build artifacts / secrets.
+**/bin/
+**/obj/
+**/node_modules/
+**/dist/
+**/.vite/
+frontend/dist/
+whisper-service/.venv/
+**/__pycache__/
+**/App_Data/
+**/*.db
+**/*.db-shm
+**/*.db-wal
+.git/
+.github/
+mobile/
+whisper-service/
+**/.env
+**/.env.*
+.claude/
+*.md
