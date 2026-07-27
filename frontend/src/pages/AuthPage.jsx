@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { api } from '../api/client';
 import Logo from '../components/Logo';
 
 const PACE_OPTIONS = [
@@ -18,15 +19,22 @@ export default function AuthPage() {
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [planLengthDays, setPlan] = useState(30);
+  const [courses, setCourses] = useState([]);
+  const [courseId, setCourseId] = useState('sw');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
+
+  // An account is tied to one direction, so the choice is made here at sign-up.
+  useEffect(() => {
+    api.listCourses().then((d) => setCourses(d.courses || [])).catch(() => {});
+  }, []);
 
   const submit = async (e) => {
     e.preventDefault();
     setError(''); setBusy(true);
     try {
       if (mode === 'register') {
-        await register({ email, password, displayName, planLengthDays });
+        await register({ email, password, displayName, planLengthDays, courseId });
       } else {
         await login(email, password);
       }
@@ -54,6 +62,24 @@ export default function AuthPage() {
         {error && <div className="error-box">{error}</div>}
 
         <form onSubmit={submit}>
+          {mode === 'register' && courses.length > 1 && (
+            <div className="field">
+              <label>What do you want to learn?</label>
+              <div className="course-options">
+                {courses.map((c) => (
+                  <div key={c.id}
+                    className={`course-opt ${courseId === c.id ? 'active' : ''}`}
+                    onClick={() => setCourseId(c.id)}>
+                    <span className="course-flag">{c.flag}</span>
+                    <span className="course-text">
+                      <strong>{c.title}</strong>
+                      <span className="course-sub">{c.subtitle}</span>
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
           {mode === 'register' && (
             <div className="field">
               <label>Display name</label>

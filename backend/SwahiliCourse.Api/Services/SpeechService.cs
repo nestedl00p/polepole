@@ -30,7 +30,11 @@ public class SpeechService
         _config.GetValue("Speech:Enabled", false) && !string.IsNullOrWhiteSpace(WhisperUrl);
 
     private string WhisperUrl => (_config["Speech:WhisperUrl"] ?? "http://localhost:8081").TrimEnd('/');
-    private string Language => _config["Speech:Language"] ?? "sw";
+
+    // Whisper language code for the course's target language (what the learner
+    // is speaking). Speech:Language still overrides globally if set.
+    private string LanguageFor(Models.Course? course) =>
+        _config["Speech:Language"] ?? course?.SttLanguage ?? "sw";
 
     public record WordScore(string Word, bool Ok);
     public record AssessResult(
@@ -45,11 +49,12 @@ public class SpeechService
     // Transcribes the audio via the Whisper sidecar and scores it against referenceText.
     // Returns null if speech scoring isn't configured or the sidecar can't be reached.
     public async Task<AssessResult?> AssessAsync(
-        Stream audio, string? contentType, string? fileName, string referenceText, CancellationToken ct = default)
+        Stream audio, string? contentType, string? fileName, string referenceText,
+        Models.Course? course = null, CancellationToken ct = default)
     {
         if (!IsConfigured) return null;
 
-        var transcription = await TranscribeAsync(audio, contentType, fileName, ct);
+        var transcription = await TranscribeAsync(audio, contentType, fileName, LanguageFor(course), ct);
         if (transcription is null) return null;
 
         var refTokens = Tokens(referenceText);
@@ -73,7 +78,7 @@ public class SpeechService
 
     private sealed record Transcription(string Text, double? Duration, double? AvgProbability);
 
-    private async Task<Transcription?> TranscribeAsync(Stream audio, string? contentType, string? fileName, CancellationToken ct)
+    private async Task<Transcription?> TranscribeAsync(Stream audio, string? contentType, string? fileName, string language, CancellationToken ct)
     {
         try
         {
@@ -86,7 +91,7 @@ public class SpeechService
                 MediaTypeHeaderValue.Parse(string.IsNullOrWhiteSpace(contentType) ? "application/octet-stream" : contentType);
             form.Add(audioContent, "file", string.IsNullOrWhiteSpace(fileName) ? "audio.webm" : fileName);
 
-            using var resp = await client.PostAsync($"{WhisperUrl}/transcribe?lang={Language}", form, ct);
+            using var resp = await client.PostAsync($"{WhisperUrl}/transcribe?lang={language}", form, ct);
             if (!resp.IsSuccessStatusCode)
             {
                 _log.LogWarning("Whisper transcribe returned {Status}: {Body}",

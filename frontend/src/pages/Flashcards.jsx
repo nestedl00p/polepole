@@ -92,6 +92,10 @@ export default function Flashcards() {
 
   // ---- Card mode ----
   const card = cards[i];
+  // `target` is the word being learned (front, and what 🔊 speaks); `source` is
+  // its translation. The API sets them per course direction.
+  const target = card.target ?? card.swahili;
+  const source = card.source ?? card.english;
   const go = (delta) => { setFlipped(false); setI((x) => (x + delta + cards.length) % cards.length); };
 
   return (
@@ -104,14 +108,14 @@ export default function Flashcards() {
       <div className={`flashcard ${flipped ? 'flipped' : ''}`} onClick={() => setFlipped((f) => !f)}>
         <div className="flashcard-inner">
           <div className="flashcard-face flashcard-front">
-            <div className="flashcard-speak"><SpeakButton text={card.swahili} variant="onDark" /></div>
-            <div className="big">{card.swahili}</div>
+            <div className="flashcard-speak"><SpeakButton text={target} variant="onDark" /></div>
+            <div className="big">{target}</div>
             <div className="tiny">Tap to reveal · {card.lessonTitle}</div>
           </div>
           <div className="flashcard-face flashcard-back">
-            <div className="flashcard-speak"><SpeakButton text={card.swahili} variant="onDark" /></div>
-            <div className="big">{card.english}</div>
-            <div className="tiny">{card.swahili}</div>
+            <div className="flashcard-speak"><SpeakButton text={target} variant="onDark" /></div>
+            <div className="big">{source}</div>
+            <div className="tiny">{target}</div>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { useAuth } from '../context/AuthContext';
+import { api } from '../api/client';
 import { Button, Card, Field, Input, ErrorBox } from '../components/ui';
 import { colors, radius } from '../theme';
 
@@ -18,15 +19,22 @@ export default function AuthScreen() {
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [planLengthDays, setPlan] = useState(30);
+  const [courses, setCourses] = useState([]);
+  const [courseId, setCourseId] = useState('sw');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
+
+  // An account is tied to one direction, so the choice is made here at sign-up.
+  useEffect(() => {
+    api.listCourses().then((d) => setCourses(d.courses || [])).catch(() => {});
+  }, []);
 
   const submit = async () => {
     setError('');
     setBusy(true);
     try {
       if (mode === 'register') {
-        await register({ email, password, displayName, planLengthDays });
+        await register({ email, password, displayName, planLengthDays, courseId });
       } else {
         await login(email, password);
       }
@@ -63,6 +71,26 @@ export default function AuthScreen() {
           </Text>
 
           <ErrorBox>{error}</ErrorBox>
+
+          {mode === 'register' && courses.length > 1 && (
+            <Field label="What do you want to learn?">
+              <View style={{ gap: 10 }}>
+                {courses.map((c) => {
+                  const active = courseId === c.id;
+                  return (
+                    <Pressable key={c.id} onPress={() => setCourseId(c.id)}
+                      style={[styles.courseOpt, active && styles.courseOptActive]}>
+                      <Text style={styles.courseFlag}>{c.flag}</Text>
+                      <View style={{ flex: 1 }}>
+                        <Text style={styles.courseTitle}>{c.title}</Text>
+                        <Text style={styles.courseSub}>{c.subtitle}</Text>
+                      </View>
+                    </Pressable>
+                  );
+                })}
+              </View>
+            </Field>
+          )}
 
           {mode === 'register' && (
             <Field label="Display name">
@@ -142,6 +170,15 @@ export default function AuthScreen() {
 }
 
 const styles = StyleSheet.create({
+  courseOpt: {
+    flexDirection: 'row', alignItems: 'center', gap: 12,
+    borderWidth: 2, borderColor: colors.line, borderRadius: 12,
+    paddingVertical: 12, paddingHorizontal: 14, backgroundColor: '#fff',
+  },
+  courseOptActive: { borderColor: colors.teal, backgroundColor: colors.light },
+  courseFlag: { fontSize: 26 },
+  courseTitle: { fontWeight: '800', color: colors.navy, fontSize: 15 },
+  courseSub: { color: colors.muted, fontSize: 12.5 },
   wrap: {
     flexGrow: 1,
     justifyContent: 'center',

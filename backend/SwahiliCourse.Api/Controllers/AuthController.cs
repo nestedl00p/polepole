@@ -35,12 +35,18 @@ public class AuthController : ControllerBase
 
         var plan = dto.PlanLengthDays <= 0 ? 30 : Math.Clamp(dto.PlanLengthDays, 30, 365);
 
+        // An account is bound to one course direction for its lifetime.
+        if (!string.IsNullOrWhiteSpace(dto.CourseId) && !Courses.IsValid(dto.CourseId))
+            return BadRequest(new { message = "Unknown course." });
+        var courseId = Courses.Get(dto.CourseId).Id;
+
         var user = new User
         {
             Email = email,
             DisplayName = string.IsNullOrWhiteSpace(dto.DisplayName) ? email.Split('@')[0] : dto.DisplayName.Trim(),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
             PlanLengthDays = plan,
+            CourseId = courseId,
             StartDate = DateTime.UtcNow,
             CreatedAt = DateTime.UtcNow
         };
@@ -63,7 +69,5 @@ public class AuthController : ControllerBase
         return Ok(new AuthResponse(_tokens.CreateToken(user), ToDto(user)));
     }
 
-    private UserDto ToDto(User u) => new(
-        u.Id, u.Email, u.DisplayName, u.PlanLengthDays, u.StartDate,
-        u.StreakCount, u.TotalXp, _pace.CurrentScheduledDay(u));
+    private UserDto ToDto(User u) => UserMapper.ToDto(u, _pace);
 }

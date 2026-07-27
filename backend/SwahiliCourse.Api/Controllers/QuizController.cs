@@ -14,11 +14,11 @@ namespace SwahiliCourse.Api.Controllers;
 public class QuizController : AuthedController
 {
     private readonly AppDbContext _db;
-    private readonly LessonCatalog _catalog;
+    private readonly CourseCatalog _courses;
 
-    public QuizController(AppDbContext db, LessonCatalog catalog)
+    public QuizController(AppDbContext db, CourseCatalog courses)
     {
-        _db = db; _catalog = catalog;
+        _db = db; _courses = courses;
     }
 
     private const double PassThreshold = 0.7; // 70% to pass and unlock the next lesson
@@ -29,7 +29,7 @@ public class QuizController : AuthedController
         var user = await _db.Users.FindAsync(CurrentUserId);
         if (user is null) return Unauthorized();
 
-        var lesson = _catalog.GetById(dto.LessonId);
+        var lesson = _courses.For(user.CourseId).GetById(dto.LessonId);
         if (lesson is null) return NotFound();
 
         var answerMap = dto.Answers.ToDictionary(a => a.QuestionId, a => a.Answer ?? string.Empty);

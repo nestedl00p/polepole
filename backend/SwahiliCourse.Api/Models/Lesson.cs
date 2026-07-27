@@ -44,6 +44,20 @@ public class ContentBlock
 
     // pronunciationDrill (speak-and-check) config — phrases the learner records.
     public List<PronunciationPrompt>? Prompts { get; set; }
+
+    // englishVerbBuilder config — curated verb list for the lesson
+    // (the English-course counterpart of StemKeys).
+    public List<string>? VerbKeys { get; set; }
+
+    // sentenceBuilder config — the sentences to reorder. Without this the
+    // component silently falls back to its built-in Swahili sentences.
+    public List<SentenceChallenge>? Challenges { get; set; }
+}
+
+public class SentenceChallenge
+{
+    public List<string> Answer { get; set; } = new();
+    public string En { get; set; } = string.Empty;
 }
 
 public class PronunciationPrompt

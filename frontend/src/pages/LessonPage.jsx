@@ -3,10 +3,17 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { api } from '../api/client';
 import ContentBlock from '../components/ContentBlock';
 import SpeakButton from '../components/SpeakButton';
+import { useAuth } from '../context/AuthContext';
 
 export default function LessonPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
+  // Vocab pairs are stored as {swahili, english}; which side is being learned
+  // (and spoken) depends on the account's course direction.
+  const learnEnglish = user?.course?.targetLanguage === 'en';
+  const learning = (v) => (learnEnglish ? v.english : v.swahili);
+  const known = (v) => (learnEnglish ? v.swahili : v.english);
   const [lesson, setLesson] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -48,10 +55,10 @@ export default function LessonPage() {
             {lesson.vocabulary.map((v, i) => (
               <div className="vocab-chip" key={i}>
                 <div className="vocab-sw-row">
-                  <div className="sw">{v.swahili}</div>
-                  <SpeakButton text={v.swahili} size="sm" />
+                  <div className="sw">{learning(v)}</div>
+                  <SpeakButton text={learning(v)} size="sm" />
                 </div>
-                <div className="en">{v.english}</div>
+                <div className="en">{known(v)}</div>
               </div>
             ))}
           </div>

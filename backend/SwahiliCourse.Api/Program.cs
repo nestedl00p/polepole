@@ -28,7 +28,8 @@ else
 }
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlite(connectionString));
 
-builder.Services.AddSingleton<LessonCatalog>();
+// One lesson catalog per course direction (Swahili-for-English, English-for-Swahili).
+builder.Services.AddSingleton<CourseCatalog>();
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<PaceService>();
 
@@ -81,6 +82,19 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.EnsureCreated();
+
+    // EnsureCreated() builds the schema only for a brand-new file — it never
+    // alters an existing one. These idempotent patches add columns introduced
+    // after a database was first created, so existing accounts and progress
+    // survive an upgrade. (Replace this with EF Core migrations before launch.)
+    foreach (var patch in new[]
+             {
+                 "ALTER TABLE Users ADD COLUMN CourseId TEXT NOT NULL DEFAULT 'sw'",
+             })
+    {
+        try { db.Database.ExecuteSqlRaw(patch); }
+        catch (Microsoft.Data.Sqlite.SqliteException) { /* column already present */ }
+    }
 }
 
 if (app.Environment.IsDevelopment())

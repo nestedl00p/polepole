@@ -36,15 +36,40 @@ public class TtsService
 
     public record TtsResult(byte[] Bytes, string ContentType, string Ext);
 
+    // The voice for a course's target language. Override per course with
+    // Tts:Voices:<courseId>; the legacy global Tts:Voice still applies to the
+    // default (Swahili) course so existing configs keep working.
+    private string VoiceFor(Models.Course course)
+    {
+        var perCourse = _config[$"Tts:Voices:{course.Id}"];
+        if (!string.IsNullOrWhiteSpace(perCourse)) return perCourse;
+
+        if (course.Id == Models.Courses.Default)
+        {
+            // Legacy behaviour for the original course: return the raw Tts:Voice
+            // config value (usually empty) and let the provider apply its own
+            // default. Keeps cache keys identical to clips generated before
+            // courses existed, so the on-disk cache stays valid.
+            return _config["Tts:Voice"] ?? "";
+        }
+        return course.TtsVoice;
+    }
+
     // Returns synthesized audio for the given text, or null if TTS isn't configured / fails.
-    public async Task<TtsResult?> SynthesizeAsync(string text, CancellationToken ct = default)
+    // The course determines which language/voice the text is spoken in.
+    public async Task<TtsResult?> SynthesizeAsync(string text, Models.Course? course = null, CancellationToken ct = default)
     {
         if (!IsConfigured) return null;
 
-        var voice = _config["Tts:Voice"] ?? "";
+        course ??= Models.Courses.Get(Models.Courses.Default);
+        var voice = VoiceFor(course);
+        var locale = course.TtsLocale;
         var rate = _config["Tts:Rate"] ?? "0.85";
         var ext = Provider == "Mock" ? "wav" : "mp3";
         var contentType = ext == "wav" ? "audio/wav" : "audio/mpeg";
+        // The voice already determines the locale (sw-KE-ZuriNeural vs
+        // en-US-JennyNeural), so it isn't part of the key — keeping the key
+        // format stable preserves clips cached before courses existed.
         var cacheKey = Hash($"{Provider}|{voice}|{rate}|{text}");
         var cachePath = Path.Combine(_cacheDir, cacheKey + "." + ext);
 
@@ -60,8 +85,8 @@ public class TtsService
 
             byte[]? bytes = Provider switch
             {
-                "Google" => await SynthesizeGoogleAsync(text, voice, rate, ct),
-                "Azure" => await SynthesizeAzureAsync(text, voice, rate, ct),
+                "Google" => await SynthesizeGoogleAsync(text, voice, locale, rate, ct),
+                "Azure" => await SynthesizeAzureAsync(text, voice, locale, rate, ct),
                 "Knowlez" => await SynthesizeKnowlezAsync(text, ct),
                 "Mock" => MockTone(text),
                 _ => null
@@ -112,15 +137,15 @@ public class TtsService
         return ms.ToArray();
     }
 
-    private async Task<byte[]?> SynthesizeGoogleAsync(string text, string voice, string rate, CancellationToken ct)
+    private async Task<byte[]?> SynthesizeGoogleAsync(string text, string voice, string locale, string rate, CancellationToken ct)
     {
         var key = _config["Tts:Google:ApiKey"];
         var client = _http.CreateClient();
         var url = $"https://texttospeech.googleapis.com/v1/text:synthesize?key={key}";
 
         object voiceObj = string.IsNullOrWhiteSpace(voice)
-            ? new { languageCode = "sw-KE", ssmlGender = "FEMALE" }
-            : new { languageCode = "sw-KE", name = voice };
+            ? new { languageCode = locale, ssmlGender = "FEMALE" }
+            : new { languageCode = locale, name = voice };
 
         var payload = new
         {
@@ -173,7 +198,7 @@ public class TtsService
         return await resp.Content.ReadAsByteArrayAsync(ct);
     }
 
-    private async Task<byte[]?> SynthesizeAzureAsync(string text, string voice, string rate, CancellationToken ct)
+    private async Task<byte[]?> SynthesizeAzureAsync(string text, string voice, string locale, string rate, CancellationToken ct)
     {
         var key = _config["Tts:Azure:Key"];
         var region = _config["Tts:Azure:Region"];
@@ -181,8 +206,8 @@ public class TtsService
         var ratePct = $"{(int)Math.Round((ParseRate(rate) - 1.0) * 100)}%"; // e.g. 0.85 -> -15%
 
         var ssml =
-            $"<speak version='1.0' xml:lang='sw-KE'>" +
-            $"<voice xml:lang='sw-KE' name='{voiceName}'>" +
+            $"<speak version='1.0' xml:lang='{locale}'>" +
+            $"<voice xml:lang='{locale}' name='{voiceName}'>" +
             $"<prosody rate='{ratePct}'>{System.Security.SecurityElement.Escape(text)}</prosody>" +
             $"</voice></speak>";
 

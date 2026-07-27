@@ -10,6 +10,15 @@ import { API_BASE_URL } from '../config';
 let enabledPromise = null;
 let player = null;
 
+// The learner's course direction decides which language is spoken. Set once from
+// AuthContext so components can keep calling speakSwahili(text) unchanged.
+let course = { id: 'sw', ttsLocale: 'sw-KE' };
+
+export function setSpeechCourse(c) {
+  if (!c) return;
+  course = { id: c.id || 'sw', ttsLocale: c.ttsLocale || 'sw-KE' };
+}
+
 // Check once whether the backend has cloud TTS configured.
 function backendEnabled() {
   if (!enabledPromise) {
@@ -25,7 +34,7 @@ export const isSpeechSupported = () => true;
 
 function speakWithDevice(text, rate) {
   Speech.stop();
-  Speech.speak(text, { language: 'sw', rate });
+  Speech.speak(text, { language: course.ttsLocale.split('-')[0], rate });
 }
 
 export async function speakSwahili(text, { rate = 0.85 } = {}) {
@@ -34,7 +43,9 @@ export async function speakSwahili(text, { rate = 0.85 } = {}) {
   try {
     if (await backendEnabled()) {
       if (player) { try { player.remove(); } catch {} player = null; }
-      player = createAudioPlayer({ uri: `${API_BASE_URL}/api/tts?text=${encodeURIComponent(text)}` });
+      player = createAudioPlayer({
+        uri: `${API_BASE_URL}/api/tts?text=${encodeURIComponent(text)}&course=${encodeURIComponent(course.id)}`,
+      });
       player.play();
       return; // cloud audio is already slowed server-side
     }

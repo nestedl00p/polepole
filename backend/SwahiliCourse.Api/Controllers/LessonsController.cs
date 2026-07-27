@@ -12,12 +12,12 @@ namespace SwahiliCourse.Api.Controllers;
 public class LessonsController : AuthedController
 {
     private readonly AppDbContext _db;
-    private readonly LessonCatalog _catalog;
+    private readonly CourseCatalog _courses;
     private readonly PaceService _pace;
 
-    public LessonsController(AppDbContext db, LessonCatalog catalog, PaceService pace)
+    public LessonsController(AppDbContext db, CourseCatalog courses, PaceService pace)
     {
-        _db = db; _catalog = catalog; _pace = pace;
+        _db = db; _courses = courses; _pace = pace;
     }
 
     // Lightweight list for the dashboard: every lesson with its lock/progress state.
@@ -27,11 +27,13 @@ public class LessonsController : AuthedController
         var user = await _db.Users.FindAsync(CurrentUserId);
         if (user is null) return Unauthorized();
 
+        var catalog = _courses.For(user.CourseId);
+
         var progress = await _db.LessonProgress
             .Where(p => p.UserId == user.Id)
             .ToDictionaryAsync(p => p.LessonId);
 
-        var items = _catalog.All.Select(l =>
+        var items = catalog.All.Select(l =>
         {
             progress.TryGetValue(l.Id, out var pr);
             return new
@@ -56,7 +58,7 @@ public class LessonsController : AuthedController
         {
             currentDay = _pace.CurrentScheduledDay(user),
             planLengthDays = user.PlanLengthDays,
-            totalLessons = _catalog.TotalLessons,
+            totalLessons = catalog.TotalLessons,
             lessons = items
         });
     }
@@ -68,7 +70,8 @@ public class LessonsController : AuthedController
         var user = await _db.Users.FindAsync(CurrentUserId);
         if (user is null) return Unauthorized();
 
-        var lesson = _catalog.GetById(id);
+        var catalog = _courses.For(user.CourseId);
+        var lesson = catalog.GetById(id);
         if (lesson is null) return NotFound();
 
         var progress = await _db.LessonProgress
@@ -91,6 +94,6 @@ public class LessonsController : AuthedController
             await _db.SaveChangesAsync();
         }
 
-        return Ok(_catalog.GetSafe(lesson));
+        return Ok(catalog.GetSafe(lesson));
     }
 }

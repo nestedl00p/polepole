@@ -16,14 +16,16 @@ public class TtsController : ControllerBase
     [AllowAnonymous]
     public IActionResult Status() => Ok(new { enabled = _tts.IsConfigured });
 
-    // GET /api/tts?text=ninasoma
-    // Public so it can be used directly as an <audio> source. Returns:
+    // GET /api/tts?text=ninasoma&course=sw
+    // Public so it can be used directly as an <audio> source. The course selects
+    // which language/voice speaks the text (defaults to the Swahili course).
+    // Returns:
     //   200 audio/mpeg  — synthesized (and cached) speech
     //   204 No Content  — TTS not configured / unavailable → client uses built-in voice
     //   400             — invalid input
     [HttpGet]
     [AllowAnonymous]
-    public async Task<IActionResult> Get([FromQuery] string text, CancellationToken ct)
+    public async Task<IActionResult> Get([FromQuery] string text, [FromQuery] string? course, CancellationToken ct)
     {
         if (string.IsNullOrWhiteSpace(text)) return BadRequest("text is required");
 
@@ -34,7 +36,7 @@ public class TtsController : ControllerBase
 
         if (!_tts.IsConfigured) return NoContent();
 
-        var audio = await _tts.SynthesizeAsync(text, ct);
+        var audio = await _tts.SynthesizeAsync(text, Models.Courses.Get(course), ct);
         if (audio is null || audio.Bytes.Length == 0) return NoContent();
 
         // Words are immutable — let the browser cache aggressively.

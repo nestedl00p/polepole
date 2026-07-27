@@ -1,7 +1,14 @@
 import { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { api, setToken, clearToken, getToken } from '../api/client';
+import { setSpeechCourse } from '../lib/speak';
 
 const AuthContext = createContext(null);
+
+// Keep the speech layer pointed at the language this account is learning.
+function applyUser(u, setUser) {
+  if (u?.course) setSpeechCourse(u.course);
+  setUser(u);
+}
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -15,7 +22,7 @@ export function AuthProvider({ children }) {
     }
     try {
       const me = await api.me();
-      setUser(me);
+      applyUser(me, setUser);
     } catch {
       await clearToken();
       setUser(null);
@@ -30,7 +37,7 @@ export function AuthProvider({ children }) {
 
   const handleAuth = async (resp) => {
     await setToken(resp.token);
-    setUser(resp.user);
+    applyUser(resp.user, setUser);
   };
 
   const login = async (email, password) => {

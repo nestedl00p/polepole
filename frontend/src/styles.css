@@ -479,6 +479,23 @@ ul.sw-list li { margin-bottom: 5px; }
   .lp-grid, .lp-steps, .lp-weeks { grid-template-columns: 1fr; }
 }
 
+/* Singular → plural arrow in the English plural builder */
+.vb-ns-arrow { color: var(--muted); font-weight: 700; }
+
+/* --- Course picker (sign-up: which direction are you learning?) --- */
+.course-options { display: grid; gap: 10px; }
+.course-opt {
+  display: flex; align-items: center; gap: 12px; cursor: pointer;
+  border: 2px solid var(--line); border-radius: 12px; padding: 12px 14px;
+  background: #fff; transition: border-color .15s, background .15s;
+}
+.course-opt:hover { border-color: var(--teal); }
+.course-opt.active { border-color: var(--teal); background: var(--light); }
+.course-flag { font-size: 1.7rem; line-height: 1; }
+.course-text { display: flex; flex-direction: column; }
+.course-text strong { color: var(--navy); }
+.course-sub { color: var(--muted); font-size: 0.85rem; }
+
 /* --- Pronunciation drill (speak-and-check) --- */
 .pd .pd-phrase {
   background: var(--cream); border: 1px solid var(--line); border-radius: 12px;

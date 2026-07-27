@@ -1,0 +1,2848 @@
+[
+  {
+    "id": 1,
+    "week": 1,
+    "title": "Sauti na Alfabeti",
+    "subtitle": "Herufi 26 na sauti zake",
+    "theme": "Matamshi",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Karibu! Kiingereza kina herufi 26. Habari njema: unazijua tayari, kwa sababu Kiswahili kinatumia herufi zilezile. Habari ngumu kidogo: katika Kiingereza, herufi moja inaweza kuwa na sauti nyingi."
+      },
+      {
+        "type": "heading",
+        "heading": "Tofauti kubwa: vokali"
+      },
+      {
+        "type": "paragraph",
+        "text": "Katika Kiswahili, vokali tano (a, e, i, o, u) hutamkwa vilevile kila mara. Katika Kiingereza, vokali hubadilika kulingana na neno. Hii ndiyo sababu Kiingereza kinaonekana kigumu mwanzoni."
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Herufi", "Sauti moja", "Sauti nyingine"],
+        "tableRows": [
+          ["a", "cat (kama 'e' fupi)", "father (kama 'a' ya Kiswahili)"],
+          ["e", "bed (kama 'e')", "he (kama 'ii')"],
+          ["i", "sit (kama 'i' fupi)", "time (kama 'ai')"],
+          ["o", "hot (kama 'o')", "go (kama 'ou')"],
+          ["u", "cup (kama 'a')", "blue (kama 'uu')"]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Usikate tamaa",
+        "lines": [
+          "Hutahitaji kukariri kanuni zote leo. Sikiliza maneno, rudia kwa sauti, na masikio yako yatajifunza yenyewe. Pole pole ndiyo mwendo."
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Sauti ambazo Kiswahili hakina"
+      },
+      {
+        "type": "list",
+        "lines": [
+          "th - kama 'think' na 'this'. Weka ulimi kati ya meno.",
+          "r - Kiingereza cha Marekani hakikunji ulimi kama Kiswahili.",
+          "v na w - 'very' na 'well' ni tofauti kabisa."
+        ]
+      },
+      {
+        "type": "pronunciationDrill",
+        "calloutTitle": "Sema kwa Sauti",
+        "intro": "Gusa kipaza sauti kisha useme neno. Tutakagua ulichosema.",
+        "prompts": [
+          { "swahili": "hello", "english": "habari" },
+          { "swahili": "book", "english": "kitabu" },
+          { "swahili": "water", "english": "maji" },
+          { "swahili": "friend", "english": "rafiki" },
+          { "swahili": "thank you", "english": "asante" }
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "hello", "swahili": "habari" },
+      { "english": "water", "swahili": "maji" },
+      { "english": "book", "swahili": "kitabu" },
+      { "english": "friend", "swahili": "rafiki" },
+      { "english": "food", "swahili": "chakula" },
+      { "english": "house", "swahili": "nyumba" },
+      { "english": "teacher", "swahili": "mwalimu" },
+      { "english": "thank you", "swahili": "asante" }
+    ],
+    "quiz": [
+      {
+        "id": 1,
+        "type": "multiple_choice",
+        "prompt": "Kiingereza kina herufi ngapi?",
+        "options": ["21", "24", "26", "30"],
+        "answer": "26"
+      },
+      {
+        "id": 2,
+        "type": "multiple_choice",
+        "prompt": "Ni sauti ipi ambayo Kiswahili hakina?",
+        "options": ["th", "m", "k", "s"],
+        "answer": "th"
+      },
+      {
+        "id": 3,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: maji",
+        "answer": "water"
+      },
+      {
+        "id": 4,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: rafiki",
+        "answer": "friend"
+      },
+      {
+        "id": 5,
+        "type": "multiple_choice",
+        "prompt": "Katika Kiswahili vokali hutamkwaje?",
+        "options": ["Hubadilika kila mara", "Vilevile kila mara", "Hazitamkwi", "Kama Kiingereza"],
+        "answer": "Vilevile kila mara"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 2,
+    "week": 1,
+    "title": "Salamu",
+    "subtitle": "Kusalimiana na kuagana",
+    "theme": "Mazungumzo",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Katika Kiingereza, salamu hutegemea wakati wa siku na jinsi unavyomjua mtu. Kuna salamu za heshima na za kirafiki."
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Kiingereza", "Kiswahili", "Lini?"],
+        "tableRows": [
+          ["Good morning", "Habari za asubuhi", "Kabla ya saa sita mchana"],
+          ["Good afternoon", "Habari za mchana", "Saa sita hadi jioni"],
+          ["Good evening", "Habari za jioni", "Jioni"],
+          ["Hello / Hi", "Habari / Hujambo", "Wakati wowote"],
+          ["How are you?", "Habari yako?", "Wakati wowote"],
+          ["Goodbye / Bye", "Kwaheri", "Unapoondoka"]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Kumbuka",
+        "lines": [
+          "\"Hi\" ni ya kirafiki zaidi kuliko \"Hello\". Kwa mtu mkubwa au bosi, tumia \"Good morning\" au \"Hello\".",
+          "\"Good night\" si salamu ya kukutana - ni ya kuagana unapokwenda kulala."
+        ]
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          { "speaker": "Asha", "swahili": "Good morning! How are you?", "english": "Habari za asubuhi! Habari yako?" },
+          { "speaker": "John", "swahili": "I am fine, thank you. And you?", "english": "Niko sawa, asante. Na wewe?" },
+          { "speaker": "Asha", "swahili": "I am fine too. Nice to meet you.", "english": "Mimi pia niko sawa. Nafurahi kukutana nawe." },
+          { "speaker": "John", "swahili": "Nice to meet you too. Goodbye!", "english": "Nafurahi pia. Kwaheri!" }
+        ]
+      },
+      {
+        "type": "pronunciationDrill",
+        "calloutTitle": "Sema kwa Sauti",
+        "intro": "Sikiliza kisha rudia salamu hizi.",
+        "prompts": [
+          { "swahili": "good morning", "english": "habari za asubuhi" },
+          { "swahili": "how are you", "english": "habari yako" },
+          { "swahili": "I am fine", "english": "niko sawa" },
+          { "swahili": "nice to meet you", "english": "nafurahi kukutana nawe" },
+          { "swahili": "goodbye", "english": "kwaheri" }
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "good morning", "swahili": "habari za asubuhi" },
+      { "english": "good evening", "swahili": "habari za jioni" },
+      { "english": "how are you", "swahili": "habari yako" },
+      { "english": "I am fine", "swahili": "niko sawa" },
+      { "english": "please", "swahili": "tafadhali" },
+      { "english": "sorry", "swahili": "samahani" },
+      { "english": "goodbye", "swahili": "kwaheri" },
+      { "english": "welcome", "swahili": "karibu" }
+    ],
+    "quiz": [
+      {
+        "id": 6,
+        "type": "multiple_choice",
+        "prompt": "Unasemaje 'Habari za asubuhi' kwa Kiingereza?",
+        "options": ["Good evening", "Good morning", "Good night", "Goodbye"],
+        "answer": "Good morning"
+      },
+      {
+        "id": 7,
+        "type": "multiple_choice",
+        "prompt": "'Good night' hutumika lini?",
+        "options": ["Unapokutana jioni", "Unapoamka", "Unapokwenda kulala", "Wakati wa chakula"],
+        "answer": "Unapokwenda kulala"
+      },
+      {
+        "id": 8,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: tafadhali",
+        "answer": "please"
+      },
+      {
+        "id": 9,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: samahani",
+        "answer": "sorry"
+      },
+      {
+        "id": 10,
+        "type": "fill_blank",
+        "prompt": "Jaza pengo: How ___ you?",
+        "answer": "are",
+        "hint": "Kitenzi cha 'kuwa' kwa 'you'"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 3,
+    "week": 1,
+    "title": "Kujitambulisha",
+    "subtitle": "Jina langu ni...",
+    "theme": "Mazungumzo",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Sasa tujifunze kujitambulisha. Katika Kiingereza kuna njia mbili za kawaida: \"My name is...\" na \"I am...\". Zote ni sahihi."
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Kiingereza", "Kiswahili"],
+        "tableRows": [
+          ["My name is Amani.", "Jina langu ni Amani."],
+          ["I am Amani.", "Mimi ni Amani."],
+          ["What is your name?", "Jina lako ni nani?"],
+          ["I am from Tanzania.", "Ninatoka Tanzania."],
+          ["Where are you from?", "Unatoka wapi?"],
+          ["I am a teacher.", "Mimi ni mwalimu."]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Angalia hili",
+        "lines": [
+          "Kiingereza kinahitaji \"a\" mbele ya kazi: \"I am A teacher\", si \"I am teacher\". Kiswahili hakina neno hili. Tutalisoma kwa kina somo la 4."
+        ]
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          { "speaker": "Maria", "swahili": "Hello! What is your name?", "english": "Habari! Jina lako ni nani?" },
+          { "speaker": "Juma", "swahili": "My name is Juma. And you?", "english": "Jina langu ni Juma. Na wewe?" },
+          { "speaker": "Maria", "swahili": "I am Maria. Where are you from?", "english": "Mimi ni Maria. Unatoka wapi?" },
+          { "speaker": "Juma", "swahili": "I am from Dar es Salaam. I am a student.", "english": "Ninatoka Dar es Salaam. Mimi ni mwanafunzi." }
+        ]
+      },
+      {
+        "type": "pronunciationDrill",
+        "calloutTitle": "Sema kwa Sauti",
+        "intro": "Jitambulishe kwa sauti.",
+        "prompts": [
+          { "swahili": "my name is", "english": "jina langu ni" },
+          { "swahili": "what is your name", "english": "jina lako ni nani" },
+          { "swahili": "I am a student", "english": "mimi ni mwanafunzi" },
+          { "swahili": "where are you from", "english": "unatoka wapi" }
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "name", "swahili": "jina" },
+      { "english": "student", "swahili": "mwanafunzi" },
+      { "english": "doctor", "swahili": "daktari" },
+      { "english": "country", "swahili": "nchi" },
+      { "english": "city", "swahili": "jiji" },
+      { "english": "work", "swahili": "kazi" },
+      { "english": "year", "swahili": "mwaka" },
+      { "english": "child", "swahili": "mtoto" }
+    ],
+    "quiz": [
+      {
+        "id": 11,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: Jina langu ni Juma.",
+        "answer": "My name is Juma"
+      },
+      {
+        "id": 12,
+        "type": "multiple_choice",
+        "prompt": "Ni ipi sahihi?",
+        "options": ["I am teacher", "I am a teacher", "I teacher", "Am I teacher"],
+        "answer": "I am a teacher"
+      },
+      {
+        "id": 13,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: mwanafunzi",
+        "answer": "student"
+      },
+      {
+        "id": 14,
+        "type": "fill_blank",
+        "prompt": "Jaza pengo: Where ___ you from?",
+        "answer": "are"
+      },
+      {
+        "id": 15,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: nchi",
+        "answer": "country"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 4,
+    "week": 1,
+    "title": "A, An, The",
+    "subtitle": "Maneno ambayo Kiswahili hakina",
+    "theme": "Sarufi",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Hili ndilo somo gumu zaidi kwa mzungumzaji wa Kiswahili, kwa sababu Kiswahili HAKINA maneno haya kabisa. Katika Kiswahili tunasema \"kitabu\" tu. Katika Kiingereza lazima useme \"a book\" au \"the book\"."
+      },
+      {
+        "type": "heading",
+        "heading": "Kanuni mbili tu"
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Neno", "Maana", "Mfano"],
+        "tableRows": [
+          ["a / an", "kitu chochote, si maalum", "I want a book. (kitabu chochote)"],
+          ["the", "kitu maalum, tunachokijua", "I want the book. (kile kitabu tunachokijua)"]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "a au an?",
+        "lines": [
+          "Tumia \"an\" mbele ya SAUTI ya vokali, si herufi tu.",
+          "an apple, an egg, an hour (herufi h haisikiki!)",
+          "a book, a house, a university (inasikika 'yunivesiti')"
+        ]
+      },
+      {
+        "type": "articleBuilder",
+        "calloutTitle": "Jenga: a / an / the",
+        "intro": "Chagua nomino, kisha chagua kama ni kitu maalum au la. Angalia jinsi neno linalotangulia linavyobadilika."
+      },
+      {
+        "type": "heading",
+        "heading": "Wakati wa kutotumia"
+      },
+      {
+        "type": "list",
+        "lines": [
+          "Majina ya watu na nchi: Juma, Tanzania (si 'the Juma')",
+          "Wingi wa jumla: I like books. (vitabu kwa ujumla)",
+          "Vitu visivyohesabika: I drink water. (si 'a water')"
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "apple", "swahili": "tufaha" },
+      { "english": "egg", "swahili": "yai" },
+      { "english": "orange", "swahili": "chungwa" },
+      { "english": "car", "swahili": "gari" },
+      { "english": "umbrella", "swahili": "mwavuli" },
+      { "english": "hour", "swahili": "saa" },
+      { "english": "table", "swahili": "meza" },
+      { "english": "chair", "swahili": "kiti" }
+    ],
+    "quiz": [
+      {
+        "id": 16,
+        "type": "multiple_choice",
+        "prompt": "Chagua sahihi: I ate ___ apple.",
+        "options": ["a", "an", "the apple", "no word"],
+        "answer": "an"
+      },
+      {
+        "id": 17,
+        "type": "multiple_choice",
+        "prompt": "Chagua sahihi: I waited for ___ hour.",
+        "options": ["a", "an", "some", "one"],
+        "answer": "an"
+      },
+      {
+        "id": 18,
+        "type": "multiple_choice",
+        "prompt": "Unatumia 'the' lini?",
+        "options": ["Kitu chochote", "Kitu maalum tunachokijua", "Wingi tu", "Kamwe"],
+        "answer": "Kitu maalum tunachokijua"
+      },
+      {
+        "id": 19,
+        "type": "fill_blank",
+        "prompt": "Jaza pengo: She has ___ car. (gari lolote)",
+        "answer": "a"
+      },
+      {
+        "id": 20,
+        "type": "multiple_choice",
+        "prompt": "Ni ipi SI sahihi?",
+        "options": ["I drink water", "I like books", "I want a water", "I have a book"],
+        "answer": "I want a water"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 5,
+    "week": 1,
+    "title": "Umoja na Wingi",
+    "subtitle": "Kuongeza -s na maneno ya kipekee",
+    "theme": "Sarufi",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Kiswahili hubadilisha MWANZO wa neno: mtu kuwa watu, kitabu kuwa vitabu. Kiingereza hubadilisha MWISHO: book kuwa books. Hii ni rahisi zaidi, lakini kuna maneno ya kipekee."
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Kanuni", "Mfano", "Wingi"],
+        "tableRows": [
+          ["Ongeza -s", "book", "books"],
+          ["Inaishia -s, -x, -ch, -sh: ongeza -es", "box", "boxes"],
+          ["Konsonanti + y: badilisha kuwa -ies", "baby", "babies"],
+          ["Kipekee: kariri", "child", "children"],
+          ["Haibadiliki", "fish", "fish"]
+        ]
+      },
+      {
+        "type": "pluralBuilder",
+        "calloutTitle": "Umoja kuwa Wingi",
+        "intro": "Gusa nomino uone jinsi wingi wake unavyoundwa. Sehemu ya dhahabu ndiyo inayobadilika."
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Ya kipekee muhimu",
+        "lines": [
+          "child kuwa children, man kuwa men, woman kuwa women",
+          "foot kuwa feet, tooth kuwa teeth, person kuwa people",
+          "Haya hayafuati kanuni yoyote. Yakaririwe."
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "box", "swahili": "sanduku" },
+      { "english": "baby", "swahili": "mtoto mchanga" },
+      { "english": "man", "swahili": "mwanamume" },
+      { "english": "woman", "swahili": "mwanamke" },
+      { "english": "children", "swahili": "watoto" },
+      { "english": "people", "swahili": "watu" },
+      { "english": "foot", "swahili": "mguu" },
+      { "english": "fish", "swahili": "samaki" }
+    ],
+    "quiz": [
+      {
+        "id": 21,
+        "type": "translate",
+        "prompt": "Wingi wa 'child' ni nini?",
+        "answer": "children"
+      },
+      {
+        "id": 22,
+        "type": "translate",
+        "prompt": "Wingi wa 'box' ni nini?",
+        "answer": "boxes"
+      },
+      {
+        "id": 23,
+        "type": "multiple_choice",
+        "prompt": "Wingi wa 'baby' ni upi?",
+        "options": ["babys", "babies", "babyes", "baby"],
+        "answer": "babies"
+      },
+      {
+        "id": 24,
+        "type": "multiple_choice",
+        "prompt": "Wingi wa 'man' ni upi?",
+        "options": ["mans", "manes", "men", "man"],
+        "answer": "men"
+      },
+      {
+        "id": 25,
+        "type": "translate",
+        "prompt": "Wingi wa 'foot' ni nini?",
+        "answer": "feet"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 6,
+    "week": 1,
+    "title": "Viwakilishi",
+    "subtitle": "I, you, he, she, it, we, they",
+    "theme": "Sarufi",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Katika Kiswahili, mtendaji huonyeshwa kwa kiambishi ndani ya kitenzi: NInasoma, TUnasoma. Katika Kiingereza, mtendaji ni neno lake mwenyewe linalosimama peke yake: I read, we read."
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Kiingereza", "Kiswahili", "Kiambishi cha Kiswahili"],
+        "tableRows": [
+          ["I", "mimi", "ni-"],
+          ["you", "wewe", "u-"],
+          ["he", "yeye (mwanamume)", "a-"],
+          ["she", "yeye (mwanamke)", "a-"],
+          ["it", "kitu", "i-/ki-"],
+          ["we", "sisi", "tu-"],
+          ["they", "wao", "wa-"]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Tofauti muhimu",
+        "lines": [
+          "Kiswahili kina 'yeye' moja kwa mwanamume na mwanamke. Kiingereza kina MAWILI: he (mwanamume) na she (mwanamke).",
+          "Kwa vitu na wanyama, Kiingereza hutumia 'it'.",
+          "Kiingereza kina 'you' moja kwa umoja na wingi - rahisi!"
+        ]
+      },
+      {
+        "type": "list",
+        "lines": [
+          "Juma ni mwanamume. Yeye ni mwalimu. kuwa He is a teacher.",
+          "Asha ni mwanamke. Yeye ni daktari. kuwa She is a doctor.",
+          "Kitabu ni kizuri. kuwa It is good."
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "I", "swahili": "mimi" },
+      { "english": "you", "swahili": "wewe" },
+      { "english": "he", "swahili": "yeye (mume)" },
+      { "english": "she", "swahili": "yeye (mke)" },
+      { "english": "it", "swahili": "hiyo/kitu" },
+      { "english": "we", "swahili": "sisi" },
+      { "english": "they", "swahili": "wao" },
+      { "english": "my", "swahili": "yangu" }
+    ],
+    "quiz": [
+      {
+        "id": 26,
+        "type": "multiple_choice",
+        "prompt": "Kwa mwanamke tunatumia kiwakilishi kipi?",
+        "options": ["he", "she", "it", "they"],
+        "answer": "she"
+      },
+      {
+        "id": 27,
+        "type": "multiple_choice",
+        "prompt": "Kwa kitabu (kitu) tunatumia kipi?",
+        "options": ["he", "she", "it", "we"],
+        "answer": "it"
+      },
+      {
+        "id": 28,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: sisi",
+        "answer": "we"
+      },
+      {
+        "id": 29,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: wao",
+        "answer": "they"
+      },
+      {
+        "id": 30,
+        "type": "multiple_choice",
+        "prompt": "Kiingereza kina viwakilishi vingapi vya 'yeye'?",
+        "options": ["Kimoja", "Viwili (he, she)", "Vitatu", "Hakina"],
+        "answer": "Viwili (he, she)"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 7,
+    "week": 1,
+    "title": "Kitenzi 'To Be'",
+    "subtitle": "am, is, are",
+    "theme": "Sarufi",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Katika Kiswahili, neno 'ni' halibadiliki: mimi ni, wewe ni, yeye ni. Katika Kiingereza, kitenzi hiki kina maumbo MATATU, na lazima uchague sahihi."
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Kiwakilishi", "Umbo", "Mfano"],
+        "tableRows": [
+          ["I", "am", "I am a teacher."],
+          ["you", "are", "You are my friend."],
+          ["he / she / it", "is", "She is a doctor."],
+          ["we", "are", "We are students."],
+          ["they", "are", "They are here."]
+        ]
+      },
+      {
+        "type": "englishVerbBuilder",
+        "mode": "toBe",
+        "calloutTitle": "Jenga: am / is / are",
+        "intro": "Gusa mtendaji uone umbo sahihi la kitenzi 'to be'."
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Ufupisho",
+        "lines": [
+          "Katika mazungumzo, Waingereza hufupisha:",
+          "I am kuwa I'm, you are kuwa you're, she is kuwa she's",
+          "we are kuwa we're, they are kuwa they're"
+        ]
+      },
+      {
+        "type": "pronunciationDrill",
+        "calloutTitle": "Sema kwa Sauti",
+        "intro": "Rudia sentensi hizi.",
+        "prompts": [
+          { "swahili": "I am a teacher", "english": "mimi ni mwalimu" },
+          { "swahili": "she is a doctor", "english": "yeye ni daktari" },
+          { "swahili": "we are friends", "english": "sisi ni marafiki" },
+          { "swahili": "they are here", "english": "wao wapo hapa" }
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "am", "swahili": "ni (mimi)" },
+      { "english": "is", "swahili": "ni (yeye)" },
+      { "english": "are", "swahili": "ni (wewe/sisi/wao)" },
+      { "english": "here", "swahili": "hapa" },
+      { "english": "there", "swahili": "pale" },
+      { "english": "happy", "swahili": "furaha" },
+      { "english": "tired", "swahili": "amechoka" },
+      { "english": "hungry", "swahili": "njaa" }
+    ],
+    "quiz": [
+      {
+        "id": 31,
+        "type": "fill_blank",
+        "prompt": "Jaza pengo: I ___ a student.",
+        "answer": "am"
+      },
+      {
+        "id": 32,
+        "type": "fill_blank",
+        "prompt": "Jaza pengo: She ___ my friend.",
+        "answer": "is"
+      },
+      {
+        "id": 33,
+        "type": "fill_blank",
+        "prompt": "Jaza pengo: They ___ teachers.",
+        "answer": "are"
+      },
+      {
+        "id": 34,
+        "type": "multiple_choice",
+        "prompt": "Ni ipi sahihi?",
+        "options": ["We is happy", "We am happy", "We are happy", "We be happy"],
+        "answer": "We are happy"
+      },
+      {
+        "id": 35,
+        "type": "multiple_choice",
+        "prompt": "'She is' hufupishwaje?",
+        "options": ["She're", "She's", "Shes", "She'is"],
+        "answer": "She's"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 8,
+    "week": 1,
+    "title": "Marudio ya Wiki ya Kwanza",
+    "subtitle": "Tuunganishe yote",
+    "theme": "Marudio",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Hongera! Umemaliza wiki ya kwanza. Umejifunza salamu, kujitambulisha, a/an/the, wingi, viwakilishi, na kitenzi 'to be'. Sasa tuviunganishe."
+      },
+      {
+        "type": "heading",
+        "heading": "Mambo makuu manne"
+      },
+      {
+        "type": "list",
+        "lines": [
+          "Kiingereza kinahitaji a/an/the - Kiswahili hakina.",
+          "Wingi huongezwa mwishoni (-s), si mwanzoni.",
+          "Kuna he na she - si 'yeye' moja.",
+          "Kitenzi 'to be' kina maumbo matatu: am, is, are."
+        ]
+      },
+      {
+        "type": "sentenceBuilder",
+        "calloutTitle": "Zamu Yako - Jenga Sentensi",
+        "intro": "Panga maneno kwa mpangilio sahihi, kisha bofya Check.",
+        "challenges": [
+          { "answer": ["My", "name", "is", "Juma"], "en": "Jina langu ni Juma" },
+          { "answer": ["She", "is", "a", "doctor"], "en": "Yeye ni daktari" },
+          { "answer": ["I", "am", "from", "Tanzania"], "en": "Ninatoka Tanzania" },
+          { "answer": ["They", "are", "my", "friends"], "en": "Wao ni marafiki zangu" },
+          { "answer": ["We", "are", "students"], "en": "Sisi ni wanafunzi" }
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Ushauri",
+        "lines": [
+          "Usijali kama bado unasahau 'a' na 'the'. Hata wanafunzi wa muda mrefu husahau. Endelea kusikiliza na kusoma - masikio yako yatajifunza."
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "yes", "swahili": "ndiyo" },
+      { "english": "no", "swahili": "hapana" },
+      { "english": "and", "swahili": "na" },
+      { "english": "but", "swahili": "lakini" },
+      { "english": "very", "swahili": "sana" },
+      { "english": "good", "swahili": "nzuri" },
+      { "english": "big", "swahili": "kubwa" },
+      { "english": "small", "swahili": "ndogo" }
+    ],
+    "quiz": [
+      {
+        "id": 36,
+        "type": "multiple_choice",
+        "prompt": "Ni ipi sahihi kabisa?",
+        "options": ["She is a doctor", "She are doctor", "She is doctor", "She am a doctor"],
+        "answer": "She is a doctor"
+      },
+      {
+        "id": 37,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: Sisi ni wanafunzi.",
+        "answer": "We are students"
+      },
+      {
+        "id": 38,
+        "type": "translate",
+        "prompt": "Wingi wa 'woman' ni nini?",
+        "answer": "women"
+      },
+      {
+        "id": 39,
+        "type": "fill_blank",
+        "prompt": "Jaza pengo: I ate ___ egg.",
+        "answer": "an"
+      },
+      {
+        "id": 40,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: lakini",
+        "answer": "but"
+      }
+    ],
+    "xpReward": 150
+  },
+  {
+    "id": 9,
+    "week": 2,
+    "title": "Wakati Uliopo",
+    "subtitle": "I work, he workS",
+    "theme": "Sarufi",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Katika Kiswahili, kitenzi hubeba kiambishi cha mtendaji: NInasoma, TUnasoma. Katika Kiingereza, kitenzi HAKIBADILIKI hata kidogo - isipokuwa kwa he, she, it, ambapo huongeza -s."
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Mtendaji", "Kitenzi", "Sentensi"],
+        "tableRows": [
+          ["I", "work", "I work every day."],
+          ["You", "work", "You work here."],
+          ["He / She", "workS", "She works here."],
+          ["We", "work", "We work together."],
+          ["They", "work", "They work hard."]
+        ]
+      },
+      {
+        "type": "englishVerbBuilder",
+        "mode": "present",
+        "verbKeys": ["work", "read", "eat", "go", "want", "speak"],
+        "calloutTitle": "Jenga: Wakati Uliopo",
+        "intro": "Gusa mtendaji na kitenzi. Angalia kinachotokea unapochagua He / She."
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Kanuni ya -s",
+        "lines": [
+          "Nyingi: ongeza -s tu (work kuwa works)",
+          "Inaishia -o, -ch, -sh, -s, -x: ongeza -es (go kuwa goes, watch kuwa watches)",
+          "Konsonanti + y: badilisha kuwa -ies (study kuwa studies)"
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Kosa la kawaida",
+        "lines": [
+          "Wanafunzi husahau -s kwa he/she/it. \"She work here\" si sahihi. Ni \"She workS here\".",
+          "Hii ni kanuni inayosahaulika zaidi katika Kiingereza chote."
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "work", "swahili": "fanya kazi" },
+      { "english": "read", "swahili": "soma" },
+      { "english": "eat", "swahili": "kula" },
+      { "english": "drink", "swahili": "kunywa" },
+      { "english": "go", "swahili": "enda" },
+      { "english": "want", "swahili": "taka" },
+      { "english": "speak", "swahili": "sema" },
+      { "english": "every day", "swahili": "kila siku" }
+    ],
+    "quiz": [
+      {
+        "id": 41,
+        "type": "fill_blank",
+        "prompt": "Jaza pengo: She ___ in Dar es Salaam. (work)",
+        "answer": "works"
+      },
+      {
+        "id": 42,
+        "type": "multiple_choice",
+        "prompt": "Ni ipi sahihi?",
+        "options": ["He go to school", "He goes to school", "He going school", "He gos to school"],
+        "answer": "He goes to school"
+      },
+      {
+        "id": 43,
+        "type": "fill_blank",
+        "prompt": "Jaza pengo: They ___ books. (read)",
+        "answer": "read"
+      },
+      {
+        "id": 44,
+        "type": "multiple_choice",
+        "prompt": "Ni lini kitenzi huongeza -s?",
+        "options": ["Kwa I na you", "Kwa he, she, it", "Kwa we na they", "Kila mara"],
+        "answer": "Kwa he, she, it"
+      },
+      {
+        "id": 45,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: Ninasoma kitabu.",
+        "answer": "I read a book"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 10,
+    "week": 2,
+    "title": "Kukanusha",
+    "subtitle": "don't na doesn't",
+    "theme": "Sarufi",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Katika Kiswahili tunakanusha kwa kubadilisha kiambishi: ninasoma kuwa SIsomi. Katika Kiingereza tunaongeza neno la msaada: don't au doesn't."
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Mtendaji", "Neno la kukanusha", "Mfano"],
+        "tableRows": [
+          ["I / you / we / they", "don't", "I don't eat meat."],
+          ["he / she / it", "doesn't", "She doesn't eat meat."]
+        ]
+      },
+      {
+        "type": "englishVerbBuilder",
+        "mode": "negative",
+        "verbKeys": ["work", "eat", "go", "want", "speak", "read"],
+        "calloutTitle": "Jenga: Kukanusha",
+        "intro": "Gusa mtendaji na kitenzi uone neno sahihi la kukanusha."
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Kanuni muhimu sana",
+        "lines": [
+          "Baada ya doesn't, kitenzi HAKICHUKUI -s!",
+          "Sahihi: She doesn't work.",
+          "Si sahihi: She doesn't works.",
+          "Sababu: 'doesn't' tayari imebeba -s ndani yake (does)."
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "not", "swahili": "si" },
+      { "english": "meat", "swahili": "nyama" },
+      { "english": "milk", "swahili": "maziwa" },
+      { "english": "understand", "swahili": "elewa" },
+      { "english": "know", "swahili": "jua" },
+      { "english": "like", "swahili": "penda" },
+      { "english": "need", "swahili": "hitaji" },
+      { "english": "never", "swahili": "kamwe" }
+    ],
+    "quiz": [
+      {
+        "id": 46,
+        "type": "fill_blank",
+        "prompt": "Jaza pengo: She ___ eat meat.",
+        "answer": "doesn't"
+      },
+      {
+        "id": 47,
+        "type": "fill_blank",
+        "prompt": "Jaza pengo: They ___ speak English.",
+        "answer": "don't"
+      },
+      {
+        "id": 48,
+        "type": "multiple_choice",
+        "prompt": "Ni ipi sahihi?",
+        "options": ["He doesn't works", "He doesn't work", "He don't works", "He not work"],
+        "answer": "He doesn't work"
+      },
+      {
+        "id": 49,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: Sielewi.",
+        "answer": "I don't understand"
+      },
+      {
+        "id": 50,
+        "type": "multiple_choice",
+        "prompt": "Kwa nini hatutumii -s baada ya doesn't?",
+        "options": ["Ni sheria isiyo na sababu", "'does' tayari imebeba -s", "Kitenzi kimekwisha", "Tunatumia -s"],
+        "answer": "'does' tayari imebeba -s"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 11,
+    "week": 2,
+    "title": "Maswali",
+    "subtitle": "Do, Does na maneno ya kuuliza",
+    "theme": "Sarufi",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Katika Kiswahili, swali linaweza kuwa sawa na kauli - sauti tu ndiyo hubadilika: Unasoma? Katika Kiingereza, lazima uanze na neno la msaada: Do au Does."
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Kauli", "Swali"],
+        "tableRows": [
+          ["You work here.", "Do you work here?"],
+          ["She works here.", "Does she work here?"],
+          ["They speak English.", "Do they speak English?"],
+          ["He likes tea.", "Does he like tea?"]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Kumbuka tena",
+        "lines": [
+          "Baada ya Does, kitenzi HAKICHUKUI -s. \"Does she works?\" si sahihi.",
+          "Ni \"Does she work?\" - kwa sababu 'does' imebeba -s."
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Maneno ya kuuliza"
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Kiingereza", "Kiswahili", "Mfano"],
+        "tableRows": [
+          ["What", "nini", "What is this?"],
+          ["Who", "nani", "Who is she?"],
+          ["Where", "wapi", "Where do you live?"],
+          ["When", "lini", "When do you work?"],
+          ["Why", "kwa nini", "Why are you here?"],
+          ["How", "vipi/jinsi", "How are you?"],
+          ["How much", "bei gani", "How much is it?"]
+        ]
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          { "speaker": "Sara", "swahili": "Where do you live?", "english": "Unaishi wapi?" },
+          { "speaker": "Ali", "swahili": "I live in Arusha. Do you know it?", "english": "Ninaishi Arusha. Unaijua?" },
+          { "speaker": "Sara", "swahili": "Yes. What do you do there?", "english": "Ndiyo. Unafanya nini huko?" },
+          { "speaker": "Ali", "swahili": "I am a teacher.", "english": "Mimi ni mwalimu." }
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "what", "swahili": "nini" },
+      { "english": "who", "swahili": "nani" },
+      { "english": "where", "swahili": "wapi" },
+      { "english": "when", "swahili": "lini" },
+      { "english": "why", "swahili": "kwa nini" },
+      { "english": "how", "swahili": "vipi" },
+      { "english": "how much", "swahili": "bei gani" },
+      { "english": "live", "swahili": "ishi" }
+    ],
+    "quiz": [
+      {
+        "id": 51,
+        "type": "fill_blank",
+        "prompt": "Jaza pengo: ___ you speak English?",
+        "answer": "Do"
+      },
+      {
+        "id": 52,
+        "type": "fill_blank",
+        "prompt": "Jaza pengo: ___ she live here?",
+        "answer": "Does"
+      },
+      {
+        "id": 53,
+        "type": "multiple_choice",
+        "prompt": "Ni ipi sahihi?",
+        "options": ["Does she works?", "Does she work?", "Do she work?", "She does work?"],
+        "answer": "Does she work?"
+      },
+      {
+        "id": 54,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: Unaishi wapi?",
+        "answer": "Where do you live"
+      },
+      {
+        "id": 55,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: kwa nini",
+        "answer": "why"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 12,
+    "week": 2,
+    "title": "Wakati Unaoendelea",
+    "subtitle": "I am working (sasa hivi)",
+    "theme": "Sarufi",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Kiingereza kina njia mbili za kuzungumzia sasa. 'I work' ni kwa mazoea (kila siku). 'I am working' ni kwa kinachotokea SASA HIVI. Kiswahili hutumia 'ninafanya kazi' kwa hali zote mbili."
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Umbo", "Maana", "Mfano"],
+        "tableRows": [
+          ["I work", "mazoea, kila siku", "I work every day."],
+          ["I am working", "sasa hivi", "I am working now."],
+          ["She reads", "mazoea", "She reads books."],
+          ["She is reading", "sasa hivi", "She is reading now."]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Kanuni",
+        "lines": [
+          "am / is / are + kitenzi + ing",
+          "I am eating. You are eating. She is eating.",
+          "Kumbuka: unahitaji SEHEMU MBILI - 'to be' na '-ing'."
+        ]
+      },
+      {
+        "type": "list",
+        "lines": [
+          "Vitenzi vinavyoishia -e: hondoa e (write kuwa writing)",
+          "Konsonanti moja mwishoni: irudie (sit kuwa sitting, run kuwa running)",
+          "Vingine: ongeza -ing tu (work kuwa working)"
+        ]
+      },
+      {
+        "type": "pronunciationDrill",
+        "calloutTitle": "Sema kwa Sauti",
+        "intro": "Rudia sentensi za wakati unaoendelea.",
+        "prompts": [
+          { "swahili": "I am working", "english": "ninafanya kazi sasa" },
+          { "swahili": "she is reading", "english": "anasoma sasa" },
+          { "swahili": "they are eating", "english": "wanakula sasa" },
+          { "swahili": "we are learning English", "english": "tunajifunza Kiingereza" }
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "now", "swahili": "sasa" },
+      { "english": "today", "swahili": "leo" },
+      { "english": "learn", "swahili": "jifunza" },
+      { "english": "write", "swahili": "andika" },
+      { "english": "listen", "swahili": "sikiliza" },
+      { "english": "watch", "swahili": "tazama" },
+      { "english": "sleep", "swahili": "lala" },
+      { "english": "run", "swahili": "kimbia" }
+    ],
+    "quiz": [
+      {
+        "id": 56,
+        "type": "fill_blank",
+        "prompt": "Jaza pengo: I ___ working now.",
+        "answer": "am"
+      },
+      {
+        "id": 57,
+        "type": "multiple_choice",
+        "prompt": "Ni ipi sahihi kwa 'sasa hivi'?",
+        "options": ["She read now", "She is reading now", "She reading now", "She reads now"],
+        "answer": "She is reading now"
+      },
+      {
+        "id": 58,
+        "type": "translate",
+        "prompt": "Umbo la -ing la 'write' ni nini?",
+        "answer": "writing"
+      },
+      {
+        "id": 59,
+        "type": "translate",
+        "prompt": "Umbo la -ing la 'run' ni nini?",
+        "answer": "running"
+      },
+      {
+        "id": 60,
+        "type": "multiple_choice",
+        "prompt": "'I work every day' inamaanisha nini?",
+        "options": ["Sasa hivi", "Mazoea, kila siku", "Jana", "Kesho"],
+        "answer": "Mazoea, kila siku"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 13,
+    "week": 2,
+    "title": "Vivumishi",
+    "subtitle": "Vinatangulia nomino!",
+    "theme": "Sarufi",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Hii ni tofauti kubwa. Katika Kiswahili, kivumishi HUFUATA nomino: nyumba KUBWA. Katika Kiingereza, kivumishi HUTANGULIA nomino: a BIG house."
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Kiswahili", "Kiingereza"],
+        "tableRows": [
+          ["nyumba kubwa", "a big house"],
+          ["mtoto mdogo", "a small child"],
+          ["kitabu kizuri", "a good book"],
+          ["gari jekundu", "a red car"],
+          ["chakula kitamu", "tasty food"]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Habari njema",
+        "lines": [
+          "Vivumishi vya Kiingereza HAVIBADILIKI kamwe!",
+          "a big house, big houses, the big man, big women",
+          "Hakuna upatanisho wa ngeli kama Kiswahili. Rahisi sana."
+        ]
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Kiingereza", "Kiswahili"],
+        "tableRows": [
+          ["big", "kubwa"],
+          ["small", "ndogo"],
+          ["good", "nzuri"],
+          ["bad", "mbaya"],
+          ["hot", "moto"],
+          ["cold", "baridi"],
+          ["new", "mpya"],
+          ["old", "kuukuu / mzee"]
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "big", "swahili": "kubwa" },
+      { "english": "small", "swahili": "ndogo" },
+      { "english": "hot", "swahili": "moto" },
+      { "english": "cold", "swahili": "baridi" },
+      { "english": "new", "swahili": "mpya" },
+      { "english": "old", "swahili": "kuukuu" },
+      { "english": "beautiful", "swahili": "mzuri" },
+      { "english": "expensive", "swahili": "ghali" }
+    ],
+    "quiz": [
+      {
+        "id": 61,
+        "type": "multiple_choice",
+        "prompt": "Ni ipi sahihi?",
+        "options": ["a house big", "a big house", "big a house", "house a big"],
+        "answer": "a big house"
+      },
+      {
+        "id": 62,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: gari jipya",
+        "answer": "a new car"
+      },
+      {
+        "id": 63,
+        "type": "multiple_choice",
+        "prompt": "Vivumishi vya Kiingereza hubadilikaje kwa wingi?",
+        "options": ["Huongeza -s", "Havibadiliki", "Hubadilisha mwanzo", "Hupatana na ngeli"],
+        "answer": "Havibadiliki"
+      },
+      {
+        "id": 64,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: baridi",
+        "answer": "cold"
+      },
+      {
+        "id": 65,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: ghali",
+        "answer": "expensive"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 14,
+    "week": 2,
+    "title": "Namba",
+    "subtitle": "Kuhesabu kwa Kiingereza",
+    "theme": "Msamiati",
+    "blocks": [
+      {
+        "type": "table",
+        "tableHeaders": ["Namba", "Kiingereza", "Kiswahili"],
+        "tableRows": [
+          ["1", "one", "moja"],
+          ["2", "two", "mbili"],
+          ["3", "three", "tatu"],
+          ["4", "four", "nne"],
+          ["5", "five", "tano"],
+          ["6", "six", "sita"],
+          ["7", "seven", "saba"],
+          ["8", "eight", "nane"],
+          ["9", "nine", "tisa"],
+          ["10", "ten", "kumi"]
+        ]
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Namba", "Kiingereza", "Kiswahili"],
+        "tableRows": [
+          ["11", "eleven", "kumi na moja"],
+          ["12", "twelve", "kumi na mbili"],
+          ["20", "twenty", "ishirini"],
+          ["30", "thirty", "thelathini"],
+          ["50", "fifty", "hamsini"],
+          ["100", "one hundred", "mia moja"],
+          ["1000", "one thousand", "elfu moja"]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Kanuni ya -teen na -ty",
+        "lines": [
+          "13 hadi 19 huishia -teen: thirteen, fourteen, fifteen...",
+          "20, 30, 40 huishia -ty: twenty, thirty, forty...",
+          "Sikiliza kwa makini: 'fifteen' (15) na 'fifty' (50) zinafanana!"
+        ]
+      },
+      {
+        "type": "pronunciationDrill",
+        "calloutTitle": "Sema kwa Sauti",
+        "intro": "Hesabu kwa sauti.",
+        "prompts": [
+          { "swahili": "one", "english": "moja" },
+          { "swahili": "five", "english": "tano" },
+          { "swahili": "ten", "english": "kumi" },
+          { "swahili": "fifteen", "english": "kumi na tano" },
+          { "swahili": "fifty", "english": "hamsini" },
+          { "swahili": "one hundred", "english": "mia moja" }
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "one", "swahili": "moja" },
+      { "english": "two", "swahili": "mbili" },
+      { "english": "three", "swahili": "tatu" },
+      { "english": "five", "swahili": "tano" },
+      { "english": "ten", "swahili": "kumi" },
+      { "english": "twenty", "swahili": "ishirini" },
+      { "english": "hundred", "swahili": "mia" },
+      { "english": "thousand", "swahili": "elfu" }
+    ],
+    "quiz": [
+      {
+        "id": 66,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: tano",
+        "answer": "five"
+      },
+      {
+        "id": 67,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: ishirini",
+        "answer": "twenty"
+      },
+      {
+        "id": 68,
+        "type": "multiple_choice",
+        "prompt": "Namba 15 kwa Kiingereza ni?",
+        "options": ["fifty", "fifteen", "five ten", "fiveteen"],
+        "answer": "fifteen"
+      },
+      {
+        "id": 69,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: mia moja",
+        "answer": "one hundred"
+      },
+      {
+        "id": 70,
+        "type": "multiple_choice",
+        "prompt": "Namba za 13-19 huishiaje?",
+        "options": ["-ty", "-teen", "-th", "-en"],
+        "answer": "-teen"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 15,
+    "week": 2,
+    "title": "Wakati na Siku",
+    "subtitle": "Saa, siku na miezi",
+    "theme": "Msamiati",
+    "blocks": [
+      {
+        "type": "table",
+        "tableHeaders": ["Kiingereza", "Kiswahili"],
+        "tableRows": [
+          ["Monday", "Jumatatu"],
+          ["Tuesday", "Jumanne"],
+          ["Wednesday", "Jumatano"],
+          ["Thursday", "Alhamisi"],
+          ["Friday", "Ijumaa"],
+          ["Saturday", "Jumamosi"],
+          ["Sunday", "Jumapili"]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Muhimu",
+        "lines": [
+          "Katika Kiingereza, siku na miezi huanza na HERUFI KUBWA kila mara: Monday, January.",
+          "Hii ni sheria isiyobadilika."
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Kuuliza saa"
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Kiingereza", "Kiswahili"],
+        "tableRows": [
+          ["What time is it?", "Ni saa ngapi?"],
+          ["It is three o'clock.", "Ni saa tisa."],
+          ["in the morning", "asubuhi"],
+          ["in the afternoon", "mchana"],
+          ["at night", "usiku"],
+          ["yesterday", "jana"],
+          ["today", "leo"],
+          ["tomorrow", "kesho"]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Tahadhari ya saa",
+        "lines": [
+          "Saa za Kiswahili na Kiingereza ni TOFAUTI! Saa moja ya Kiswahili ni 7 o'clock ya Kiingereza.",
+          "Kiingereza huanza kuhesabu usiku wa manane; Kiswahili huanza macheo."
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "Monday", "swahili": "Jumatatu" },
+      { "english": "Friday", "swahili": "Ijumaa" },
+      { "english": "day", "swahili": "siku" },
+      { "english": "week", "swahili": "wiki" },
+      { "english": "month", "swahili": "mwezi" },
+      { "english": "yesterday", "swahili": "jana" },
+      { "english": "tomorrow", "swahili": "kesho" },
+      { "english": "time", "swahili": "wakati" }
+    ],
+    "quiz": [
+      {
+        "id": 71,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: Jumatatu",
+        "answer": "Monday"
+      },
+      {
+        "id": 72,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: kesho",
+        "answer": "tomorrow"
+      },
+      {
+        "id": 73,
+        "type": "multiple_choice",
+        "prompt": "Siku za wiki huandikwaje kwa Kiingereza?",
+        "options": ["Herufi ndogo", "Herufi kubwa mwanzoni", "Zote kubwa", "Haijalishi"],
+        "answer": "Herufi kubwa mwanzoni"
+      },
+      {
+        "id": 74,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: wiki",
+        "answer": "week"
+      },
+      {
+        "id": 75,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: Ni saa ngapi?",
+        "answer": "What time is it"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 16,
+    "week": 2,
+    "title": "Marudio ya Wiki ya Pili",
+    "subtitle": "Wakati uliopo kamili",
+    "theme": "Marudio",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Wiki hii umejifunza wakati uliopo, kukanusha, maswali, wakati unaoendelea, vivumishi, namba na siku. Tuunganishe yote."
+      },
+      {
+        "type": "list",
+        "lines": [
+          "He / she / it huongeza -s: She works.",
+          "Kukanusha: don't / doesn't - na kitenzi hakichukui -s.",
+          "Maswali: Do / Does mwanzoni.",
+          "Sasa hivi: am/is/are + kitenzi-ing.",
+          "Vivumishi hutangulia nomino na havibadiliki."
+        ]
+      },
+      {
+        "type": "sentenceBuilder",
+        "calloutTitle": "Zamu Yako - Jenga Sentensi",
+        "intro": "Panga maneno kwa mpangilio sahihi.",
+        "challenges": [
+          { "answer": ["She", "works", "in", "a", "hospital"], "en": "Anafanya kazi hospitalini" },
+          { "answer": ["I", "don't", "eat", "meat"], "en": "Sili nyama" },
+          { "answer": ["Do", "you", "speak", "English"], "en": "Unasema Kiingereza?" },
+          { "answer": ["They", "are", "reading", "books"], "en": "Wanasoma vitabu sasa" },
+          { "answer": ["It", "is", "a", "big", "house"], "en": "Ni nyumba kubwa" }
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "hospital", "swahili": "hospitali" },
+      { "english": "school", "swahili": "shule" },
+      { "english": "market", "swahili": "soko" },
+      { "english": "money", "swahili": "pesa" },
+      { "english": "family", "swahili": "familia" },
+      { "english": "mother", "swahili": "mama" },
+      { "english": "father", "swahili": "baba" },
+      { "english": "help", "swahili": "saidia" }
+    ],
+    "quiz": [
+      {
+        "id": 76,
+        "type": "multiple_choice",
+        "prompt": "Ni ipi sahihi?",
+        "options": ["She don't work", "She doesn't works", "She doesn't work", "She not work"],
+        "answer": "She doesn't work"
+      },
+      {
+        "id": 77,
+        "type": "fill_blank",
+        "prompt": "Jaza pengo: ___ he like tea?",
+        "answer": "Does"
+      },
+      {
+        "id": 78,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: Ninasoma sasa hivi.",
+        "answer": "I am reading now"
+      },
+      {
+        "id": 79,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: soko",
+        "answer": "market"
+      },
+      {
+        "id": 80,
+        "type": "multiple_choice",
+        "prompt": "Ni ipi sahihi?",
+        "options": ["a car red", "a red car", "red a car", "car a red"],
+        "answer": "a red car"
+      }
+    ],
+    "xpReward": 150
+  },
+  {
+    "id": 17,
+    "week": 3,
+    "title": "Wakati Uliopita",
+    "subtitle": "Kuongeza -ed",
+    "theme": "Sarufi",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Katika Kiswahili, wakati uliopita huonyeshwa kwa kiambishi -li-: niLIsoma. Katika Kiingereza, huongezwa -ed mwishoni mwa kitenzi - na hakibadiliki kwa mtendaji yeyote!"
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Mtendaji", "Kitenzi", "Sentensi"],
+        "tableRows": [
+          ["I", "worked", "I worked yesterday."],
+          ["You", "worked", "You worked hard."],
+          ["He / She", "worked", "She worked late."],
+          ["We", "worked", "We worked together."],
+          ["They", "worked", "They worked here."]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Habari njema kubwa",
+        "lines": [
+          "Katika wakati uliopita, HAKUNA -s ya he/she/it!",
+          "Umbo ni MOJA kwa kila mtendaji: worked, worked, worked.",
+          "Hii ni rahisi kuliko wakati uliopo."
+        ]
+      },
+      {
+        "type": "englishVerbBuilder",
+        "mode": "past",
+        "verbKeys": ["work", "want", "play"],
+        "calloutTitle": "Jenga: Wakati Uliopita",
+        "intro": "Gusa mtendaji na kitenzi. Angalia jinsi umbo linavyobaki lilelile."
+      },
+      {
+        "type": "list",
+        "lines": [
+          "Vitenzi vingi: ongeza -ed (work kuwa worked)",
+          "Vinavyoishia -e: ongeza -d tu (like kuwa liked)",
+          "Konsonanti + y: badilisha kuwa -ied (study kuwa studied)"
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "worked", "swahili": "alifanya kazi" },
+      { "english": "played", "swahili": "alicheza" },
+      { "english": "wanted", "swahili": "alitaka" },
+      { "english": "studied", "swahili": "alisoma" },
+      { "english": "finished", "swahili": "alimaliza" },
+      { "english": "last week", "swahili": "wiki iliyopita" },
+      { "english": "ago", "swahili": "iliyopita" },
+      { "english": "then", "swahili": "kisha" }
+    ],
+    "quiz": [
+      {
+        "id": 81,
+        "type": "translate",
+        "prompt": "Wakati uliopita wa 'work' ni nini?",
+        "answer": "worked"
+      },
+      {
+        "id": 82,
+        "type": "translate",
+        "prompt": "Wakati uliopita wa 'study' ni nini?",
+        "answer": "studied"
+      },
+      {
+        "id": 83,
+        "type": "multiple_choice",
+        "prompt": "Ni ipi sahihi?",
+        "options": ["She workeds", "She worked", "She worksed", "She did worked"],
+        "answer": "She worked"
+      },
+      {
+        "id": 84,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: jana",
+        "answer": "yesterday"
+      },
+      {
+        "id": 85,
+        "type": "multiple_choice",
+        "prompt": "Katika wakati uliopita, he/she huongeza -s?",
+        "options": ["Ndiyo, kila mara", "Hapana, kamwe", "Wakati mwingine", "Kwa vitenzi vipekee tu"],
+        "answer": "Hapana, kamwe"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 18,
+    "week": 3,
+    "title": "Vitenzi vya Kipekee",
+    "subtitle": "go kuwa went, eat kuwa ate",
+    "theme": "Sarufi",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Kiingereza kina vitenzi takriban 180 visivyofuata kanuni ya -ed. Habari njema: vinavyotumika sana ni takriban 50 tu, na utavijua kwa kuvisikia mara kwa mara."
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Sasa", "Uliopita", "Kiswahili"],
+        "tableRows": [
+          ["go", "went", "enda"],
+          ["eat", "ate", "kula"],
+          ["see", "saw", "ona"],
+          ["speak", "spoke", "sema"],
+          ["read", "read (matamshi hubadilika)", "soma"],
+          ["come", "came", "kuja"],
+          ["give", "gave", "toa"],
+          ["take", "took", "chukua"],
+          ["make", "made", "tengeneza"],
+          ["buy", "bought", "nunua"]
+        ]
+      },
+      {
+        "type": "englishVerbBuilder",
+        "mode": "past",
+        "verbKeys": ["go", "eat", "see", "speak", "read"],
+        "calloutTitle": "Jenga: Vitenzi vya Kipekee",
+        "intro": "Gusa kitenzi uone umbo lake la wakati uliopita."
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Kitenzi 'to be' kilichopita",
+        "lines": [
+          "I / he / she / it kuwa WAS",
+          "You / we / they kuwa WERE",
+          "Mfano: I was tired. They were happy."
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "went", "swahili": "alienda" },
+      { "english": "ate", "swahili": "alikula" },
+      { "english": "saw", "swahili": "aliona" },
+      { "english": "came", "swahili": "alikuja" },
+      { "english": "bought", "swahili": "alinunua" },
+      { "english": "was", "swahili": "alikuwa" },
+      { "english": "were", "swahili": "walikuwa" },
+      { "english": "took", "swahili": "alichukua" }
+    ],
+    "quiz": [
+      {
+        "id": 86,
+        "type": "translate",
+        "prompt": "Wakati uliopita wa 'go' ni nini?",
+        "answer": "went"
+      },
+      {
+        "id": 87,
+        "type": "translate",
+        "prompt": "Wakati uliopita wa 'eat' ni nini?",
+        "answer": "ate"
+      },
+      {
+        "id": 88,
+        "type": "fill_blank",
+        "prompt": "Jaza pengo: I ___ tired yesterday.",
+        "answer": "was"
+      },
+      {
+        "id": 89,
+        "type": "fill_blank",
+        "prompt": "Jaza pengo: They ___ happy.",
+        "answer": "were"
+      },
+      {
+        "id": 90,
+        "type": "multiple_choice",
+        "prompt": "Wakati uliopita wa 'buy' ni upi?",
+        "options": ["buyed", "bought", "buied", "buy"],
+        "answer": "bought"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 19,
+    "week": 3,
+    "title": "Maswali ya Wakati Uliopita",
+    "subtitle": "Did",
+    "theme": "Sarufi",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Kwa maswali na kukanusha katika wakati uliopita, tumia DID. Na kama ilivyo kwa 'does', kitenzi hurudi kwenye umbo lake la msingi."
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Aina", "Mfano"],
+        "tableRows": [
+          ["Kauli", "She went to the market."],
+          ["Swali", "Did she go to the market?"],
+          ["Kukanusha", "She didn't go to the market."]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Kanuni muhimu",
+        "lines": [
+          "Baada ya did / didn't, kitenzi HAKICHUKUI umbo la wakati uliopita!",
+          "Sahihi: Did you go? / I didn't go.",
+          "Si sahihi: Did you went? / I didn't went.",
+          "Sababu: 'did' tayari inaonyesha wakati uliopita."
+        ]
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          { "speaker": "Neema", "swahili": "Did you go to the market yesterday?", "english": "Ulienda sokoni jana?" },
+          { "speaker": "Hassan", "swahili": "Yes, I went in the morning.", "english": "Ndiyo, nilienda asubuhi." },
+          { "speaker": "Neema", "swahili": "What did you buy?", "english": "Ulinunua nini?" },
+          { "speaker": "Hassan", "swahili": "I bought rice and fish. I didn't buy meat.", "english": "Nilinunua mchele na samaki. Sikununua nyama." }
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "did", "swahili": "alifanya" },
+      { "english": "didn't", "swahili": "hakufanya" },
+      { "english": "rice", "swahili": "mchele" },
+      { "english": "bread", "swahili": "mkate" },
+      { "english": "yesterday", "swahili": "jana" },
+      { "english": "morning", "swahili": "asubuhi" },
+      { "english": "evening", "swahili": "jioni" },
+      { "english": "last year", "swahili": "mwaka jana" }
+    ],
+    "quiz": [
+      {
+        "id": 91,
+        "type": "multiple_choice",
+        "prompt": "Ni ipi sahihi?",
+        "options": ["Did you went?", "Did you go?", "Did you goes?", "You did went?"],
+        "answer": "Did you go?"
+      },
+      {
+        "id": 92,
+        "type": "fill_blank",
+        "prompt": "Jaza pengo: I ___ go to school yesterday. (kukanusha)",
+        "answer": "didn't"
+      },
+      {
+        "id": 93,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: Ulinunua nini?",
+        "answer": "What did you buy"
+      },
+      {
+        "id": 94,
+        "type": "multiple_choice",
+        "prompt": "Baada ya 'didn't', kitenzi kinakuwaje?",
+        "options": ["Umbo la msingi", "Umbo la uliopita", "Huongeza -s", "Huongeza -ing"],
+        "answer": "Umbo la msingi"
+      },
+      {
+        "id": 95,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: mkate",
+        "answer": "bread"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 20,
+    "week": 3,
+    "title": "Wakati Ujao: Will",
+    "subtitle": "Nitakachofanya",
+    "theme": "Sarufi",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Katika Kiswahili, wakati ujao ni kiambishi -ta-: niTAsoma. Katika Kiingereza, ni neno moja tu: WILL. Na ni rahisi sana - halibadiliki kamwe."
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Mtendaji", "Sentensi"],
+        "tableRows": [
+          ["I", "I will go tomorrow."],
+          ["You", "You will see."],
+          ["He / She", "She will come."],
+          ["We", "We will help."],
+          ["They", "They will work."]
+        ]
+      },
+      {
+        "type": "englishVerbBuilder",
+        "mode": "future",
+        "verbKeys": ["work", "go", "eat", "see", "speak", "read"],
+        "calloutTitle": "Jenga: Wakati Ujao",
+        "intro": "Gusa mtendaji na kitenzi. 'will' haibadiliki kamwe, na kitenzi hubaki kama kilivyo."
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Ufupisho na kukanusha",
+        "lines": [
+          "I will kuwa I'll, she will kuwa she'll, they will kuwa they'll",
+          "Kukanusha: will not kuwa won't",
+          "Mfano: I won't go. (Sitaenda.)"
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "will", "swahili": "ta-" },
+      { "english": "won't", "swahili": "hata-" },
+      { "english": "tomorrow", "swahili": "kesho" },
+      { "english": "next week", "swahili": "wiki ijayo" },
+      { "english": "later", "swahili": "baadaye" },
+      { "english": "soon", "swahili": "hivi karibuni" },
+      { "english": "wait", "swahili": "subiri" },
+      { "english": "call", "swahili": "piga simu" }
+    ],
+    "quiz": [
+      {
+        "id": 96,
+        "type": "fill_blank",
+        "prompt": "Jaza pengo: I ___ come tomorrow.",
+        "answer": "will"
+      },
+      {
+        "id": 97,
+        "type": "multiple_choice",
+        "prompt": "Ni ipi sahihi?",
+        "options": ["She wills come", "She will comes", "She will come", "She will came"],
+        "answer": "She will come"
+      },
+      {
+        "id": 98,
+        "type": "translate",
+        "prompt": "'will not' hufupishwaje?",
+        "answer": "won't"
+      },
+      {
+        "id": 99,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: Nitaenda kesho.",
+        "answer": "I will go tomorrow"
+      },
+      {
+        "id": 100,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: wiki ijayo",
+        "answer": "next week"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 21,
+    "week": 3,
+    "title": "Going To",
+    "subtitle": "Mipango iliyopangwa",
+    "theme": "Sarufi",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Kuna njia nyingine ya wakati ujao: 'going to'. Hutumika kwa mipango uliyopanga tayari, au unapoona dalili."
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Umbo", "Matumizi", "Mfano"],
+        "tableRows": [
+          ["will", "uamuzi wa ghafla, ahadi", "I will help you."],
+          ["going to", "mpango uliopangwa", "I am going to visit my mother."],
+          ["going to", "dalili unazoziona", "Look! It is going to rain."]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Muundo",
+        "lines": [
+          "am / is / are + going to + kitenzi",
+          "I am going to travel. She is going to study.",
+          "Kumbuka: unahitaji 'to be' kwanza!"
+        ]
+      },
+      {
+        "type": "pronunciationDrill",
+        "calloutTitle": "Sema kwa Sauti",
+        "intro": "Rudia sentensi za mipango.",
+        "prompts": [
+          { "swahili": "I am going to travel", "english": "nitasafiri" },
+          { "swahili": "she is going to study", "english": "atasoma" },
+          { "swahili": "it is going to rain", "english": "mvua itanyesha" },
+          { "swahili": "we are going to help", "english": "tutasaidia" }
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "travel", "swahili": "safiri" },
+      { "english": "visit", "swahili": "tembelea" },
+      { "english": "rain", "swahili": "mvua" },
+      { "english": "study", "swahili": "soma" },
+      { "english": "plan", "swahili": "mpango" },
+      { "english": "start", "swahili": "anza" },
+      { "english": "finish", "swahili": "maliza" },
+      { "english": "meet", "swahili": "kutana" }
+    ],
+    "quiz": [
+      {
+        "id": 101,
+        "type": "fill_blank",
+        "prompt": "Jaza pengo: I am ___ to travel next week.",
+        "answer": "going"
+      },
+      {
+        "id": 102,
+        "type": "multiple_choice",
+        "prompt": "Ni ipi sahihi?",
+        "options": ["She going to study", "She is going to study", "She is going study", "She go to study"],
+        "answer": "She is going to study"
+      },
+      {
+        "id": 103,
+        "type": "multiple_choice",
+        "prompt": "'going to' hutumika zaidi kwa nini?",
+        "options": ["Uamuzi wa ghafla", "Mpango uliopangwa", "Wakati uliopita", "Mazoea"],
+        "answer": "Mpango uliopangwa"
+      },
+      {
+        "id": 104,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: tembelea",
+        "answer": "visit"
+      },
+      {
+        "id": 105,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: mvua",
+        "answer": "rain"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 22,
+    "week": 3,
+    "title": "Can na Could",
+    "subtitle": "Uwezo na ombi la heshima",
+    "theme": "Sarufi",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "'Can' huonyesha uwezo - unachoweza kufanya. Katika Kiswahili ni 'naweza'. Baada ya can, kitenzi hubaki kama kilivyo."
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Kiingereza", "Kiswahili"],
+        "tableRows": [
+          ["I can swim.", "Ninaweza kuogelea."],
+          ["She can speak English.", "Anaweza kusema Kiingereza."],
+          ["I can't come.", "Siwezi kuja."],
+          ["Can you help me?", "Unaweza kunisaidia?"],
+          ["Could you help me?", "Ungeweza kunisaidia? (heshima zaidi)"]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Kanuni rahisi",
+        "lines": [
+          "can + kitenzi cha msingi. Hakuna 'to', hakuna -s, hakuna -ing.",
+          "Sahihi: She can swim.",
+          "Si sahihi: She can to swim. / She cans swim. / She can swims."
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Could kwa heshima",
+        "lines": [
+          "Katika duka au ofisi, 'Could' ni ya heshima zaidi kuliko 'Can'.",
+          "Could you help me, please? ni nzuri zaidi kuliko Can you help me?"
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "can", "swahili": "naweza" },
+      { "english": "can't", "swahili": "siwezi" },
+      { "english": "could", "swahili": "ningeweza" },
+      { "english": "swim", "swahili": "ogelea" },
+      { "english": "drive", "swahili": "endesha" },
+      { "english": "cook", "swahili": "pika" },
+      { "english": "sing", "swahili": "imba" },
+      { "english": "dance", "swahili": "cheza densi" }
+    ],
+    "quiz": [
+      {
+        "id": 106,
+        "type": "multiple_choice",
+        "prompt": "Ni ipi sahihi?",
+        "options": ["She can swims", "She can to swim", "She can swim", "She cans swim"],
+        "answer": "She can swim"
+      },
+      {
+        "id": 107,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: Ninaweza kupika.",
+        "answer": "I can cook"
+      },
+      {
+        "id": 108,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: siwezi",
+        "answer": "can't"
+      },
+      {
+        "id": 109,
+        "type": "multiple_choice",
+        "prompt": "Ni ipi ya heshima zaidi?",
+        "options": ["Can you help me?", "Could you help me?", "Help me!", "You help me"],
+        "answer": "Could you help me?"
+      },
+      {
+        "id": 110,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: endesha",
+        "answer": "drive"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 23,
+    "week": 3,
+    "title": "Have na Has",
+    "subtitle": "Kumiliki",
+    "theme": "Sarufi",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Kwa kumiliki, Kiingereza hutumia 'have'. Kama ilivyo kwa vitenzi vingine, he/she/it hutumia umbo tofauti: HAS."
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Mtendaji", "Umbo", "Mfano"],
+        "tableRows": [
+          ["I / you / we / they", "have", "I have a car."],
+          ["he / she / it", "has", "She has a car."]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Maswali na kukanusha",
+        "lines": [
+          "Swali: Do you have a car? / Does she have a car?",
+          "Kukanusha: I don't have a car. / She doesn't have a car.",
+          "Angalia: baada ya does/doesn't tunatumia HAVE, si has!"
+        ]
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          { "speaker": "Zawadi", "swahili": "Do you have any children?", "english": "Una watoto?" },
+          { "speaker": "Musa", "swahili": "Yes, I have two children.", "english": "Ndiyo, nina watoto wawili." },
+          { "speaker": "Zawadi", "swahili": "Does your wife have a job?", "english": "Mke wako ana kazi?" },
+          { "speaker": "Musa", "swahili": "Yes, she has a good job. She is a nurse.", "english": "Ndiyo, ana kazi nzuri. Yeye ni muuguzi." }
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "have", "swahili": "nina" },
+      { "english": "has", "swahili": "ana" },
+      { "english": "wife", "swahili": "mke" },
+      { "english": "husband", "swahili": "mume" },
+      { "english": "brother", "swahili": "kaka" },
+      { "english": "sister", "swahili": "dada" },
+      { "english": "job", "swahili": "kazi" },
+      { "english": "nurse", "swahili": "muuguzi" }
+    ],
+    "quiz": [
+      {
+        "id": 111,
+        "type": "fill_blank",
+        "prompt": "Jaza pengo: She ___ two children.",
+        "answer": "has"
+      },
+      {
+        "id": 112,
+        "type": "fill_blank",
+        "prompt": "Jaza pengo: They ___ a big house.",
+        "answer": "have"
+      },
+      {
+        "id": 113,
+        "type": "multiple_choice",
+        "prompt": "Ni ipi sahihi?",
+        "options": ["Does she has a car?", "Does she have a car?", "Do she has a car?", "Does she having a car?"],
+        "answer": "Does she have a car?"
+      },
+      {
+        "id": 114,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: dada",
+        "answer": "sister"
+      },
+      {
+        "id": 115,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: Nina kazi.",
+        "answer": "I have a job"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 24,
+    "week": 3,
+    "title": "Marudio ya Wiki ya Tatu",
+    "subtitle": "Nyakati zote",
+    "theme": "Marudio",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Sasa unajua nyakati kuu za Kiingereza: uliopita, uliopo, na ujao. Hii ndiyo msingi wa mazungumzo yote."
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Wakati", "Mfano", "Kiswahili"],
+        "tableRows": [
+          ["Uliopita", "I worked yesterday.", "Nilifanya kazi jana."],
+          ["Uliopo", "I work every day.", "Ninafanya kazi kila siku."],
+          ["Unaoendelea", "I am working now.", "Ninafanya kazi sasa."],
+          ["Ujao (will)", "I will work tomorrow.", "Nitafanya kazi kesho."],
+          ["Ujao (going to)", "I am going to work.", "Nimepanga kufanya kazi."]
+        ]
+      },
+      {
+        "type": "sentenceBuilder",
+        "calloutTitle": "Zamu Yako - Jenga Sentensi",
+        "intro": "Panga maneno kwa mpangilio sahihi.",
+        "challenges": [
+          { "answer": ["I", "went", "to", "the", "market"], "en": "Nilienda sokoni" },
+          { "answer": ["Did", "you", "see", "her"], "en": "Ulimwona?" },
+          { "answer": ["She", "will", "come", "tomorrow"], "en": "Atakuja kesho" },
+          { "answer": ["I", "can", "speak", "English"], "en": "Ninaweza kusema Kiingereza" },
+          { "answer": ["He", "has", "two", "brothers"], "en": "Ana kaka wawili" }
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "always", "swahili": "daima" },
+      { "english": "sometimes", "swahili": "wakati mwingine" },
+      { "english": "often", "swahili": "mara nyingi" },
+      { "english": "already", "swahili": "tayari" },
+      { "english": "still", "swahili": "bado" },
+      { "english": "again", "swahili": "tena" },
+      { "english": "together", "swahili": "pamoja" },
+      { "english": "because", "swahili": "kwa sababu" }
+    ],
+    "quiz": [
+      {
+        "id": 116,
+        "type": "multiple_choice",
+        "prompt": "Ni ipi sahihi kwa wakati uliopita?",
+        "options": ["I go yesterday", "I went yesterday", "I will go yesterday", "I going yesterday"],
+        "answer": "I went yesterday"
+      },
+      {
+        "id": 117,
+        "type": "fill_blank",
+        "prompt": "Jaza pengo: ___ you go to school yesterday?",
+        "answer": "Did"
+      },
+      {
+        "id": 118,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: Atakuja kesho.",
+        "answer": "She will come tomorrow"
+      },
+      {
+        "id": 119,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: kwa sababu",
+        "answer": "because"
+      },
+      {
+        "id": 120,
+        "type": "multiple_choice",
+        "prompt": "Ni ipi sahihi?",
+        "options": ["He have a car", "He has a car", "He haves a car", "He is have a car"],
+        "answer": "He has a car"
+      }
+    ],
+    "xpReward": 150
+  },
+  {
+    "id": 25,
+    "week": 4,
+    "title": "Sokoni",
+    "subtitle": "Kununua na kuuliza bei",
+    "theme": "Matumizi",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Sasa tutumie Kiingereza katika maisha halisi. Tutaanza sokoni - mahali ambapo utahitaji kuuliza bei na kununua vitu."
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Kiingereza", "Kiswahili"],
+        "tableRows": [
+          ["How much is this?", "Hii ni bei gani?"],
+          ["How much are these?", "Hivi ni bei gani?"],
+          ["It is too expensive.", "Ni ghali sana."],
+          ["Can you reduce the price?", "Unaweza kupunguza bei?"],
+          ["I will take it.", "Nitaichukua."],
+          ["Do you have change?", "Una chenji?"],
+          ["Here you are.", "Haya, chukua."]
+        ]
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          { "speaker": "Buyer", "swahili": "Good morning. How much are the tomatoes?", "english": "Habari za asubuhi. Nyanya ni bei gani?" },
+          { "speaker": "Seller", "swahili": "They are two thousand shillings a kilo.", "english": "Ni shilingi elfu mbili kwa kilo." },
+          { "speaker": "Buyer", "swahili": "That is expensive. Can you reduce it?", "english": "Ni ghali. Unaweza kupunguza?" },
+          { "speaker": "Seller", "swahili": "Okay, one thousand five hundred.", "english": "Sawa, elfu moja na mia tano." },
+          { "speaker": "Buyer", "swahili": "Good. I will take two kilos.", "english": "Nzuri. Nitachukua kilo mbili." }
+        ]
+      },
+      {
+        "type": "pronunciationDrill",
+        "calloutTitle": "Sema kwa Sauti",
+        "intro": "Jizoeze maneno ya sokoni.",
+        "prompts": [
+          { "swahili": "how much is this", "english": "hii ni bei gani" },
+          { "swahili": "it is too expensive", "english": "ni ghali sana" },
+          { "swahili": "I will take it", "english": "nitaichukua" },
+          { "swahili": "do you have change", "english": "una chenji" }
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "price", "swahili": "bei" },
+      { "english": "cheap", "swahili": "rahisi" },
+      { "english": "expensive", "swahili": "ghali" },
+      { "english": "buy", "swahili": "nunua" },
+      { "english": "sell", "swahili": "uza" },
+      { "english": "change", "swahili": "chenji" },
+      { "english": "tomatoes", "swahili": "nyanya" },
+      { "english": "shop", "swahili": "duka" }
+    ],
+    "quiz": [
+      {
+        "id": 121,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: Hii ni bei gani?",
+        "answer": "How much is this"
+      },
+      {
+        "id": 122,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: ghali",
+        "answer": "expensive"
+      },
+      {
+        "id": 123,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: duka",
+        "answer": "shop"
+      },
+      {
+        "id": 124,
+        "type": "multiple_choice",
+        "prompt": "Unauliza vipi bei ya vitu vingi?",
+        "options": ["How much is these?", "How much are these?", "How many is these?", "How much these?"],
+        "answer": "How much are these?"
+      },
+      {
+        "id": 125,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: chenji",
+        "answer": "change"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 26,
+    "week": 4,
+    "title": "Chakula na Mgahawa",
+    "subtitle": "Kuagiza chakula",
+    "theme": "Matumizi",
+    "blocks": [
+      {
+        "type": "table",
+        "tableHeaders": ["Kiingereza", "Kiswahili"],
+        "tableRows": [
+          ["I would like...", "Ningependa..."],
+          ["Can I have the menu?", "Naomba menyu?"],
+          ["I am hungry.", "Nina njaa."],
+          ["I am thirsty.", "Nina kiu."],
+          ["The bill, please.", "Bili, tafadhali."],
+          ["It was delicious.", "Kilikuwa kitamu."]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "'I would like' ni ya heshima",
+        "lines": [
+          "'I want' ni sahihi lakini inaweza kuonekana kali.",
+          "'I would like' (au I'd like) ni ya heshima zaidi - tumia hii mgahawani."
+        ]
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Chakula", "Kiswahili"],
+        "tableRows": [
+          ["rice", "wali"],
+          ["meat", "nyama"],
+          ["fish", "samaki"],
+          ["vegetables", "mboga"],
+          ["fruit", "matunda"],
+          ["tea", "chai"],
+          ["coffee", "kahawa"],
+          ["water", "maji"]
+        ]
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          { "speaker": "Waiter", "swahili": "Good evening. What would you like?", "english": "Habari za jioni. Ungependa nini?" },
+          { "speaker": "Guest", "swahili": "I would like rice and fish, please.", "english": "Ningependa wali na samaki, tafadhali." },
+          { "speaker": "Waiter", "swahili": "Anything to drink?", "english": "Kitu cha kunywa?" },
+          { "speaker": "Guest", "swahili": "Water, please. And the bill after.", "english": "Maji, tafadhali. Na bili baadaye." }
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "rice", "swahili": "wali" },
+      { "english": "vegetables", "swahili": "mboga" },
+      { "english": "fruit", "swahili": "matunda" },
+      { "english": "tea", "swahili": "chai" },
+      { "english": "coffee", "swahili": "kahawa" },
+      { "english": "hungry", "swahili": "njaa" },
+      { "english": "thirsty", "swahili": "kiu" },
+      { "english": "delicious", "swahili": "tamu" }
+    ],
+    "quiz": [
+      {
+        "id": 126,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: Nina njaa.",
+        "answer": "I am hungry"
+      },
+      {
+        "id": 127,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: mboga",
+        "answer": "vegetables"
+      },
+      {
+        "id": 128,
+        "type": "multiple_choice",
+        "prompt": "Ni ipi ya heshima zaidi mgahawani?",
+        "options": ["I want rice", "Give me rice", "I would like rice", "Rice!"],
+        "answer": "I would like rice"
+      },
+      {
+        "id": 129,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: Bili, tafadhali.",
+        "answer": "The bill please"
+      },
+      {
+        "id": 130,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: tamu",
+        "answer": "delicious"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 27,
+    "week": 4,
+    "title": "Safari na Maelekezo",
+    "subtitle": "Kuuliza njia",
+    "theme": "Matumizi",
+    "blocks": [
+      {
+        "type": "table",
+        "tableHeaders": ["Kiingereza", "Kiswahili"],
+        "tableRows": [
+          ["Where is the bus station?", "Kituo cha basi kiko wapi?"],
+          ["How do I get to...?", "Nifikeje...?"],
+          ["Go straight.", "Nenda moja kwa moja."],
+          ["Turn left.", "Geuka kushoto."],
+          ["Turn right.", "Geuka kulia."],
+          ["It is near.", "Iko karibu."],
+          ["It is far.", "Iko mbali."],
+          ["How long does it take?", "Inachukua muda gani?"]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Vihusishi vya mahali",
+        "lines": [
+          "in - ndani (in the house)",
+          "on - juu ya (on the table)",
+          "at - mahali maalum (at the market)",
+          "near - karibu na (near the school)",
+          "between - kati ya (between the shops)"
+        ]
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          { "speaker": "Tourist", "swahili": "Excuse me, where is the bus station?", "english": "Samahani, kituo cha basi kiko wapi?" },
+          { "speaker": "Local", "swahili": "Go straight, then turn left.", "english": "Nenda moja kwa moja, kisha geuka kushoto." },
+          { "speaker": "Tourist", "swahili": "Is it far?", "english": "Iko mbali?" },
+          { "speaker": "Local", "swahili": "No, it is near. Ten minutes on foot.", "english": "Hapana, iko karibu. Dakika kumi kwa miguu." },
+          { "speaker": "Tourist", "swahili": "Thank you very much!", "english": "Asante sana!" }
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "left", "swahili": "kushoto" },
+      { "english": "right", "swahili": "kulia" },
+      { "english": "straight", "swahili": "moja kwa moja" },
+      { "english": "near", "swahili": "karibu" },
+      { "english": "far", "swahili": "mbali" },
+      { "english": "road", "swahili": "barabara" },
+      { "english": "bus", "swahili": "basi" },
+      { "english": "airport", "swahili": "uwanja wa ndege" }
+    ],
+    "quiz": [
+      {
+        "id": 131,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: kushoto",
+        "answer": "left"
+      },
+      {
+        "id": 132,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: Geuka kulia.",
+        "answer": "Turn right"
+      },
+      {
+        "id": 133,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: mbali",
+        "answer": "far"
+      },
+      {
+        "id": 134,
+        "type": "fill_blank",
+        "prompt": "Jaza pengo: The book is ___ the table.",
+        "answer": "on"
+      },
+      {
+        "id": 135,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: barabara",
+        "answer": "road"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 28,
+    "week": 4,
+    "title": "Kazini",
+    "subtitle": "Kazi na ofisi",
+    "theme": "Matumizi",
+    "blocks": [
+      {
+        "type": "table",
+        "tableHeaders": ["Kiingereza", "Kiswahili"],
+        "tableRows": [
+          ["What do you do?", "Unafanya kazi gani?"],
+          ["I work in an office.", "Ninafanya kazi ofisini."],
+          ["I am looking for a job.", "Ninatafuta kazi."],
+          ["Can I speak to the manager?", "Naweza kuongea na meneja?"],
+          ["I have a meeting.", "Nina mkutano."],
+          ["What time do you start?", "Unaanza saa ngapi?"]
+        ]
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Kazi", "Kiswahili"],
+        "tableRows": [
+          ["teacher", "mwalimu"],
+          ["doctor", "daktari"],
+          ["nurse", "muuguzi"],
+          ["farmer", "mkulima"],
+          ["driver", "dereva"],
+          ["engineer", "mhandisi"],
+          ["businessman", "mfanyabiashara"],
+          ["student", "mwanafunzi"]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Kumbuka 'a'",
+        "lines": [
+          "Unapotaja kazi, Kiingereza kinahitaji 'a' au 'an':",
+          "I am A teacher. She is AN engineer.",
+          "Bila 'a' si sahihi - hii ni tofauti na Kiswahili."
+        ]
+      },
+      {
+        "type": "englishVerbBuilder",
+        "mode": "present",
+        "verbKeys": ["work", "want", "speak", "go"],
+        "calloutTitle": "Jenga: Kuzungumza Kazini",
+        "intro": "Rudia kanuni ya -s kwa he/she/it kwa vitenzi vya kazini."
+      }
+    ],
+    "vocabulary": [
+      { "english": "office", "swahili": "ofisi" },
+      { "english": "manager", "swahili": "meneja" },
+      { "english": "meeting", "swahili": "mkutano" },
+      { "english": "farmer", "swahili": "mkulima" },
+      { "english": "driver", "swahili": "dereva" },
+      { "english": "engineer", "swahili": "mhandisi" },
+      { "english": "salary", "swahili": "mshahara" },
+      { "english": "busy", "swahili": "shughuli nyingi" }
+    ],
+    "quiz": [
+      {
+        "id": 136,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: Unafanya kazi gani?",
+        "answer": "What do you do"
+      },
+      {
+        "id": 137,
+        "type": "multiple_choice",
+        "prompt": "Ni ipi sahihi?",
+        "options": ["She is engineer", "She is an engineer", "She is a engineer", "She engineer"],
+        "answer": "She is an engineer"
+      },
+      {
+        "id": 138,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: mkulima",
+        "answer": "farmer"
+      },
+      {
+        "id": 139,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: mkutano",
+        "answer": "meeting"
+      },
+      {
+        "id": 140,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: ofisi",
+        "answer": "office"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 29,
+    "week": 4,
+    "title": "Afya",
+    "subtitle": "Hospitalini na kwa daktari",
+    "theme": "Matumizi",
+    "blocks": [
+      {
+        "type": "table",
+        "tableHeaders": ["Kiingereza", "Kiswahili"],
+        "tableRows": [
+          ["I am sick.", "Mimi ni mgonjwa."],
+          ["I have a headache.", "Nina maumivu ya kichwa."],
+          ["I have a fever.", "Nina homa."],
+          ["My stomach hurts.", "Tumbo linauma."],
+          ["I need a doctor.", "Nahitaji daktari."],
+          ["Where is the hospital?", "Hospitali iko wapi?"],
+          ["Take this medicine.", "Kunywa dawa hii."]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Muundo wa 'I have a...'",
+        "lines": [
+          "Kwa maradhi mengi, Kiingereza hutumia 'I have a...':",
+          "I have a headache. I have a cold. I have a fever.",
+          "Kwa maumivu ya sehemu: My back hurts. My leg hurts."
+        ]
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          { "speaker": "Doctor", "swahili": "Good morning. What is the problem?", "english": "Habari za asubuhi. Tatizo ni nini?" },
+          { "speaker": "Patient", "swahili": "I have a fever and a headache.", "english": "Nina homa na maumivu ya kichwa." },
+          { "speaker": "Doctor", "swahili": "How long have you been sick?", "english": "Umekuwa mgonjwa muda gani?" },
+          { "speaker": "Patient", "swahili": "Three days.", "english": "Siku tatu." },
+          { "speaker": "Doctor", "swahili": "Take this medicine twice a day.", "english": "Kunywa dawa hii mara mbili kwa siku." }
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "sick", "swahili": "mgonjwa" },
+      { "english": "headache", "swahili": "maumivu ya kichwa" },
+      { "english": "fever", "swahili": "homa" },
+      { "english": "medicine", "swahili": "dawa" },
+      { "english": "pain", "swahili": "maumivu" },
+      { "english": "blood", "swahili": "damu" },
+      { "english": "healthy", "swahili": "mwenye afya" },
+      { "english": "rest", "swahili": "pumzika" }
+    ],
+    "quiz": [
+      {
+        "id": 141,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: Nina homa.",
+        "answer": "I have a fever"
+      },
+      {
+        "id": 142,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: dawa",
+        "answer": "medicine"
+      },
+      {
+        "id": 143,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: mgonjwa",
+        "answer": "sick"
+      },
+      {
+        "id": 144,
+        "type": "multiple_choice",
+        "prompt": "Ni ipi sahihi?",
+        "options": ["I have headache", "I have a headache", "I am headache", "I has a headache"],
+        "answer": "I have a headache"
+      },
+      {
+        "id": 145,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: Nahitaji daktari.",
+        "answer": "I need a doctor"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 30,
+    "week": 4,
+    "title": "Present Perfect",
+    "subtitle": "have / has + kitenzi",
+    "theme": "Sarufi",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Umbo hili huonyesha kitu kilichotokea lakini bado kina uhusiano na sasa. Kiswahili hutumia -me-: niMEkula. Kiingereza hutumia have/has + umbo la tatu la kitenzi."
+      },
+      {
+        "type": "table",
+        "tableHeaders": ["Kiingereza", "Kiswahili"],
+        "tableRows": [
+          ["I have eaten.", "Nimekula."],
+          ["She has finished.", "Amemaliza."],
+          ["We have arrived.", "Tumefika."],
+          ["They have gone.", "Wameenda."],
+          ["I have not seen him.", "Sijamwona."]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Umbo la tatu",
+        "lines": [
+          "Vitenzi vya kawaida: sawa na wakati uliopita (worked, finished)",
+          "Vya kipekee: umbo la tatu (go kuwa went kuwa GONE, eat kuwa ate kuwa EATEN, see kuwa saw kuwa SEEN)",
+          "Kariri: go-went-gone, eat-ate-eaten, see-saw-seen, do-did-done"
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Tofauti muhimu",
+        "lines": [
+          "I ate rice. - wakati fulani uliopita (jana)",
+          "I have eaten. - hivi punde, bado nimeshiba sasa",
+          "Tumia 'have/has' unapozungumzia matokeo ya sasa."
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "eaten", "swahili": "amekula" },
+      { "english": "gone", "swahili": "ameenda" },
+      { "english": "seen", "swahili": "ameona" },
+      { "english": "done", "swahili": "amefanya" },
+      { "english": "arrived", "swahili": "amefika" },
+      { "english": "just", "swahili": "hivi punde" },
+      { "english": "yet", "swahili": "bado" },
+      { "english": "ever", "swahili": "wahi" }
+    ],
+    "quiz": [
+      {
+        "id": 146,
+        "type": "fill_blank",
+        "prompt": "Jaza pengo: She ___ finished her work.",
+        "answer": "has"
+      },
+      {
+        "id": 147,
+        "type": "translate",
+        "prompt": "Umbo la tatu la 'eat' ni nini?",
+        "answer": "eaten"
+      },
+      {
+        "id": 148,
+        "type": "translate",
+        "prompt": "Umbo la tatu la 'go' ni nini?",
+        "answer": "gone"
+      },
+      {
+        "id": 149,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: Nimekula.",
+        "answer": "I have eaten"
+      },
+      {
+        "id": 150,
+        "type": "multiple_choice",
+        "prompt": "Ni ipi sahihi?",
+        "options": ["She have gone", "She has went", "She has gone", "She has go"],
+        "answer": "She has gone"
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 31,
+    "week": 4,
+    "title": "Marudio ya Mwisho",
+    "subtitle": "Hongera! Umefika mwisho",
+    "theme": "Marudio",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Hongera sana! Umemaliza masomo 31. Sasa unaweza kusalimiana, kujitambulisha, kuuliza maswali, kuzungumzia wakati uliopita na ujao, kununua sokoni, na kuongea na daktari."
+      },
+      {
+        "type": "heading",
+        "heading": "Mambo makuu uliyojifunza"
+      },
+      {
+        "type": "list",
+        "lines": [
+          "a / an / the - maneno ambayo Kiswahili hakina",
+          "Wingi huongezwa mwishoni (-s), pamoja na ya kipekee",
+          "he na she - viwakilishi viwili tofauti",
+          "am / is / are - kitenzi 'to be'",
+          "-s ya he/she/it katika wakati uliopo",
+          "don't / doesn't / didn't kwa kukanusha",
+          "Do / Does / Did kwa maswali",
+          "Vivumishi hutangulia nomino na havibadiliki",
+          "will na going to kwa wakati ujao"
+        ]
+      },
+      {
+        "type": "sentenceBuilder",
+        "calloutTitle": "Mtihani wa Mwisho - Jenga Sentensi",
+        "intro": "Sentensi hizi zinachanganya yote uliyojifunza. Panga maneno kwa mpangilio sahihi.",
+        "challenges": [
+          { "answer": ["I", "have", "eaten", "already"], "en": "Nimekula tayari" },
+          { "answer": ["She", "doesn't", "speak", "English"], "en": "Hasemi Kiingereza" },
+          { "answer": ["Did", "you", "buy", "the", "book"], "en": "Ulinunua kile kitabu?" },
+          { "answer": ["We", "will", "meet", "tomorrow"], "en": "Tutakutana kesho" },
+          { "answer": ["He", "is", "a", "good", "teacher"], "en": "Yeye ni mwalimu mzuri" }
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Nini kinachofuata?",
+        "lines": [
+          "Endelea kusikiliza Kiingereza kila siku - redio, muziki, video.",
+          "Soma vitabu rahisi na habari.",
+          "Ongea bila woga. Makosa ni sehemu ya kujifunza.",
+          "Pole pole ndiyo mwendo - hatua kwa hatua utafika."
+        ]
+      },
+      {
+        "type": "pronunciationDrill",
+        "calloutTitle": "Sema kwa Sauti - Mara ya Mwisho",
+        "intro": "Sentensi hizi zinaonyesha yote uliyojifunza.",
+        "prompts": [
+          { "swahili": "I have learned English", "english": "nimejifunza Kiingereza" },
+          { "swahili": "she is a good teacher", "english": "yeye ni mwalimu mzuri" },
+          { "swahili": "we will meet tomorrow", "english": "tutakutana kesho" },
+          { "swahili": "thank you very much", "english": "asante sana" }
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "english": "learn", "swahili": "jifunza" },
+      { "english": "practice", "swahili": "jizoeze" },
+      { "english": "mistake", "swahili": "kosa" },
+      { "english": "easy", "swahili": "rahisi" },
+      { "english": "difficult", "swahili": "gumu" },
+      { "english": "slowly", "swahili": "pole pole" },
+      { "english": "congratulations", "swahili": "hongera" },
+      { "english": "step by step", "swahili": "hatua kwa hatua" }
+    ],
+    "quiz": [
+      {
+        "id": 151,
+        "type": "multiple_choice",
+        "prompt": "Ni ipi sahihi kabisa?",
+        "options": ["She don't has a car", "She doesn't have a car", "She doesn't has a car", "She not have a car"],
+        "answer": "She doesn't have a car"
+      },
+      {
+        "id": 152,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: Tutakutana kesho.",
+        "answer": "We will meet tomorrow"
+      },
+      {
+        "id": 153,
+        "type": "fill_blank",
+        "prompt": "Jaza pengo: I ate ___ orange this morning.",
+        "answer": "an"
+      },
+      {
+        "id": 154,
+        "type": "translate",
+        "prompt": "Wingi wa 'child' ni nini?",
+        "answer": "children"
+      },
+      {
+        "id": 155,
+        "type": "translate",
+        "prompt": "Tafsiri kwa Kiingereza: hongera",
+        "answer": "congratulations"
+      }
+    ],
+    "xpReward": 200
+  }
+]

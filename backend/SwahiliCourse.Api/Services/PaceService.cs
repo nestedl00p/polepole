@@ -7,15 +7,11 @@ namespace SwahiliCourse.Api.Services;
 // a given lesson is unlocked.
 public class PaceService
 {
-    private readonly LessonCatalog _catalog;
-    public PaceService(LessonCatalog catalog) => _catalog = catalog;
+    private readonly CourseCatalog _courses;
+    public PaceService(CourseCatalog courses) => _courses = courses;
 
-    // The 30 lessons are spread evenly across PlanLengthDays.
-    // e.g. 30 lessons over 60 days = a new lesson roughly every 2 days.
-    public int LessonsPerCalendarDay(User user)
-    {
-        return _catalog.TotalLessons; // total, used with ratio below
-    }
+    // Lesson count for the user's own course direction.
+    public int TotalLessons(User user) => _courses.For(user.CourseId).TotalLessons;
 
     // Which lesson number the user is scheduled to have reached today (1-based, capped at total).
     public int CurrentScheduledDay(User user)
@@ -23,8 +19,9 @@ public class PaceService
         var daysElapsed = (DateTime.UtcNow.Date - user.StartDate.Date).Days;
         if (daysElapsed < 0) daysElapsed = 0;
 
-        var total = _catalog.TotalLessons;          // 30
-        var plan = Math.Max(user.PlanLengthDays, total >= 1 ? 1 : 1);
+        var total = TotalLessons(user);
+        if (total <= 0) return 1;                   // course content not authored yet
+        var plan = Math.Max(user.PlanLengthDays, 1);
 
         // ratio of lessons to calendar days; at least lesson 1 from day 0.
         double lessonsPerDay = (double)total / plan;

@@ -5,6 +5,10 @@ import AdjectiveBuilder from './AdjectiveBuilder';
 import NounSorter from './NounSorter';
 import SentenceBuilder from './SentenceBuilder';
 import PronunciationDrill from './PronunciationDrill';
+// English-course builders (the Swahili concord builders have no English analogue).
+import ArticleBuilder from './ArticleBuilder';
+import PluralBuilder from './PluralBuilder';
+import EnglishVerbBuilder from './EnglishVerbBuilder';
 
 // Renders a single content block from a lesson (heading, paragraph, callout, table, dialogue, list, verbBuilder, possessiveBuilder).
 export default function ContentBlock({ block }) {
@@ -32,6 +36,15 @@ export default function ContentBlock({ block }) {
 
     case 'pronunciationDrill':
       return <PronunciationDrill block={block} />;
+
+    case 'articleBuilder':
+      return <ArticleBuilder block={block} />;
+
+    case 'pluralBuilder':
+      return <PluralBuilder block={block} />;
+
+    case 'englishVerbBuilder':
+      return <EnglishVerbBuilder block={block} />;
 
     case 'paragraph':
       return <div className="block"><p>{block.text}</p></div>;

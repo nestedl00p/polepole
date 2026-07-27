@@ -7,13 +7,13 @@ namespace SwahiliCourse.Api.Services;
 public class TtsWarmupService : BackgroundService
 {
     private readonly TtsService _tts;
-    private readonly LessonCatalog _catalog;
+    private readonly CourseCatalog _courses;
     private readonly IConfiguration _config;
     private readonly ILogger<TtsWarmupService> _log;
 
-    public TtsWarmupService(TtsService tts, LessonCatalog catalog, IConfiguration config, ILogger<TtsWarmupService> log)
+    public TtsWarmupService(TtsService tts, CourseCatalog courses, IConfiguration config, ILogger<TtsWarmupService> log)
     {
-        _tts = tts; _catalog = catalog; _config = config; _log = log;
+        _tts = tts; _courses = courses; _config = config; _log = log;
     }
 
     private static readonly string[] Subjects = { "ni", "u", "a", "tu", "m", "wa" };
@@ -33,15 +33,20 @@ public class TtsWarmupService : BackgroundService
 
         try
         {
-            var words = BuildWordList();
-            _log.LogInformation("TTS warm-up: pre-generating {Count} lesson words (builder + vocabulary), {Delay}ms apart…", words.Count, delayMs);
             int done = 0;
-            foreach (var word in words)
+            foreach (var (course, catalog) in _courses.AllCourses)
             {
-                if (stoppingToken.IsCancellationRequested) break;
-                await _tts.SynthesizeAsync(word, stoppingToken); // caches to disk
-                done++;
-                await Task.Delay(delayMs, stoppingToken);
+                var words = BuildWordList(catalog, course);
+                if (words.Count == 0) continue;
+                _log.LogInformation("TTS warm-up [{Course}]: pre-generating {Count} words, {Delay}ms apart…",
+                    course.Id, words.Count, delayMs);
+                foreach (var word in words)
+                {
+                    if (stoppingToken.IsCancellationRequested) break;
+                    await _tts.SynthesizeAsync(word, course, stoppingToken); // caches to disk
+                    done++;
+                    await Task.Delay(delayMs, stoppingToken);
+                }
             }
             _log.LogInformation("TTS warm-up complete: {Done} words ready.", done);
         }
@@ -54,19 +59,25 @@ public class TtsWarmupService : BackgroundService
 
     // Mirrors the frontend VerbBuilder assembly rules, driven by the actual
     // verbBuilder blocks in lessons.json (so curated stemKeys stay in sync).
-    private HashSet<string> BuildWordList()
+    private HashSet<string> BuildWordList(LessonCatalog catalog, Models.Course course)
     {
         var words = new HashSet<string>(StringComparer.Ordinal);
+        var targetIsEnglish = course.TargetLanguage == "en";
 
-        foreach (var lesson in _catalog.All)
+        foreach (var lesson in catalog.All)
         {
-            // Vocabulary words (these also feed the flashcard deck).
+            // Vocabulary in the course's TARGET language — that's the side the
+            // 🔊 buttons speak.
             foreach (var v in lesson.Vocabulary)
             {
-                var sw = v.Swahili?.Trim();
-                if (!string.IsNullOrEmpty(sw) && sw.Length <= 60)
-                    words.Add(sw);
+                var word = (targetIsEnglish ? v.English : v.Swahili)?.Trim();
+                if (!string.IsNullOrEmpty(word) && word.Length <= 60)
+                    words.Add(word);
             }
+
+            // The remaining enumerations mirror the Swahili grammar builders, which
+            // only appear in the Swahili course.
+            if (targetIsEnglish) continue;
 
             foreach (var b in lesson.Blocks)
             {

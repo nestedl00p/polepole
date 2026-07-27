@@ -22,8 +22,7 @@ public class UserController : AuthedController
     {
         var u = await _db.Users.FindAsync(CurrentUserId);
         if (u is null) return NotFound();
-        return new UserDto(u.Id, u.Email, u.DisplayName, u.PlanLengthDays, u.StartDate,
-            u.StreakCount, u.TotalXp, _pace.CurrentScheduledDay(u));
+        return UserMapper.ToDto(u, _pace);
     }
 
     // Change the pace, e.g. extend the 30-day plan to 60 or 90 days.
@@ -38,8 +37,7 @@ public class UserController : AuthedController
         u.PlanLengthDays = Math.Clamp(dto.PlanLengthDays, 30, 365);
         await _db.SaveChangesAsync();
 
-        return new UserDto(u.Id, u.Email, u.DisplayName, u.PlanLengthDays, u.StartDate,
-            u.StreakCount, u.TotalXp, _pace.CurrentScheduledDay(u));
+        return UserMapper.ToDto(u, _pace);
     }
 
     // Optional: let a user restart the course (reset start date & progress).
@@ -58,7 +56,6 @@ public class UserController : AuthedController
         u.LastActivityDate = null;
         await _db.SaveChangesAsync();
 
-        return new UserDto(u.Id, u.Email, u.DisplayName, u.PlanLengthDays, u.StartDate,
-            u.StreakCount, u.TotalXp, _pace.CurrentScheduledDay(u));
+        return UserMapper.ToDto(u, _pace);
     }
 }

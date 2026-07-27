@@ -3,19 +3,23 @@ using SwahiliCourse.Api.Models;
 
 namespace SwahiliCourse.Api.Services;
 
-// Loads the static lesson catalog from lessons.json once at startup.
-// To edit course content, you simply edit Data/lessons.json - no code changes needed.
+// The lesson list for a single course direction, loaded once at startup.
+// To edit course content you edit the course's lessons file — no code changes.
+// Resolved per-course via CourseCatalog.
 public class LessonCatalog
 {
     private readonly List<Lesson> _lessons;
 
-    public LessonCatalog(IWebHostEnvironment env)
+    private LessonCatalog(List<Lesson> lessons) => _lessons = lessons;
+
+    public static LessonCatalog FromFile(string path)
     {
-        var path = Path.Combine(env.ContentRootPath, "Data", "lessons.json");
         var json = File.ReadAllText(path);
         var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-        _lessons = JsonSerializer.Deserialize<List<Lesson>>(json, options) ?? new();
+        return new LessonCatalog(JsonSerializer.Deserialize<List<Lesson>>(json, options) ?? new());
     }
+
+    public static LessonCatalog Empty() => new(new List<Lesson>());
 
     public IReadOnlyList<Lesson> All => _lessons;
 

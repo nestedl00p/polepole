@@ -65,6 +65,9 @@ async function request(path, { method = 'GET', body, auth = true } = {}) {
 
 export const api = {
   // Auth
+  // Courses (learning directions) — public, used by the sign-up picker
+  listCourses: () => request('/courses', { auth: false }),
+
   register: (payload) => request('/auth/register', { method: 'POST', body: payload, auth: false }),
   login: (payload) => request('/auth/login', { method: 'POST', body: payload, auth: false }),
 

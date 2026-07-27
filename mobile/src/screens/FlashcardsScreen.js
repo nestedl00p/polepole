@@ -143,6 +143,10 @@ export default function FlashcardsScreen() {
 function FlipCard({ card }) {
   const anim = useRef(new Animated.Value(0)).current;
   const [flipped, setFlipped] = useState(false);
+  // `target` is the word being learned (front, and what 🔊 speaks); the API sets
+  // target/source per course direction.
+  const target = card.target ?? card.swahili;
+  const source = card.source ?? card.english;
 
   const flip = () => {
     Animated.spring(anim, {
@@ -168,8 +172,8 @@ function FlipCard({ card }) {
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
         >
-          <View style={styles.faceSpeak}><SpeakButton text={card.swahili} variant="onDark" /></View>
-          <Text style={styles.faceBig}>{card.swahili}</Text>
+          <View style={styles.faceSpeak}><SpeakButton text={target} variant="onDark" /></View>
+          <Text style={styles.faceBig}>{target}</Text>
           <Text style={styles.faceTiny}>Tap to reveal · {card.lessonTitle}</Text>
         </LinearGradient>
       </Animated.View>
@@ -187,9 +191,9 @@ function FlipCard({ card }) {
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
         >
-          <View style={styles.faceSpeak}><SpeakButton text={card.swahili} variant="onDark" /></View>
-          <Text style={styles.faceBig}>{card.english}</Text>
-          <Text style={styles.faceTiny}>{card.swahili}</Text>
+          <View style={styles.faceSpeak}><SpeakButton text={target} variant="onDark" /></View>
+          <Text style={styles.faceBig}>{source}</Text>
+          <Text style={styles.faceTiny}>{target}</Text>
         </LinearGradient>
       </Animated.View>
     </Pressable>

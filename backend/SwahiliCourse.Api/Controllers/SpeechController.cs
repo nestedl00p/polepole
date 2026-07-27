@@ -24,7 +24,7 @@ public class SpeechController : ControllerBase
     [AllowAnonymous]
     [RequestSizeLimit(15_000_000)] // ~15 MB — short spoken clips only
     public async Task<IActionResult> Assess(
-        [FromForm] IFormFile? file, [FromForm] string? referenceText, CancellationToken ct)
+        [FromForm] IFormFile? file, [FromForm] string? referenceText, [FromForm] string? course, CancellationToken ct)
     {
         if (!_speech.IsConfigured) return NoContent();
         if (file is null || file.Length == 0) return BadRequest("audio file is required");
@@ -32,7 +32,8 @@ public class SpeechController : ControllerBase
         if (referenceText.Length > 120) return BadRequest("referenceText too long");
 
         await using var stream = file.OpenReadStream();
-        var result = await _speech.AssessAsync(stream, file.ContentType, file.FileName, referenceText, ct);
+        var result = await _speech.AssessAsync(
+            stream, file.ContentType, file.FileName, referenceText, Models.Courses.Get(course), ct);
         if (result is null) return NoContent();
 
         return Ok(result);

@@ -1,7 +1,18 @@
 import { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { api } from '../api/client';
+import { setSpeechCourse } from '../lib/speak';
+import { setAssessCourse } from '../lib/speechAssess';
 
 const AuthContext = createContext(null);
+
+// Keep the speech layer pointed at the language this account is learning.
+function applyUser(u, setUser) {
+  if (u?.course) {
+    setSpeechCourse(u.course);
+    setAssessCourse(u.course.id);
+  }
+  setUser(u);
+}
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -12,7 +23,7 @@ export function AuthProvider({ children }) {
     if (!token) { setLoading(false); return; }
     try {
       const me = await api.me();
-      setUser(me);
+      applyUser(me, setUser);
     } catch {
       localStorage.removeItem('swahili_token');
       setUser(null);
@@ -25,7 +36,7 @@ export function AuthProvider({ children }) {
 
   const handleAuth = (resp) => {
     localStorage.setItem('swahili_token', resp.token);
-    setUser(resp.user);
+    applyUser(resp.user, setUser);
   };
 
   const login = async (email, password) => {
@@ -45,7 +56,7 @@ export function AuthProvider({ children }) {
 
   const refreshUser = async () => {
     const me = await api.me();
-    setUser(me);
+    applyUser(me, setUser);
     return me;
   };
 

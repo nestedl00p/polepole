@@ -4,9 +4,19 @@
 // 2) Falls back to the browser's built-in Web Speech voice when the backend
 //    isn't configured (204) or the network call fails.
 
-const clipCache = new Map(); // text -> objectURL | 'none'
+const clipCache = new Map(); // "<course>|<text>" -> objectURL | 'none'
 let currentAudio = null;
 let voicesPromise = null;
+
+// The learner's course direction decides which language is spoken. Set once from
+// AuthContext so components can keep calling speakSwahili(text) without threading
+// the course through every prop chain.
+let course = { id: 'sw', ttsLocale: 'sw-KE' };
+
+export function setSpeechCourse(c) {
+  if (!c) return;
+  course = { id: c.id || 'sw', ttsLocale: c.ttsLocale || 'sw-KE' };
+}
 
 // ---- built-in Web Speech (fallback) ----
 function getVoices() {
@@ -24,11 +34,13 @@ function getVoices() {
 function speakWithBrowser(text, rate) {
   if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
   getVoices().then((voices) => {
-    const swVoice = voices.find((v) => /^sw\b|^sw-/i.test(v.lang));
+    const prefix = course.ttsLocale.split('-')[0];
+    const re = new RegExp(`^${prefix}\\b|^${prefix}-`, 'i');
+    const match = voices.find((v) => re.test(v.lang));
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
-    u.lang = swVoice ? swVoice.lang : 'sw-KE';
-    if (swVoice) u.voice = swVoice;
+    u.lang = match ? match.lang : course.ttsLocale;
+    if (match) u.voice = match;
     u.rate = rate;
     window.speechSynthesis.speak(u);
   });
@@ -36,22 +48,23 @@ function speakWithBrowser(text, rate) {
 
 // ---- backend cloud audio (preferred) ----
 async function getBackendClip(text) {
-  if (clipCache.has(text)) {
-    const v = clipCache.get(text);
+  const key = `${course.id}|${text}`;
+  if (clipCache.has(key)) {
+    const v = clipCache.get(key);
     return v === 'none' ? null : v;
   }
   try {
-    const res = await fetch(`/api/tts?text=${encodeURIComponent(text)}`);
+    const res = await fetch(`/api/tts?text=${encodeURIComponent(text)}&course=${encodeURIComponent(course.id)}`);
     if (res.status === 200) {
       const blob = await res.blob();
       if (blob.size > 0) {
         const url = URL.createObjectURL(blob);
-        clipCache.set(text, url);
+        clipCache.set(key, url);
         return url;
       }
     }
     // 204 (not configured) or empty body — remember so we stop re-asking.
-    clipCache.set(text, 'none');
+    clipCache.set(key, 'none');
     return null;
   } catch {
     return null; // transient network error — don't cache, allow retry
