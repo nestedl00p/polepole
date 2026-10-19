@@ -258,4 +258,14 @@ SwahiliCourse/
 
 ---
 
+## License
+
+Licensed under the [Apache License, Version 2.0](LICENSE).
+Copyright 2026 N. Rosales.
+
+Course content in `backend/SwahiliCourse.Api/Data/lessons.json` is covered by the
+same license.
+
+---
+
 Pole pole ndiyo mwendo — slowly but surely. Happy teaching! 🇹🇿🇰🇪
