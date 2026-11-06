@@ -49,10 +49,37 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// CORS for the React dev server.
+// CORS. The single-container deploy serves the frontend from wwwroot, so it is
+// same-origin and needs none of this; the defaults below just cover the React
+// dev server. When the frontend is hosted separately (e.g. a static site on
+// Vercel), list its origin in Cors:AllowedOrigins — a comma-separated list, so
+// a single environment variable does it:
+//   Cors__AllowedOrigins=https://polepole.vercel.app
+// An entry may use a "*." wildcard (https://*.vercel.app) to match subdomains,
+// which covers Vercel's per-deployment preview URLs — at the cost of letting any
+// site on that domain call the API, so prefer exact origins in production.
+// Auth is a Bearer token from localStorage rather than a cookie, so credentials
+// are deliberately not allowed.
 const string CorsPolicy = "frontend";
+var corsSetting = builder.Configuration["Cors:AllowedOrigins"];
+var allowedOrigins = string.IsNullOrWhiteSpace(corsSetting)
+    ? new[] { "http://localhost:5173", "http://localhost:3000" }
+    : corsSetting.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+static bool OriginMatches(string origin, string pattern)
+{
+    var star = pattern.IndexOf("*.", StringComparison.Ordinal);
+    if (star < 0) return string.Equals(origin, pattern, StringComparison.OrdinalIgnoreCase);
+
+    var scheme = pattern[..star];           // "https://"
+    var suffix = pattern[(star + 1)..];     // ".vercel.app"
+    return origin.StartsWith(scheme, StringComparison.OrdinalIgnoreCase)
+        && origin.EndsWith(suffix, StringComparison.OrdinalIgnoreCase)
+        && origin.Length > scheme.Length + suffix.Length;   // require a real subdomain
+}
+
 builder.Services.AddCors(o => o.AddPolicy(CorsPolicy, p =>
-    p.WithOrigins("http://localhost:5173", "http://localhost:3000")
+    p.SetIsOriginAllowed(origin => allowedOrigins.Any(pattern => OriginMatches(origin, pattern)))
      .AllowAnyHeader()
      .AllowAnyMethod()));
 
