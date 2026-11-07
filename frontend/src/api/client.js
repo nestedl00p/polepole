@@ -1,5 +1,7 @@
 // Central API client. Reads the JWT from localStorage and attaches it.
-const BASE = '/api';
+import { apiUrl } from '../config.js';
+
+const BASE = apiUrl('/api');
 
 function getToken() {
   return localStorage.getItem('swahili_token');

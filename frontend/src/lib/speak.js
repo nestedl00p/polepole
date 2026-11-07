@@ -4,6 +4,8 @@
 // 2) Falls back to the browser's built-in Web Speech voice when the backend
 //    isn't configured (204) or the network call fails.
 
+import { apiUrl } from '../config.js';
+
 const clipCache = new Map(); // "<course>|<text>" -> objectURL | 'none'
 let currentAudio = null;
 let voicesPromise = null;
@@ -54,7 +56,7 @@ async function getBackendClip(text) {
     return v === 'none' ? null : v;
   }
   try {
-    const res = await fetch(`/api/tts?text=${encodeURIComponent(text)}&course=${encodeURIComponent(course.id)}`);
+    const res = await fetch(apiUrl(`/api/tts?text=${encodeURIComponent(text)}&course=${encodeURIComponent(course.id)}`));
     if (res.status === 200) {
       const blob = await res.blob();
       if (blob.size > 0) {

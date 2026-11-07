@@ -1,6 +1,8 @@
 // Pronunciation / speak-and-check API. Talks to the backend, which forwards the
 // audio to the self-hosted Whisper sidecar and scores it against the target phrase.
 
+import { apiUrl } from '../config.js';
+
 let statusCache = null; // null = not yet checked
 let courseId = 'sw';
 
@@ -13,7 +15,7 @@ export function setAssessCourse(id) {
 export async function speechEnabled() {
   if (statusCache !== null) return statusCache;
   try {
-    const res = await fetch('/api/speech/status');
+    const res = await fetch(apiUrl('/api/speech/status'));
     const json = await res.json();
     statusCache = !!json.enabled;
   } catch {
@@ -32,7 +34,7 @@ export async function assessPronunciation(blob, referenceText) {
   form.append('referenceText', referenceText);
   form.append('course', courseId);
 
-  const res = await fetch('/api/speech/assess', { method: 'POST', body: form });
+  const res = await fetch(apiUrl('/api/speech/assess'), { method: 'POST', body: form });
   if (res.status === 204) throw new Error('speech service unavailable');
   if (!res.ok) throw new Error(`assess failed (${res.status})`);
   return res.json();

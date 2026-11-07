@@ -102,6 +102,17 @@ Keep it private/network-restricted — it has no auth of its own.
 
 ---
 
+## Hosting the frontend on Vercel instead
+
+The container above is self-contained — it serves the frontend itself. If you'd
+rather put the React app on Vercel's CDN (and get preview deploys), keep this
+API deploy and follow `deploy/VERCEL.md`: it adds a `VITE_API_BASE` build
+variable on the Vercel side and a `Cors__AllowedOrigins` App Setting here.
+Vercel cannot host the .NET API itself — no .NET runtime, and no persistent
+disk for SQLite.
+
+---
+
 ## Costs & teardown
 
 - **B1 plan**: ~US$13/month. **ACR Basic**: ~US$5/month.
