@@ -24,7 +24,8 @@ RAM and is optional. The drill degrades to listen-only without it. See
 
 1. **Azure CLI** — https://aka.ms/InstallAzureCli
 2. **Sign in**: `az login` (and `az account set --subscription "<name>"` if you
-   have more than one).
+   have more than one). `az account show` must print a subscription — a bare
+   Entra tenant is not enough; create one at portal.azure.com → Subscriptions.
 3. That's it — you do **not** need Docker locally. `az acr build` builds the
    image in the cloud from the repo's `Dockerfile`.
 
@@ -58,9 +59,9 @@ takes ~30 s while the container cold-starts.
 ## Redeploy after code changes
 
 Re-run the same script — `az acr build` rebuilds the image and the app restarts.
-(If you kept the random names from the first run, set `RG`, `ACR`, `APP`, `PLAN`
-to those values at the top of the script first so it updates in place instead of
-creating new resources.)
+Resource names are derived from your subscription id, so a re-run always targets
+the same resources and updates them in place. The existing `Jwt__Key` is reused,
+so redeploying does not sign your users out.
 
 ---
 
