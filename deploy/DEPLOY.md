@@ -56,6 +56,60 @@ takes ~30 s while the container cold-starts.
 
 ---
 
+## Native-quality audio (Azure Speech)
+
+The 🔊 buttons call `/api/tts`, which needs an Azure Speech resource. Without
+one the endpoint returns `204` and the client falls back to the built-in
+browser/device voice — the app still works, it just sounds worse.
+
+Create the resource once (**F0 is free forever**: 0.5M characters/month of
+neural TTS):
+
+```bash
+az provider register --namespace Microsoft.CognitiveServices --wait
+```
+
+```bash
+az cognitiveservices account create -n polepole-speech-a82a5661 -g polepole-rg --kind SpeechServices --sku F0 -l eastus --yes
+```
+
+Then wire the key into the web app and restart it:
+
+```bash
+export AZURE_TTS_KEY="$(az cognitiveservices account keys list -n polepole-speech-a82a5661 -g polepole-rg --query key1 -o tsv)"
+```
+
+```bash
+az webapp config appsettings set -n polepole-app-a82a5661 -g polepole-rg --settings "Tts__Provider=Azure" "Tts__Azure__Key=$AZURE_TTS_KEY" "Tts__Azure__Region=eastus" -o none
+```
+
+Gotchas, all of which cost real time at least once:
+
+- **Register the provider first.** On a fresh subscription `account create`
+  fails with `MissingSubscriptionRegistration` until
+  `Microsoft.CognitiveServices` is registered. It is a free, one-time, no-cost
+  subscription setting.
+- **`az webapp restart` is not enough.** A container App Service can keep
+  serving the old process with the old environment. Use a full stop/start, then
+  confirm `GET /api/tts/status` reports `{"enabled":true}`:
+  ```bash
+  az webapp stop -n polepole-app-a82a5661 -g polepole-rg && az webapp start -n polepole-app-a82a5661 -g polepole-rg
+  ```
+- **Keep `Tts:Warmup:Enabled` off on F0.** The warm-up job paces itself at
+  `Tts:Warmup:DelayMs` (default 1100ms ≈ 54 req/min), well over F0's ~20
+  req/min ceiling. It stays `false` in `appsettings.json`; leave it there unless
+  you move to S0. Clips are cached on disk under `/home` either way, so each
+  distinct word is synthesized once.
+- `sw-KE-ZuriNeural` and `sw-KE-RafikiNeural` both exist in `eastus`. Colocate
+  the Speech resource with the app to keep latency down.
+
+Settings applied this way survive a redeploy — `az webapp config appsettings
+set` adds and updates, it never removes the settings you did not list. So you
+only need to export `AZURE_TTS_KEY` before `azure-deploy.sh` on a first deploy,
+or after rotating the key.
+
+---
+
 ## Redeploy after code changes
 
 Re-run the same script — `az acr build` rebuilds the image and the app restarts.
