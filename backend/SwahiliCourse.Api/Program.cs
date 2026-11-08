@@ -159,21 +159,21 @@ static bool IsPlaceholderKey(string key) =>
     key.Contains("CHANGE-THIS", StringComparison.OrdinalIgnoreCase)
     || key.Contains("change-me", StringComparison.OrdinalIgnoreCase);
 
-var jwtKey = builder.Configuration["Jwt:Key"];
-var keyIsUsable = !string.IsNullOrWhiteSpace(jwtKey) && !IsPlaceholderKey(jwtKey);
+var configuredKey = builder.Configuration["Jwt:Key"];
+var keyIsUsable = !string.IsNullOrWhiteSpace(configuredKey) && !IsPlaceholderKey(configuredKey);
 
-if (builder.Environment.IsDevelopment())
-{
-    jwtKey = keyIsUsable ? jwtKey : DevJwtKey;
-}
-else if (!keyIsUsable)
+if (!keyIsUsable && !builder.Environment.IsDevelopment())
 {
     throw new InvalidOperationException(
         "Jwt:Key is not configured, or is still the development placeholder. Set it to a "
         + "random string of at least 32 characters. On Azure App Service: az webapp config "
         + "appsettings set -g <group> -n <app> --settings Jwt__Key=\"<secret>\".");
 }
-else if (Encoding.UTF8.GetByteCount(jwtKey) < 32)
+
+// keyIsUsable implies configuredKey is non-null; Development falls back instead.
+var jwtKey = keyIsUsable ? configuredKey! : DevJwtKey;
+
+if (Encoding.UTF8.GetByteCount(jwtKey) < 32)
 {
     throw new InvalidOperationException(
         "Jwt:Key must be at least 32 bytes — HMAC-SHA256 signing keys shorter than the hash "
