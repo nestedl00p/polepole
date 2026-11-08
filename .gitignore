@@ -12,6 +12,9 @@ dist/
 build/
 .vite/
 
+# Vercel CLI link state (project/org ids, written by `vercel link`)
+.vercel/
+
 # Expo mobile
 .expo/
 .expo-shared/
