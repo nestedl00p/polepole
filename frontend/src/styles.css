@@ -92,7 +92,11 @@ a:hover { text-decoration: underline; }
 .switch-link { text-align: center; margin-top: 18px; color: var(--muted); font-size: 0.92rem; }
 
 /* ---------- Dashboard ---------- */
-.page { padding: 28px 0 60px; }
+/* Vertical only: the `padding: 28px 0 60px` shorthand this used to carry beat
+   .container's own `0 20px`, since .page is declared later — which left every
+   page flush against the screen edge on a phone. Longhands here leave the
+   side gutter alone. */
+.page { padding-top: 28px; padding-bottom: 60px; }
 .page-head { margin-bottom: 24px; }
 .page-head h1 { font-size: 1.8rem; color: var(--navy); font-weight: 800; }
 .page-head p { color: var(--muted); margin-top: 4px; }
