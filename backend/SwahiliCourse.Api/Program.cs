@@ -1,5 +1,8 @@
 using System.Text;
+using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -85,8 +88,97 @@ builder.Services.AddCors(o => o.AddPolicy(CorsPolicy, p =>
      .AllowAnyHeader()
      .AllowAnyMethod()));
 
-// JWT auth.
-var jwtKey = builder.Configuration["Jwt:Key"] ?? "dev-secret-change-me-in-production-please-32chars";
+// Azure App Service terminates TLS and proxies the request, so the real client
+// address arrives in X-Forwarded-For. Without this every request appears to come
+// from the load balancer and the rate limiter below would put all users in one
+// bucket. ForwardLimit 1 takes the entry App Service itself appended, so a
+// client-supplied X-Forwarded-For cannot spoof the partition key.
+builder.Services.Configure<ForwardedHeadersOptions>(o =>
+{
+    o.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    o.ForwardLimit = 1;
+    o.KnownIPNetworks.Clear();
+    o.KnownProxies.Clear();
+});
+
+// Rate limiting. The API lives on a public hostname, so CORS does not gate who
+// can reach it — curl ignores CORS entirely. These limits are the real control
+// on the unauthenticated endpoints, and a backstop for a single small instance.
+const string AuthPolicy = "auth";
+const string MediaPolicy = "media";
+
+static string ClientKey(HttpContext ctx) =>
+    ctx.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+    options.OnRejected = async (ctx, ct) =>
+    {
+        if (ctx.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter))
+            ctx.HttpContext.Response.Headers.RetryAfter = ((int)retryAfter.TotalSeconds).ToString();
+        await ctx.HttpContext.Response.WriteAsync("Too many requests. Try again shortly.", ct);
+    };
+
+    // Backstop so one caller cannot saturate the instance.
+    options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(ctx =>
+        RateLimitPartition.GetFixedWindowLimiter(ClientKey(ctx), _ => new FixedWindowRateLimiterOptions
+        {
+            PermitLimit = 240,
+            Window = TimeSpan.FromMinutes(1),
+        }));
+
+    // Sign-in and registration are unauthenticated by necessity, so this is what
+    // stands between the password check and an automated guessing attack.
+    options.AddPolicy(AuthPolicy, ctx =>
+        RateLimitPartition.GetFixedWindowLimiter(ClientKey(ctx), _ => new FixedWindowRateLimiterOptions
+        {
+            PermitLimit = 10,
+            Window = TimeSpan.FromMinutes(5),
+        }));
+
+    // Anonymous endpoints that cost real money (cloud TTS bills per character)
+    // or real CPU (Whisper transcription). Generous enough for a learner
+    // clicking through a lesson, bounded enough to not be a free API.
+    options.AddPolicy(MediaPolicy, ctx =>
+        RateLimitPartition.GetFixedWindowLimiter(ClientKey(ctx), _ => new FixedWindowRateLimiterOptions
+        {
+            PermitLimit = 90,
+            Window = TimeSpan.FromMinutes(1),
+        }));
+});
+
+// JWT auth. Outside Development the signing key must come from configuration:
+// falling back to a well-known string would let anyone mint a token for any
+// account, and the app would look perfectly healthy while doing it.
+const string DevJwtKey = "dev-secret-change-me-in-production-please-32chars";
+
+// appsettings.json ships a "CHANGE-THIS-..." placeholder, so Jwt:Key is never
+// null in practice — a null check alone would wave the placeholder through.
+static bool IsPlaceholderKey(string key) =>
+    key.Contains("CHANGE-THIS", StringComparison.OrdinalIgnoreCase)
+    || key.Contains("change-me", StringComparison.OrdinalIgnoreCase);
+
+var configuredKey = builder.Configuration["Jwt:Key"];
+var keyIsUsable = !string.IsNullOrWhiteSpace(configuredKey) && !IsPlaceholderKey(configuredKey);
+
+if (!keyIsUsable && !builder.Environment.IsDevelopment())
+{
+    throw new InvalidOperationException(
+        "Jwt:Key is not configured, or is still the development placeholder. Set it to a "
+        + "random string of at least 32 characters. On Azure App Service: az webapp config "
+        + "appsettings set -g <group> -n <app> --settings Jwt__Key=\"<secret>\".");
+}
+
+// keyIsUsable implies configuredKey is non-null; Development falls back instead.
+var jwtKey = keyIsUsable ? configuredKey! : DevJwtKey;
+
+if (Encoding.UTF8.GetByteCount(jwtKey) < 32)
+{
+    throw new InvalidOperationException(
+        "Jwt:Key must be at least 32 bytes — HMAC-SHA256 signing keys shorter than the hash "
+        + "are rejected at startup rather than silently weakening every token.");
+}
 var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "SwahiliCourse";
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(opt =>
@@ -125,6 +217,9 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate();
 }
 
+// Must run before anything that reads the client address or scheme.
+app.UseForwardedHeaders();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -138,6 +233,11 @@ app.UseCors(CorsPolicy);
 // Harmless in local dev where wwwroot is empty (the frontend runs on Vite instead).
 app.UseDefaultFiles();
 app.UseStaticFiles();
+
+// Deliberately after static files: one page load pulls many assets, and counting
+// those against the limit would throttle ordinary browsing. The API routes below
+// are what actually needs bounding.
+app.UseRateLimiter();
 
 app.UseAuthentication();
 app.UseAuthorization();

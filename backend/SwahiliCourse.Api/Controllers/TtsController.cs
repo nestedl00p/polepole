@@ -1,11 +1,14 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using SwahiliCourse.Api.Services;
 
 namespace SwahiliCourse.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+// Anonymous and metered: cloud TTS bills per character.
+[EnableRateLimiting("media")]
 public class TtsController : ControllerBase
 {
     private readonly TtsService _tts;
