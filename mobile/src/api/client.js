@@ -83,6 +83,11 @@ export const api = {
   // Quiz
   submitQuiz: (lessonId, answers) => request('/quiz/submit', { method: 'POST', body: { lessonId, answers } }),
 
+  // Dose ya leo — the daily practice loop. The dose is stable within the
+  // calendar day, so refetching returns the same items until they are answered.
+  dose: () => request('/dose'),
+  answerDose: (payload) => request('/dose/answer', { method: 'POST', body: payload }),
+
   // Review
   flashcards: () => request('/review/flashcards'),
   practice: (count = 10) => request(`/review/practice?count=${count}`),

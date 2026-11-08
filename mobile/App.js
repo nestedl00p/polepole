@@ -11,6 +11,7 @@ import { colors } from './src/theme';
 
 import AuthScreen from './src/screens/AuthScreen';
 import DashboardScreen from './src/screens/DashboardScreen';
+import DoseScreen from './src/screens/DoseScreen';
 import LessonScreen from './src/screens/LessonScreen';
 import QuizScreen from './src/screens/QuizScreen';
 import FlashcardsScreen from './src/screens/FlashcardsScreen';
@@ -30,8 +31,8 @@ function HeaderStats() {
   if (!user) return null;
   return (
     <View style={styles.headerStats}>
-      <Pill>🔥 {user.streakCount}</Pill>
-      <Pill>⭐ {user.totalXp} XP</Pill>
+      <Pill>ð¥ {user.streakCount}</Pill>
+      <Pill>â­ {user.totalXp} XP</Pill>
     </View>
   );
 }
@@ -54,17 +55,22 @@ function Tabs() {
       <Tab.Screen
         name="Dashboard"
         component={DashboardScreen}
-        options={{ tabBarIcon: ({ focused }) => <TabIcon emoji="🏠" focused={focused} /> }}
+        options={{ tabBarIcon: ({ focused }) => <TabIcon emoji="ð " focused={focused} /> }}
+      />
+      <Tab.Screen
+        name="Dose"
+        component={DoseScreen}
+        options={{ title: 'Dose ya leo', tabBarIcon: ({ focused }) => <TabIcon emoji="🎯" focused={focused} /> }}
       />
       <Tab.Screen
         name="Flashcards"
         component={FlashcardsScreen}
-        options={{ tabBarIcon: ({ focused }) => <TabIcon emoji="🃏" focused={focused} /> }}
+        options={{ tabBarIcon: ({ focused }) => <TabIcon emoji="ð" focused={focused} /> }}
       />
       <Tab.Screen
         name="Settings"
         component={SettingsScreen}
-        options={{ tabBarIcon: ({ focused }) => <TabIcon emoji="⚙️" focused={focused} /> }}
+        options={{ tabBarIcon: ({ focused }) => <TabIcon emoji="âï¸" focused={focused} /> }}
       />
     </Tab.Navigator>
   );

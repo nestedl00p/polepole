@@ -3,6 +3,7 @@ import { useAuth } from './context/AuthContext';
 import LandingPage from './pages/LandingPage';
 import AuthPage from './pages/AuthPage';
 import Dashboard from './pages/Dashboard';
+import DosePage from './pages/DosePage';
 import LessonPage from './pages/LessonPage';
 import QuizPage from './pages/QuizPage';
 import Flashcards from './pages/Flashcards';
@@ -20,6 +21,7 @@ function NavBar() {
         <Link to="/app" className="brand"><Logo size={30} light /></Link>
         <nav>
           <Link to="/app">Dashboard</Link>
+          <Link to="/dose">Dose</Link>
           <Link to="/flashcards">Flashcards</Link>
           <Link to="/settings">Settings</Link>
           <span className="pill">🔥 <span className="streak">{user.streakCount}</span></span>
@@ -50,6 +52,7 @@ export default function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={user ? <Navigate to="/app" /> : <AuthPage />} />
         <Route path="/app" element={<Protected><Dashboard /></Protected>} />
+        <Route path="/dose" element={<Protected><DosePage /></Protected>} />
         <Route path="/lesson/:id" element={<Protected><LessonPage /></Protected>} />
         <Route path="/lesson/:id/quiz" element={<Protected><QuizPage /></Protected>} />
         <Route path="/flashcards" element={<Protected><Flashcards /></Protected>} />
