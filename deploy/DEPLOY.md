@@ -92,8 +92,16 @@ create `Users` again, and the container would crash on startup with
 
 We **baseline** it — record `InitialCreate` as already applied — rather than
 resetting it. The initial migration's DDL is identical to what `EnsureCreated()`
-produced, so the existing file is already correct; baselining keeps the beta
-testers' accounts and progress, while a reset would delete them for no gain.
+produced, so the existing file is already correct and there is nothing to
+rebuild.
+
+Baselining wins on operations rather than on safety. The database only ever
+holds `Users` and `LessonProgress` — lesson content is loaded from the JSON
+files baked into the image, not stored — and as of 2026-11-07 it had no user
+accounts in it, so a reset would lose nothing today either. Baselining is
+simply less to go wrong: one App Setting plus the deploy you were doing
+anyway, and it never touches the persistent volume. It is also the only
+option left once real accounts exist.
 
 `Database:BaselineExistingSchema=true` makes the app do this itself on startup,
 so it needs no shell or `sqlite3` inside the container (the image has neither):
@@ -128,10 +136,11 @@ not a correctness requirement.
 > database that never ran that code, add the column first:
 > `ALTER TABLE Users ADD COLUMN CourseId TEXT NOT NULL DEFAULT 'sw';`
 
-**Resetting instead** (only worthwhile if the data is genuinely disposable and
-you'd rather not think about the above): point the app at an empty directory and
-let migrations build the schema from scratch. This abandons every account and all
-progress in the old file, which stays on disk unused.
+**Resetting instead** is just as safe while the database has no accounts in
+it: point the app at an empty directory and let migrations build the schema
+from scratch. The old file stays on disk, unused and ignored. This stops being
+an option as soon as there are real users whose progress you would be
+throwing away.
 
 ```bash
 az webapp config appsettings set -g polepole-rg -n <app> --settings DataDir=/home/data2
