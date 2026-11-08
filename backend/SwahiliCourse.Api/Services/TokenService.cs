@@ -8,14 +8,15 @@ namespace SwahiliCourse.Api.Services;
 
 public class TokenService
 {
-    private readonly IConfiguration _config;
-    public TokenService(IConfiguration config) => _config = config;
+    private readonly JwtSettings _jwt;
+
+    // Takes the key Program.cs resolved rather than re-reading configuration,
+    // so the token is signed with whatever the authentication handler will
+    // validate it against. See JwtSettings.
+    public TokenService(JwtSettings jwt) => _jwt = jwt;
 
     public string CreateToken(User user)
     {
-        var key = _config["Jwt:Key"] ?? "dev-secret-change-me-in-production-please-32chars";
-        var issuer = _config["Jwt:Issuer"] ?? "SwahiliCourse";
-
         var claims = new[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
@@ -24,12 +25,12 @@ public class TokenService
         };
 
         var creds = new SigningCredentials(
-            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
+            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwt.Key)),
             SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
-            issuer: issuer,
-            audience: issuer,
+            issuer: _jwt.Issuer,
+            audience: _jwt.Issuer,
             claims: claims,
             expires: DateTime.UtcNow.AddDays(30),
             signingCredentials: creds);

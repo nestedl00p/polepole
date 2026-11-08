@@ -180,6 +180,10 @@ if (Encoding.UTF8.GetByteCount(jwtKey) < 32)
         + "are rejected at startup rather than silently weakening every token.");
 }
 var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "SwahiliCourse";
+
+// One source of truth for the key: TokenService signs with exactly what the
+// handler below validates against. See Services/JwtSettings.cs.
+builder.Services.AddSingleton(new JwtSettings(jwtKey, jwtIssuer));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(opt =>
     {
