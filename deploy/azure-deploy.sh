@@ -26,6 +26,17 @@
 # ============================================================================
 set -euo pipefail
 
+# Helps the CLI print non-ASCII on Windows. Note this does NOT fix the acr
+# build log streamer — see the --no-logs comment at the build step below.
+export PYTHONIOENCODING=utf-8
+
+# Git Bash (MSYS) rewrites arguments that look like absolute POSIX paths into
+# Windows paths, so "DataDir=/home/data" reaches Azure as
+# "DataDir=C:/Program Files/Git/home/data". The container then writes SQLite to
+# a relative directory inside its own filesystem instead of the persistent
+# /home mount, and the database silently vanishes on every restart. Disable it.
+export MSYS_NO_PATHCONV=1
+
 # ---- Settings --------------------------------------------------------------
 # Every name can be overridden from the environment, e.g.
 #   APP=polepole-beta LOCATION=westeurope bash deploy/azure-deploy.sh
@@ -86,8 +97,19 @@ echo "==> Container registry: $ACR"
 az acr show -n "$ACR" -g "$RG" -o none 2>/dev/null \
   || az acr create -n "$ACR" -g "$RG" --sku Basic --admin-enabled true -o none
 
+# --no-logs is load-bearing, not a preference. The CLI streams build output
+# through colorama to the console's cp1252 encoding on Windows and dies with a
+# UnicodeEncodeError on the U+2713 that npm/vite print — aborting the deploy
+# *after* the cloud build has already succeeded, which leaves a registry with a
+# good image and no web app in front of it. PYTHONIOENCODING does not reach it.
+# So skip streaming, and fetch the logs only when the build really fails.
 echo "==> Building image in the cloud (this uses the Dockerfile at repo root)…"
-az acr build -r "$ACR" -t "$IMAGE" . -o none
+if ! az acr build -r "$ACR" -t "$IMAGE" . --no-logs -o none; then
+  echo "ERROR: image build failed. Logs for the last run:" >&2
+  LAST_RUN=$(az acr task list-runs -r "$ACR" --top 1 --query "[0].runId" -o tsv 2>/dev/null || true)
+  [ -n "$LAST_RUN" ] && az acr task logs -r "$ACR" --run-id "$LAST_RUN" >&2 2>/dev/null || true
+  exit 1
+fi
 
 echo "==> App Service plan: $PLAN (Linux B1)"
 az appservice plan show -n "$PLAN" -g "$RG" -o none 2>/dev/null \
