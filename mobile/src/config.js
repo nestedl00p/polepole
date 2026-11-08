@@ -12,11 +12,12 @@ import { Platform } from 'react-native';
 //                          Find it with `ipconfig` (Windows) / `ifconfig` (mac/linux).
 //                          Phone and computer must be on the same Wi-Fi.
 //
-// If you're testing on a real device, set API_HOST_OVERRIDE below to your
-// computer's LAN IP. Leave it null to auto-pick for the simulator/emulator.
+// To test against a local backend instead, replace API_HOST_OVERRIDE below with
+// your computer's LAN IP, or null to auto-pick for the simulator/emulator.
 // ---------------------------------------------------------------------------
 
-const API_HOST_OVERRIDE = 'http://192.168.8.238:5167'; // e.g. 'http://192.168.1.42:5167'
+// Deployed API (Azure App Service for Containers).
+const API_HOST_OVERRIDE = 'https://polepole-app-a82a5661.azurewebsites.net';
 
 const DEV_HOST = Platform.select({
   android: 'http://10.0.2.2:5167',
