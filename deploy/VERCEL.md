@@ -161,12 +161,19 @@ currently unset on the Azure web app, so the API falls back to its defaults —
 custom domain and every `*.vercel.app` origin.
 
 The browser sends whichever origin the user is actually on, so list the custom
-domain. Including the Vercel-assigned URL as well keeps that working as a
-fallback during cutover (`__` is .NET's nested-config separator):
+domain (`__` is .NET's nested-config separator):
 
 ```bash
-MSYS_NO_PATHCONV=1 az webapp config appsettings set -g polepole-rg -n polepole-app-a82a5661 --settings Cors__AllowedOrigins="https://pole-pole.app,https://www.pole-pole.app,https://polepole.vercel.app"
+MSYS_NO_PATHCONV=1 az webapp config appsettings set -g polepole-rg -n polepole-app-a82a5661 --settings Cors__AllowedOrigins="https://pole-pole.app,https://www.pole-pole.app"
 ```
+
+> **Do not guess the `*.vercel.app` hostname.** `polepole.vercel.app` is **not**
+> this project — it is an unrelated French app also called "Polé Polé". Because
+> `vercel.app` subdomains are global across all Vercel accounts, a plausible
+> name is often already taken, and the one assigned to this project will be
+> something like `polepole-<hash>-<team>.vercel.app`. If you want that URL
+> allowed as well, copy the exact hostname from the project's Domains page.
+> Adding a guessed one authorises a stranger's site to call the API.
 
 An entry may use a `*.` wildcard to match subdomains, which is the only
 practical way to cover Vercel's per-deployment preview URLs:
@@ -176,10 +183,12 @@ MSYS_NO_PATHCONV=1 az webapp config appsettings set -g polepole-rg -n polepole-a
 ```
 
 Note the trade-off: `https://*.vercel.app` lets **any** site on `vercel.app`
-call your API. Prefer the exact-origin form, and add the wildcard only while you
-actually need previews. (Auth is a Bearer token in `localStorage`, not a cookie,
-so CORS is not what protects a session here — but it does gate who can reach
-your unauthenticated endpoints.)
+call your API — including the unrelated `polepole.vercel.app` above, which is a
+concrete reminder that the wildcard is not a "just our previews" shortcut.
+Prefer the exact-origin form, and add the wildcard only while you actually need
+previews. (Auth is a Bearer token in `localStorage`, not a cookie, so CORS is
+not what protects a session here — but it does gate who can reach your
+unauthenticated endpoints.)
 
 Two things to know about this command:
 
