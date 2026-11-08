@@ -38,6 +38,12 @@ builder.Services.AddSingleton<CourseCatalog>();
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<PaceService>();
 
+// The daily practice loop: per-item spaced repetition behind "Dose ya leo".
+// The scheduler is pure arithmetic over Leitner boxes, so it is a singleton;
+// DoseService reads the learner's cards and so follows the DbContext scope.
+builder.Services.AddSingleton<ReviewScheduler>();
+builder.Services.AddScoped<DoseService>();
+
 // Cloud text-to-speech (Google/Azure) with on-disk caching. Optional — falls back
 // to the browser/device built-in voice when no provider key is configured.
 builder.Services.AddHttpClient();

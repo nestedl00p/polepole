@@ -28,4 +28,5 @@ public class User
     public int TotalXp { get; set; } = 0;
 
     public ICollection<LessonProgress> Progress { get; set; } = new List<LessonProgress>();
+    public ICollection<CardState> Cards { get; set; } = new List<CardState>();
 }

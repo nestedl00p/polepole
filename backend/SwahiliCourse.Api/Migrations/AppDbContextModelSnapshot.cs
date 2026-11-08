@@ -17,6 +17,61 @@ namespace SwahiliCourse.Api.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.0");
 
+            modelBuilder.Entity("SwahiliCourse.Api.Models.CardState", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("BestSpeechScore")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Box")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CourseId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DueAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ItemKey")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ItemKind")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Lapses")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("LastSeenAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Pinned")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SourceLessonId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Strength")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId", "DueAt");
+
+                    b.HasIndex("UserId", "CourseId", "ItemKey")
+                        .IsUnique();
+
+                    b.ToTable("CardStates");
+                });
+
             modelBuilder.Entity("SwahiliCourse.Api.Models.LessonProgress", b =>
                 {
                     b.Property<int>("Id")
@@ -106,6 +161,17 @@ namespace SwahiliCourse.Api.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("SwahiliCourse.Api.Models.CardState", b =>
+                {
+                    b.HasOne("SwahiliCourse.Api.Models.User", "User")
+                        .WithMany("Cards")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SwahiliCourse.Api.Models.LessonProgress", b =>
                 {
                     b.HasOne("SwahiliCourse.Api.Models.User", "User")
@@ -119,6 +185,8 @@ namespace SwahiliCourse.Api.Migrations
 
             modelBuilder.Entity("SwahiliCourse.Api.Models.User", b =>
                 {
+                    b.Navigation("Cards");
+
                     b.Navigation("Progress");
                 });
 #pragma warning restore 612, 618
