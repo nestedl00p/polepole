@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using SwahiliCourse.Api.Data;
 using SwahiliCourse.Api.DTOs;
@@ -9,6 +10,8 @@ namespace SwahiliCourse.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+// Unauthenticated by necessity, so rate limiting is what bounds password guessing.
+[EnableRateLimiting("auth")]
 public class AuthController : ControllerBase
 {
     private readonly AppDbContext _db;

@@ -1,11 +1,14 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using SwahiliCourse.Api.Services;
 
 namespace SwahiliCourse.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+// Anonymous and CPU-expensive: Whisper transcription of uploaded audio.
+[EnableRateLimiting("media")]
 public class SpeechController : ControllerBase
 {
     private readonly SpeechService _speech;
