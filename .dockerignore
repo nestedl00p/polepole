@@ -1,21 +1,52 @@
 # Keep the build context small and avoid copying host build artifacts / secrets.
-**/bin/
-**/obj/
-**/node_modules/
-**/dist/
-**/.vite/
-frontend/dist/
-whisper-service/.venv/
-**/__pycache__/
-**/App_Data/
+#
+# IMPORTANT: no trailing slashes on directory rules. Docker tolerates them, but
+# `az acr build` compiles each rule to its own regex — "mobile/" becomes
+# ^mobile/$ — and tests it against paths like "mobile". A trailing slash
+# therefore matches nothing, silently, and the directory is uploaded anyway.
+# Rules starting with **/ only match nested paths (^.*/bin$), so anything that
+# can also sit at the repo root needs a bare entry too.
+
+# Build output
+**/bin
+**/obj
+**/dist
+**/.vite
+bin
+obj
+dist
+frontend/dist
+
+# Dependencies
+**/node_modules
+node_modules
+
+# Python (Whisper sidecar, not part of this image)
+**/__pycache__
+**/.venv
+whisper-service/.venv
+
+# Local databases — never ship one into the image
+**/App_Data
 **/*.db
 **/*.db-shm
 **/*.db-wal
-.git/
-.github/
-mobile/
-whisper-service/
+*.db
+*.db-shm
+*.db-wal
+
+# Secrets
 **/.env
 **/.env.*
-.claude/
+.env
+.env.*
+
+# Not needed by the Dockerfile (it builds frontend/ and backend/ only)
+mobile
+whisper-service
+
+# Tooling / VCS. .claude can contain git worktrees, which are large.
+.git
+.github
+.claude
 *.md
