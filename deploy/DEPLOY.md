@@ -65,6 +65,88 @@ so redeploying does not sign your users out.
 
 ---
 
+## Database schema & migrations
+
+The schema is managed with **EF Core migrations**. On startup the app calls
+`db.Database.Migrate()`, which creates the database and the full schema when
+there is none and applies only the pending migrations when there is — so a
+redeploy keeps existing accounts and progress instead of needing the database
+dropped.
+
+To change the schema, edit the entities and generate a migration:
+
+```bash
+cd backend/SwahiliCourse.Api
+dotnet ef migrations add DescribeTheChange     # needs: dotnet tool install --global dotnet-ef
+```
+
+Commit the files under `Migrations/`. The next deploy applies them on startup.
+
+### Baselining the deployed database
+
+**One-off, needed only for the first migration-based deploy.** The live database
+was created by the old `EnsureCreated()` call, so it has the real tables but no
+`__EFMigrationsHistory`. `Migrate()` would see zero applied migrations, try to
+create `Users` again, and the container would crash on startup with
+`SQLite Error 1: 'table "Users" already exists'`.
+
+We **baseline** it — record `InitialCreate` as already applied — rather than
+resetting it. The initial migration's DDL is identical to what `EnsureCreated()`
+produced, so the existing file is already correct and there is nothing to
+rebuild.
+
+Baselining wins on operations rather than on safety. The database only ever
+holds `Users` and `LessonProgress` — lesson content is loaded from the JSON
+files baked into the image, not stored — and as of 2026-11-07 it had no user
+accounts in it, so a reset would lose nothing today either. Baselining is
+simply less to go wrong: one App Setting plus the deploy you were doing
+anyway, and it never touches the persistent volume. It is also the only
+option left once real accounts exist.
+
+`Database:BaselineExistingSchema=true` makes the app do this itself on startup,
+so it needs no shell or `sqlite3` inside the container (the image has neither):
+
+```bash
+# 1) Arm the one-off baseline (this restarts the app on the old image, which
+#    ignores the setting — harmless).
+az webapp config appsettings set -g polepole-rg -n <app> \
+  --settings Database__BaselineExistingSchema=true
+
+# 2) Deploy the migration-based image.
+bash deploy/azure-deploy.sh
+
+# 3) Confirm it ran — look for "Baselined existing schema as migration ...".
+az webapp log tail -g polepole-rg -n <app>
+
+# 4) Disarm it again (tidiness — see below).
+az webapp config appsettings delete -g polepole-rg -n <app> \
+  --setting-names Database__BaselineExistingSchema
+```
+
+The step is safe to repeat and safe to forget: it acts **only** on a database
+that has a `Users` table and no `__EFMigrationsHistory`. On a fresh database it
+does nothing and lets migrations create the schema; on an already-baselined one
+it logs `Database already tracks migrations` and stops. Step 4 is housekeeping,
+not a correctness requirement.
+
+> **One assumption.** Baselining declares the existing schema to match
+> `InitialCreate`, including `Users.CourseId`. The pre-migrations code added that
+> column with an idempotent `ALTER TABLE` on *every* startup, so the deployed
+> database has had it since the course-direction release. If you ever baseline a
+> database that never ran that code, add the column first:
+> `ALTER TABLE Users ADD COLUMN CourseId TEXT NOT NULL DEFAULT 'sw';`
+
+**Resetting instead** is just as safe while the database has no accounts in
+it: point the app at an empty directory and let migrations build the schema
+from scratch. The old file stays on disk, unused and ignored. This stops being
+an option as soon as there are real users whose progress you would be
+throwing away.
+
+```bash
+az webapp config appsettings set -g polepole-rg -n <app> --settings DataDir=/home/data2
+```
+
+
 ## Point the mobile app at it
 
 In `mobile/src/config.js`, set `API_HOST_OVERRIDE` to your deployed URL:
@@ -128,6 +210,5 @@ disk for SQLite.
 
 ## Before real launch (not just beta)
 
-- Swap `EnsureCreated()` for EF Core migrations (see root README).
 - Move from SQLite to Azure Database for PostgreSQL for multi-user scale.
 - Rotate `JWT_KEY` and store it in Azure Key Vault.

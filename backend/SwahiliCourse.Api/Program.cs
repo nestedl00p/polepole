@@ -1,6 +1,8 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.IdentityModel.Tokens;
 using SwahiliCourse.Api.Data;
 using SwahiliCourse.Api.Services;
@@ -104,24 +106,23 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-// --- Ensure database is created (simple approach; swap for migrations in production) ---
+// --- Bring the database up to the current schema ---
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.EnsureCreated();
 
-    // EnsureCreated() builds the schema only for a brand-new file — it never
-    // alters an existing one. These idempotent patches add columns introduced
-    // after a database was first created, so existing accounts and progress
-    // survive an upgrade. (Replace this with EF Core migrations before launch.)
-    foreach (var patch in new[]
-             {
-                 "ALTER TABLE Users ADD COLUMN CourseId TEXT NOT NULL DEFAULT 'sw'",
-             })
-    {
-        try { db.Database.ExecuteSqlRaw(patch); }
-        catch (Microsoft.Data.Sqlite.SqliteException) { /* column already present */ }
-    }
+    // A database created by the pre-migrations EnsureCreated() path has the tables
+    // but no __EFMigrationsHistory, so Migrate() would try to create them again and
+    // fail. Set Database:BaselineExistingSchema=true for one startup to record the
+    // initial migration as already applied instead. Safe to leave on — it only acts
+    // on an untracked database, and never on a fresh or already-migrated one.
+    // See deploy/DEPLOY.md, "Baselining the deployed database".
+    if (app.Configuration.GetValue<bool>("Database:BaselineExistingSchema"))
+        BaselineUntrackedSchema(db, app.Services.GetRequiredService<ILoggerFactory>());
+
+    // Creates the file and the full schema when there is none, and applies only the
+    // pending migrations when there is — so an upgrade keeps accounts and progress.
+    db.Database.Migrate();
 }
 
 if (app.Environment.IsDevelopment())
@@ -150,3 +151,49 @@ app.MapGet("/healthz", () => Results.Ok(new { status = "ok" }));
 app.MapFallbackToFile("index.html");
 
 app.Run();
+
+// Adopt a database whose schema predates migrations: write the initial migration
+// into __EFMigrationsHistory so Migrate() skips it and later migrations still run.
+// Does nothing unless the schema exists and is untracked, which makes repeat
+// startups (and fresh databases) no-ops.
+static void BaselineUntrackedSchema(AppDbContext db, ILoggerFactory loggerFactory)
+{
+    var logger = loggerFactory.CreateLogger("Database.Baseline");
+    var connection = db.Database.GetDbConnection();
+    connection.Open();
+
+    bool TableExists(string name)
+    {
+        using var cmd = connection.CreateCommand();
+        cmd.CommandText = "SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name = $name";
+        var p = cmd.CreateParameter();
+        p.ParameterName = "$name";
+        p.Value = name;
+        cmd.Parameters.Add(p);
+        return Convert.ToInt64(cmd.ExecuteScalar()) > 0;
+    }
+
+    if (!TableExists("Users"))
+    {
+        logger.LogInformation("No existing schema to baseline; migrations will create it.");
+        return;
+    }
+    if (TableExists("__EFMigrationsHistory"))
+    {
+        logger.LogInformation("Database already tracks migrations; nothing to baseline.");
+        return;
+    }
+
+    var initialMigration = db.Database.GetMigrations().First();
+    var history = db.GetService<IHistoryRepository>();
+    var efVersion = typeof(DbContext).Assembly.GetName().Version?.ToString(3) ?? "0.0.0";
+
+    using var transaction = db.Database.BeginTransaction();
+    db.Database.ExecuteSqlRaw(history.GetCreateIfNotExistsScript());
+    db.Database.ExecuteSqlRaw(history.GetInsertScript(new HistoryRow(initialMigration, efVersion)));
+    transaction.Commit();
+
+    logger.LogWarning(
+        "Baselined existing schema as migration {Migration}. Remove Database:BaselineExistingSchema once this has run.",
+        initialMigration);
+}
