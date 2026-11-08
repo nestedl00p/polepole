@@ -245,13 +245,14 @@ SwahiliCourse/
 ## Before you deploy to production
 
 1. **Change the JWT secret** (`Jwt:Key`) to a long random value from an env var / secrets manager.
-2. **Switch to EF Core migrations** instead of `EnsureCreated()`:
+2. **Schema changes** go through EF Core migrations (already wired up —
+   `Program.cs` calls `db.Database.Migrate()` on startup):
    ```bash
    dotnet tool install --global dotnet-ef
-   dotnet ef migrations add InitialCreate
-   dotnet ef database update
+   dotnet ef migrations add DescribeTheChange
    ```
-   Then use `db.Database.Migrate();` in `Program.cs`.
+   Commit the files under `Migrations/`; the next deploy applies them. See
+   `deploy/DEPLOY.md` for baselining a database created before migrations.
 3. **Lock down CORS** in `Program.cs` to your real frontend domain.
 4. Consider **PostgreSQL/SQL Server** over SQLite for multi-user scale.
 5. Bind the Whisper sidecar to `127.0.0.1` only — it has no auth (internal service).
