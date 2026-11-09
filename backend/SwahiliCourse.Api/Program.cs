@@ -42,6 +42,7 @@ builder.Services.AddScoped<PaceService>();
 // The scheduler is pure arithmetic over Leitner boxes, so it is a singleton;
 // DoseService reads the learner's cards and so follows the DbContext scope.
 builder.Services.AddSingleton<ReviewScheduler>();
+builder.Services.AddSingleton<StreakService>();
 builder.Services.AddScoped<DoseService>();
 
 // Cloud text-to-speech (Google/Azure) with on-disk caching. Optional — falls back

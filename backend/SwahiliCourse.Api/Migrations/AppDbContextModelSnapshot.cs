@@ -137,6 +137,12 @@ namespace SwahiliCourse.Api.Migrations
                     b.Property<DateTime?>("LastActivityDate")
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime?>("LastDoseAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("LastRestDayAt")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -149,6 +155,10 @@ namespace SwahiliCourse.Api.Migrations
 
                     b.Property<int>("StreakCount")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("TimeZoneId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("TotalXp")
                         .HasColumnType("INTEGER");

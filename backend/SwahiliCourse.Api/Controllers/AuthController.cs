@@ -17,10 +17,11 @@ public class AuthController : ControllerBase
     private readonly AppDbContext _db;
     private readonly TokenService _tokens;
     private readonly PaceService _pace;
+    private readonly StreakService _streaks;
 
-    public AuthController(AppDbContext db, TokenService tokens, PaceService pace)
+    public AuthController(AppDbContext db, TokenService tokens, PaceService pace, StreakService streaks)
     {
-        _db = db; _tokens = tokens; _pace = pace;
+        _db = db; _tokens = tokens; _pace = pace; _streaks = streaks;
     }
 
     [HttpPost("register")]
@@ -50,6 +51,9 @@ public class AuthController : ControllerBase
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
             PlanLengthDays = plan,
             CourseId = courseId,
+            // Streak days are counted here, so an unrecognised or missing zone
+            // falls back to UTC rather than being rejected at sign-up.
+            TimeZoneId = TimeZones.Normalize(dto.TimeZoneId),
             StartDate = DateTime.UtcNow,
             CreatedAt = DateTime.UtcNow
         };
@@ -72,5 +76,5 @@ public class AuthController : ControllerBase
         return Ok(new AuthResponse(_tokens.CreateToken(user), ToDto(user)));
     }
 
-    private UserDto ToDto(User u) => UserMapper.ToDto(u, _pace);
+    private UserDto ToDto(User u) => UserMapper.ToDto(u, _pace, _streaks);
 }

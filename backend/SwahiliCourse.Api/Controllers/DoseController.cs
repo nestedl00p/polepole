@@ -80,4 +80,17 @@ public class DoseController : AuthedController
             _dose.IntervalDays(card),
             card.Lapses));
     }
+
+    // Close the session: credits the day in the learner's own time zone and
+    // returns where the streak now stands. Safe to call twice — a second
+    // completion on the same day comes back AlreadyCountedToday with nothing
+    // changed.
+    [HttpPost("complete")]
+    public async Task<ActionResult<DoseCompleteResultDto>> Complete(CancellationToken ct)
+    {
+        var user = await _db.Users.FindAsync([CurrentUserId], ct);
+        if (user is null) return Unauthorized();
+
+        return Ok(await _dose.CompleteAsync(user, ct));
+    }
 }

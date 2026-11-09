@@ -31,12 +31,14 @@ public class DoseService
     private readonly AppDbContext _db;
     private readonly CourseCatalog _courses;
     private readonly ReviewScheduler _scheduler;
+    private readonly StreakService _streaks;
 
-    public DoseService(AppDbContext db, CourseCatalog courses, ReviewScheduler scheduler)
+    public DoseService(AppDbContext db, CourseCatalog courses, ReviewScheduler scheduler, StreakService streaks)
     {
         _db = db;
         _courses = courses;
         _scheduler = scheduler;
+        _streaks = streaks;
     }
 
     // An item the learner has met: Target is the side being learned (and the
@@ -47,14 +49,18 @@ public class DoseService
     {
         var course = Courses.Get(user.CourseId);
         var pool = await PoolAsync(user, ct);
-        var today = DateOnly.FromDateTime(DateTime.UtcNow);
+
+        // The learner's own day, not UTC's — the same day the streak counts.
+        var now = DateTime.UtcNow;
+        var today = _streaks.TodayFor(user, now);
+        var doneToday = _streaks.HasDosedToday(user, now);
 
         if (pool.Count < MinimumPool)
         {
             var message = course.SourceLanguage == "sw"
                 ? "Soma masomo machache zaidi ili kufungua dose ya leo."
                 : "Study a few more lessons to unlock your daily dose.";
-            return new DoseDto(today.ToString("yyyy-MM-dd"), 0, new List<DoseItemDto>(), message);
+            return new DoseDto(today.ToString("yyyy-MM-dd"), 0, new List<DoseItemDto>(), message, doneToday);
         }
 
         var states = await _db.CardStates
@@ -65,7 +71,7 @@ public class DoseService
         var selected = Select(pool, byKey, Rng(user.Id, today));
         var items = Compose(selected, pool, byKey, Rng(user.Id, today));
 
-        return new DoseDto(today.ToString("yyyy-MM-dd"), items.Count, items, null);
+        return new DoseDto(today.ToString("yyyy-MM-dd"), items.Count, items, null, doneToday);
     }
 
     // Look one item up by key, for grading an answer. Returns null when the key
@@ -250,4 +256,43 @@ public class DoseService
         exercise is DoseExercises.Tambua or DoseExercises.Tunga or DoseExercises.Sema;
 
     public int IntervalDays(CardState card) => _scheduler.IntervalDays(card);
+
+    // Close out a dose: credit the day and return where the streak now stands.
+    //
+    // The item count is taken from the cards actually touched today rather than
+    // from anything the client sends, so opening and abandoning a dose cannot
+    // claim a streak day.
+    public async Task<DoseCompleteResultDto> CompleteAsync(User user, CancellationToken ct = default)
+    {
+        var now = DateTime.UtcNow;
+        var course = Courses.Get(user.CourseId);
+        var today = _streaks.TodayFor(user, now);
+
+        // Midnight where the learner is, expressed as an instant to compare
+        // against the UTC timestamps on the cards.
+        var dayStartUtc = TimeZoneInfo.ConvertTimeToUtc(
+            DateTime.SpecifyKind(today.ToDateTime(TimeOnly.MinValue), DateTimeKind.Unspecified),
+            _streaks.ZoneFor(user));
+
+        var answeredToday = await _db.CardStates
+            .CountAsync(c => c.UserId == user.Id && c.CourseId == course.Id
+                && c.LastSeenAt != null && c.LastSeenAt >= dayStartUtc, ct);
+
+        if (answeredToday == 0)
+        {
+            return new DoseCompleteResultDto(
+                today.ToString("yyyy-MM-dd"), 0,
+                user.StreakCount, StreakAdvanced: false, RestDayUsed: false,
+                AlreadyCountedToday: false, _streaks.RestDayAvailable(user, today));
+        }
+
+        var streak = _streaks.Record(user, now);
+        user.LastDoseAt = now;
+        await _db.SaveChangesAsync(ct);
+
+        return new DoseCompleteResultDto(
+            today.ToString("yyyy-MM-dd"), answeredToday,
+            streak.StreakCount, streak.Advanced, streak.RestDayUsed,
+            streak.AlreadyCountedToday, _streaks.RestDayAvailable(user, today));
+    }
 }

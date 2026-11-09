@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../api/client';
+import { useAuth } from '../context/AuthContext';
 import SpeakButton from '../components/SpeakButton';
 import { useMicRecorder } from '../hooks/useMicRecorder';
 import { speechEnabled, assessPronunciation } from '../lib/speechAssess';
@@ -31,12 +32,14 @@ const scoreClass = (s) => (s >= 80 ? 'good' : s >= 55 ? 'ok' : 'low');
 
 export default function DosePage() {
   const navigate = useNavigate();
+  const { refreshUser } = useAuth();
   const [dose, setDose] = useState(null);
   const [loading, setLoading] = useState(true);
   const [idx, setIdx] = useState(0);
   const [result, setResult] = useState(null);   // answer result for the current item
   const [log, setLog] = useState([]);           // one entry per answered item
   const [done, setDone] = useState(false);
+  const [closing, setClosing] = useState(null);   // result of POST /dose/complete
 
   const load = () => {
     setLoading(true);
@@ -44,6 +47,7 @@ export default function DosePage() {
     setResult(null);
     setLog([]);
     setDone(false);
+    setClosing(null);
     api.dose().then(setDose).finally(() => setLoading(false));
   };
 
@@ -83,10 +87,23 @@ export default function DosePage() {
     setLog((l) => [...l, { item, correct: res.correct, strength: res.strength }]);
   };
 
+  // Finishing closes the dose server-side, which is what credits the day.
+  // The streak is deliberately not claimed by the client: the API counts the
+  // cards actually touched today, so an abandoned session earns nothing.
+  const finish = async () => {
+    setDone(true);
+    try {
+      setClosing(await api.completeDose());
+      await refreshUser();
+    } catch {
+      /* the answers are already saved; the day can be credited on the next visit */
+    }
+  };
+
   const next = () => {
     setResult(null);
     if (idx + 1 < items.length) setIdx(idx + 1);
-    else setDone(true);
+    else finish();
   };
 
   // Skipping does not post an answer, so an item the learner could not attempt
@@ -94,7 +111,7 @@ export default function DosePage() {
   const skip = () => {
     setResult(null);
     if (idx + 1 < items.length) setIdx(idx + 1);
-    else setDone(true);
+    else finish();
   };
 
   if (done) {
@@ -109,6 +126,23 @@ export default function DosePage() {
               ? 'Nothing recorded this time.'
               : 'Each answer moved that word in your queue — tomorrow\'s dose is built from what you just did.'}
           </p>
+
+          {closing?.streakAdvanced && (
+            <div className="dose-streak">
+              <div className="dose-streak-num">{closing.streakCount} 🔥</div>
+              <div className="dose-streak-lbl">
+                {closing.streakCount === 1 ? 'day' : 'days'} in a row
+              </div>
+              {/* Said plainly rather than hidden: a streak the learner can't
+                  account for is worse than a broken one. */}
+              {closing.restDayUsed && (
+                <div className="dose-rest">
+                  Siku ya mapumziko — you missed a day and it's been covered. The next
+                  one is available in a week.
+                </div>
+              )}
+            </div>
+          )}
 
           {log.length > 0 && (
             <div className="dose-summary mt">

@@ -3,6 +3,7 @@ import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useAudioRecorder, RecordingPresets, AudioModule, setAudioModeAsync } from 'expo-audio';
 import { api } from '../api/client';
+import { useAuth } from '../context/AuthContext';
 import { API_BASE_URL } from '../config';
 import { Button, Card, Spinner } from '../components/ui';
 import SpeakButton from '../components/SpeakButton';
@@ -26,12 +27,14 @@ const LABELS = {
 const scoreColor = (s) => (s >= 80 ? colors.success : s >= 55 ? colors.gold : colors.danger);
 
 export default function DoseScreen({ navigation }) {
+  const { refreshUser } = useAuth();
   const [dose, setDose] = useState(null);
   const [loading, setLoading] = useState(true);
   const [idx, setIdx] = useState(0);
   const [result, setResult] = useState(null);
   const [log, setLog] = useState([]);
   const [done, setDone] = useState(false);
+  const [closing, setClosing] = useState(null);   // result of POST /dose/complete
 
   const load = useCallback(() => {
     setLoading(true);
@@ -39,6 +42,7 @@ export default function DoseScreen({ navigation }) {
     setResult(null);
     setLog([]);
     setDone(false);
+    setClosing(null);
     api.dose().then(setDose).catch(() => setDose(null)).finally(() => setLoading(false));
   }, []);
 
@@ -83,10 +87,23 @@ export default function DoseScreen({ navigation }) {
     setLog((l) => [...l, { item, correct: res.correct, strength: res.strength }]);
   };
 
+  // Finishing closes the dose server-side, which is what credits the day. The
+  // streak is not claimed by the client: the API counts the cards actually
+  // touched today, so an abandoned session earns nothing.
+  const finish = async () => {
+    setDone(true);
+    try {
+      setClosing(await api.completeDose());
+      await refreshUser();
+    } catch {
+      /* the answers are saved; the day can be credited on the next visit */
+    }
+  };
+
   const advance = () => {
     setResult(null);
     if (idx + 1 < items.length) setIdx(idx + 1);
-    else setDone(true);
+    else finish();
   };
 
   if (done) {
@@ -101,6 +118,23 @@ export default function DoseScreen({ navigation }) {
               ? 'Nothing recorded this time.'
               : "Each answer moved that word in your queue — tomorrow's dose is built from what you just did."}
           </Text>
+
+          {closing?.streakAdvanced && (
+            <View style={styles.streak}>
+              <Text style={styles.streakNum}>{closing.streakCount} 🔥</Text>
+              <Text style={styles.streakLbl}>
+                {closing.streakCount === 1 ? 'DAY' : 'DAYS'} IN A ROW
+              </Text>
+              {/* Said plainly rather than hidden: a streak the learner cannot
+                  account for is worse than a broken one. */}
+              {closing.restDayUsed && (
+                <Text style={styles.rest}>
+                  Siku ya mapumziko — you missed a day and it has been covered. The
+                  next one is available in a week.
+                </Text>
+              )}
+            </View>
+          )}
 
           {log.length > 0 && (
             <View style={styles.summary}>
@@ -402,6 +436,19 @@ const styles = StyleSheet.create({
   semaScore: { fontSize: 34, fontWeight: '800' },
   note: { color: colors.muted, fontSize: 14, lineHeight: 20 },
   err: { color: colors.danger, fontSize: 13.5, marginTop: 10 },
+
+  streak: {
+    alignSelf: 'stretch', marginTop: 18, padding: 16, borderRadius: radius,
+    backgroundColor: colors.cream, borderWidth: 1, borderColor: colors.line,
+    alignItems: 'center',
+  },
+  streakNum: { fontSize: 30, fontWeight: '800', color: colors.gold },
+  streakLbl: { fontSize: 11, fontWeight: '800', color: colors.muted, letterSpacing: 1.2, marginTop: 4 },
+  // A forgiven miss is stated, never quietly absorbed.
+  rest: {
+    marginTop: 12, paddingTop: 12, borderTopWidth: 1, borderTopColor: colors.line,
+    color: colors.muted, fontSize: 13, lineHeight: 19, textAlign: 'center',
+  },
 
   summary: { alignSelf: 'stretch', marginTop: 16, borderTopWidth: 1, borderTopColor: colors.line, paddingTop: 14 },
   summaryRow: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingVertical: 7 },

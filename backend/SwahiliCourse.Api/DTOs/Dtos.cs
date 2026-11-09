@@ -1,12 +1,13 @@
 namespace SwahiliCourse.Api.DTOs;
 
-public record RegisterDto(string Email, string Password, string DisplayName, int PlanLengthDays, string? CourseId);
+public record RegisterDto(string Email, string Password, string DisplayName, int PlanLengthDays, string? CourseId, string? TimeZoneId);
 public record LoginDto(string Email, string Password);
 public record AuthResponse(string Token, UserDto User);
 
 public record UserDto(
     int Id, string Email, string DisplayName, int PlanLengthDays,
     DateTime StartDate, int StreakCount, int TotalXp, int CurrentDay,
+    string TimeZoneId, bool RestDayAvailable, bool DoneToday,
     CourseDto Course);
 
 // The learner's course direction — drives labels, which side of a vocab pair is
@@ -34,7 +35,7 @@ public record ProgressDto(
 
 // `message` is set instead of items when the learner has not met enough words
 // to build a dose yet.
-public record DoseDto(string Date, int Size, List<DoseItemDto> Items, string? Message);
+public record DoseDto(string Date, int Size, List<DoseItemDto> Items, string? Message, bool AlreadyDoneToday);
 
 // One item as the learner sees it. The correct answer is not here on purpose;
 // it comes back from POST /api/dose/answer once a choice has been made.
@@ -54,3 +55,12 @@ public record DoseAnswerDto(string ItemKey, string Exercise, string? Answer, int
 public record DoseAnswerResultDto(
     string ItemKey, bool Correct, string CorrectAnswer,
     int Box, int Strength, DateTime DueAt, int IntervalDays, int Lapses);
+
+public record UpdateTimeZoneDto(string TimeZoneId);
+
+// Closing a dose. ItemsAnswered is counted server-side from the cards actually
+// touched today, so an empty session cannot claim a streak day.
+public record DoseCompleteResultDto(
+    string Date, int ItemsAnswered,
+    int StreakCount, bool StreakAdvanced, bool RestDayUsed,
+    bool AlreadyCountedToday, bool RestDayAvailable);

@@ -62,6 +62,9 @@ export const api = {
   dose: () => request('/dose'),
   answerDose: (payload) => request('/dose/answer', { method: 'POST', body: payload }),
 
+  completeDose: () => request('/dose/complete', { method: 'POST' }),
+  updateTimeZone: (timeZoneId) => request('/user/timezone', { method: 'PUT', body: { timeZoneId } }),
+
   // Review
   flashcards: () => request('/review/flashcards'),
   practice: (count = 10) => request(`/review/practice?count=${count}`),
