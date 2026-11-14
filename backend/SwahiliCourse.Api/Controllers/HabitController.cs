@@ -7,8 +7,9 @@ namespace SwahiliCourse.Api.Controllers;
 
 // The habit-test read-out, for whoever runs PolePole — not for learners.
 //
-// There is no admin role in this app, and a learner's JWT must not unlock a
-// report about every other learner, so this is gated on a separate key from
+// This is the endpoint for scripts: no account, just a key. (Signed-in admins
+// read the same report in the backoffice, GET /api/admin/habit.) A learner's
+// JWT must not unlock it, so it is gated on a separate key from
 // configuration (Habit:ReportKey) sent in the X-Report-Key header. With no key
 // configured the endpoint answers 404, exactly as if it did not exist: an
 // unconfigured deployment exposes nothing.

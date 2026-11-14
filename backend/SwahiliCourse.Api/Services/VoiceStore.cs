@@ -68,6 +68,21 @@ public class VoiceStore
         return (fileName, new FileInfo(path).Length);
     }
 
+    // Every take a learner kept — for deleting the account they belong to.
+    public void DeleteAll(int userId)
+    {
+        var folder = FolderFor(userId);
+        if (Directory.Exists(folder)) Directory.Delete(folder, recursive: true);
+    }
+
+    // Files and bytes on disk across all learners, for the backoffice.
+    public (int Files, long Bytes) Usage()
+    {
+        if (!Directory.Exists(_root)) return (0, 0);
+        var files = new DirectoryInfo(_root).GetFiles("*", SearchOption.AllDirectories);
+        return (files.Length, files.Sum(f => f.Length));
+    }
+
     public void Delete(int userId, string fileName)
     {
         var path = PathFor(userId, fileName);

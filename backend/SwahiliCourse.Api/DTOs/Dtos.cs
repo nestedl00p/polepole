@@ -14,7 +14,10 @@ public record UserDto(
     string TimeZoneId, bool RestDayAvailable, bool DoneToday,
     // "HH:mm" in the learner's own zone.
     string ReminderLocalTime, bool RemindersEnabled, bool HasPushToken, string? Why,
-    CourseDto Course);
+    CourseDto Course,
+    // Shows the link to the backoffice. Only a hint for the UI: every admin
+    // endpoint checks the account itself.
+    bool IsAdmin = false);
 
 // The learner's course direction — drives labels, which side of a vocab pair is
 // the prompt, and which language is spoken/scored.

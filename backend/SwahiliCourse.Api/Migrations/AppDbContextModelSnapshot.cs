@@ -17,6 +17,44 @@ namespace SwahiliCourse.Api.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.0");
 
+            modelBuilder.Entity("SwahiliCourse.Api.Models.AdminAuditEntry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AdminEmail")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("AdminUserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Detail")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TargetEmail")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("TargetUserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedAt");
+
+                    b.HasIndex("TargetUserId");
+
+                    b.ToTable("AdminAudit");
+                });
+
             modelBuilder.Entity("SwahiliCourse.Api.Models.CardState", b =>
                 {
                     b.Property<int>("Id")
@@ -181,6 +219,12 @@ namespace SwahiliCourse.Api.Migrations
                     b.Property<DateTime?>("HabitAskedAt")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsDisabled")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime?>("LastActivityDate")
                         .HasColumnType("TEXT");
 
@@ -191,6 +235,9 @@ namespace SwahiliCourse.Api.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("LastRestDayAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("LastSeenAt")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("LastShareOfferAt")

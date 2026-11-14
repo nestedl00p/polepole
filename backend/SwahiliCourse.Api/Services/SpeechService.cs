@@ -67,6 +67,35 @@ public class SpeechService
         });
     }
 
+    // Host of the sidecar, without path or credentials — safe to show an admin.
+    public string? Host => Uri.TryCreate(WhisperUrl, UriKind.Absolute, out var uri) ? uri.Authority : null;
+
+    // A live check for the backoffice. Short timeout on purpose: a sidecar
+    // that has scaled to zero will miss it, and the caller says so rather
+    // than holding the page for the half minute a cold start takes.
+    public async Task<(bool Reachable, string Detail, long Milliseconds)> PingAsync(CancellationToken ct)
+    {
+        if (!IsConfigured) return (false, "Speech scoring is not enabled.", 0);
+
+        var started = Environment.TickCount64;
+        try
+        {
+            var client = _http.CreateClient();
+            client.Timeout = TimeSpan.FromSeconds(6);
+            using var resp = await client.GetAsync($"{WhisperUrl}/health", ct);
+            var ms = Environment.TickCount64 - started;
+            return resp.IsSuccessStatusCode
+                ? (true, "Sidecar answered its health check.", ms)
+                : (false, $"Sidecar answered {(int)resp.StatusCode}.", ms);
+        }
+        catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException)
+        {
+            return (false,
+                "No answer within 6 seconds. If the sidecar scales to zero this is normal when idle — it is waking now; try again in half a minute.",
+                Environment.TickCount64 - started);
+        }
+    }
+
     // Whisper language code for the course's target language (what the learner
     // is speaking). Speech:Language still overrides globally if set.
     private string LanguageFor(Models.Course? course) =>

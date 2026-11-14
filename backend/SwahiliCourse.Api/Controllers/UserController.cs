@@ -51,15 +51,7 @@ public class UserController : AuthedController
         var u = await _db.Users.FindAsync(CurrentUserId);
         if (u is null) return NotFound();
 
-        var progress = _db.LessonProgress.Where(p => p.UserId == u.Id);
-        _db.LessonProgress.RemoveRange(progress);
-
-        u.StartDate = DateTime.UtcNow;
-        u.StreakCount = 0;
-        u.TotalXp = 0;
-        u.LastActivityDate = null;
-        u.LastRestDayAt = null;
-        u.LastDoseAt = null;
+        AccountAdmin.ResetProgress(_db, u, DateTime.UtcNow);
         await _db.SaveChangesAsync();
 
         return UserMapper.ToDto(u, _pace, _streaks);

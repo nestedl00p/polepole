@@ -22,6 +22,21 @@ public class User
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
+    // --- Backoffice ---
+    // May use /api/admin and the /admin area. Read from this row on every
+    // request rather than baked into the 30-day token, so revoking it takes
+    // effect at once. Granted by another admin, or by Admin:Emails at startup.
+    public bool IsAdmin { get; set; }
+
+    // Suspended by an admin: sign-in is refused and existing tokens stop
+    // working, but nothing is deleted, so lifting it restores the account as
+    // it was.
+    public bool IsDisabled { get; set; }
+
+    // Last authenticated request, to within SeenThrottle (see Program.cs).
+    // Null for an account that has not been back since this was added.
+    public DateTime? LastSeenAt { get; set; }
+
     // The learner's IANA time zone ("Africa/Dar_es_Salaam"), sent by the client.
     // Streak days are counted in this zone rather than UTC. Defaults to UTC so
     // accounts that predate this behave exactly as they did before.

@@ -121,6 +121,47 @@ export const api = {
   // Review
   flashcards: () => request('/review/flashcards'),
   practice: (count = 10) => request(`/review/practice?count=${count}`),
+
+  // The backoffice (/admin). Every one of these is refused server-side for an
+  // account that is not an admin, whatever the UI shows.
+  admin: {
+    overview: () => request('/admin/overview'),
+    users: (params) => request(`/admin/users?${query(params)}`),
+    user: (id) => request(`/admin/users/${id}`),
+    updateUser: (id, payload) => request(`/admin/users/${id}`, { method: 'PUT', body: payload }),
+    setRole: (id, isAdmin) => request(`/admin/users/${id}/role`, { method: 'POST', body: { isAdmin } }),
+    setStatus: (id, disabled) => request(`/admin/users/${id}/status`, { method: 'POST', body: { disabled } }),
+    setPassword: (id, newPassword) => request(`/admin/users/${id}/password`, { method: 'POST', body: { newPassword } }),
+    resetProgress: (id) => request(`/admin/users/${id}/reset-progress`, { method: 'POST' }),
+    deleteUser: (id) => request(`/admin/users/${id}`, { method: 'DELETE' }),
+    // Fetched with the token and saved from a blob: a plain link could not
+    // send the Authorization header.
+    exportUser: async (id) => {
+      const res = await fetch(`${BASE}/admin/users/${id}/export`, { headers: { Authorization: `Bearer ${getToken()}` } });
+      if (!res.ok) throw new Error(`Could not export that account (${res.status})`);
+      const url = URL.createObjectURL(await res.blob());
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `polepole-account-${id}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    },
+    content: () => request('/admin/content'),
+    habit: () => request('/admin/habit'),
+    system: () => request('/admin/system'),
+    pingSpeech: () => request('/admin/system/speech/ping', { method: 'POST' }),
+    clearTtsCache: () => request('/admin/system/tts-cache/clear', { method: 'POST' }),
+    audit: (page = 1) => request(`/admin/audit?page=${page}`),
+  },
 };
+
+// Query string from an object, leaving out anything empty.
+function query(params = {}) {
+  const q = new URLSearchParams();
+  Object.entries(params).forEach(([k, v]) => {
+    if (v !== undefined && v !== null && v !== '') q.set(k, v);
+  });
+  return q.toString();
+}
 
 export { getToken };
