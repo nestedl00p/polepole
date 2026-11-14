@@ -5,12 +5,16 @@ import AdjectiveBuilder from './AdjectiveBuilder';
 import NounSorter from './NounSorter';
 import SentenceBuilder from './SentenceBuilder';
 import PronunciationDrill from './PronunciationDrill';
+import LessonTable from './LessonTable';
+import Dialogue from './Dialogue';
+import QuickCheck from './QuickCheck';
 // English-course builders (the Swahili concord builders have no English analogue).
 import ArticleBuilder from './ArticleBuilder';
 import PluralBuilder from './PluralBuilder';
 import EnglishVerbBuilder from './EnglishVerbBuilder';
 
-// Renders a single content block from a lesson (heading, paragraph, callout, table, dialogue, list, verbBuilder, possessiveBuilder).
+// Renders a single content block from a lesson. New block types must be
+// registered BOTH here and in the mobile ContentBlock.js.
 export default function ContentBlock({ block }) {
   switch (block.type) {
     case 'heading':
@@ -69,35 +73,13 @@ export default function ContentBlock({ block }) {
       );
 
     case 'table':
-      return (
-        <div className="block">
-          <div className="table-wrap">
-            <table className="swtable">
-              <thead>
-                <tr>{(block.tableHeaders || []).map((h, i) => <th key={i}>{h}</th>)}</tr>
-              </thead>
-              <tbody>
-                {(block.tableRows || []).map((row, ri) => (
-                  <tr key={ri}>{row.map((c, ci) => <td key={ci}>{c}</td>)}</tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      );
+      return <LessonTable block={block} />;
 
     case 'dialogue':
-      return (
-        <div className="block">
-          {(block.dialogue || []).map((d, i) => (
-            <div className="dialogue-line" key={i}>
-              <span className="sp">{d.speaker}: </span>
-              <span className="sw">{d.swahili}</span>
-              <div className="en">{d.english}</div>
-            </div>
-          ))}
-        </div>
-      );
+      return <Dialogue block={block} />;
+
+    case 'quickCheck':
+      return <QuickCheck block={block} />;
 
     default:
       return null;

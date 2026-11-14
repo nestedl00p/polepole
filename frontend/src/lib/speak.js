@@ -33,9 +33,10 @@ function getVoices() {
   return voicesPromise;
 }
 
+// Resolves when the utterance finishes (or is cancelled / errors).
 function speakWithBrowser(text, rate) {
-  if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
-  getVoices().then((voices) => {
+  if (typeof window === 'undefined' || !('speechSynthesis' in window)) return Promise.resolve();
+  return getVoices().then((voices) => new Promise((resolve) => {
     const prefix = course.ttsLocale.split('-')[0];
     const re = new RegExp(`^${prefix}\\b|^${prefix}-`, 'i');
     const match = voices.find((v) => re.test(v.lang));
@@ -44,8 +45,10 @@ function speakWithBrowser(text, rate) {
     u.lang = match ? match.lang : course.ttsLocale;
     if (match) u.voice = match;
     u.rate = rate;
+    u.onend = resolve;
+    u.onerror = resolve;
     window.speechSynthesis.speak(u);
-  });
+  }));
 }
 
 // ---- backend cloud audio (preferred) ----
@@ -93,4 +96,38 @@ export async function speakSwahili(text, { rate = 0.8 } = {}) {
     }
   }
   speakWithBrowser(text, rate);
+}
+
+// Like speakSwahili, but the promise resolves only once the clip has finished
+// playing — used to play a whole dialogue line by line. A timeout guards
+// against a voice that never reports its end.
+export async function speakAndWait(text, { rate = 0.8 } = {}) {
+  if (!text || typeof window === 'undefined') return;
+  const guard = new Promise((resolve) => setTimeout(resolve, 4000 + text.length * 150));
+
+  const url = await getBackendClip(text);
+  if (url) {
+    try {
+      if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
+      const audio = new Audio(url);
+      currentAudio = audio;
+      const ended = new Promise((resolve) => {
+        audio.onended = resolve;
+        audio.onpause = resolve; // stopSpeaking() or another clip took over
+        audio.onerror = resolve;
+      });
+      await audio.play();
+      await Promise.race([ended, guard]);
+      return;
+    } catch {
+      // fall through to the built-in voice
+    }
+  }
+  await Promise.race([speakWithBrowser(text, rate), guard]);
+}
+
+export function stopSpeaking() {
+  if (typeof window === 'undefined') return;
+  if (currentAudio) { try { currentAudio.pause(); } catch { /* already stopped */ } }
+  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
 }

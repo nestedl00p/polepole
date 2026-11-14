@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { api } from '../api/client';
 import ContentBlock from '../components/ContentBlock';
 import SpeakButton from '../components/SpeakButton';
+import VocabMatch from '../components/VocabMatch';
 import { useAuth } from '../context/AuthContext';
 
 export default function LessonPage() {
@@ -25,6 +26,11 @@ export default function LessonPage() {
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
   }, [id]);
+
+  const matchPairs = useMemo(
+    () => (lesson?.vocabulary || []).map((v) => ({ learning: learning(v), known: known(v) })),
+    [lesson, learnEnglish], // eslint-disable-line react-hooks/exhaustive-deps
+  );
 
   if (loading) return <div className="spinner" />;
   if (error) return (
@@ -62,6 +68,7 @@ export default function LessonPage() {
               </div>
             ))}
           </div>
+          {matchPairs.length >= 3 && <VocabMatch pairs={matchPairs} />}
         </div>
       )}
 

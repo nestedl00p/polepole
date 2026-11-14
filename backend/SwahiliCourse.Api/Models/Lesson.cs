@@ -25,7 +25,7 @@ public class Lesson
 
 public class ContentBlock
 {
-    // type: "heading" | "paragraph" | "callout" | "table" | "dialogue" | "list" | "verbBuilder"
+    // type: "heading" | "paragraph" | "callout" | "table" | "dialogue" | "list" | "quickCheck" | builders…
     public string Type { get; set; } = "paragraph";
     public string? Heading { get; set; }
     public string? Text { get; set; }
@@ -52,6 +52,18 @@ public class ContentBlock
     // sentenceBuilder config — the sentences to reorder. Without this the
     // component silently falls back to its built-in Swahili sentences.
     public List<SentenceChallenge>? Challenges { get; set; }
+
+    // quickCheck config — in-lesson practice questions with instant feedback.
+    // Unlike Quiz, answers are sent to the client: this is ungraded practice.
+    public List<CheckQuestion>? Questions { get; set; }
+}
+
+public class CheckQuestion
+{
+    public string Prompt { get; set; } = string.Empty;
+    public List<string> Options { get; set; } = new();
+    public string Answer { get; set; } = string.Empty;
+    public string? Explain { get; set; }
 }
 
 public class SentenceChallenge

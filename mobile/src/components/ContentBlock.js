@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native';
-import { colors, radius, shadow } from '../theme';
+import { colors } from '../theme';
 import VerbBuilder from './VerbBuilder';
 import PossessiveBuilder from './PossessiveBuilder';
 import QuestionBuilder from './QuestionBuilder';
@@ -7,14 +7,17 @@ import AdjectiveBuilder from './AdjectiveBuilder';
 import NounSorter from './NounSorter';
 import SentenceBuilder from './SentenceBuilder';
 import PronunciationDrill from './PronunciationDrill';
+import LessonTable from './LessonTable';
+import Dialogue from './Dialogue';
+import QuickCheck from './QuickCheck';
 // English-course builders (the Swahili concord builders have no English analogue).
 import ArticleBuilder from './ArticleBuilder';
 import PluralBuilder from './PluralBuilder';
 import EnglishVerbBuilder from './EnglishVerbBuilder';
 
 // Renders a single lesson content block.
-// Static types: heading, paragraph, callout, list, table, dialogue.
-// Interactive types: verbBuilder, possessiveBuilder, questionBuilder,
+// Static types: heading, paragraph, callout, list.
+// Interactive types: table, dialogue, quickCheck, verbBuilder, possessiveBuilder, questionBuilder,
 // adjectiveBuilder, nounSorter, sentenceBuilder, pronunciationDrill.
 // New block types must be registered BOTH here and in the web ContentBlock.jsx.
 export default function ContentBlock({ block }) {
@@ -87,48 +90,14 @@ export default function ContentBlock({ block }) {
         </View>
       );
 
-    case 'table': {
-      // Four or more columns on a phone leaves ~55pt of text per cell at the
-      // normal padding, which breaks ordinary words mid-word.
-      const dense = (block.tableHeaders || []).length >= 4;
-      return (
-        <View style={styles.block}>
-          <View style={styles.table}>
-            <View style={[styles.tr, styles.theadRow]}>
-              {(block.tableHeaders || []).map((h, i) => (
-                <View key={i} style={[styles.cell, dense && styles.cellDense]}>
-                  <Text style={[styles.th, dense && styles.textDense]}>{h}</Text>
-                </View>
-              ))}
-            </View>
-            {(block.tableRows || []).map((row, ri) => (
-              <View key={ri} style={[styles.tr, ri % 2 === 1 && styles.trAlt]}>
-                {row.map((c, ci) => (
-                  <View key={ci} style={[styles.cell, dense && styles.cellDense]}>
-                    <Text style={[styles.td, ci === 0 && styles.tdFirst, dense && styles.textDense]}>{c}</Text>
-                  </View>
-                ))}
-              </View>
-            ))}
-          </View>
-        </View>
-      );
-    }
+    case 'table':
+      return <LessonTable block={block} />;
 
     case 'dialogue':
-      return (
-        <View style={styles.block}>
-          {(block.dialogue || []).map((d, i) => (
-            <View key={i} style={styles.dialogueLine}>
-              <Text style={styles.dialogueTop}>
-                <Text style={styles.speaker}>{d.speaker}: </Text>
-                <Text style={styles.swahili}>{d.swahili}</Text>
-              </Text>
-              <Text style={styles.english}>{d.english}</Text>
-            </View>
-          ))}
-        </View>
-      );
+      return <Dialogue block={block} />;
+
+    case 'quickCheck':
+      return <QuickCheck block={block} />;
 
     default:
       return null;
@@ -162,35 +131,4 @@ const styles = StyleSheet.create({
   listItem: { flexDirection: 'row', marginBottom: 5, paddingLeft: 4 },
   bullet: { color: colors.teal, marginRight: 10, fontSize: 16, lineHeight: 23 },
   listText: { flex: 1, color: colors.ink, fontSize: 15.5, lineHeight: 23 },
-
-  table: {
-    borderRadius: 8,
-    overflow: 'hidden',
-    borderWidth: 1,
-    borderColor: colors.line,
-    ...shadow,
-  },
-  tr: { flexDirection: 'row' },
-  theadRow: { backgroundColor: colors.teal },
-  trAlt: { backgroundColor: colors.light },
-  cell: { flex: 1, paddingVertical: 9, paddingHorizontal: 13, borderBottomWidth: 1, borderBottomColor: colors.line },
-  cellDense: { paddingHorizontal: 7 },
-  textDense: { fontSize: 12.5 },
-  th: { color: '#fff', fontWeight: '700', fontSize: 13.5 },
-  td: { color: colors.ink, fontSize: 14 },
-  tdFirst: { fontWeight: '700', color: colors.navy },
-
-  dialogueLine: {
-    paddingVertical: 10,
-    paddingHorizontal: 14,
-    borderRadius: 10,
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderColor: colors.line,
-    marginBottom: 8,
-  },
-  dialogueTop: { fontSize: 15 },
-  speaker: { fontWeight: '800', color: colors.tealDark },
-  swahili: { fontWeight: '600', color: colors.ink },
-  english: { color: colors.muted, fontSize: 13.5, fontStyle: 'italic', marginTop: 2 },
 });
