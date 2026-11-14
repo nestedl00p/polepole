@@ -2,6 +2,7 @@
   "expo": {
     "name": "PolePole",
     "slug": "polepole",
+    "scheme": "polepole",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
@@ -21,7 +22,8 @@
       "bundler": "metro"
     },
     "plugins": [
-      "expo-audio"
+      "expo-audio",
+      "expo-notifications"
     ]
   }
 }

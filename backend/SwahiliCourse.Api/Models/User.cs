@@ -46,6 +46,34 @@ public class User
     // a long-standing learner.
     public string MilestonesSeen { get; set; } = string.Empty;
 
+    // --- Reminders ---
+    // One push a day at a time the learner picked, in their own zone. Stored
+    // as a wall-clock time so it stays "8 in the morning" across DST and travel.
+    public TimeOnly ReminderLocalTime { get; set; } = new(8, 0);
+    public bool RemindersEnabled { get; set; } = true;
+    // Expo push token for the learner's phone. Null on web-only accounts, where
+    // the browser shows the reminder itself.
+    public string? PushToken { get; set; }
+    // When the last reminder went out (or was shown by the browser). This is
+    // what an open is compared against to decide whether it was prompted.
+    public DateTime? LastNotifiedAt { get; set; }
+    // When the learner first chose a reminder time themselves — a step on the
+    // hypothesised habit path, so it is recorded rather than inferred.
+    public DateTime? ReminderChosenAt { get; set; }
+    // The "want me to stop reminding you?" offer is made once, ever.
+    public DateTime? ReminderOffOfferedAt { get; set; }
+
+    // trip | family | work | curiosity — asked after the first dose. Used in
+    // the copy that follows a lapse.
+    public string? Why { get; set; }
+
+    // The weekly "send someone a sentence" offer: when it was last made.
+    public DateTime? LastShareOfferAt { get; set; }
+
+    // The day-30 question, "what makes you open this?" — asked once.
+    public DateTime? HabitAskedAt { get; set; }
+    public string? HabitAnswer { get; set; }
+
     public ICollection<LessonProgress> Progress { get; set; } = new List<LessonProgress>();
     public ICollection<CardState> Cards { get; set; } = new List<CardState>();
 }

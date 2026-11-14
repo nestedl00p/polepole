@@ -10,6 +10,8 @@ public class AppDbContext : DbContext
     public DbSet<User> Users => Set<User>();
     public DbSet<LessonProgress> LessonProgress => Set<LessonProgress>();
     public DbSet<CardState> CardStates => Set<CardState>();
+    public DbSet<PracticeDay> PracticeDays => Set<PracticeDay>();
+    public DbSet<VoiceTake> VoiceTakes => Set<VoiceTake>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -42,6 +44,27 @@ public class AppDbContext : DbContext
             .HasOne(c => c.User)
             .WithMany(u => u.Cards)
             .HasForeignKey(c => c.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // One row per learner per local day.
+        modelBuilder.Entity<PracticeDay>()
+            .HasIndex(d => new { d.UserId, d.Day })
+            .IsUnique();
+
+        modelBuilder.Entity<PracticeDay>()
+            .HasOne(d => d.User)
+            .WithMany()
+            .HasForeignKey(d => d.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // "This learner's takes of this word, oldest first."
+        modelBuilder.Entity<VoiceTake>()
+            .HasIndex(v => new { v.UserId, v.ItemKey, v.CreatedAt });
+
+        modelBuilder.Entity<VoiceTake>()
+            .HasOne(v => v.User)
+            .WithMany()
+            .HasForeignKey(v => v.UserId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -46,6 +46,8 @@ public class CardState
 
     // "Nitakumbuka hii" — pinned items get priority in future Doses.
     public bool Pinned { get; set; }
+    // When it was pinned — "pinned something in week one" is a habit-path step.
+    public DateTime? PinnedAt { get; set; }
 
     public DateTime? LastSeenAt { get; set; }
 

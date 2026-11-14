@@ -19,7 +19,7 @@ const WEEKS = [
 ];
 
 const STEPS = [
-  { n: '1', title: 'Create your free account', body: 'Sign up and choose the pace that fits your life.' },
+  { n: '1', title: 'Try three words first', body: 'No sign-up. If you want to keep going, an account saves what you just did.' },
   { n: '2', title: 'Learn a lesson a day', body: 'Read, listen, and absorb bite-sized lessons that unlock on schedule.' },
   { n: '3', title: 'Practice & prove it', body: 'Drill flashcards and pass the quiz to unlock the next lesson.' },
 ];
@@ -35,7 +35,9 @@ export default function LandingPage() {
   const { user } = useAuth();
   const primaryCta = user
     ? { to: '/app', label: 'Go to my dashboard' }
-    : { to: '/login', label: 'Start learning free' };
+    // Straight into three words of Swahili, not into a sign-up form: the
+    // account is offered afterwards, as a way to keep what they just did.
+    : { to: '/try', label: 'Try 3 words now' };
 
   return (
     <div className="lp">
@@ -55,7 +57,7 @@ export default function LandingPage() {
             ) : (
               <>
                 <Link to="/login" className="btn btn-ghost btn-sm">Log in</Link>
-                <Link to="/login" className="btn btn-gold btn-sm">Start free</Link>
+                <Link to="/try" className="btn btn-gold btn-sm">Start free</Link>
               </>
             )}
           </div>
@@ -77,7 +79,7 @@ export default function LandingPage() {
               <Link to={primaryCta.to} className="btn btn-gold">{primaryCta.label}</Link>
               <a href="#curriculum" className="btn btn-ghost">See the curriculum</a>
             </div>
-            <p className="lp-trust">Free while in beta · No credit card · Learn on web &amp; mobile</p>
+            <p className="lp-trust">30 seconds · No account needed · Free while in beta</p>
           </div>
           <div className="lp-hero-art">
             <div className="lp-hero-badge"><Logo size={150} wordmark={false} /></div>

@@ -37,6 +37,23 @@ async function request(path, { method = 'GET', body, auth = true } = {}) {
   return data;
 }
 
+// multipart/form-data: the browser sets the Content-Type (with its boundary),
+// so this cannot go through request(), which always sends JSON.
+async function upload(path, form) {
+  const res = await fetch(`${BASE}${path}`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${getToken()}` },
+    body: form,
+  });
+  const data = await res.json().catch(() => null);
+  if (!res.ok) {
+    const err = new Error((data && data.message) || `Request failed (${res.status})`);
+    err.status = res.status;
+    throw err;
+  }
+  return data;
+}
+
 export const api = {
   // Courses (learning directions) — public, used by the sign-up picker
   listCourses: () => request('/courses', { auth: false }),
@@ -64,6 +81,42 @@ export const api = {
 
   completeDose: () => request('/dose/complete', { method: 'POST' }),
   updateTimeZone: (timeZoneId) => request('/user/timezone', { method: 'PUT', body: { timeZoneId } }),
+
+  // The Dose screen was opened — distinct from fetching the dose, which the
+  // dashboard also does. The server uses it to tell a prompted open from an
+  // unprompted one.
+  openDose: () => request('/dose/open', { method: 'POST' }),
+
+  // The pre-signup taster: three items and a proverb, no account.
+  taster: (course) => request(`/dose/taster?course=${encodeURIComponent(course)}`, { auth: false }),
+  answerTaster: (payload) => request('/dose/taster/answer', { method: 'POST', body: payload, auth: false }),
+
+  // Reminders, the why, and the day-30 question. Any field left out of
+  // updateReminders is left as it is.
+  updateReminders: (payload) => request('/user/reminders', { method: 'PUT', body: payload }),
+  reminderShown: () => request('/user/reminders/shown', { method: 'POST' }),
+  updateWhy: (why) => request('/user/why', { method: 'PUT', body: { why } }),
+  habitAnswer: (answer) => request('/user/habit-answer', { method: 'POST', body: { answer } }),
+
+  // "Nitakumbuka hii" — pin a card so future doses favour it.
+  pinCard: (itemKey, pinned) => request('/cards/pin', { method: 'POST', body: { itemKey, pinned } }),
+
+  // Kept pronunciation takes. Audio is fetched with the token and played from
+  // a blob, because an <audio src> cannot send an Authorization header.
+  voiceTakes: (itemKey) => request(`/voice?itemKey=${encodeURIComponent(itemKey)}`),
+  keepVoiceTake: (blob, itemKey, score) => {
+    const form = new FormData();
+    const ext = (blob.type || '').includes('ogg') ? 'ogg' : 'webm';
+    form.append('file', blob, `take.${ext}`);
+    form.append('itemKey', itemKey);
+    form.append('score', String(Math.round(score)));
+    return upload('/voice', form);
+  },
+  voiceAudio: async (id) => {
+    const res = await fetch(`${BASE}/voice/${id}/audio`, { headers: { Authorization: `Bearer ${getToken()}` } });
+    if (!res.ok) throw new Error(`Could not load that recording (${res.status})`);
+    return res.blob();
+  },
 
   // Review
   flashcards: () => request('/review/flashcards'),

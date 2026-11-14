@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, Pressable, Share, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useAudioRecorder, RecordingPresets, AudioModule, setAudioModeAsync } from 'expo-audio';
 import { api } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import { API_BASE_URL } from '../config';
-import { Button, Card, Spinner } from '../components/ui';
+import { Button, Card, Spinner, Input } from '../components/ui';
+import WeekStrip from '../components/WeekStrip';
 import SpeakButton from '../components/SpeakButton';
 import { colors, radius, shadow } from '../theme';
 
@@ -56,7 +57,13 @@ export default function DoseScreen({ navigation }) {
   }, []);
 
   // Reload on focus so a lesson finished in between shows up in the queue.
-  useFocusEffect(useCallback(() => { load(); }, [load]));
+  // Coming to this screen is also what counts as opening the Dose — the
+  // server compares it with when the day's reminder went out. An "endelea"
+  // round calls load() directly and so is not counted as a second open.
+  useFocusEffect(useCallback(() => {
+    load();
+    api.openDose().catch(() => {});
+  }, [load]));
 
   if (loading) return <Spinner />;
 
@@ -141,6 +148,8 @@ export default function DoseScreen({ navigation }) {
             <Text style={styles.xpTotal}>+{closing.xpEarned} XP for finishing</Text>
           )}
 
+          <WeekStrip week={closing?.week} style={styles.mt} />
+
           {closing?.streakAdvanced && (
             <View style={styles.streak}>
               <Text style={styles.streakNum}>{closing.streakCount} 🔥</Text>
@@ -165,7 +174,10 @@ export default function DoseScreen({ navigation }) {
                   <Text style={{ color: e.correct ? colors.success : colors.danger, fontWeight: '800' }}>
                     {e.correct ? '✓' : '✗'}
                   </Text>
-                  <Text style={styles.summaryWord}>{e.item.itemKey}</Text>
+                  {/* A proverb's key is an index ("methali:3"), not something to show. */}
+                  <Text style={styles.summaryWord} numberOfLines={1}>
+                    {e.item.kind === 'methali' ? (e.item.target || 'Methali') : e.item.itemKey}
+                  </Text>
                   <View style={styles.strengthTrack}>
                     <View style={[styles.strengthFill, { width: `${e.strength}%` }]} />
                   </View>
@@ -174,6 +186,10 @@ export default function DoseScreen({ navigation }) {
               ))}
             </View>
           )}
+
+          {/* After the reward, never before it — and the server sends at most
+              one of these per completion. */}
+          {closing && <ClosingAsk closing={closing} onChanged={refreshUser} />}
 
           <Button
             title="Done for today"
@@ -216,6 +232,7 @@ export default function DoseScreen({ navigation }) {
                 Imehifadhiwa — saved to your deck  +{result.xpEarned} XP
               </Text>
             )}
+            <PinButton key={item.itemKey} itemKey={item.itemKey} initial={item.pinned} />
             <Button
               title={idx + 1 < items.length ? 'Next →' : 'Finish'}
               variant="gold"
@@ -238,6 +255,7 @@ export default function DoseScreen({ navigation }) {
               </View>
               <Text style={styles.strengthPct}>{result.strength}%</Text>
             </View>
+            <PinButton key={item.itemKey} itemKey={item.itemKey} initial={item.pinned} />
             <Text style={[styles.muted, styles.when]}>
               {result.intervalDays === 0
                 ? 'Coming back again shortly.'
@@ -359,6 +377,8 @@ function SemaItem({ item, result, onAnswered, onSkip }) {
   const [assessed, setAssessed] = useState(null);
   const [enabled, setEnabled] = useState(null);
   const [err, setErr] = useState(null);
+  const [takeUri, setTakeUri] = useState(null);   // the recording just scored
+  const [kept, setKept] = useState('no');         // no | saving | yes | error
   const recorder = useAudioRecorder(RecordingPresets.HIGH_QUALITY);
   const elapsed = useElapsed(item.itemKey);
 
@@ -369,7 +389,22 @@ function SemaItem({ item, result, onAnswered, onSkip }) {
       .catch(() => setEnabled(false));
   }, []);
 
-  useEffect(() => { setPhase('idle'); setAssessed(null); setErr(null); }, [item.itemKey]);
+  useEffect(() => {
+    setPhase('idle'); setAssessed(null); setErr(null); setTakeUri(null); setKept('no');
+  }, [item.itemKey]);
+
+  // Keeping a take is the learner's own act, one tap, after they have seen
+  // the score. Nothing is stored unless they ask.
+  const keep = async () => {
+    if (!takeUri || kept === 'saving' || kept === 'yes') return;
+    setKept('saving');
+    try {
+      await api.keepVoiceTake(takeUri, item.itemKey, assessed.score);
+      setKept('yes');
+    } catch {
+      setKept('error');
+    }
+  };
 
   const startRec = async () => {
     setErr(null);
@@ -397,6 +432,7 @@ function SemaItem({ item, result, onAnswered, onSkip }) {
       if (!res.ok) throw new Error('assess failed');
       const a = await res.json();
       setAssessed(a);
+      setTakeUri(recorder.uri);
       onAnswered(await api.answerDose({
         itemKey: item.itemKey,
         exercise: 'sema',
@@ -446,6 +482,18 @@ function SemaItem({ item, result, onAnswered, onSkip }) {
             </View>
           )}
 
+          {assessed && takeUri && (
+            <Button
+              title={kept === 'yes' ? '✓ Kept' : kept === 'saving' ? 'Saving…' : 'Hifadhi sauti — keep this take'}
+              variant="ghost"
+              size="sm"
+              style={styles.mt}
+              disabled={kept === 'saving' || kept === 'yes'}
+              onPress={keep}
+            />
+          )}
+          {kept === 'error' && <Text style={styles.err}>Couldn't save that one.</Text>}
+
           {phase === 'error' && (
             <>
               <Text style={styles.err}>Couldn't reach the pronunciation service.</Text>
@@ -462,7 +510,148 @@ function SemaItem({ item, result, onAnswered, onSkip }) {
   );
 }
 
+// "Nitakumbuka hii" — I will remember this. One tap to make a card the
+// learner's own; pinned cards are favoured when future doses are built.
+function PinButton({ itemKey, initial }) {
+  const [pinned, setPinned] = useState(!!initial);
+  const [busy, setBusy] = useState(false);
+
+  const toggle = async () => {
+    if (busy) return;
+    setBusy(true);
+    try {
+      const res = await api.pinCard(itemKey, !pinned);
+      setPinned(res.pinned);
+    } catch {
+      /* leave it as it was */
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <Pressable
+      onPress={toggle}
+      disabled={busy}
+      accessibilityRole="button"
+      accessibilityState={{ selected: pinned }}
+      style={[styles.pin, pinned && styles.pinOn]}
+    >
+      <Text style={[styles.pinText, pinned && styles.pinTextOn]}>
+        📌 {pinned ? 'Pinned — it will come up more often' : 'Nitakumbuka hii — pin this'}
+      </Text>
+    </Pressable>
+  );
+}
+
+// The one thing the completion card may ask. Each is dismissable in a tap,
+// and none comes back: the server records an ask as made when it sends it.
+function ClosingAsk({ closing, onChanged }) {
+  const [state, setState] = useState('open'); // open | done | dismissed
+  const [answer, setAnswer] = useState('');
+
+  if (state === 'dismissed') return null;
+
+  // A product that offers to stop notifying you is one confident it has
+  // built a habit rather than rented one.
+  if (closing.offerStopReminders) {
+    const stop = async () => {
+      try { await api.updateReminders({ enabled: false }); await onChanged(); } catch { /* Settings has the switch */ }
+      setState('done');
+    };
+    return (
+      <View style={styles.ask}>
+        {state === 'done' ? (
+          <Text style={styles.askDone}>Sawa — no more reminders. You can turn them back on in Settings.</Text>
+        ) : (
+          <>
+            <Text style={styles.askTitle}>You've started on your own 14 days running.</Text>
+            <Text style={styles.askBody}>Want me to stop reminding you?</Text>
+            <Button title="Yes, stop reminding me" size="sm" onPress={stop} />
+            <Button title="Keep them" variant="ghost" size="sm" style={styles.askGap} onPress={() => setState('dismissed')} />
+          </>
+        )}
+      </View>
+    );
+  }
+
+  if (closing.askHabitQuestion) {
+    const send = async () => {
+      if (!answer.trim()) return;
+      try { await api.habitAnswer(answer.trim()); } catch { /* not worth interrupting them over */ }
+      setState('done');
+    };
+    return (
+      <View style={styles.ask}>
+        {state === 'done' ? (
+          <Text style={styles.askDone}>Asante — that helps.</Text>
+        ) : (
+          <>
+            <Text style={styles.askTitle}>One question, once.</Text>
+            <Text style={styles.askBody}>What makes you open this?</Text>
+            <Input value={answer} onChangeText={setAnswer} maxLength={280} placeholder="In your own words" style={styles.askInput} />
+            <Button title="Send" size="sm" disabled={!answer.trim()} onPress={send} />
+            <Button title="Skip" variant="ghost" size="sm" style={styles.askGap} onPress={() => setState('dismissed')} />
+          </>
+        )}
+      </View>
+    );
+  }
+
+  // Weekly at most, and only on the learner's say-so: the words leave the
+  // phone through the system share sheet, to whoever they pick. The app sends
+  // nothing by itself. (The web client can attach the learner's own recording;
+  // here it is the text.)
+  if (closing.shareOffer) {
+    const offer = closing.shareOffer;
+    const send = async () => {
+      try {
+        const res = await Share.share({ message: offer.gloss ? `${offer.text} — "${offer.gloss}"` : offer.text });
+        if (res.action !== Share.dismissedAction) setState('done');
+      } catch {
+        /* closing the sheet is a "no", not an error */
+      }
+    };
+    return (
+      <View style={styles.ask}>
+        <Text style={styles.askTitle}>You can say this now.</Text>
+        <Text style={styles.askQuote}>{offer.text}</Text>
+        {offer.gloss ? <Text style={styles.askBody}>{offer.gloss}</Text> : null}
+        {state === 'done' ? (
+          <Text style={styles.askDone}>Sent on its way.</Text>
+        ) : (
+          <>
+            <Button title="Send it to someone" size="sm" onPress={send} />
+            <Button title="Not now" variant="ghost" size="sm" style={styles.askGap} onPress={() => setState('dismissed')} />
+          </>
+        )}
+      </View>
+    );
+  }
+
+  return null;
+}
+
 const styles = StyleSheet.create({
+  pin: {
+    alignSelf: 'flex-start', marginTop: 12, paddingVertical: 8, paddingHorizontal: 12,
+    borderRadius: 999, borderWidth: 1.5, borderColor: colors.line, backgroundColor: '#fff',
+  },
+  pinOn: { borderColor: colors.gold, backgroundColor: colors.goldTint },
+  pinText: { fontSize: 13.5, fontWeight: '600', color: colors.muted },
+  pinTextOn: { color: '#8a5a00' },
+
+  ask: {
+    alignSelf: 'stretch', alignItems: 'center', marginTop: 18, padding: 16,
+    borderRadius: radius, backgroundColor: colors.light, borderWidth: 1, borderColor: colors.line,
+  },
+  askTitle: { fontWeight: '800', color: colors.navy, textAlign: 'center', fontSize: 15.5 },
+  askBody: { color: colors.muted, textAlign: 'center', marginTop: 4, marginBottom: 12 },
+  askQuote: { fontSize: 20, fontWeight: '800', color: colors.tealDark, textAlign: 'center', marginTop: 8 },
+  askDone: { color: colors.tealDark, fontWeight: '600', textAlign: 'center' },
+  askInput: { alignSelf: 'stretch', marginBottom: 12 },
+  askGap: { marginTop: 8 },
+
   page: { padding: 20, paddingBottom: 60, backgroundColor: colors.cream, flexGrow: 1 },
   centered: { alignItems: 'center' },
   muted: { color: colors.muted },

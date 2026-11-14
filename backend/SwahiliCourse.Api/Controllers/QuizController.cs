@@ -16,10 +16,11 @@ public class QuizController : AuthedController
     private readonly AppDbContext _db;
     private readonly CourseCatalog _courses;
     private readonly StreakService _streaks;
+    private readonly PracticeLog _practice;
 
-    public QuizController(AppDbContext db, CourseCatalog courses, StreakService streaks)
+    public QuizController(AppDbContext db, CourseCatalog courses, StreakService streaks, PracticeLog practice)
     {
-        _db = db; _courses = courses; _streaks = streaks;
+        _db = db; _courses = courses; _streaks = streaks; _practice = practice;
     }
 
     private const double PassThreshold = 0.7; // 70% to pass and unlock the next lesson
@@ -77,6 +78,9 @@ public class QuizController : AuthedController
                 xpEarned = (int)Math.Round(lesson.XpReward * ((double)correct / Math.Max(total, 1)));
                 user.TotalXp += xpEarned;
                 _streaks.Record(user, DateTime.UtcNow);
+                // The streak credits a quiz pass, so the last-7-days strip
+                // has to show it too or the two would disagree.
+                await _practice.QuizPassedAsync(user, DateTime.UtcNow);
             }
         }
 

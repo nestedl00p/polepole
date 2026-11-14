@@ -91,6 +91,41 @@ export const api = {
   completeDose: () => request('/dose/complete', { method: 'POST' }),
   updateTimeZone: (timeZoneId) => request('/user/timezone', { method: 'PUT', body: { timeZoneId } }),
 
+  // The Dose screen was opened — distinct from fetching the dose, which the
+  // dashboard also does. The server uses it to tell a prompted open from an
+  // unprompted one.
+  openDose: () => request('/dose/open', { method: 'POST' }),
+
+  // The pre-signup taster: three items and a proverb, no account.
+  taster: (course) => request(`/dose/taster?course=${encodeURIComponent(course)}`, { auth: false }),
+  answerTaster: (payload) => request('/dose/taster/answer', { method: 'POST', body: payload, auth: false }),
+
+  // Reminders, the why, and the day-30 question. Any field left out of
+  // updateReminders is left as it is; an empty pushToken clears it.
+  updateReminders: (payload) => request('/user/reminders', { method: 'PUT', body: payload }),
+  updateWhy: (why) => request('/user/why', { method: 'PUT', body: { why } }),
+  habitAnswer: (answer) => request('/user/habit-answer', { method: 'POST', body: { answer } }),
+
+  // "Nitakumbuka hii" — pin a card so future doses favour it.
+  pinCard: (itemKey, pinned) => request('/cards/pin', { method: 'POST', body: { itemKey, pinned } }),
+
+  // Keep a pronunciation take. multipart, so it cannot go through request():
+  // fetch has to set the Content-Type itself, with the boundary.
+  keepVoiceTake: async (uri, itemKey, score) => {
+    const form = new FormData();
+    form.append('file', { uri, name: 'take.m4a', type: 'audio/m4a' });
+    form.append('itemKey', itemKey);
+    form.append('score', String(Math.round(score)));
+    const token = await getToken();
+    const res = await fetch(`${BASE}/voice`, {
+      method: 'POST',
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+      body: form,
+    });
+    if (!res.ok) throw new Error(`Could not keep that take (${res.status})`);
+    return res.json();
+  },
+
   // Review
   flashcards: () => request('/review/flashcards'),
   practice: (count = 10) => request(`/review/practice?count=${count}`),

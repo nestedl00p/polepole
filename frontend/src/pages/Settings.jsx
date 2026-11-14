@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { api } from '../api/client';
 import { useAuth } from '../context/AuthContext';
+import { askNotificationPermission, notificationPermission, notificationsSupported } from '../lib/reminders';
 
 const PACE_OPTIONS = [
   { days: 30, label: 'Intensive', desc: '1 lesson/day' },
@@ -46,8 +47,10 @@ export default function Settings() {
     <div className="container page narrow">
       <div className="page-head">
         <h1>Settings</h1>
-        <p>Adjust your learning pace or restart the course.</p>
+        <p>Your reminder, your pace, or a fresh start.</p>
       </div>
+
+      <ReminderCard user={user} setUser={setUser} />
 
       <div className="card mb">
         <h2 className="block" style={{ fontSize: '1.1rem' }}>Your pace</h2>
@@ -87,6 +90,109 @@ export default function Settings() {
           Restart course
         </button>
       </div>
+    </div>
+  );
+}
+
+const WHYS = [
+  { id: 'trip', label: 'A trip' },
+  { id: 'family', label: 'Family' },
+  { id: 'work', label: 'Work' },
+  { id: 'curiosity', label: 'Curiosity' },
+];
+
+// One reminder a day, at a time the learner picks. Everything here saves as
+// it is changed — there is no state worth a separate Save button.
+function ReminderCard({ user, setUser }) {
+  const [permission, setPermission] = useState(notificationPermission());
+  const [error, setError] = useState('');
+
+  const update = async (payload) => {
+    setError('');
+    try {
+      setUser(await api.updateReminders(payload));
+    } catch (e) {
+      setError(e.message || 'Could not save that.');
+    }
+  };
+
+  const toggle = async () => {
+    const turningOn = !user.remindersEnabled;
+    // Asked from this click, the only place a browser will honour it — and
+    // not waited for: the prompt can sit unanswered, and the switch should
+    // not sit there with it.
+    if (turningOn) askNotificationPermission().then(setPermission);
+    await update({ enabled: turningOn });
+  };
+
+  const setWhy = async (why) => {
+    setError('');
+    try {
+      setUser(await api.updateWhy(user.why === why ? null : why));
+    } catch (e) {
+      setError(e.message || 'Could not save that.');
+    }
+  };
+
+  return (
+    <div className="card mb">
+      <h2 className="block" style={{ fontSize: '1.1rem' }}>Daily reminder</h2>
+      <p className="muted mb">
+        One a day, at the time you choose. It names the words waiting in your dose and nothing else.
+      </p>
+
+      <div className="row spread reminder-row">
+        <label className="reminder-toggle">
+          <input type="checkbox" checked={user.remindersEnabled} onChange={toggle} />
+          <span>Remind me</span>
+        </label>
+        <input
+          className="taster-time reminder-time"
+          type="time"
+          value={user.reminderLocalTime}
+          disabled={!user.remindersEnabled}
+          aria-label="Reminder time"
+          onChange={(e) => e.target.value && update({ localTime: e.target.value })}
+        />
+      </div>
+
+      {/* Said plainly: what this browser can and cannot do. */}
+      {user.remindersEnabled && (
+        <p className="muted reminder-note">
+          {!notificationsSupported()
+            ? 'This browser cannot show notifications. The phone app will use this time.'
+            : permission === 'granted'
+              ? 'In a browser the reminder can only appear while PolePole is open in a tab. The phone app delivers it either way.'
+              : permission === 'denied'
+                ? 'Notifications are blocked for this site in your browser settings, so nothing will appear here. The phone app will still use this time.'
+                : (
+                  <>
+                    This browser has not been allowed to show notifications yet.{' '}
+                    <a href="#" onClick={async (e) => { e.preventDefault(); setPermission(await askNotificationPermission()); }}>Allow them</a>
+                  </>
+                )}
+          {user.hasPushToken && ' Your phone is registered.'}
+        </p>
+      )}
+
+      <div className="field mt">
+        <label>What's your why? (used only if you drift away for a few days)</label>
+        <div className="why-chips">
+          {WHYS.map((w) => (
+            <button
+              key={w.id}
+              type="button"
+              className={`why-chip ${user.why === w.id ? 'active' : ''}`}
+              aria-pressed={user.why === w.id}
+              onClick={() => setWhy(w.id)}
+            >
+              {w.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {error && <div className="error-box mt">{error}</div>}
     </div>
   );
 }

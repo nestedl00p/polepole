@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { api, setToken, clearToken, getToken } from '../api/client';
 import { setSpeechCourse } from '../lib/speak';
+import { registerForReminders, unregisterReminders } from '../lib/reminders';
 
 const AuthContext = createContext(null);
 
@@ -39,6 +40,11 @@ function applyUser(u, setUser) {
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  // True between creating an account from the taster and answering (or
+  // skipping) the two questions that follow it. Kept here because the
+  // navigator swaps its whole stack the moment `user` is set, and the taster
+  // screen that started the flow is gone by then.
+  const [onboarding, setOnboarding] = useState(false);
 
   const loadUser = useCallback(async () => {
     const token = await getToken();
@@ -50,6 +56,9 @@ export function AuthProvider({ children }) {
       const me = await api.me();
       applyUser(me, setUser);
       syncTimeZone(me, (u) => applyUser(u, setUser));
+      // Keep the server's copy of this phone's push token fresh. Never
+      // prompts: it only registers if permission was already given.
+      registerForReminders();
     } catch {
       await clearToken();
       setUser(null);
@@ -71,15 +80,26 @@ export function AuthProvider({ children }) {
   const login = async (email, password) => {
     const resp = await api.login({ email, password });
     await handleAuth(resp);
+    registerForReminders();
   };
 
-  const register = async (payload) => {
+  // `onboard` sends the new learner through the reminder and why questions
+  // before the dashboard. Set before the user is, so the navigator never
+  // shows the dashboard for a frame in between.
+  const register = async (payload, { onboard = false } = {}) => {
     const resp = await api.register({ ...payload, timeZoneId: deviceTimeZone() });
+    if (onboard) setOnboarding(true);
     await handleAuth(resp);
   };
 
+  const finishOnboarding = () => setOnboarding(false);
+
   const logout = async () => {
+    // While the token is still valid: this phone stops being where the
+    // account's reminders go.
+    await unregisterReminders();
     await clearToken();
+    setOnboarding(false);
     setUser(null);
   };
 
@@ -90,7 +110,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout, refreshUser, setUser }}>
+    <AuthContext.Provider value={{ user, loading, onboarding, finishOnboarding, login, register, logout, refreshUser, setUser }}>
       {children}
     </AuthContext.Provider>
   );

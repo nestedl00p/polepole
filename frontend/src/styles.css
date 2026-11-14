@@ -679,3 +679,88 @@ ul.sw-list li { margin-bottom: 5px; }
 }
 .dose-milestone-title { font-weight: 800; color: var(--gold); font-size: 1rem; }
 .dose-milestone-detail { color: var(--muted); font-size: 0.86rem; line-height: 1.45; margin-top: 4px; }
+
+/* ---------- The last-7-days strip ---------- */
+/* A record, not a threat: an empty dot is just an empty dot. */
+.week-strip { display: flex; align-items: center; gap: 6px; margin-top: 12px; }
+.week-dot {
+  width: 11px; height: 11px; border-radius: 50%;
+  border: 2px solid var(--line); background: transparent; flex-shrink: 0;
+}
+.week-dot.on { background: var(--gold); border-color: var(--gold); }
+.week-dot.today { box-shadow: 0 0 0 2px rgba(200, 134, 13, 0.28); }
+.week-strip-lbl { font-size: 0.78rem; color: var(--muted); margin-left: 4px; }
+.week-strip-light .week-dot { border-color: rgba(255, 255, 255, 0.45); }
+.week-strip-light .week-dot.on { background: var(--gold-light); border-color: var(--gold-light); }
+.week-strip-light .week-dot.today { box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3); }
+.week-strip-light .week-strip-lbl { color: #cfe0e8; }
+
+/* ---------- Pins, kept takes, and the one ask after a dose ---------- */
+.dose-pin {
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 12px;
+  padding: 7px 12px; border-radius: 999px; border: 1.5px solid var(--line);
+  background: #fff; color: var(--muted); font: inherit; font-size: 0.85rem; font-weight: 600;
+  cursor: pointer; transition: all .12s;
+}
+.dose-pin:hover { border-color: var(--gold); color: var(--ink); }
+.dose-pin.on { border-color: var(--gold); background: #fdf3dc; color: #8a5a00; }
+.dose-pin:disabled { opacity: 0.6; cursor: default; }
+.row.center > .dose-pin { margin-top: 0; }
+
+.dose-voice { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 14px; }
+
+.dose-ask {
+  margin-top: 18px; padding: 16px; border-radius: 12px;
+  background: var(--light); border: 1px solid var(--line); text-align: center;
+}
+.dose-ask-title { font-weight: 800; color: var(--navy); }
+.dose-ask-body { color: var(--muted); font-size: 0.95rem; margin: 4px 0 12px; }
+.dose-ask-quote { font-size: 1.25rem; font-weight: 800; color: var(--teal-dark); margin-top: 8px; }
+.dose-ask-done { color: var(--teal-dark); font-weight: 600; }
+.dose-ask-input {
+  width: 100%; padding: 10px 12px; border: 2px solid var(--line); border-radius: 10px;
+  font: inherit; margin-bottom: 12px; background: #fff;
+}
+.dose-ask-input:focus { outline: none; border-color: var(--teal); }
+
+.deck-filter { margin-top: 10px; }
+.deck-filter.active { border-color: var(--gold); color: #8a5a00; background: #fdf3dc; }
+
+/* ---------- The taster and the steps after it ---------- */
+.taster-card { max-width: 480px; width: 100%; }
+.taster-card .sb-progress { margin: 10px 0 18px; }
+.taster-login { font-size: 0.88rem; font-weight: 600; }
+.taster-switch { text-align: center; font-size: 0.85rem; margin-top: 16px; }
+.taster-methali { margin-top: 18px; padding: 16px; border: 2px solid var(--gold); border-radius: 12px; }
+.taster-methali .dose-methali-text { justify-content: center; }
+.taster-note { font-size: 0.85rem; margin-top: 12px; }
+.taster-time {
+  font: inherit; font-size: 1.5rem; font-weight: 800; color: var(--navy);
+  padding: 10px 14px; border: 2px solid var(--line); border-radius: 12px; background: #fff;
+}
+.taster-time:focus { outline: none; border-color: var(--teal); }
+.taster-time:disabled { opacity: 0.5; }
+
+.why-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+.why-opt {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 16px 10px; border: 2px solid var(--line); border-radius: 12px; background: #fff;
+  font: inherit; font-weight: 700; color: var(--navy); cursor: pointer; transition: all .12s;
+}
+.why-opt:hover { border-color: var(--teal); background: var(--light); }
+.why-opt:disabled { opacity: 0.6; cursor: default; }
+.why-icon { font-size: 1.6rem; }
+
+/* ---------- Reminder settings ---------- */
+.reminder-row { align-items: center; gap: 14px; flex-wrap: wrap; }
+.reminder-toggle { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; color: var(--navy); cursor: pointer; }
+.reminder-toggle input { width: 20px; height: 20px; accent-color: var(--teal); }
+.reminder-time { font-size: 1.15rem; padding: 8px 12px; }
+.reminder-note { font-size: 0.85rem; margin-top: 12px; }
+.why-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.why-chip {
+  padding: 8px 14px; border-radius: 999px; border: 2px solid var(--line); background: #fff;
+  font: inherit; font-size: 0.9rem; font-weight: 600; color: var(--muted); cursor: pointer;
+}
+.why-chip:hover { border-color: var(--teal); }
+.why-chip.active { border-color: var(--teal); background: #e3f1f1; color: var(--teal-dark); }

@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import SpeakButton from '../components/SpeakButton';
 import { useMicRecorder } from '../hooks/useMicRecorder';
 import { speechEnabled, assessPronunciation } from '../lib/speechAssess';
+import WeekStrip from '../components/WeekStrip';
 
 // "Dose ya leo" — the daily practice loop. Five items, about ninety seconds,
 // one of them spoken aloud.
@@ -61,6 +62,11 @@ export default function DosePage() {
   };
 
   useEffect(load, []);
+
+  // Tell the server the Dose was opened. Once per visit, not per "endelea"
+  // round: what is being recorded is how the day's practice started — before
+  // or after the reminder — and a second round did not start anything.
+  useEffect(() => { api.openDose().catch(() => {}); }, []);
 
   if (loading) return <div className="spinner" />;
   if (!dose) {
@@ -149,6 +155,8 @@ export default function DosePage() {
             <div className="dose-xp-total">+{closing.xpEarned} XP for finishing</div>
           )}
 
+          {closing?.week && <div className="row center mt"><WeekStrip week={closing.week} /></div>}
+
           {closing?.streakAdvanced && (
             <div className="dose-streak">
               <div className="dose-streak-num">{closing.streakCount} 🔥</div>
@@ -173,7 +181,8 @@ export default function DosePage() {
                   <span className={e.correct ? 'feedback-correct' : 'feedback-wrong'}>
                     {e.correct ? '✓' : '✗'}
                   </span>
-                  <span className="dose-summary-word">{e.item.itemKey}</span>
+                  {/* A proverb's key is an index ("methali:3"), not something to show. */}
+                  <span className="dose-summary-word">{e.item.kind === 'methali' ? (e.item.target || 'Methali') : e.item.itemKey}</span>
                   <span className="dose-strength-track" aria-hidden="true">
                     <span style={{ width: `${e.strength}%` }} />
                   </span>
@@ -182,6 +191,10 @@ export default function DosePage() {
               ))}
             </div>
           )}
+
+          {/* After the reward, never before it — and the server sends at most
+              one of these per completion. */}
+          {closing && <ClosingAsk closing={closing} onChanged={refreshUser} />}
 
           <div className="row center mt" style={{ gap: 12 }}>
             <button className="btn btn-primary" onClick={() => navigate('/app')}>
@@ -234,6 +247,7 @@ export default function DosePage() {
               </span>
               <span className="dose-strength-pct">{result.strength}%</span>
             </div>
+            <PinButton key={item.itemKey} itemKey={item.itemKey} initial={item.pinned} />
             <div className="muted dose-when">
               {result.intervalDays === 0
                 ? 'Coming back again shortly.'
@@ -259,6 +273,7 @@ export default function DosePage() {
                 <span className="dose-xp">+{result.xpEarned} XP</span>
               </div>
             )}
+            <PinButton key={item.itemKey} itemKey={item.itemKey} initial={item.pinned} />
             <div className="row center mt">
               <button className="btn btn-gold" onClick={next} autoFocus>
                 {idx + 1 < items.length ? 'Next →' : 'Finish'}
@@ -373,11 +388,31 @@ function SemaItem({ item, result, onAnswered, onSkip }) {
   const [phase, setPhase] = useState('idle'); // idle | recording | checking | error
   const [assessed, setAssessed] = useState(null);
   const [enabled, setEnabled] = useState(null);
+  const [take, setTake] = useState(null);       // the recording just scored, until kept or discarded
+  const [kept, setKept] = useState('no');       // no | saving | yes | error
+  const [earlier, setEarlier] = useState(null); // the learner's first kept take of this word
   const rec = useMicRecorder();
   const elapsed = useElapsed(item.itemKey);
 
   useEffect(() => { speechEnabled().then(setEnabled); }, []);
-  useEffect(() => { setPhase('idle'); setAssessed(null); }, [item.itemKey]);
+  useEffect(() => {
+    setPhase('idle'); setAssessed(null); setTake(null); setKept('no'); setEarlier(null);
+    // Oldest first, so the first element is the "before".
+    api.voiceTakes(item.itemKey).then((t) => setEarlier(t?.[0] ?? null)).catch(() => {});
+  }, [item.itemKey]);
+
+  // Keeping a take is the learner's own act, one tap, after they have seen
+  // the score. Nothing is stored unless they ask.
+  const keep = async () => {
+    if (!take || kept === 'saving' || kept === 'yes') return;
+    setKept('saving');
+    try {
+      await api.keepVoiceTake(take, item.itemKey, assessed.score);
+      setKept('yes');
+    } catch {
+      setKept('error');
+    }
+  };
 
   const unavailable = enabled === false || rec.supported === false;
 
@@ -389,6 +424,7 @@ function SemaItem({ item, result, onAnswered, onSkip }) {
       try {
         const a = await assessPronunciation(blob, item.target);
         setAssessed(a);
+        setTake(blob);
         onAnswered(await api.answerDose({
           itemKey: item.itemKey,
           exercise: 'sema',
@@ -455,6 +491,17 @@ function SemaItem({ item, result, onAnswered, onSkip }) {
             </div>
           )}
 
+          {assessed && (
+            <div className="dose-voice">
+              {earlier && <PlayTake take={earlier} label="Your first take" />}
+              {take && <PlayBlob blob={take} label="Today" />}
+              <button className="btn btn-ghost btn-sm" onClick={keep} disabled={kept === 'saving' || kept === 'yes'}>
+                {kept === 'yes' ? '✓ Kept' : kept === 'saving' ? 'Saving…' : 'Hifadhi sauti — keep this take'}
+              </button>
+              {kept === 'error' && <span className="pd-err">Couldn't save that one.</span>}
+            </div>
+          )}
+
           {phase === 'error' && (
             <div className="pd-err">
               Couldn't reach the pronunciation service.{' '}
@@ -470,5 +517,198 @@ function SemaItem({ item, result, onAnswered, onSkip }) {
         </>
       )}
     </>
+  );
+}
+
+// "Nitakumbuka hii" — I will remember this. One tap to make a card the
+// learner's own; pinned cards are favoured when future doses are built.
+function PinButton({ itemKey, initial }) {
+  const [pinned, setPinned] = useState(!!initial);
+  const [busy, setBusy] = useState(false);
+
+  const toggle = async () => {
+    if (busy) return;
+    setBusy(true);
+    try {
+      const res = await api.pinCard(itemKey, !pinned);
+      setPinned(res.pinned);
+    } catch {
+      /* leave it as it was */
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <button
+      type="button"
+      className={`dose-pin ${pinned ? 'on' : ''}`}
+      onClick={toggle}
+      disabled={busy}
+      aria-pressed={pinned}
+    >
+      📌 {pinned ? 'Pinned — it will come up more often' : 'Nitakumbuka hii — pin this'}
+    </button>
+  );
+}
+
+function playUrl(url, onEnd) {
+  const audio = new Audio(url);
+  audio.onended = onEnd;
+  audio.onerror = onEnd;
+  audio.play().catch(onEnd);
+}
+
+// A recording still in memory — the one just made.
+function PlayBlob({ blob, label }) {
+  const play = () => {
+    const url = URL.createObjectURL(blob);
+    playUrl(url, () => URL.revokeObjectURL(url));
+  };
+  return <button type="button" className="btn btn-ghost btn-sm" onClick={play}>▶ {label}</button>;
+}
+
+function ago(iso) {
+  const days = Math.floor((Date.now() - new Date(iso + (iso.endsWith('Z') ? '' : 'Z')).getTime()) / 86400000);
+  if (days <= 0) return 'earlier today';
+  if (days === 1) return 'yesterday';
+  if (days < 14) return `${days} days ago`;
+  return `${Math.floor(days / 7)} weeks ago`;
+}
+
+// A kept take. Fetched with the token and played from a blob — the audio
+// endpoint is private to the learner, so an <audio src> cannot reach it.
+function PlayTake({ take, label }) {
+  const [busy, setBusy] = useState(false);
+  const play = async () => {
+    if (busy) return;
+    setBusy(true);
+    try {
+      const url = URL.createObjectURL(await api.voiceAudio(take.id));
+      playUrl(url, () => { URL.revokeObjectURL(url); setBusy(false); });
+    } catch {
+      setBusy(false);
+    }
+  };
+  return (
+    <button type="button" className="btn btn-ghost btn-sm" onClick={play} disabled={busy}>
+      ▶ {label} · {take.score}% · {ago(take.createdAt)}
+    </button>
+  );
+}
+
+// The one thing the completion card may ask. Each is dismissable in a tap,
+// and none comes back: the server records an ask as made when it sends it.
+function ClosingAsk({ closing, onChanged }) {
+  const [state, setState] = useState('open'); // open | done | dismissed
+  const [answer, setAnswer] = useState('');
+
+  if (state === 'dismissed') return null;
+
+  // A product that offers to stop notifying you is one confident it has
+  // built a habit rather than rented one.
+  if (closing.offerStopReminders) {
+    if (state === 'done') return <div className="dose-ask"><div className="dose-ask-done">Sawa — no more reminders. You can turn them back on in Settings.</div></div>;
+    const stop = async () => {
+      try { await api.updateReminders({ enabled: false }); await onChanged(); } catch { /* still on; Settings has the switch */ }
+      setState('done');
+    };
+    return (
+      <div className="dose-ask">
+        <div className="dose-ask-title">You've started on your own 14 days running.</div>
+        <div className="dose-ask-body">Want me to stop reminding you?</div>
+        <div className="row center" style={{ gap: 10 }}>
+          <button className="btn btn-primary btn-sm" onClick={stop}>Yes, stop reminding me</button>
+          <button className="btn btn-ghost btn-sm" onClick={() => setState('dismissed')}>Keep them</button>
+        </div>
+      </div>
+    );
+  }
+
+  if (closing.askHabitQuestion) {
+    if (state === 'done') return <div className="dose-ask"><div className="dose-ask-done">Asante — that helps.</div></div>;
+    const send = async () => {
+      if (!answer.trim()) return;
+      try { await api.habitAnswer(answer.trim()); } catch { /* not worth interrupting them over */ }
+      setState('done');
+    };
+    return (
+      <div className="dose-ask">
+        <div className="dose-ask-title">One question, once.</div>
+        <div className="dose-ask-body">What makes you open this?</div>
+        <input
+          className="dose-ask-input"
+          value={answer}
+          maxLength={280}
+          placeholder="In your own words"
+          onChange={(e) => setAnswer(e.target.value)}
+          onKeyDown={(e) => { if (e.key === 'Enter') send(); }}
+        />
+        <div className="row center" style={{ gap: 10 }}>
+          <button className="btn btn-primary btn-sm" onClick={send} disabled={!answer.trim()}>Send</button>
+          <button className="btn btn-ghost btn-sm" onClick={() => setState('dismissed')}>Skip</button>
+        </div>
+      </div>
+    );
+  }
+
+  if (closing.shareOffer) {
+    return <ShareOffer offer={closing.shareOffer} done={state === 'done'} onDone={() => setState('done')} onDismiss={() => setState('dismissed')} />;
+  }
+
+  return null;
+}
+
+// Weekly at most, and only ever on the learner's say-so: the recording and
+// the text leave the device through the system share sheet, to whoever they
+// pick. Nothing is sent by the app.
+function ShareOffer({ offer, done, onDone, onDismiss }) {
+  const [note, setNote] = useState('');
+  const text = offer.gloss ? `${offer.text} — "${offer.gloss}"` : offer.text;
+
+  const send = async () => {
+    try {
+      if (navigator.share) {
+        let files;
+        if (offer.voiceTakeId) {
+          try {
+            const blob = await api.voiceAudio(offer.voiceTakeId);
+            const ext = (blob.type || '').includes('ogg') ? 'ogg' : 'webm';
+            const file = new File([blob], `polepole.${ext}`, { type: blob.type || 'audio/webm' });
+            if (navigator.canShare?.({ files: [file] })) files = [file];
+          } catch { /* share the words without the recording */ }
+        }
+        await navigator.share(files ? { text, files } : { text });
+        onDone();
+      } else {
+        await navigator.clipboard.writeText(text);
+        setNote('Copied — paste it to whoever you like.');
+        onDone();
+      }
+    } catch (e) {
+      // Closing the share sheet is a "no", not an error.
+      if (e?.name !== 'AbortError') setNote("Couldn't open sharing here.");
+    }
+  };
+
+  return (
+    <div className="dose-ask">
+      <div className="dose-ask-title">You can say this now.</div>
+      <div className="dose-ask-quote">{offer.text}</div>
+      {offer.gloss && <div className="dose-ask-body">{offer.gloss}</div>}
+      {done ? (
+        <div className="dose-ask-done">{note || 'Sent on its way.'}</div>
+      ) : (
+        <>
+          <div className="row center" style={{ gap: 10 }}>
+            <button className="btn btn-primary btn-sm" onClick={send}>
+              {offer.voiceTakeId ? 'Send your recording to someone' : 'Send it to someone'}
+            </button>
+            <button className="btn btn-ghost btn-sm" onClick={onDismiss}>Not now</button>
+          </div>
+          {note && <div className="pd-err">{note}</div>}
+        </>
+      )}
+    </div>
   );
 }

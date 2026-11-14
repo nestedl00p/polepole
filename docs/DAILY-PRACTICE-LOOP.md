@@ -450,3 +450,34 @@ that the learner can't predict the total before finishing.
 
 Steps 1–3 are the loop. 4–6 are what make it hold. 7–8 are what tell you
 whether it did.
+
+---
+
+## As built
+
+All eight steps are implemented. Where the build departs from the sketch above,
+this is what exists and why.
+
+| Sketched | Built | Why |
+|---|---|---|
+| `POST /api/cards/{key}/pin` | `POST /api/cards/pin` with `{ itemKey, pinned }` | A key is the word itself (`yeye / wao`, `Habari?`); slashes and question marks do not survive a path segment. |
+| — | `POST /api/dose/open` | The dashboard also calls `GET /api/dose` to draw its hero, so fetching cannot be what counts as opening. |
+| — | `POST /api/dose/taster/answer` | Taster answers stay off the wire like every other answer, so grading needs its own anonymous call. |
+| — | `POST /api/user/reminders/shown` | The browser shows its own reminder; this is how the server learns one went out. |
+| — | `PUT /api/user/why`, `POST /api/user/habit-answer` | The why, and the day-30 question. |
+| — | `POST/GET/DELETE /api/voice`, `GET /api/voice/{id}/audio` | Kept pronunciation takes. Audio is private to its owner. |
+| — | `GET /api/habit/report` | The habit-test read-out. 404 unless `Habit:ReportKey` is configured and sent as `X-Report-Key`. |
+| `RestDaysUsed` counter | `LastRestDayAt` | "One per rolling seven" is a question about when, not how many. |
+| `LastDoseAt` for the strip | `PracticeDays` table | One row per learner per local day: opened, opened-before-reminder, completed, duration. It is the habit-test instrument and what draws the strip. |
+| Web push + weekly email digest | Browser `Notification` while a tab is open | No service worker or push subscription yet, and no mail sender. The UI says so where reminders are switched on. |
+| The *why* weights lesson themes | The *why* is used in lapse copy only | Lesson themes are `Grammar`, `Vocabulary`, `Culture`… — nothing a trip or a family maps onto. Needs topical tags on lessons first. |
+
+Rules that hold across all of it:
+
+- A reminder goes out once a day, never to someone already done, never more
+  than an hour late, and its copy names the words waiting — never the streak.
+- The completion card asks at most one thing (stop reminders → the day-30
+  question → the weekly share), only on the day's first completion, and each
+  ask is recorded as made the moment it is sent.
+- Nothing is stored from a recording unless the learner taps to keep it; per
+  card the first take is kept for good plus the latest four.

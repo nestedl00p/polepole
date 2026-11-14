@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { api } from '../api/client';
 import { useAuth } from '../context/AuthContext';
+import WeekStrip from '../components/WeekStrip';
 
 // The dashboard leads with the Dose, not the course.
 //
@@ -69,6 +70,7 @@ export default function Dashboard() {
               ? 'About ninety seconds. One of them you say out loud.'
               : (dose?.message ?? 'Study a lesson and your review queue starts filling.')}
           </div>
+          <WeekStrip week={dose?.week} light />
         </div>
         {doseReady
           ? <button className="btn btn-gold" onClick={() => navigate('/dose')}>Anza →</button>

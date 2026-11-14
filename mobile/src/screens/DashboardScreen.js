@@ -3,6 +3,7 @@ import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { api } from '../api/client';
 import { useAuth } from '../context/AuthContext';
+import WeekStrip from '../components/WeekStrip';
 import { Button, Card, Spinner, ProgressBar } from '../components/ui';
 import { colors, radius, shadow, shadowLg } from '../theme';
 
@@ -86,6 +87,7 @@ export default function DashboardScreen({ navigation }) {
             ? 'About ninety seconds. One of them you say out loud.'
             : (dose?.message ?? 'Study a lesson and your review queue starts filling.')}
         </Text>
+        <WeekStrip week={dose?.week} light style={{ marginTop: 12 }} />
         {doseReady ? (
           <Button title="Anza →" variant="gold" style={styles.heroBtn} onPress={() => navigation.navigate('Dose')} />
         ) : nextLesson ? (

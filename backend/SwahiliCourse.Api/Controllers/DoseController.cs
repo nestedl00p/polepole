@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.EntityFrameworkCore;
 using SwahiliCourse.Api.Data;
 using SwahiliCourse.Api.DTOs;
 using SwahiliCourse.Api.Models;
@@ -19,11 +21,68 @@ public class DoseController : AuthedController
 {
     private readonly AppDbContext _db;
     private readonly DoseService _dose;
+    private readonly PracticeLog _practice;
+    private readonly TasterService _taster;
 
-    public DoseController(AppDbContext db, DoseService dose)
+    public DoseController(AppDbContext db, DoseService dose, PracticeLog practice, TasterService taster)
     {
         _db = db;
         _dose = dose;
+        _practice = practice;
+        _taster = taster;
+    }
+
+    // The Dose screen was opened. Separate from GET /api/dose because the
+    // dashboard fetches the dose too, to draw its hero — and a dashboard visit
+    // is not the learner starting their practice. Whether the open came before
+    // the day's reminder is decided here, from the server's own record of when
+    // that reminder went out; the client is not asked.
+    [HttpPost("open")]
+    public async Task<IActionResult> Open(CancellationToken ct)
+    {
+        var user = await _db.Users.FindAsync([CurrentUserId], ct);
+        if (user is null) return Unauthorized();
+
+        var now = DateTime.UtcNow;
+        var day = await _practice.OpenAsync(user, now, ct);
+        try
+        {
+            await _db.SaveChangesAsync(ct);
+        }
+        catch (DbUpdateException)
+        {
+            // Two opens for the same new day arrived together — two tabs, a
+            // phone and a laptop, or React re-running an effect — and the
+            // other one created the day's row first. The unique index did its
+            // job; drop our duplicate and report the row that won.
+            _db.ChangeTracker.Clear();
+            user = await _db.Users.FindAsync([CurrentUserId], ct);
+            if (user is null) return Unauthorized();
+            day = await _practice.OpenAsync(user, now, ct);
+            await _db.SaveChangesAsync(ct);
+        }
+
+        return Ok(new { date = day.Day.ToString("yyyy-MM-dd"), unprompted = day.OpenedUnprompted });
+    }
+
+    // The pre-signup Dose: three items and a proverb, no account. Anonymous on
+    // purpose — it is what a visitor gets before being asked for anything.
+    [HttpGet("taster")]
+    [AllowAnonymous]
+    public ActionResult<TasterDto> Taster([FromQuery] string? course) => Ok(_taster.Build(course));
+
+    // Grades one taster answer. Stateless: nothing is stored until an account
+    // exists, at which point registration replays the answers.
+    [HttpPost("taster/answer")]
+    [AllowAnonymous]
+    [EnableRateLimiting("media")]
+    public ActionResult<TasterResultDto> TasterAnswer(TasterGradeDto dto)
+    {
+        if (string.IsNullOrWhiteSpace(dto.ItemKey) || string.IsNullOrWhiteSpace(dto.Exercise))
+            return BadRequest(new { message = "itemKey and exercise are required." });
+
+        var result = _taster.Grade(dto.Course, dto.ItemKey, dto.Exercise, dto.Answer);
+        return result is null ? NotFound(new { message = "That item is not in the taster." }) : Ok(result);
     }
 
     // Today's items. Stable within the calendar day: a reload returns the same

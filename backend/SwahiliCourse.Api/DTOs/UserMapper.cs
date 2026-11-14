@@ -18,6 +18,7 @@ public static class UserMapper
             u.Id, u.Email, u.DisplayName, u.PlanLengthDays, u.StartDate,
             u.StreakCount, u.TotalXp, pace.CurrentScheduledDay(u),
             u.TimeZoneId, streaks.RestDayAvailable(u, now), streaks.HasDosedToday(u, now),
+            u.ReminderLocalTime.ToString("HH:mm"), u.RemindersEnabled, !string.IsNullOrEmpty(u.PushToken), u.Why,
             ToDto(Courses.Get(u.CourseId)));
     }
 }

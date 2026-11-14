@@ -53,6 +53,9 @@ namespace SwahiliCourse.Api.Migrations
                     b.Property<bool>("Pinned")
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime?>("PinnedAt")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("SourceLessonId")
                         .HasColumnType("INTEGER");
 
@@ -113,6 +116,44 @@ namespace SwahiliCourse.Api.Migrations
                     b.ToTable("LessonProgress");
                 });
 
+            modelBuilder.Entity("SwahiliCourse.Api.Models.PracticeDay", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateOnly>("Day")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DoseCompletedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DoseOpenedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("DurationSeconds")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ItemsAnswered")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("OpenedUnprompted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("QuizPassedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId", "Day")
+                        .IsUnique();
+
+                    b.ToTable("PracticeDays");
+                });
+
             modelBuilder.Entity("SwahiliCourse.Api.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -134,13 +175,25 @@ namespace SwahiliCourse.Api.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("HabitAnswer")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("HabitAskedAt")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime?>("LastActivityDate")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("LastDoseAt")
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime?>("LastNotifiedAt")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime?>("LastRestDayAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("LastShareOfferAt")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("MilestonesSeen")
@@ -152,6 +205,21 @@ namespace SwahiliCourse.Api.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int>("PlanLengthDays")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("PushToken")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("ReminderChosenAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<TimeOnly>("ReminderLocalTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("ReminderOffOfferedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("RemindersEnabled")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("StartDate")
@@ -167,12 +235,60 @@ namespace SwahiliCourse.Api.Migrations
                     b.Property<int>("TotalXp")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Why")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
                         .IsUnique();
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("SwahiliCourse.Api.Models.VoiceTake", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CourseId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ItemKey")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Score")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("SizeBytes")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId", "ItemKey", "CreatedAt");
+
+                    b.ToTable("VoiceTakes");
                 });
 
             modelBuilder.Entity("SwahiliCourse.Api.Models.CardState", b =>
@@ -190,6 +306,28 @@ namespace SwahiliCourse.Api.Migrations
                 {
                     b.HasOne("SwahiliCourse.Api.Models.User", "User")
                         .WithMany("Progress")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SwahiliCourse.Api.Models.PracticeDay", b =>
+                {
+                    b.HasOne("SwahiliCourse.Api.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SwahiliCourse.Api.Models.VoiceTake", b =>
+                {
+                    b.HasOne("SwahiliCourse.Api.Models.User", "User")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

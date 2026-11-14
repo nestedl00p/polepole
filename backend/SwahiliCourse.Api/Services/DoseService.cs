@@ -39,13 +39,26 @@ public class DoseService
     private readonly CourseCatalog _courses;
     private readonly ReviewScheduler _scheduler;
     private readonly StreakService _streaks;
+    private readonly PracticeLog _practice;
 
-    public DoseService(AppDbContext db, CourseCatalog courses, ReviewScheduler scheduler, StreakService streaks)
+    // How often the "send it to someone" offer may be made. Weekly and opt-in
+    // rather than daily and default: a daily social prompt is the step that
+    // turns a Facilitator into a Dealer.
+    public const int ShareOfferEveryDays = 7;
+
+    // The single in-app question — "what makes you open this?" — is put once,
+    // at this age. The answers either name an emotion or name the reminder.
+    public const int HabitQuestionAtDays = 30;
+
+    public DoseService(
+        AppDbContext db, CourseCatalog courses, ReviewScheduler scheduler,
+        StreakService streaks, PracticeLog practice)
     {
         _db = db;
         _courses = courses;
         _scheduler = scheduler;
         _streaks = streaks;
+        _practice = practice;
     }
 
     // An item the learner can be asked about: Target is the side being learned
@@ -69,13 +82,14 @@ public class DoseService
         var byKey = states.ToDictionary(c => c.ItemKey, StringComparer.Ordinal);
 
         var pool = await PoolAsync(user, byKey, ct);
+        var week = await _practice.WeekAsync(user, now, ct);
 
         if (pool.Count < MinimumPool)
         {
             var message = course.SourceLanguage == "sw"
                 ? "Soma masomo machache zaidi ili kufungua dose ya leo."
                 : "Study a few more lessons to unlock your daily dose.";
-            return new DoseDto(today.ToString("yyyy-MM-dd"), 0, new List<DoseItemDto>(), message, doneToday);
+            return new DoseDto(today.ToString("yyyy-MM-dd"), 0, new List<DoseItemDto>(), message, doneToday, week);
         }
 
         var selected = Select(pool, byKey, Rng(user.Id, today));
@@ -86,7 +100,7 @@ public class DoseService
         var bonus = PickMethali(user, byKey, today);
         if (bonus is not null) items.Add(bonus);
 
-        return new DoseDto(today.ToString("yyyy-MM-dd"), items.Count, items, null, doneToday);
+        return new DoseDto(today.ToString("yyyy-MM-dd"), items.Count, items, null, doneToday, week);
     }
 
     // Look one item up by key, for grading an answer. Returns null when the key
@@ -233,13 +247,14 @@ public class DoseService
             byKey.TryGetValue(item.Key, out var state);
             var strength = state?.Strength ?? 0;
             var box = state?.Box ?? 0;
+            var pinned = state?.Pinned ?? false;
 
             if (item.Key == semaKey)
             {
                 items.Add(new DoseItemDto(
                     item.Key, item.Kind, DoseExercises.Sema,
                     item.Source, item.Target, new List<string>(),
-                    strength, box, item.LessonId, item.LessonTitle, item.Note));
+                    strength, box, item.LessonId, item.LessonTitle, item.Note, pinned));
                 continue;
             }
 
@@ -282,7 +297,7 @@ public class DoseService
             items.Add(new DoseItemDto(
                 item.Key, item.Kind, exercise,
                 prompt, exercise == DoseExercises.Tambua ? item.Target : null, options,
-                strength, box, item.LessonId, item.LessonTitle, item.Note));
+                strength, box, item.LessonId, item.LessonTitle, item.Note, pinned));
         }
 
         return items;
@@ -381,10 +396,16 @@ public class DoseService
                 today.ToString("yyyy-MM-dd"), 0,
                 user.StreakCount, StreakAdvanced: false, RestDayUsed: false,
                 AlreadyCountedToday: false, _streaks.RestDayAvailable(user, today),
-                XpEarned: 0, user.TotalXp, new List<MilestoneDto>());
+                XpEarned: 0, user.TotalXp, new List<MilestoneDto>(),
+                await _practice.WeekAsync(user, now, ct));
         }
 
+        // Whether this is the day's first completion is read before the record
+        // is written — afterwards every completion looks like a repeat.
+        var firstToday = !_streaks.HasDosedToday(user, now);
+
         var streak = _streaks.Record(user, now);
+        await _practice.CompleteAsync(user, now, answeredToday, ct);
 
         // The completion bonus is for closing the dose, so it is paid once a day
         // however many times the learner comes back with "endelea".
@@ -400,12 +421,112 @@ public class DoseService
             alreadySeen: seen);
         if (crossed.Count > 0) user.MilestonesSeen = Milestones.Serialize(seen);
 
+        // At most one ask per completion, and only on the day's first: the
+        // card that closes a dose is a reward, and a reward that arrives with
+        // three questions attached stops being one. Each is recorded as made
+        // the moment it is returned, so none can be put twice.
+        var offerStop = false;
+        var askHabit = false;
+        ShareOfferDto? share = null;
+
+        if (firstToday)
+        {
+            if (await ShouldOfferStopAsync(user, now, ct))
+            {
+                offerStop = true;
+                user.ReminderOffOfferedAt = now;
+            }
+            else if (user.HabitAskedAt is null && (now - user.CreatedAt).TotalDays >= HabitQuestionAtDays)
+            {
+                askHabit = true;
+                user.HabitAskedAt = now;
+            }
+            else if ((share = await ShareOfferAsync(user, cards, now, ct)) is not null)
+            {
+                user.LastShareOfferAt = now;
+            }
+        }
+
         await _db.SaveChangesAsync(ct);
 
         return new DoseCompleteResultDto(
             today.ToString("yyyy-MM-dd"), answeredToday,
             streak.StreakCount, streak.Advanced, streak.RestDayUsed,
             streak.AlreadyCountedToday, _streaks.RestDayAvailable(user, today),
-            xp, user.TotalXp, crossed);
+            xp, user.TotalXp, crossed,
+            await _practice.WeekAsync(user, now, ct),
+            offerStop, askHabit, share);
+    }
+
+    // "You've started on your own 14 days running. Want me to stop reminding
+    // you?" Offered once, and only to someone who has actually been getting
+    // reminders — offering to stop something that never happened is noise.
+    private async Task<bool> ShouldOfferStopAsync(User user, DateTime now, CancellationToken ct)
+    {
+        if (!user.RemindersEnabled || user.ReminderOffOfferedAt is not null) return false;
+        if (user.LastNotifiedAt is null) return false;
+        return await _practice.UnpromptedRunAsync(user, now, ct) >= PracticeLog.UnpromptedRunForOffer;
+    }
+
+    // Something the learner can now say, to send to a person. Their own voice
+    // when they have kept a take that passed; otherwise a proverb they have
+    // collected, which is the other thing here that is repeatable to someone.
+    private async Task<ShareOfferDto?> ShareOfferAsync(
+        User user, List<CardState> cards, DateTime now, CancellationToken ct)
+    {
+        // Not in the first week: "you can say this now" has to be about
+        // something that has had time to become true.
+        if ((now - user.CreatedAt).TotalDays < ShareOfferEveryDays) return null;
+        if (user.LastShareOfferAt is DateTime last && (now - last).TotalDays < ShareOfferEveryDays) return null;
+
+        var course = Courses.Get(user.CourseId);
+        var since = now.AddDays(-ShareOfferEveryDays);
+
+        var take = await _db.VoiceTakes
+            .Where(v => v.UserId == user.Id && v.CourseId == course.Id
+                        && v.Score >= SemaPassScore && v.CreatedAt >= since)
+            .OrderByDescending(v => v.CreatedAt)
+            .FirstOrDefaultAsync(ct);
+
+        if (take is not null)
+        {
+            var item = await FindAsync(user, take.ItemKey, ct);
+            return new ShareOfferDto(take.Text, item?.Source ?? string.Empty, take.Id);
+        }
+
+        var methaliKey = cards
+            .Where(c => c.ItemKind == ItemKinds.Methali)
+            .OrderByDescending(c => c.LastSeenAt)
+            .Select(c => c.ItemKey)
+            .FirstOrDefault();
+        var methali = methaliKey is null ? null : _courses.MethaliFor(course.Id).ByKey(methaliKey);
+
+        return methali is null ? null : new ShareOfferDto(methali.Target, methali.Source, null);
+    }
+
+    // "Nitakumbuka hii" — pin or unpin a card. Pinning something not yet
+    // reviewed creates its card, due now, so a pin made from the flashcard
+    // deck shows up in the very next dose.
+    public async Task<CardState> PinAsync(User user, PoolItem item, bool pinned, CancellationToken ct = default)
+    {
+        var course = Courses.Get(user.CourseId);
+
+        var card = await _db.CardStates
+            .FirstOrDefaultAsync(c => c.UserId == user.Id && c.CourseId == course.Id && c.ItemKey == item.Key, ct);
+
+        if (card is null)
+        {
+            card = _scheduler.NewCard(user.Id, course.Id, item.Key, item.Kind, item.LessonId);
+            _db.CardStates.Add(card);
+        }
+
+        if (card.Pinned != pinned)
+        {
+            card.Pinned = pinned;
+            card.PinnedAt = pinned ? DateTime.UtcNow : null;
+        }
+
+        await _db.SaveChangesAsync(ct);
+        return card;
     }
 }

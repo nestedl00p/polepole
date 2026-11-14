@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, Link, useNavigate } from 'react-router-dom';
+import { Routes, Route, Navigate, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import LandingPage from './pages/LandingPage';
 import AuthPage from './pages/AuthPage';
@@ -8,12 +8,19 @@ import LessonPage from './pages/LessonPage';
 import QuizPage from './pages/QuizPage';
 import Flashcards from './pages/Flashcards';
 import Settings from './pages/Settings';
+import TasterPage from './pages/TasterPage';
+import { useDoseReminder } from './lib/reminders';
 import Logo from './components/Logo';
 
 function NavBar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   if (!user) return null;
+  // The taster signs the learner in partway through and then has two more
+  // things to ask. A bar full of other places to go would be an exit offered
+  // in the middle of that.
+  if (pathname === '/try') return null;
 
   return (
     <div className="topbar">
@@ -45,11 +52,18 @@ function Protected({ children }) {
 export default function App() {
   const { user } = useAuth();
 
+  // The browser's share of the daily reminder; a no-op until the learner has
+  // granted notification permission.
+  useDoseReminder(user);
+
   return (
     <>
       <NavBar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        {/* The taster comes before any account, so it is not Protected — and it
+            keeps the learner through sign-up and the two questions after it. */}
+        <Route path="/try" element={<TasterPage />} />
         <Route path="/login" element={user ? <Navigate to="/app" /> : <AuthPage />} />
         <Route path="/app" element={<Protected><Dashboard /></Protected>} />
         <Route path="/dose" element={<Protected><DosePage /></Protected>} />

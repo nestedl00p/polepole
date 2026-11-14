@@ -23,6 +23,9 @@ web-build/
 # Generated cloud-TTS audio cache
 backend/SwahiliCourse.Api/App_Data/tts-cache/
 
+# Learners' kept pronunciation takes
+backend/SwahiliCourse.Api/App_Data/voice/
+
 # Python Whisper sidecar
 whisper-service/.venv/
 **/__pycache__/
