@@ -3,8 +3,14 @@ import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { api } from '../api/client';
 import { useAuth } from '../context/AuthContext';
-import { Card, Spinner, ProgressBar } from '../components/ui';
-import { colors, radius, shadow } from '../theme';
+import { Button, Card, Spinner, ProgressBar } from '../components/ui';
+import { colors, radius, shadow, shadowLg } from '../theme';
+
+// Leads with the Dose, not the course — the same restructure as the web
+// dashboard. The 31-card grid is folded away so there is one primary action and
+// one named next lesson above it.
+//
+// See docs/DAILY-PRACTICE-LOOP.md.
 
 const WEEK_TITLES = {
   1: 'Foundations',
@@ -16,19 +22,28 @@ const WEEK_TITLES = {
 export default function DashboardScreen({ navigation }) {
   const { user } = useAuth();
   const [data, setData] = useState(null);
+  const [dose, setDose] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showAll, setShowAll] = useState(false);
 
-  // Reload every time the screen regains focus (e.g. after passing a quiz).
+  // Reload every time the screen regains focus (e.g. after passing a quiz or
+  // finishing a dose).
   useFocusEffect(
     useCallback(() => {
       let active = true;
-      api
-        .listLessons()
-        .then((d) => active && setData(d))
+      Promise.all([
+        api.listLessons(),
+        // A dose that cannot be built yet is not an error — the hero points at
+        // a lesson instead.
+        api.dose().catch(() => null),
+      ])
+        .then(([lessons, d]) => {
+          if (!active) return;
+          setData(lessons);
+          setDose(d);
+        })
         .finally(() => active && setLoading(false));
-      return () => {
-        active = false;
-      };
+      return () => { active = false; };
     }, [])
   );
 
@@ -43,16 +58,66 @@ export default function DashboardScreen({ navigation }) {
 
   const completed = data.lessons.filter((l) => l.quizCompleted).length;
   const pct = Math.round((completed / data.totalLessons) * 100);
-  const weeks = [1, 2, 3, 4];
+
+  // Today's lesson: the first one open and not yet passed.
+  const nextLesson =
+    data.lessons.find((l) => l.unlocked && !l.quizCompleted) ??
+    data.lessons.filter((l) => l.unlocked).slice(-1)[0];
+
+  const doseReady = !!dose && dose.items?.length > 0;
 
   return (
     <ScrollView contentContainerStyle={styles.page}>
       <View style={styles.head}>
         <Text style={styles.h1}>Karibu, {user.displayName}! 👋</Text>
         <Text style={styles.muted}>
-          Your {data.planLengthDays}-day Swahili plan — you're scheduled for Day {data.currentDay}.
+          Day {data.currentDay} of your {data.planLengthDays}-day plan.
         </Text>
       </View>
+
+      {/* The one primary action on the screen. */}
+      <View style={[styles.hero, !doseReady && styles.heroDone]}>
+        <Text style={styles.heroKicker}>DOSE YA LEO</Text>
+        <Text style={styles.heroTitle}>
+          {doseReady ? `${dose.items.length} items` : 'Nothing due yet'}
+        </Text>
+        <Text style={styles.heroSub}>
+          {doseReady
+            ? 'About ninety seconds. One of them you say out loud.'
+            : (dose?.message ?? 'Study a lesson and your review queue starts filling.')}
+        </Text>
+        {doseReady ? (
+          <Button title="Anza →" variant="gold" style={styles.heroBtn} onPress={() => navigation.navigate('Dose')} />
+        ) : nextLesson ? (
+          <Button
+            title="Open a lesson →"
+            variant="gold"
+            style={styles.heroBtn}
+            onPress={() => navigation.navigate('Lesson', { id: nextLesson.id })}
+          />
+        ) : null}
+      </View>
+
+      {/* The lesson is still here — just no longer the first decision. */}
+      {nextLesson && (
+        <Card style={styles.nextLesson}>
+          <View style={styles.spread}>
+            <View style={{ flex: 1, paddingRight: 12 }}>
+              <Text style={styles.nextKicker}>
+                {nextLesson.quizCompleted ? 'LAST LESSON' : 'SOMO LA LEO'} · DAY {nextLesson.id}
+              </Text>
+              <Text style={styles.nextTitle}>{nextLesson.title}</Text>
+              <Text style={styles.nextSub}>{nextLesson.subtitle}</Text>
+            </View>
+            <Button
+              title={nextLesson.lessonViewed ? 'Continue →' : 'Start →'}
+              variant="ghost"
+              size="sm"
+              onPress={() => navigation.navigate('Lesson', { id: nextLesson.id })}
+            />
+          </View>
+        </Card>
+      )}
 
       <View style={styles.statsGrid}>
         <Stat num={`${completed}/${data.totalLessons}`} label="Lessons done" />
@@ -61,7 +126,7 @@ export default function DashboardScreen({ navigation }) {
         <Stat num={`${pct}%`} label="Course complete" />
       </View>
 
-      <Card style={{ marginBottom: 24 }}>
+      <Card style={{ marginBottom: 20 }}>
         <View style={styles.spread}>
           <Text style={styles.bold}>Overall progress</Text>
           <Text style={styles.muted}>{completed} of {data.totalLessons} lessons</Text>
@@ -69,7 +134,15 @@ export default function DashboardScreen({ navigation }) {
         <ProgressBar pct={pct} />
       </Card>
 
-      {weeks.map((w) => {
+      <Button
+        title={showAll ? 'Hide all lessons' : `All ${data.totalLessons} lessons`}
+        variant="ghost"
+        size="sm"
+        style={{ marginBottom: 20 }}
+        onPress={() => setShowAll((s) => !s)}
+      />
+
+      {showAll && [1, 2, 3, 4].map((w) => {
         const lessons = data.lessons.filter((l) => l.week === w);
         if (!lessons.length) return null;
         return (
@@ -143,13 +216,31 @@ function Badge({ children, tint, color }) {
 
 const styles = StyleSheet.create({
   page: { padding: 20, paddingBottom: 60, backgroundColor: colors.cream },
-  head: { marginBottom: 20 },
+  head: { marginBottom: 18 },
   h1: { fontSize: 24, color: colors.navy, fontWeight: '800', marginBottom: 4 },
   muted: { color: colors.muted },
   bold: { fontWeight: '700', color: colors.ink },
   spread: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
 
-  statsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, marginBottom: 24 },
+  hero: {
+    backgroundColor: colors.navy,
+    borderRadius: radius,
+    padding: 22,
+    marginBottom: 16,
+    ...shadowLg,
+  },
+  heroDone: { backgroundColor: colors.tealDark },
+  heroKicker: { fontSize: 11, fontWeight: '800', color: colors.goldLight, letterSpacing: 1.4 },
+  heroTitle: { fontSize: 24, fontWeight: '800', color: '#fff', marginTop: 2, marginBottom: 4 },
+  heroSub: { color: '#cfe0e8', fontSize: 14.5, lineHeight: 20 },
+  heroBtn: { marginTop: 16 },
+
+  nextLesson: { marginBottom: 20 },
+  nextKicker: { fontSize: 11, fontWeight: '800', color: colors.teal, letterSpacing: 1 },
+  nextTitle: { color: colors.navy, fontSize: 17, fontWeight: '700', marginTop: 3 },
+  nextSub: { color: colors.muted, fontSize: 14, marginTop: 2 },
+
+  statsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, marginBottom: 20 },
   stat: {
     backgroundColor: '#fff',
     borderRadius: radius,

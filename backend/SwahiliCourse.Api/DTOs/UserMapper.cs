@@ -11,8 +11,13 @@ public static class UserMapper
         c.Id, c.Title, c.Subtitle, c.Description,
         c.TargetLanguage, c.SourceLanguage, c.TtsLocale, c.Flag);
 
-    public static UserDto ToDto(User u, PaceService pace) => new(
-        u.Id, u.Email, u.DisplayName, u.PlanLengthDays, u.StartDate,
-        u.StreakCount, u.TotalXp, pace.CurrentScheduledDay(u),
-        ToDto(Courses.Get(u.CourseId)));
+    public static UserDto ToDto(User u, PaceService pace, StreakService streaks)
+    {
+        var now = DateTime.UtcNow;
+        return new UserDto(
+            u.Id, u.Email, u.DisplayName, u.PlanLengthDays, u.StartDate,
+            u.StreakCount, u.TotalXp, pace.CurrentScheduledDay(u),
+            u.TimeZoneId, streaks.RestDayAvailable(u, now), streaks.HasDosedToday(u, now),
+            ToDto(Courses.Get(u.CourseId)));
+    }
 }

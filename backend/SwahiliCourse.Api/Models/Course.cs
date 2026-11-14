@@ -24,6 +24,10 @@ public class Course
     public string SttLanguage { get; set; } = "sw";
 
     public string LessonsFile { get; set; } = "lessons.json";
+
+    // Proverbs and idioms for this direction. They belong to no lesson — they
+    // are the surprise the Dose can hand out — so they live in their own file.
+    public string MethaliFile { get; set; } = "methali.json";
     public string Flag { get; set; } = "🇹🇿";
 }
 
@@ -48,6 +52,7 @@ public static class Courses
             TtsVoice = "sw-KE-ZuriNeural",
             SttLanguage = "sw",
             LessonsFile = "lessons.json",
+            MethaliFile = "methali.json",
             Flag = "🇹🇿",
         },
         new Course
@@ -62,6 +67,7 @@ public static class Courses
             TtsVoice = "en-US-JennyNeural",
             SttLanguage = "en",
             LessonsFile = "lessons-en.json",
+            MethaliFile = "methali-en.json",
             Flag = "🇬🇧",
         },
     };

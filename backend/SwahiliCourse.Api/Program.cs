@@ -38,6 +38,13 @@ builder.Services.AddSingleton<CourseCatalog>();
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<PaceService>();
 
+// The daily practice loop: per-item spaced repetition behind "Dose ya leo".
+// The scheduler is pure arithmetic over Leitner boxes, so it is a singleton;
+// DoseService reads the learner's cards and so follows the DbContext scope.
+builder.Services.AddSingleton<ReviewScheduler>();
+builder.Services.AddSingleton<StreakService>();
+builder.Services.AddScoped<DoseService>();
+
 // Cloud text-to-speech (Google/Azure) with on-disk caching. Optional — falls back
 // to the browser/device built-in voice when no provider key is configured.
 builder.Services.AddHttpClient();
@@ -180,6 +187,10 @@ if (Encoding.UTF8.GetByteCount(jwtKey) < 32)
         + "are rejected at startup rather than silently weakening every token.");
 }
 var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "SwahiliCourse";
+
+// One source of truth for the key: TokenService signs with exactly what the
+// handler below validates against. See Services/JwtSettings.cs.
+builder.Services.AddSingleton(new JwtSettings(jwtKey, jwtIssuer));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(opt =>
     {
