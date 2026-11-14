@@ -32,24 +32,45 @@ body {
 a { color: var(--teal-dark); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
+/* Body copy wants 1.55; a heading that wraps at that leading falls apart into
+   separate lines. */
+h1, h2, h3 { line-height: 1.22; }
+
 .container { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
-.narrow { max-width: 460px; }
+/* Single-column task pages (quiz, dose, flashcards, settings). Wide enough to
+   read as a desktop page rather than a phone screen floating in one; on a
+   phone the viewport is the limit anyway. */
+.narrow { max-width: 640px; }
+/* Lessons are prose and two-column tables: cap the measure instead of letting
+   a "word / meaning" table stretch the full 1080px. */
+.lesson-page { max-width: 860px; }
 
 /* ---------- Top bar ---------- */
 .topbar {
   background: var(--navy);
   color: #fff;
-  padding: 14px 0;
+  padding: 12px 0;
   box-shadow: var(--shadow);
   position: sticky; top: 0; z-index: 50;
 }
-.topbar .inner { display: flex; align-items: center; justify-content: space-between; }
+.topbar .inner { display: flex; align-items: center; gap: 22px; }
 .brand { font-weight: 800; font-size: 1.25rem; letter-spacing: 0.3px; color: #fff; display:flex; align-items:center; gap:10px; }
+.brand:hover { text-decoration: none; }
 .brand .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--gold-light); display:inline-block; }
-.topbar nav { display: flex; gap: 18px; align-items: center; }
-.topbar nav a { color: #d7e4ec; font-weight: 600; font-size: 0.95rem; }
-.topbar nav a:hover { color: #fff; text-decoration: none; }
-.topbar .pill { background: rgba(255,255,255,0.12); padding: 6px 12px; border-radius: 999px; font-size: 0.85rem; display:flex; gap:6px; align-items:center; }
+.topbar-links { display: flex; gap: 4px; align-items: center; margin-left: auto; }
+.topbar-links a {
+  color: #d7e4ec; font-weight: 600; font-size: 0.95rem;
+  padding: 7px 12px; border-radius: 999px; transition: background .12s, color .12s;
+}
+.topbar-links a:hover { color: #fff; text-decoration: none; background: rgba(255,255,255,0.08); }
+.topbar-links a.active { color: #fff; background: rgba(255,255,255,0.14); }
+.topbar-links .tab-icon { display: none; }
+.topbar-meta { display: flex; gap: 10px; align-items: center; }
+.topbar .pill { background: rgba(255,255,255,0.12); padding: 6px 12px; border-radius: 999px; font-size: 0.85rem; display:flex; gap:6px; align-items:center; white-space: nowrap; }
+/* The default ghost button is teal-on-white; on the navy bar that is teal on
+   navy, which all but disappears. */
+.topbar .btn-ghost { color: #fff; border-color: rgba(255,255,255,0.45); }
+.topbar .btn-ghost:hover { background: rgba(255,255,255,0.12); border-color: #fff; }
 .streak { color: var(--gold-light); font-weight: 800; }
 
 /* ---------- Buttons ---------- */
@@ -179,7 +200,7 @@ a:hover { text-decoration: underline; }
 .sb-row.wrong { animation: sb-shake 0.5s; border-color: var(--danger); }
 
 .sb-tile {
-  user-select: none; cursor: grab; background: #fff; border: 2px solid var(--teal);
+  user-select: none; cursor: grab; background: #fff; border: 2px solid var(--teal); font-family: inherit;
   color: var(--navy); font-weight: 800; font-size: 1.05rem; padding: 10px 16px;
   border-radius: 10px; box-shadow: var(--shadow); transition: transform .12s, box-shadow .12s, background .15s, border-color .15s;
 }
@@ -187,6 +208,8 @@ a:hover { text-decoration: underline; }
 .sb-tile:active { cursor: grabbing; }
 .sb-tile.dragging { opacity: 0.4; }
 .sb-tile.over { border-color: var(--gold); border-style: dashed; }
+.sb-tile.picked { border-color: var(--gold); background: #fdf3dc; transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.sb-hint { color: var(--muted); font-size: 0.85rem; margin-top: 10px; }
 .sb-tile.correct { background: var(--success); border-color: var(--success); color: #fff; animation: sb-pop 0.45s ease both; }
 
 .sb-actions { display: flex; align-items: center; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
@@ -286,7 +309,10 @@ a:hover { text-decoration: underline; }
   .vb-piece { min-width: 56px; padding: 6px 11px; }
   .vb-piece-val { font-size: 1.15rem; }
 }
-.swtable { width: 100%; border-collapse: collapse; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); }
+/* A table wider than the screen scrolls inside its own box instead of
+   dragging the whole page sideways. */
+.table-wrap { overflow-x: auto; border-radius: 8px; box-shadow: var(--shadow); -webkit-overflow-scrolling: touch; }
+.swtable { width: 100%; border-collapse: collapse; border-radius: 8px; overflow: hidden; }
 .swtable th { background: var(--teal); color: #fff; text-align: left; padding: 9px 13px; font-size: 0.9rem; }
 .swtable td { padding: 9px 13px; border-bottom: 1px solid var(--line); font-size: 0.95rem; }
 .swtable td:first-child { font-weight: 700; color: var(--navy); }
@@ -339,6 +365,8 @@ ul.sw-list li { margin-bottom: 5px; }
 .row { display: flex; gap: 12px; align-items: center; }
 .spread { justify-content: space-between; }
 .center { justify-content: center; }
+/* A centred row is a row of buttons; two of them do not always fit a phone. */
+.row.center { flex-wrap: wrap; }
 .mt { margin-top: 18px; }
 .mb { margin-bottom: 18px; }
 .muted { color: var(--muted); }
@@ -346,22 +374,97 @@ ul.sw-list li { margin-bottom: 5px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* Pace selector */
-.pace-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 10px; }
+.pace-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px,1fr)); gap: 10px; }
+/* Four options in the sign-up card: 2×2, not three and a straggler. */
+.auth-card .pace-options { grid-template-columns: 1fr 1fr; }
 .pace-opt { border: 2px solid var(--line); border-radius: 12px; padding: 14px; text-align: center; cursor: pointer; background:#fff; transition: all .12s; }
 .pace-opt:hover { border-color: var(--teal); }
 .pace-opt.active { border-color: var(--teal); background: #e3f1f1; }
 .pace-opt .n { font-size: 1.4rem; font-weight: 800; color: var(--navy); }
 .pace-opt .d { font-size: 0.82rem; color: var(--muted); }
 
+/* Between a phone and a full desktop the single row still fits, just tighter. */
+@media (max-width: 900px) {
+  .topbar .inner { gap: 12px; }
+  .topbar-links a { padding: 7px 9px; }
+  .topbar .logo-word { display: none; }
+}
+
+@media (min-width: 641px) {
+  /* A flashcard sized for a phone looks lost on a desktop. Same 7:4 shape. */
+  .flashcard { max-width: 520px; height: 300px; }
+  .flashcard-face .big { font-size: 2.4rem; }
+}
+
 @media (max-width: 640px) {
-  /* The bar holds five links plus the streak/XP pills and logout, which is
-     more than fits on a phone in one row — let both halves wrap instead of
-     pushing Logout off the right edge. */
-  .topbar .inner { flex-wrap: wrap; gap: 10px; }
-  .topbar nav { gap: 12px; flex-wrap: wrap; justify-content: flex-end; flex: 1; }
-  .topbar nav a { font-size: 0.9rem; }
-  .topbar nav a span.hide-sm { display: none; }
-  .lesson-grid { grid-template-columns: 1fr; }
+  /* The bar used to hold four links, two pills and Logout in one wrapping
+     row — three ragged lines and 143px of a phone screen, sticky. Now the
+     header is one short row (brand, streak, XP, logout) and the four
+     destinations are a tab bar on the bottom edge, as in the phone app. */
+  .topbar { padding: 9px 0; }
+  .topbar .inner { gap: 8px; justify-content: space-between; }
+  .topbar-meta { gap: 6px; }
+  .topbar .pill { padding: 5px 9px; font-size: 0.8rem; gap: 4px; }
+  .topbar .btn-sm { padding: 6px 11px; font-size: 0.82rem; min-height: 0; }
+
+  .topbar-links {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; margin: 0; gap: 0;
+    background: #fff; border-top: 1px solid var(--line);
+    box-shadow: 0 -2px 12px rgba(26, 58, 92, 0.08);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .topbar-links a, .topbar-links a:hover {
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px;
+    padding: 8px 2px 7px; border-radius: 0; background: none;
+    color: var(--muted); font-size: 0.7rem; font-weight: 700;
+  }
+  .topbar-links a.active { color: var(--teal-dark); background: none; }
+  .topbar-links .tab-icon { display: block; font-size: 1.25rem; line-height: 1.2; opacity: 0.55; }
+  .topbar-links a.active .tab-icon { opacity: 1; }
+  /* Room for the tab bar under the last thing on the page. */
+  .page { padding-top: 20px; padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
+
+  .page-head { margin-bottom: 18px; }
+  .page-head h1 { font-size: 1.5rem; }
+  .lesson-head h1 { font-size: 1.55rem; }
+  .lesson-head .subtitle { font-size: 1rem; }
+  .card { padding: 18px; }
+  .card-pad-lg { padding: 22px 20px; }
+  .auth-wrap { padding: 16px; }
+  .auth-title { font-size: 1.5rem; }
+  .question-card { padding: 20px 18px; }
+  .question-prompt { font-size: 1.15rem; }
+  .result-card { padding: 28px 18px; }
+
+  /* Fingers, not cursors. */
+  .btn { min-height: 44px; }
+  .btn-sm { min-height: 38px; }
+  .speak-btn-sm { width: 34px; height: 34px; font-size: 0.9rem; }
+  .back-link { display: inline-block; padding: 6px 0; }
+
+  .dose-hero { padding: 20px; gap: 16px; }
+  .dose-hero .btn { width: 100%; }
+  .stats { grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+  .stat { padding: 14px; }
+  .stat .num { font-size: 1.45rem; }
+  .lesson-grid { grid-template-columns: 1fr; gap: 12px; }
+  .lesson-card { min-height: 0; }
+
+  /* Two chips to a row instead of one long column of them. */
+  .vocab-grid { grid-template-columns: repeat(auto-fill, minmax(min(140px, 100%), 1fr)); gap: 8px; }
+  .vocab-chip { padding: 9px 11px; }
+  .vocab-chip .sw { overflow-wrap: anywhere; }
+
+  .swtable th, .swtable td { padding: 8px 10px; font-size: 0.9rem; }
+  .vb { padding: 16px; }
+  .sb-row { padding: 12px; gap: 8px; }
+  .sb-tile { padding: 10px 13px; }
+
+  /* Two across; an odd one out (Settings has five) takes the full last row
+     rather than sitting alone in half of it. */
+  .pace-options { grid-template-columns: 1fr 1fr; }
+  .pace-opt:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .pace-opt { padding: 12px 8px; }
 }
 
 /* ============================================================
@@ -414,7 +517,9 @@ ul.sw-list li { margin-bottom: 5px; }
 .lp-stat .l { display: block; color: #c7d6e2; font-size: 0.9rem; font-weight: 600; margin-top: 4px; }
 
 /* Generic section */
-.lp-section { padding: 72px 0; }
+/* scroll-margin: the header is sticky, so an in-page link would otherwise park
+   the section's heading underneath it. */
+.lp-section { padding: 72px 0; scroll-margin-top: 56px; }
 .lp-section-alt { background: linear-gradient(180deg, #fff, var(--cream)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .lp-section-head { text-align: center; max-width: 640px; margin: 0 auto 44px; }
 .lp-section-head h2 { font-size: 2.2rem; color: var(--navy); font-weight: 900; letter-spacing: -0.5px; }
@@ -486,6 +591,39 @@ ul.sw-list li { margin-bottom: 5px; }
   .lp-hero-art { order: -1; }
   .lp-stats-inner { grid-template-columns: repeat(2, 1fr); gap: 26px 12px; }
   .lp-grid, .lp-steps, .lp-weeks { grid-template-columns: 1fr; }
+}
+
+/* Two-up cards on a tablet rather than one very wide column. */
+@media (min-width: 561px) and (max-width: 860px) {
+  .lp-grid, .lp-weeks { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 560px) {
+  /* The 280px badge used to fill the first screen and push the headline's
+     button below the fold. */
+  .lp-header-inner { height: 60px; }
+  .lp-hero { padding: 28px 0 40px; }
+  .lp-hero-inner { gap: 20px; }
+  .lp-hero-badge { width: 132px; height: 132px; }
+  .lp-hero-badge img { width: 78px !important; height: 78px !important; }
+  .lp-eyebrow { margin-bottom: 12px; }
+  .lp-hero-copy h1 { font-size: 2.25rem; letter-spacing: -0.5px; }
+  .lp-lead { font-size: 1.05rem; margin: 14px auto 22px; }
+  .lp-hero-actions { flex-direction: column; gap: 10px; }
+  .lp-hero-actions .btn { width: 100%; padding: 13px 20px; }
+  .lp-stats { padding: 24px 0; }
+  .lp-stat .n { font-size: 1.7rem; }
+  .lp-section { padding: 48px 0; }
+  .lp-section-head { margin-bottom: 28px; }
+  .lp-section-head h2 { font-size: 1.65rem; }
+  .lp-section-head p { font-size: 1rem; }
+  .lp-feature { padding: 20px; }
+  .lp-grid, .lp-steps, .lp-weeks { gap: 14px; }
+  .lp-price-card { padding: 26px 20px; }
+  .lp-cta { padding: 52px 0; }
+  .lp-cta-inner h2 { font-size: 1.75rem; }
+  .lp-cta-inner p { font-size: 1.02rem; }
+  .lp-cta-inner .btn { width: 100%; }
 }
 
 /* Singular → plural arrow in the English plural builder */

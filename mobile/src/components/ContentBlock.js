@@ -87,22 +87,25 @@ export default function ContentBlock({ block }) {
         </View>
       );
 
-    case 'table':
+    case 'table': {
+      // Four or more columns on a phone leaves ~55pt of text per cell at the
+      // normal padding, which breaks ordinary words mid-word.
+      const dense = (block.tableHeaders || []).length >= 4;
       return (
         <View style={styles.block}>
           <View style={styles.table}>
             <View style={[styles.tr, styles.theadRow]}>
               {(block.tableHeaders || []).map((h, i) => (
-                <View key={i} style={styles.cell}>
-                  <Text style={styles.th}>{h}</Text>
+                <View key={i} style={[styles.cell, dense && styles.cellDense]}>
+                  <Text style={[styles.th, dense && styles.textDense]}>{h}</Text>
                 </View>
               ))}
             </View>
             {(block.tableRows || []).map((row, ri) => (
               <View key={ri} style={[styles.tr, ri % 2 === 1 && styles.trAlt]}>
                 {row.map((c, ci) => (
-                  <View key={ci} style={styles.cell}>
-                    <Text style={[styles.td, ci === 0 && styles.tdFirst]}>{c}</Text>
+                  <View key={ci} style={[styles.cell, dense && styles.cellDense]}>
+                    <Text style={[styles.td, ci === 0 && styles.tdFirst, dense && styles.textDense]}>{c}</Text>
                   </View>
                 ))}
               </View>
@@ -110,6 +113,7 @@ export default function ContentBlock({ block }) {
           </View>
         </View>
       );
+    }
 
     case 'dialogue':
       return (
@@ -170,6 +174,8 @@ const styles = StyleSheet.create({
   theadRow: { backgroundColor: colors.teal },
   trAlt: { backgroundColor: colors.light },
   cell: { flex: 1, paddingVertical: 9, paddingHorizontal: 13, borderBottomWidth: 1, borderBottomColor: colors.line },
+  cellDense: { paddingHorizontal: 7 },
+  textDense: { fontSize: 12.5 },
   th: { color: '#fff', fontWeight: '700', fontSize: 13.5 },
   td: { color: colors.ink, fontSize: 14 },
   tdFirst: { fontWeight: '700', color: colors.navy },

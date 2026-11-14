@@ -4,8 +4,13 @@ import {
   View,
   Pressable,
   ActivityIndicator,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
   StyleSheet,
 } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors, radius, shadow } from '../theme';
 
 export function Button({ title, onPress, variant = 'primary', size = 'md', disabled, block, style }) {
@@ -36,6 +41,35 @@ export function Button({ title, onPress, variant = 'primary', size = 'md', disab
         {title}
       </Text>
     </Pressable>
+  );
+}
+
+// A scrolling screen with no navigation header (taster, sign-up, onboarding).
+//
+// Nothing above these screens reserves the status bar, notch or home
+// indicator, so a tall form used to scroll up underneath them — and the app's
+// light status-bar text sat invisible on the cream background. This pads by
+// the device's own insets and switches the status bar to dark while mounted.
+export function BareScreen({ children, keyboard = false }) {
+  const insets = useSafeAreaInsets();
+  const scroll = (
+    <ScrollView
+      style={styles.bareScroll}
+      contentContainerStyle={[
+        styles.bareContent,
+        { paddingTop: 20 + insets.top, paddingBottom: 20 + insets.bottom },
+      ]}
+      keyboardShouldPersistTaps="handled"
+    >
+      <StatusBar style="dark" />
+      {children}
+    </ScrollView>
+  );
+  if (!keyboard) return scroll;
+  return (
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      {scroll}
+    </KeyboardAvoidingView>
   );
 }
 
@@ -104,6 +138,8 @@ const styles = StyleSheet.create({
   btnSm: { paddingVertical: 8, paddingHorizontal: 14 },
   btnText: { fontWeight: '700', fontSize: 15.5 },
   btnTextSm: { fontSize: 13.5 },
+  bareScroll: { flex: 1, backgroundColor: colors.cream },
+  bareContent: { flexGrow: 1, justifyContent: 'center', paddingHorizontal: 20 },
   card: {
     backgroundColor: '#fff',
     borderRadius: radius,

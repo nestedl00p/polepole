@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { View, Text, ScrollView, Pressable, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../api/client';
-import { Button, Card, Field, Input, ErrorBox } from '../components/ui';
+import { BareScreen, Button, Card, Field, Input, ErrorBox } from '../components/ui';
 import { colors, radius } from '../theme';
 
 const PACE_OPTIONS = [
@@ -47,14 +47,7 @@ export default function AuthScreen() {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-    >
-      <ScrollView
-        contentContainerStyle={styles.wrap}
-        keyboardShouldPersistTaps="handled"
-      >
+    <BareScreen keyboard>
         <Card style={styles.card}>
           <View style={styles.brand}>
             <View style={styles.dot} />
@@ -164,8 +157,7 @@ export default function AuthScreen() {
             </Pressable>
           </View>
         </Card>
-      </ScrollView>
-    </KeyboardAvoidingView>
+    </BareScreen>
   );
 }
 
@@ -179,13 +171,7 @@ const styles = StyleSheet.create({
   courseFlag: { fontSize: 26 },
   courseTitle: { fontWeight: '800', color: colors.navy, fontSize: 15 },
   courseSub: { color: colors.muted, fontSize: 12.5 },
-  wrap: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    backgroundColor: colors.cream,
-    padding: 20,
-  },
-  card: { width: '100%', maxWidth: 460, alignSelf: 'center', padding: 28 },
+  card: { width: '100%', maxWidth: 460, alignSelf: 'center' },
   brand: { flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 18 },
   dot: { width: 12, height: 12, borderRadius: 6, backgroundColor: colors.goldLight },
   brandText: { fontWeight: '800', fontSize: 20, color: colors.navy, letterSpacing: 0.3 },

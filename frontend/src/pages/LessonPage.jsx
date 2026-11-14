@@ -28,16 +28,16 @@ export default function LessonPage() {
 
   if (loading) return <div className="spinner" />;
   if (error) return (
-    <div className="container page">
+    <div className="container page lesson-page">
       <div className="error-box">{error}</div>
-      <Link to="/" className="btn btn-ghost">← Back to dashboard</Link>
+      <Link to="/app" className="btn btn-ghost">← Back to dashboard</Link>
     </div>
   );
   if (!lesson) return null;
 
   return (
-    <div className="container page">
-      <Link to="/" className="muted">← Dashboard</Link>
+    <div className="container page lesson-page">
+      <Link to="/app" className="muted back-link">← Dashboard</Link>
       <div className="lesson-head mt">
         <div>
           <div className="day-num">Day {lesson.id} · {lesson.theme}</div>

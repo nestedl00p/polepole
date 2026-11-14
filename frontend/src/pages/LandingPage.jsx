@@ -90,7 +90,7 @@ export default function LandingPage() {
       {/* ---------- Stats ---------- */}
       <section className="lp-stats">
         <div className="container lp-stats-inner">
-          <div className="lp-stat"><span className="n">28</span><span className="l">Guided lessons</span></div>
+          <div className="lp-stat"><span className="n">31</span><span className="l">Guided lessons</span></div>
           <div className="lp-stat"><span className="n">4</span><span className="l">Weekly themes</span></div>
           <div className="lp-stat"><span className="n">300+</span><span className="l">Words &amp; phrases</span></div>
           <div className="lp-stat"><span className="n">0→💬</span><span className="l">Beginner to talking</span></div>
@@ -165,7 +165,7 @@ export default function LandingPage() {
             <div className="lp-price-tag">Free</div>
             <div className="lp-price-amount">$0<span>/ during beta</span></div>
             <ul className="lp-price-list">
-              <li>✓ Full 28-lesson Swahili course</li>
+              <li>✓ Full 31-lesson Swahili course</li>
               <li>✓ Flashcards &amp; practice quizzes</li>
               <li>✓ Streaks, XP &amp; progress tracking</li>
               <li>✓ Web &amp; mobile access</li>
