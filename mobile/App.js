@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -23,6 +23,14 @@ import SettingsScreen from './src/screens/SettingsScreen';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
+// Every screen sits on cream. Without this the navigator paints its default
+// grey behind any screen whose content is shorter than the display, so a short
+// page showed cream on top and a grey band beneath it.
+const navTheme = {
+  ...DefaultTheme,
+  colors: { ...DefaultTheme.colors, background: colors.cream },
+};
+
 const navyHeader = {
   headerStyle: { backgroundColor: colors.navy },
   headerTintColor: '#fff',
@@ -34,8 +42,8 @@ function HeaderStats() {
   if (!user) return null;
   return (
     <View style={styles.headerStats}>
-      <Pill>ð¥ {user.streakCount}</Pill>
-      <Pill>â­ {user.totalXp} XP</Pill>
+      <Pill>🔥 {user.streakCount}</Pill>
+      <Pill>⭐ {user.totalXp} XP</Pill>
     </View>
   );
 }
@@ -58,7 +66,7 @@ function Tabs() {
       <Tab.Screen
         name="Dashboard"
         component={DashboardScreen}
-        options={{ tabBarIcon: ({ focused }) => <TabIcon emoji="ð " focused={focused} /> }}
+        options={{ tabBarIcon: ({ focused }) => <TabIcon emoji="🏠" focused={focused} /> }}
       />
       <Tab.Screen
         name="Dose"
@@ -68,12 +76,12 @@ function Tabs() {
       <Tab.Screen
         name="Flashcards"
         component={FlashcardsScreen}
-        options={{ tabBarIcon: ({ focused }) => <TabIcon emoji="ð" focused={focused} /> }}
+        options={{ tabBarIcon: ({ focused }) => <TabIcon emoji="🃏" focused={focused} /> }}
       />
       <Tab.Screen
         name="Settings"
         component={SettingsScreen}
-        options={{ tabBarIcon: ({ focused }) => <TabIcon emoji="âï¸" focused={focused} /> }}
+        options={{ tabBarIcon: ({ focused }) => <TabIcon emoji="⚙️" focused={focused} /> }}
       />
     </Tab.Navigator>
   );
@@ -118,7 +126,7 @@ export default function App() {
       <AuthProvider>
         {/* `linking` is what lets a tapped reminder (polepole://dose) open
             straight into the Dose tab. */}
-        <NavigationContainer linking={linking}>
+        <NavigationContainer linking={linking} theme={navTheme}>
           <StatusBar style="light" />
           <RootNavigator />
         </NavigationContainer>

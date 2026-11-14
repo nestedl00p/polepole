@@ -222,8 +222,11 @@ const styles = StyleSheet.create({
     padding: 12,
     alignItems: 'center',
     backgroundColor: '#fff',
+    // Two across; with five options the last one takes the full final row.
+    // At 30% the row broke 3 + 2 and the last two stretched to a different
+    // width from the three above them.
     flexGrow: 1,
-    flexBasis: '30%',
+    flexBasis: '45%',
   },
   paceOptActive: { borderColor: colors.teal, backgroundColor: colors.tealTint },
   paceNum: { fontSize: 22, fontWeight: '800', color: colors.navy },

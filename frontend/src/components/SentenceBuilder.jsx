@@ -1,8 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { speakSwahili } from '../lib/speak';
 
-// Drag-and-drop sentence builder. Reorder the scrambled word tiles into the
-// correct Swahili sentence, then Check. Correct → green pop + audio; wrong → shake.
+// Sentence builder. Reorder the scrambled word tiles into the correct Swahili
+// sentence, then Check. Correct → green pop + audio; wrong → shake.
+//
+// Two ways to reorder: drag a tile onto another (mouse), or tap one tile and
+// then the tile whose place it should take. HTML5 drag-and-drop never fires
+// from a touchscreen, so without the tap path this was unusable on a phone.
 
 const CHALLENGES = [
   { answer: ['Huyu', 'ni', 'rafiki', 'yangu'], en: 'This is my friend' },
@@ -27,6 +31,7 @@ export default function SentenceBuilder({ block = {} }) {
   const [tiles, setTiles] = useState(() => scramble(challenges[0].answer));
   const [status, setStatus] = useState('idle'); // idle | correct | wrong
   const [overIdx, setOverIdx] = useState(null);
+  const [picked, setPicked] = useState(null);
   const [done, setDone] = useState(false);
   const dragFrom = useRef(null);
   const ch = challenges[ci];
@@ -34,6 +39,7 @@ export default function SentenceBuilder({ block = {} }) {
   useEffect(() => {
     setTiles(scramble(ch.answer));
     setStatus('idle');
+    setPicked(null);
   }, [ci]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const move = (from, to) => {
@@ -54,8 +60,15 @@ export default function SentenceBuilder({ block = {} }) {
     setOverIdx(null);
   };
 
+  const tap = (i) => {
+    if (status === 'correct') return;
+    if (picked == null) setPicked(i);
+    else { move(picked, i); setPicked(null); }
+  };
+
   const check = () => {
     if (status === 'correct') return;
+    setPicked(null);
     const correct = tiles.map((t) => t.w).join(' ') === ch.answer.join(' ');
     if (correct) {
       setStatus('correct');
@@ -104,24 +117,31 @@ export default function SentenceBuilder({ block = {} }) {
 
         <div className={`sb-row ${status}`}>
           {tiles.map((t, i) => (
-            <span
+            <button
+              type="button"
               key={t.k}
-              className={`sb-tile ${status === 'correct' ? 'correct' : ''} ${overIdx === i ? 'over' : ''}`}
+              className={`sb-tile ${status === 'correct' ? 'correct' : ''} ${overIdx === i ? 'over' : ''} ${picked === i ? 'picked' : ''}`}
+              aria-pressed={picked === i}
+              onClick={() => tap(i)}
               style={status === 'correct' ? { animationDelay: `${i * 90}ms` } : undefined}
               draggable={status !== 'correct'}
-              onDragStart={(e) => { dragFrom.current = i; e.dataTransfer.effectAllowed = 'move'; e.currentTarget.classList.add('dragging'); }}
+              onDragStart={(e) => { setPicked(null); dragFrom.current = i; e.dataTransfer.effectAllowed = 'move'; e.currentTarget.classList.add('dragging'); }}
               onDragEnd={(e) => { e.currentTarget.classList.remove('dragging'); setOverIdx(null); }}
               onDragOver={(e) => { e.preventDefault(); setOverIdx(i); }}
               onDrop={onDrop(i)}
             >
               {t.w}
-            </span>
+            </button>
           ))}
         </div>
 
+        <p className="sb-hint">
+          {picked == null ? 'Drag a word, or tap it and then tap where it belongs.' : 'Now tap the word whose place it should take.'}
+        </p>
+
         <div className="sb-actions">
           <button className="btn btn-gold" onClick={check} disabled={status === 'correct'}>Check ✓</button>
-          <button className="btn btn-ghost btn-sm" onClick={() => setTiles(scramble(ch.answer))} disabled={status === 'correct'}>Shuffle</button>
+          <button className="btn btn-ghost btn-sm" onClick={() => { setPicked(null); setTiles(scramble(ch.answer)); }} disabled={status === 'correct'}>Shuffle</button>
           {status === 'wrong' && <span className="sb-msg sb-msg-wrong">Not quite — try again</span>}
           {status === 'correct' && <span className="sb-msg sb-msg-correct">✓ Sawa! “{ch.en}”</span>}
         </div>

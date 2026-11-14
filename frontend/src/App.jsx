@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, Link, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import LandingPage from './pages/LandingPage';
 import AuthPage from './pages/AuthPage';
@@ -23,24 +23,38 @@ function NavBar() {
   if (pathname === '/try') return null;
 
   return (
-    <div className="topbar">
+    <header className="topbar">
       <div className="container inner">
         <Link to="/app" className="brand"><Logo size={30} light /></Link>
-        <nav>
-          <Link to="/app">Dashboard</Link>
-          <Link to="/dose">Dose</Link>
-          <Link to="/flashcards">Flashcards</Link>
-          <Link to="/settings">Settings</Link>
+        {/* One row on a desktop. On a phone the four destinations drop to a
+            tab bar along the bottom edge — the same four tabs the phone app
+            has — so the header stays a single short row. */}
+        <nav className="topbar-links" aria-label="Main">
+          {NAV_LINKS.map((l) => (
+            <NavLink key={l.to} to={l.to} end={l.to === '/app'}>
+              <span className="tab-icon" aria-hidden="true">{l.icon}</span>
+              {l.label}
+            </NavLink>
+          ))}
+        </nav>
+        <div className="topbar-meta">
           <span className="pill">🔥 <span className="streak">{user.streakCount}</span></span>
           <span className="pill">⭐ {user.totalXp} XP</span>
           <button className="btn btn-sm btn-ghost" onClick={() => { logout(); navigate('/'); }}>
             Logout
           </button>
-        </nav>
+        </div>
       </div>
-    </div>
+    </header>
   );
 }
+
+const NAV_LINKS = [
+  { to: '/app', label: 'Dashboard', icon: '🏠' },
+  { to: '/dose', label: 'Dose', icon: '🎯' },
+  { to: '/flashcards', label: 'Flashcards', icon: '🃏' },
+  { to: '/settings', label: 'Settings', icon: '⚙️' },
+];
 
 function Protected({ children }) {
   const { user, loading } = useAuth();

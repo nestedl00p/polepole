@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { api } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import { registerForReminders } from '../lib/reminders';
-import { Button, Card } from '../components/ui';
+import { BareScreen, Button, Card } from '../components/ui';
 import { ChipRow, REMINDER_TIMES, WHYS } from '../components/ReminderControls';
 import { colors } from '../theme';
 
@@ -55,7 +55,7 @@ export default function OnboardingScreen() {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.wrap}>
+    <BareScreen>
       <Card style={styles.card}>
         {step === 'reminder' ? (
           <>
@@ -77,12 +77,11 @@ export default function OnboardingScreen() {
           </>
         )}
       </Card>
-    </ScrollView>
+    </BareScreen>
   );
 }
 
 const styles = StyleSheet.create({
-  wrap: { flexGrow: 1, justifyContent: 'center', padding: 20, backgroundColor: colors.cream },
   card: { alignItems: 'center' },
   title: { fontSize: 24, fontWeight: '800', color: colors.navy, textAlign: 'center' },
   sub: { color: colors.muted, textAlign: 'center', lineHeight: 21, marginTop: 6, marginBottom: 18 },

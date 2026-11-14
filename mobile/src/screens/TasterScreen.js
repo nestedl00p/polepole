@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { View, Text, ScrollView, Pressable, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { api } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import { setSpeechCourse } from '../lib/speak';
-import { Button, Card, Field, Input, ErrorBox, Spinner } from '../components/ui';
+import { BareScreen, Button, Card, Field, Input, ErrorBox, Spinner } from '../components/ui';
 import SpeakButton from '../components/SpeakButton';
 import { colors, radius } from '../theme';
 
@@ -50,12 +50,12 @@ export default function TasterScreen({ navigation }) {
 
   if (failed || (taster && !taster.items.length)) {
     return (
-      <View style={styles.wrap}>
+      <BareScreen>
         <Card>
           <Text style={styles.muted}>Couldn't load the taster.</Text>
           <Button title="Create an account or log in" style={styles.mt} onPress={toLogin} />
         </Card>
-      </View>
+      </BareScreen>
     );
   }
   if (!taster) return <Spinner />;
@@ -194,11 +194,9 @@ export default function TasterScreen({ navigation }) {
   }
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <ScrollView contentContainerStyle={styles.wrap} keyboardShouldPersistTaps="handled">
-        <Card>{body}</Card>
-      </ScrollView>
-    </KeyboardAvoidingView>
+    <BareScreen keyboard>
+      <Card>{body}</Card>
+    </BareScreen>
   );
 }
 
@@ -246,7 +244,6 @@ function AccountStep({ onSubmit, onLogin }) {
 }
 
 const styles = StyleSheet.create({
-  wrap: { flexGrow: 1, justifyContent: 'center', padding: 20, backgroundColor: colors.cream },
   centered: { alignItems: 'center' },
   muted: { color: colors.muted, lineHeight: 21 },
   small: { fontSize: 13, textAlign: 'center' },

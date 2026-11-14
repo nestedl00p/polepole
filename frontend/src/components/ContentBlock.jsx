@@ -71,16 +71,18 @@ export default function ContentBlock({ block }) {
     case 'table':
       return (
         <div className="block">
-          <table className="swtable">
-            <thead>
-              <tr>{(block.tableHeaders || []).map((h, i) => <th key={i}>{h}</th>)}</tr>
-            </thead>
-            <tbody>
-              {(block.tableRows || []).map((row, ri) => (
-                <tr key={ri}>{row.map((c, ci) => <td key={ci}>{c}</td>)}</tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="table-wrap">
+            <table className="swtable">
+              <thead>
+                <tr>{(block.tableHeaders || []).map((h, i) => <th key={i}>{h}</th>)}</tr>
+              </thead>
+              <tbody>
+                {(block.tableRows || []).map((row, ri) => (
+                  <tr key={ri}>{row.map((c, ci) => <td key={ci}>{c}</td>)}</tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       );
 

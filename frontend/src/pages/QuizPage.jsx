@@ -76,7 +76,7 @@ export default function QuizPage() {
           <div className="row center mt" style={{ gap: 12 }}>
             {result.passed ? (
               <>
-                <button className="btn btn-primary" onClick={() => navigate('/')}>Back to dashboard →</button>
+                <button className="btn btn-primary" onClick={() => navigate('/app')}>Back to dashboard →</button>
                 {lesson.id < 31 && (
                   <button className="btn btn-gold" onClick={() => navigate(`/lesson/${lesson.id + 1}`)}>
                     Next lesson →
@@ -100,7 +100,7 @@ export default function QuizPage() {
 
   return (
     <div className="container page narrow">
-      <Link to={`/lesson/${lesson.id}`} className="muted">← Back to lesson</Link>
+      <Link to={`/lesson/${lesson.id}`} className="muted back-link">← Back to lesson</Link>
       <div className="quiz-progress mt">Question {idx + 1} of {total} · {lesson.title}</div>
       <div className="progress-bar mb"><span style={{ width: `${((idx + 1) / total) * 100}%` }} /></div>
 
