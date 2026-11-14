@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { api } from '../api/client';
 import ContentBlock from '../components/ContentBlock';
 import SpeakButton from '../components/SpeakButton';
+import VocabMatch from '../components/VocabMatch';
 import { Button, Card, Spinner, ErrorBox } from '../components/ui';
 import { colors } from '../theme';
 import { useAuth } from '../context/AuthContext';
@@ -27,6 +28,11 @@ export default function LessonScreen({ route, navigation }) {
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
   }, [id]);
+
+  const matchPairs = useMemo(
+    () => (lesson?.vocabulary || []).map((v) => ({ learning: learning(v), known: known(v) })),
+    [lesson, learnEnglish], // eslint-disable-line react-hooks/exhaustive-deps
+  );
 
   if (loading) return <Spinner />;
   if (error) {
@@ -65,6 +71,7 @@ export default function LessonScreen({ route, navigation }) {
               </View>
             ))}
           </View>
+          {matchPairs.length >= 3 && <VocabMatch pairs={matchPairs} />}
         </View>
       )}
 

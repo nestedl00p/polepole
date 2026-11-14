@@ -59,6 +59,15 @@
           { "swahili": "friend", "english": "rafiki" },
           { "swahili": "thank you", "english": "asante" }
         ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Katika neno 'he', herufi 'e' hutamkwa kama:", "options": ["ii", "e", "a", "ai"], "answer": "ii" },
+          { "prompt": "Katika neno 'time', herufi 'i' hutamkwa kama:", "options": ["ai", "i", "ii", "e"], "answer": "ai" },
+          { "prompt": "Kutamka 'th', ulimi unawekwa wapi?", "options": ["Kati ya meno", "Nyuma ya meno", "Chini ya mdomo", "Kooni"], "answer": "Kati ya meno" }
+        ]
       }
     ],
     "vocabulary": [
@@ -159,6 +168,15 @@
           { "swahili": "nice to meet you", "english": "nafurahi kukutana nawe" },
           { "swahili": "goodbye", "english": "kwaheri" }
         ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Ni saa tatu asubuhi. Unamsalimu bosi wako:", "options": ["Good morning", "Good evening", "Good night", "Goodbye"], "answer": "Good morning" },
+          { "prompt": "Jaza pengo: I am fine, ___ you.", "options": ["thank", "please", "sorry", "welcome"], "answer": "thank" },
+          { "prompt": "Unaondoka. Unasema:", "options": ["Goodbye", "Hello", "Good morning", "How are you?"], "answer": "Goodbye" }
+        ]
       }
     ],
     "vocabulary": [
@@ -257,6 +275,15 @@
           { "swahili": "I am a student", "english": "mimi ni mwanafunzi" },
           { "swahili": "where are you from", "english": "unatoka wapi" }
         ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Jaza pengo: My name ___ Juma.", "options": ["is", "am", "are", "be"], "answer": "is" },
+          { "prompt": "'Unatoka wapi?' kwa Kiingereza ni:", "options": ["Where are you from?", "What is your name?", "How are you?", "Where do you live?"], "answer": "Where are you from?" },
+          { "prompt": "Jaza pengo: I am ___ student.", "options": ["a", "an", "is", "are"], "answer": "a", "explain": "Kiingereza kinahitaji 'a' mbele ya kazi." }
+        ]
       }
     ],
     "vocabulary": [
@@ -352,6 +379,15 @@
           "Wingi wa jumla: I like books. (vitabu kwa ujumla)",
           "Vitu visivyohesabika: I drink water. (si 'a water')"
         ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Jaza pengo: I have ___ umbrella.", "options": ["an", "a", "two", "many"], "answer": "an", "explain": "'umbrella' huanza na sauti ya vokali." },
+          { "prompt": "Jaza pengo: She is at ___ university.", "options": ["a", "an", "two", "many"], "answer": "a", "explain": "'university' inasikika 'yunivesiti' - si sauti ya vokali." },
+          { "prompt": "Ni ipi sahihi?", "options": ["I drink water.", "I drink a water.", "I drink an water.", "I drink waters."], "answer": "I drink water.", "explain": "Vitu visivyohesabika havichukui a / an." }
+        ]
       }
     ],
     "vocabulary": [
@@ -411,7 +447,7 @@
     "blocks": [
       {
         "type": "paragraph",
-        "text": "Kiswahili hubadilisha MWANZO wa neno: mtu kuwa watu, kitabu kuwa vitabu. Kiingereza hubadilisha MWISHO: book kuwa books. Hii ni rahisi zaidi, lakini kuna maneno ya kipekee."
+        "text": "Kiswahili hubadilisha MWANZO wa neno: mtu → watu, kitabu → vitabu. Kiingereza hubadilisha MWISHO: book → books. Hii ni rahisi zaidi, lakini kuna maneno ya kipekee."
       },
       {
         "type": "table",
@@ -426,16 +462,25 @@
       },
       {
         "type": "pluralBuilder",
-        "calloutTitle": "Umoja kuwa Wingi",
+        "calloutTitle": "Umoja → Wingi",
         "intro": "Gusa nomino uone jinsi wingi wake unavyoundwa. Sehemu ya dhahabu ndiyo inayobadilika."
       },
       {
         "type": "callout",
         "calloutTitle": "Ya kipekee muhimu",
         "lines": [
-          "child kuwa children, man kuwa men, woman kuwa women",
-          "foot kuwa feet, tooth kuwa teeth, person kuwa people",
+          "child → children, man → men, woman → women",
+          "foot → feet, tooth → teeth, person → people",
           "Haya hayafuati kanuni yoyote. Yakaririwe."
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Wingi wa 'book' ni:", "options": ["books", "bookes", "bookies", "book"], "answer": "books" },
+          { "prompt": "Wingi wa 'woman' ni:", "options": ["women", "womans", "womens", "womanes"], "answer": "women", "explain": "Ni neno la kipekee - likaririwe." },
+          { "prompt": "Wingi wa 'fish' ni:", "options": ["fish", "fishs", "fishies", "fishen"], "answer": "fish", "explain": "Halibadiliki." }
         ]
       }
     ],
@@ -521,9 +566,18 @@
       {
         "type": "list",
         "lines": [
-          "Juma ni mwanamume. Yeye ni mwalimu. kuwa He is a teacher.",
-          "Asha ni mwanamke. Yeye ni daktari. kuwa She is a doctor.",
-          "Kitabu ni kizuri. kuwa It is good."
+          "Juma ni mwanamume. Yeye ni mwalimu. → He is a teacher.",
+          "Asha ni mwanamke. Yeye ni daktari. → She is a doctor.",
+          "Kitabu ni kizuri. → It is good."
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Jaza pengo: Asha ni daktari. ___ is a doctor.", "options": ["She", "He", "It", "They"], "answer": "She", "explain": "Kwa mwanamke tunatumia 'she'." },
+          { "prompt": "Jaza pengo: Kitabu ni kizuri. ___ is good.", "options": ["It", "He", "She", "We"], "answer": "It", "explain": "Kwa vitu tunatumia 'it'." },
+          { "prompt": "'Sisi' kwa Kiingereza ni:", "options": ["we", "they", "you", "I"], "answer": "we" }
         ]
       }
     ],
@@ -607,8 +661,8 @@
         "calloutTitle": "Ufupisho",
         "lines": [
           "Katika mazungumzo, Waingereza hufupisha:",
-          "I am kuwa I'm, you are kuwa you're, she is kuwa she's",
-          "we are kuwa we're, they are kuwa they're"
+          "I am → I'm, you are → you're, she is → she's",
+          "we are → we're, they are → they're"
         ]
       },
       {
@@ -620,6 +674,15 @@
           { "swahili": "she is a doctor", "english": "yeye ni daktari" },
           { "swahili": "we are friends", "english": "sisi ni marafiki" },
           { "swahili": "they are here", "english": "wao wapo hapa" }
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Jaza pengo: You ___ my friend.", "options": ["are", "am", "is", "be"], "answer": "are" },
+          { "prompt": "Jaza pengo: It ___ a book.", "options": ["is", "am", "are", "be"], "answer": "is" },
+          { "prompt": "'They are' hufupishwaje?", "options": ["they're", "they's", "they'm", "theyre"], "answer": "they're" }
         ]
       }
     ],
@@ -711,6 +774,15 @@
         "lines": [
           "Usijali kama bado unasahau 'a' na 'the'. Hata wanafunzi wa muda mrefu husahau. Endelea kusikiliza na kusoma - masikio yako yatajifunza."
         ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Ni ipi sahihi?", "options": ["He is a teacher.", "He is teacher.", "He are a teacher.", "He am a teacher."], "answer": "He is a teacher." },
+          { "prompt": "Wingi wa 'tooth' ni:", "options": ["teeth", "tooths", "toothes", "teeths"], "answer": "teeth" },
+          { "prompt": "Jaza pengo: We ___ students.", "options": ["are", "is", "am", "be"], "answer": "are" }
+        ]
       }
     ],
     "vocabulary": [
@@ -791,9 +863,9 @@
         "type": "callout",
         "calloutTitle": "Kanuni ya -s",
         "lines": [
-          "Nyingi: ongeza -s tu (work kuwa works)",
-          "Inaishia -o, -ch, -sh, -s, -x: ongeza -es (go kuwa goes, watch kuwa watches)",
-          "Konsonanti + y: badilisha kuwa -ies (study kuwa studies)"
+          "Nyingi: ongeza -s tu (work → works)",
+          "Inaishia -o, -ch, -sh, -s, -x: ongeza -es (go → goes, watch → watches)",
+          "Konsonanti + y: badilisha kuwa -ies (study → studies)"
         ]
       },
       {
@@ -802,6 +874,15 @@
         "lines": [
           "Wanafunzi husahau -s kwa he/she/it. \"She work here\" si sahihi. Ni \"She workS here\".",
           "Hii ni kanuni inayosahaulika zaidi katika Kiingereza chote."
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Jaza pengo: He ___ every day. (work)", "options": ["works", "work", "working", "workes"], "answer": "works", "explain": "He / she / it huongeza -s." },
+          { "prompt": "Jaza pengo: She ___ TV. (watch)", "options": ["watches", "watchs", "watch", "watchies"], "answer": "watches", "explain": "Inaishia -ch: ongeza -es." },
+          { "prompt": "Jaza pengo: We ___ together. (work)", "options": ["work", "works", "workes", "working"], "answer": "work", "explain": "Hakuna -s kwa 'we'." }
         ]
       }
     ],
@@ -860,7 +941,7 @@
     "blocks": [
       {
         "type": "paragraph",
-        "text": "Katika Kiswahili tunakanusha kwa kubadilisha kiambishi: ninasoma kuwa SIsomi. Katika Kiingereza tunaongeza neno la msaada: don't au doesn't."
+        "text": "Katika Kiswahili tunakanusha kwa kubadilisha kiambishi: ninasoma → SIsomi. Katika Kiingereza tunaongeza neno la msaada: don't au doesn't."
       },
       {
         "type": "table",
@@ -885,6 +966,15 @@
           "Sahihi: She doesn't work.",
           "Si sahihi: She doesn't works.",
           "Sababu: 'doesn't' tayari imebeba -s ndani yake (does)."
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Jaza pengo: I ___ eat meat.", "options": ["don't", "doesn't", "not", "isn't"], "answer": "don't" },
+          { "prompt": "Jaza pengo: He ___ speak English.", "options": ["doesn't", "don't", "not", "aren't"], "answer": "doesn't", "explain": "He / she / it hutumia 'doesn't'." },
+          { "prompt": "Ni ipi sahihi?", "options": ["She doesn't want tea.", "She doesn't wants tea.", "She don't wants tea.", "She not want tea."], "answer": "She doesn't want tea.", "explain": "Baada ya doesn't, kitenzi hakichukui -s." }
         ]
       }
     ],
@@ -988,6 +1078,15 @@
           { "speaker": "Sara", "swahili": "Yes. What do you do there?", "english": "Ndiyo. Unafanya nini huko?" },
           { "speaker": "Ali", "swahili": "I am a teacher.", "english": "Mimi ni mwalimu." }
         ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Jaza pengo: ___ he like tea?", "options": ["Does", "Do", "Is", "Are"], "answer": "Does", "explain": "He / she / it hutumia 'Does'." },
+          { "prompt": "Ni ipi sahihi?", "options": ["Does she work here?", "Does she works here?", "Do she work here?", "She work here?"], "answer": "Does she work here?", "explain": "Baada ya Does, kitenzi hakichukui -s." },
+          { "prompt": "'Wapi' kwa Kiingereza ni:", "options": ["Where", "What", "When", "Why"], "answer": "Where" }
+        ]
       }
     ],
     "vocabulary": [
@@ -1068,9 +1167,9 @@
       {
         "type": "list",
         "lines": [
-          "Vitenzi vinavyoishia -e: hondoa e (write kuwa writing)",
-          "Konsonanti moja mwishoni: irudie (sit kuwa sitting, run kuwa running)",
-          "Vingine: ongeza -ing tu (work kuwa working)"
+          "Vitenzi vinavyoishia -e: ondoa e (write → writing)",
+          "Konsonanti moja mwishoni: irudie (sit → sitting, run → running)",
+          "Vingine: ongeza -ing tu (work → working)"
         ]
       },
       {
@@ -1082,6 +1181,15 @@
           { "swahili": "she is reading", "english": "anasoma sasa" },
           { "swahili": "they are eating", "english": "wanakula sasa" },
           { "swahili": "we are learning English", "english": "tunajifunza Kiingereza" }
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Jaza pengo: They ___ eating now.", "options": ["are", "is", "am", "be"], "answer": "are" },
+          { "prompt": "Umbo la -ing la 'sit' ni:", "options": ["sitting", "siting", "siteing", "sitteing"], "answer": "sitting", "explain": "Konsonanti moja mwishoni hurudiwa." },
+          { "prompt": "Ni ipi inaonyesha mazoea (kila siku)?", "options": ["She reads books.", "She is reading now.", "She is reading a book now.", "They are reading now."], "answer": "She reads books." }
         ]
       }
     ],
@@ -1174,6 +1282,15 @@
           ["cold", "baridi"],
           ["new", "mpya"],
           ["old", "kuukuu / mzee"]
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Ni ipi sahihi?", "options": ["a big house", "a house big", "big a house", "house a big"], "answer": "a big house", "explain": "Kivumishi hutangulia nomino." },
+          { "prompt": "'Kitabu kizuri' kwa Kiingereza ni:", "options": ["a good book", "a book good", "a bad book", "a new book"], "answer": "a good book" },
+          { "prompt": "Wingi wa 'a big house' ni:", "options": ["big houses", "bigs houses", "bigs house", "houses bigs"], "answer": "big houses", "explain": "Vivumishi vya Kiingereza havibadiliki." }
         ]
       }
     ],
@@ -1280,6 +1397,15 @@
           { "swahili": "fifty", "english": "hamsini" },
           { "swahili": "one hundred", "english": "mia moja" }
         ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Namba 12 kwa Kiingereza ni:", "options": ["twelve", "twenty", "two", "eleven"], "answer": "twelve" },
+          { "prompt": "'Fifty' ni namba gani?", "options": ["50", "15", "5", "500"], "answer": "50", "explain": "fifteen = 15, fifty = 50." },
+          { "prompt": "Namba 30 kwa Kiingereza ni:", "options": ["thirty", "thirteen", "three", "threety"], "answer": "thirty" }
+        ]
       }
     ],
     "vocabulary": [
@@ -1381,6 +1507,15 @@
           "Saa za Kiswahili na Kiingereza ni TOFAUTI! Saa moja ya Kiswahili ni 7 o'clock ya Kiingereza.",
           "Kiingereza huanza kuhesabu usiku wa manane; Kiswahili huanza macheo."
         ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Ni ipi imeandikwa sahihi?", "options": ["Monday", "monday", "mOnday", "MONday"], "answer": "Monday", "explain": "Siku huanza na herufi kubwa." },
+          { "prompt": "'Kesho' kwa Kiingereza ni:", "options": ["tomorrow", "yesterday", "today", "tonight"], "answer": "tomorrow" },
+          { "prompt": "Saa moja asubuhi ya Kiswahili ni saa ngapi kwa Kiingereza?", "options": ["7 o'clock", "1 o'clock", "6 o'clock", "12 o'clock"], "answer": "7 o'clock" }
+        ]
       }
     ],
     "vocabulary": [
@@ -1459,6 +1594,15 @@
           { "answer": ["Do", "you", "speak", "English"], "en": "Unasema Kiingereza?" },
           { "answer": ["They", "are", "reading", "books"], "en": "Wanasoma vitabu sasa" },
           { "answer": ["It", "is", "a", "big", "house"], "en": "Ni nyumba kubwa" }
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Jaza pengo: ___ they speak English?", "options": ["Do", "Does", "Are", "Is"], "answer": "Do" },
+          { "prompt": "Ni ipi sahihi?", "options": ["a small child", "a child small", "small a child", "child a small"], "answer": "a small child" },
+          { "prompt": "Jaza pengo: She ___ reading now.", "options": ["is", "are", "am", "does"], "answer": "is" }
         ]
       }
     ],
@@ -1549,9 +1693,18 @@
       {
         "type": "list",
         "lines": [
-          "Vitenzi vingi: ongeza -ed (work kuwa worked)",
-          "Vinavyoishia -e: ongeza -d tu (like kuwa liked)",
-          "Konsonanti + y: badilisha kuwa -ied (study kuwa studied)"
+          "Vitenzi vingi: ongeza -ed (work → worked)",
+          "Vinavyoishia -e: ongeza -d tu (like → liked)",
+          "Konsonanti + y: badilisha kuwa -ied (study → studied)"
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Wakati uliopita wa 'like' ni:", "options": ["liked", "likeed", "likd", "likied"], "answer": "liked", "explain": "Kinaishia -e: ongeza -d tu." },
+          { "prompt": "Wakati uliopita wa 'play' ni:", "options": ["played", "plaied", "playd", "plays"], "answer": "played" },
+          { "prompt": "Jaza pengo: They ___ here yesterday. (work)", "options": ["worked", "work", "works", "working"], "answer": "worked" }
         ]
       }
     ],
@@ -1605,7 +1758,7 @@
     "id": 18,
     "week": 3,
     "title": "Vitenzi vya Kipekee",
-    "subtitle": "go kuwa went, eat kuwa ate",
+    "subtitle": "go → went, eat → ate",
     "theme": "Sarufi",
     "blocks": [
       {
@@ -1639,9 +1792,18 @@
         "type": "callout",
         "calloutTitle": "Kitenzi 'to be' kilichopita",
         "lines": [
-          "I / he / she / it kuwa WAS",
-          "You / we / they kuwa WERE",
+          "I / he / she / it → WAS",
+          "You / we / they → WERE",
           "Mfano: I was tired. They were happy."
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Wakati uliopita wa 'see' ni:", "options": ["saw", "seed", "sees", "seen"], "answer": "saw" },
+          { "prompt": "Wakati uliopita wa 'come' ni:", "options": ["came", "comed", "come", "coming"], "answer": "came" },
+          { "prompt": "Jaza pengo: We ___ happy yesterday.", "options": ["were", "was", "are", "be"], "answer": "were", "explain": "You / we / they hutumia 'were'." }
         ]
       }
     ],
@@ -1728,6 +1890,15 @@
           { "speaker": "Neema", "swahili": "What did you buy?", "english": "Ulinunua nini?" },
           { "speaker": "Hassan", "swahili": "I bought rice and fish. I didn't buy meat.", "english": "Nilinunua mchele na samaki. Sikununua nyama." }
         ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Ni ipi sahihi?", "options": ["Did you go?", "Did you went?", "Do you went?", "Did you goes?"], "answer": "Did you go?", "explain": "Baada ya did, kitenzi hurudi kwenye umbo la msingi." },
+          { "prompt": "Jaza pengo: I ___ buy meat yesterday. (kukanusha)", "options": ["didn't", "don't", "wasn't", "not"], "answer": "didn't" },
+          { "prompt": "Jaza pengo: What did you ___?", "options": ["buy", "bought", "buys", "buying"], "answer": "buy" }
+        ]
       }
     ],
     "vocabulary": [
@@ -1809,9 +1980,18 @@
         "type": "callout",
         "calloutTitle": "Ufupisho na kukanusha",
         "lines": [
-          "I will kuwa I'll, she will kuwa she'll, they will kuwa they'll",
-          "Kukanusha: will not kuwa won't",
+          "I will → I'll, she will → she'll, they will → they'll",
+          "Kukanusha: will not → won't",
           "Mfano: I won't go. (Sitaenda.)"
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Jaza pengo: She ___ come tomorrow.", "options": ["will", "wills", "is", "does"], "answer": "will", "explain": "'will' haibadiliki kamwe." },
+          { "prompt": "'I will' hufupishwaje?", "options": ["I'll", "I'will", "Iw'll", "Ill"], "answer": "I'll" },
+          { "prompt": "Ni ipi sahihi?", "options": ["They will work.", "They will works.", "They wills work.", "They will worked."], "answer": "They will work." }
         ]
       }
     ],
@@ -1899,6 +2079,15 @@
           { "swahili": "it is going to rain", "english": "mvua itanyesha" },
           { "swahili": "we are going to help", "english": "tutasaidia" }
         ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Jaza pengo: She ___ going to study.", "options": ["is", "are", "am", "will"], "answer": "is" },
+          { "prompt": "Unaona mawingu meusi. Unasema:", "options": ["It is going to rain.", "It rained yesterday.", "It rains every day.", "It is rain."], "answer": "It is going to rain." },
+          { "prompt": "Jaza pengo: We are going ___ help.", "options": ["to", "for", "at", "in"], "answer": "to" }
+        ]
       }
     ],
     "vocabulary": [
@@ -1985,6 +2174,15 @@
           "Katika duka au ofisi, 'Could' ni ya heshima zaidi kuliko 'Can'.",
           "Could you help me, please? ni nzuri zaidi kuliko Can you help me?"
         ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Ni ipi sahihi?", "options": ["She can swim.", "She can to swim.", "She cans swim.", "She can swims."], "answer": "She can swim.", "explain": "can + kitenzi cha msingi." },
+          { "prompt": "'Siwezi kuja' kwa Kiingereza ni:", "options": ["I can't come.", "I can come.", "I don't come.", "Can I come?"], "answer": "I can't come." },
+          { "prompt": "Jaza pengo: ___ you help me, please? (kwa heshima)", "options": ["Could", "Do", "Are", "Does"], "answer": "Could" }
+        ]
       }
     ],
     "vocabulary": [
@@ -2069,6 +2267,15 @@
           { "speaker": "Zawadi", "swahili": "Does your wife have a job?", "english": "Mke wako ana kazi?" },
           { "speaker": "Musa", "swahili": "Yes, she has a good job. She is a nurse.", "english": "Ndiyo, ana kazi nzuri. Yeye ni muuguzi." }
         ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Jaza pengo: He ___ a car.", "options": ["has", "have", "is", "are"], "answer": "has", "explain": "He / she / it hutumia 'has'." },
+          { "prompt": "Jaza pengo: Does she ___ a job?", "options": ["have", "has", "having", "had"], "answer": "have", "explain": "Baada ya does tunatumia 'have'." },
+          { "prompt": "Jaza pengo: I ___ have a car. (kukanusha)", "options": ["don't", "doesn't", "isn't", "not"], "answer": "don't" }
+        ]
       }
     ],
     "vocabulary": [
@@ -2148,6 +2355,15 @@
           { "answer": ["She", "will", "come", "tomorrow"], "en": "Atakuja kesho" },
           { "answer": ["I", "can", "speak", "English"], "en": "Ninaweza kusema Kiingereza" },
           { "answer": ["He", "has", "two", "brothers"], "en": "Ana kaka wawili" }
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Ni ipi ni wakati ujao?", "options": ["I will work tomorrow.", "I worked yesterday.", "I work every day.", "I am working now."], "answer": "I will work tomorrow." },
+          { "prompt": "Jaza pengo: ___ you see her yesterday?", "options": ["Did", "Do", "Does", "Will"], "answer": "Did" },
+          { "prompt": "Jaza pengo: He ___ two brothers.", "options": ["has", "have", "is", "are"], "answer": "has" }
         ]
       }
     ],
@@ -2240,6 +2456,15 @@
           { "swahili": "it is too expensive", "english": "ni ghali sana" },
           { "swahili": "I will take it", "english": "nitaichukua" },
           { "swahili": "do you have change", "english": "una chenji" }
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Jaza pengo: How much ___ this?", "options": ["is", "are", "do", "does"], "answer": "is" },
+          { "prompt": "'Ni ghali sana' kwa Kiingereza ni:", "options": ["It is too expensive.", "It is too cheap.", "I will take it.", "Here you are."], "answer": "It is too expensive." },
+          { "prompt": "Umeamua kununua. Unasema:", "options": ["I will take it.", "Do you have change?", "Can you reduce the price?", "How much is this?"], "answer": "I will take it." }
         ]
       }
     ],
@@ -2337,6 +2562,15 @@
           { "speaker": "Waiter", "swahili": "Anything to drink?", "english": "Kitu cha kunywa?" },
           { "speaker": "Guest", "swahili": "Water, please. And the bill after.", "english": "Maji, tafadhali. Na bili baadaye." }
         ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "'Nina kiu' kwa Kiingereza ni:", "options": ["I am thirsty.", "I am hungry.", "I am tired.", "I am sick."], "answer": "I am thirsty." },
+          { "prompt": "Unataka kulipa. Unasema:", "options": ["The bill, please.", "The menu, please.", "Water, please.", "It was delicious."], "answer": "The bill, please." },
+          { "prompt": "'Samaki' kwa Kiingereza ni:", "options": ["fish", "meat", "rice", "fruit"], "answer": "fish" }
+        ]
       }
     ],
     "vocabulary": [
@@ -2424,6 +2658,15 @@
           { "speaker": "Tourist", "swahili": "Is it far?", "english": "Iko mbali?" },
           { "speaker": "Local", "swahili": "No, it is near. Ten minutes on foot.", "english": "Hapana, iko karibu. Dakika kumi kwa miguu." },
           { "speaker": "Tourist", "swahili": "Thank you very much!", "english": "Asante sana!" }
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "'Geuka kushoto' kwa Kiingereza ni:", "options": ["Turn left.", "Turn right.", "Go straight.", "It is near."], "answer": "Turn left." },
+          { "prompt": "Jaza pengo: The school is ___ the shops. (kati ya)", "options": ["between", "on", "in", "at"], "answer": "between" },
+          { "prompt": "'Iko mbali' kwa Kiingereza ni:", "options": ["It is far.", "It is near.", "Go straight.", "Is it far?"], "answer": "It is far." }
         ]
       }
     ],
@@ -2519,6 +2762,15 @@
         "verbKeys": ["work", "want", "speak", "go"],
         "calloutTitle": "Jenga: Kuzungumza Kazini",
         "intro": "Rudia kanuni ya -s kwa he/she/it kwa vitenzi vya kazini."
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Jaza pengo: He is ___ farmer.", "options": ["a", "an", "is", "are"], "answer": "a" },
+          { "prompt": "'Dereva' kwa Kiingereza ni:", "options": ["driver", "farmer", "nurse", "engineer"], "answer": "driver" },
+          { "prompt": "'Unaanza saa ngapi?' kwa Kiingereza ni:", "options": ["What time do you start?", "What do you do?", "I have a meeting.", "I am looking for a job."], "answer": "What time do you start?" }
+        ]
       }
     ],
     "vocabulary": [
@@ -2604,6 +2856,15 @@
           { "speaker": "Patient", "swahili": "Three days.", "english": "Siku tatu." },
           { "speaker": "Doctor", "swahili": "Take this medicine twice a day.", "english": "Kunywa dawa hii mara mbili kwa siku." }
         ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Jaza pengo: I ___ a headache.", "options": ["have", "am", "do", "is"], "answer": "have", "explain": "Kwa maradhi mengi: I have a..." },
+          { "prompt": "'Tumbo linauma' kwa Kiingereza ni:", "options": ["My stomach hurts.", "My head hurts.", "I have a fever.", "I am sick."], "answer": "My stomach hurts." },
+          { "prompt": "'Hospitali iko wapi?' kwa Kiingereza ni:", "options": ["Where is the hospital?", "I need a doctor.", "What is the problem?", "Take this medicine."], "answer": "Where is the hospital?" }
+        ]
       }
     ],
     "vocabulary": [
@@ -2678,7 +2939,7 @@
         "calloutTitle": "Umbo la tatu",
         "lines": [
           "Vitenzi vya kawaida: sawa na wakati uliopita (worked, finished)",
-          "Vya kipekee: umbo la tatu (go kuwa went kuwa GONE, eat kuwa ate kuwa EATEN, see kuwa saw kuwa SEEN)",
+          "Vya kipekee: umbo la tatu (go → went → GONE, eat → ate → EATEN, see → saw → SEEN)",
           "Kariri: go-went-gone, eat-ate-eaten, see-saw-seen, do-did-done"
         ]
       },
@@ -2689,6 +2950,15 @@
           "I ate rice. - wakati fulani uliopita (jana)",
           "I have eaten. - hivi punde, bado nimeshiba sasa",
           "Tumia 'have/has' unapozungumzia matokeo ya sasa."
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Jaza pengo: They ___ gone.", "options": ["have", "has", "are", "did"], "answer": "have" },
+          { "prompt": "Umbo la tatu la 'see' ni:", "options": ["seen", "saw", "sees", "seeing"], "answer": "seen" },
+          { "prompt": "Ni ipi inaonyesha matokeo ya sasa?", "options": ["I have eaten.", "I ate rice yesterday.", "I eat rice.", "I will eat."], "answer": "I have eaten." }
         ]
       }
     ],
@@ -2797,6 +3067,15 @@
           { "swahili": "she is a good teacher", "english": "yeye ni mwalimu mzuri" },
           { "swahili": "we will meet tomorrow", "english": "tutakutana kesho" },
           { "swahili": "thank you very much", "english": "asante sana" }
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Jipime Haraka",
+        "questions": [
+          { "prompt": "Jaza pengo: She ___ speak English. (kukanusha)", "options": ["doesn't", "don't", "isn't", "not"], "answer": "doesn't" },
+          { "prompt": "Ni ipi sahihi?", "options": ["He is a good teacher.", "He is a teacher good.", "He is good a teacher.", "He a good teacher is."], "answer": "He is a good teacher." },
+          { "prompt": "Jaza pengo: I have ___ already. (eat)", "options": ["eaten", "ate", "eat", "eating"], "answer": "eaten" }
         ]
       }
     ],

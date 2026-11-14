@@ -321,6 +321,48 @@ h1, h2, h3 { line-height: 1.22; }
 .dialogue-line .sp { font-weight: 800; color: var(--teal-dark); }
 .dialogue-line .sw { font-weight: 600; }
 .dialogue-line .en { color: var(--muted); font-size: 0.9rem; font-style: italic; }
+.dialogue-line.playing { border-color: var(--teal); background: #e3f1f1; }
+.dialogue-line.mine { border-left: 4px solid var(--gold); }
+.dlg-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 10px; }
+.dlg-roles { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.dlg-roles-label { color: var(--muted); font-size: 0.85rem; font-weight: 700; }
+.dlg-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.dlg-text { min-width: 0; }
+.dlg-tr-cover { margin-top: 4px; }
+
+/* Self-test tables: mode switch, covered cells, per-cell audio */
+.lt-bar { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.lt-mode { border: 1.5px solid var(--line); background: #fff; color: var(--ink); border-radius: 999px; padding: 5px 13px; font: inherit; font-size: 0.82rem; font-weight: 700; cursor: pointer; }
+.lt-mode:hover { border-color: var(--teal); }
+.lt-mode.active { background: var(--teal); border-color: var(--teal); color: #fff; }
+.lt-cell { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.lt-cover { border: 1.5px dashed var(--gold); background: #fdf3dc; color: #8a5c05; border-radius: 8px; padding: 3px 12px; font: inherit; font-size: 0.82rem; font-weight: 700; cursor: pointer; }
+.lt-cover:hover { background: #fbe8bd; }
+.lt-hint { color: var(--muted); font-size: 0.85rem; margin-top: 8px; }
+
+/* Quick check (in-lesson practice questions) */
+.qc { border-left-color: var(--gold); }
+.qc-prompt { font-size: 1.08rem; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+.qc-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 8px; }
+.qc-option { margin-bottom: 0; padding: 11px 15px; color: var(--ink); }
+.qc-option:disabled { cursor: default; }
+.qc-option.wrong { opacity: 0.65; }
+.qc-option.correct { font-weight: 700; color: #1d7a43; }
+.qc-option:disabled:not(.correct):not(.wrong) { opacity: 0.5; }
+.qc-shake { animation: sb-shake 0.45s; }
+.qc-feedback { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; min-height: 36px; margin-top: 12px; }
+.qc-explain { color: var(--ink); }
+
+/* Vocab match game */
+.vm { border-left-color: var(--navy); }
+.vm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.vm-col { display: flex; flex-direction: column; gap: 8px; }
+.vm-tile { min-height: 46px; border: 2px solid var(--line); background: #fff; color: var(--ink); border-radius: 10px; padding: 8px 12px; font: inherit; font-weight: 700; cursor: pointer; overflow-wrap: anywhere; transition: border-color .12s, background .12s; }
+.vm-tile:hover:not(:disabled) { border-color: var(--teal); }
+.vm-tile.picked { border-color: var(--gold); background: #fdf3dc; }
+.vm-tile.matched { border-color: var(--success); background: #e3f5ea; color: #1d7a43; cursor: default; }
+.vm-tile.miss { border-color: var(--danger); background: #fdecea; }
+@media (prefers-reduced-motion: reduce) { .qc-shake { animation: none; } }
 ul.sw-list { padding-left: 22px; }
 ul.sw-list li { margin-bottom: 5px; }
 
