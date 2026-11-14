@@ -16,7 +16,11 @@
       "bundleIdentifier": "com.polepole.app"
     },
     "android": {
-      "package": "com.polepole.app"
+      "package": "com.polepole.app",
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ]
     },
     "web": {
       "bundler": "metro"
@@ -24,6 +28,12 @@
     "plugins": [
       "expo-audio",
       "expo-notifications"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "71833e02-5ec5-40cc-8384-b515dc1dbcd8"
+      }
+    },
+    "owner": "nestedl00p"
   }
 }
