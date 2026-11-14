@@ -4,7 +4,13 @@
 import { apiUrl } from '../config.js';
 
 let statusCache = null; // null = not yet checked
+let statusAt = 0;       // when it was last fetched
 let courseId = 'sw';
+
+// The status call is also what wakes a scaled-to-zero Whisper sidecar, so the
+// cached answer only stands for a couple of minutes: a drill opened after a
+// long pause re-asks (and re-wakes) instead of meeting a cold sidecar.
+const STATUS_TTL_MS = 2 * 60 * 1000;
 
 // Set from AuthContext so recordings are transcribed in the language being learned.
 export function setAssessCourse(id) {
@@ -13,7 +19,8 @@ export function setAssessCourse(id) {
 
 // True only when the backend's Whisper sidecar is enabled and reachable.
 export async function speechEnabled() {
-  if (statusCache !== null) return statusCache;
+  if (statusCache !== null && Date.now() - statusAt < STATUS_TTL_MS) return statusCache;
+  statusAt = Date.now();
   try {
     const res = await fetch(apiUrl('/api/speech/status'));
     const json = await res.json();

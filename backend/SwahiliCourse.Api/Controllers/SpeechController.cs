@@ -15,10 +15,16 @@ public class SpeechController : ControllerBase
     public SpeechController(SpeechService speech) => _speech = speech;
 
     // GET /api/speech/status — lets the client decide whether to show the
-    // speak-and-check mic (self-hosted Whisper sidecar must be enabled).
+    // speak-and-check mic (self-hosted Whisper sidecar must be enabled). Clients
+    // call this as a drill appears, so it doubles as the cue to wake a sidecar
+    // that has scaled to zero (throttled, fire-and-forget).
     [HttpGet("status")]
     [AllowAnonymous]
-    public IActionResult Status() => Ok(new { enabled = _speech.IsConfigured });
+    public IActionResult Status()
+    {
+        _speech.WarmUp();
+        return Ok(new { enabled = _speech.IsConfigured });
+    }
 
     // POST /api/speech/assess  (multipart/form-data: file=<audio>, referenceText=<target phrase>)
     // Returns transcription + pronunciation/word-match scoring. 204 when speech

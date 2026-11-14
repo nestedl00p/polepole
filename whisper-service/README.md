@@ -68,5 +68,17 @@ NVIDIA GPU, use `WHISPER_DEVICE=cuda WHISPER_COMPUTE=float16` for a big speedup.
   not phoneme-level accent. That's the right signal for beginners. For per-sound
   scoring you'd add a pronunciation-assessment pass (e.g. Azure) later; the
   backend response shape already leaves room for it.
-- Keep this bound to `127.0.0.1` (localhost). It has no auth — it's an internal
-  sidecar the .NET backend talks to, not a public endpoint.
+- Locally, keep this bound to `127.0.0.1`. With no `WHISPER_API_KEY` set,
+  `/transcribe` is open to anyone who can reach the port.
+
+## Deploying it
+
+`Dockerfile` builds an image with the model baked in, listening on
+`0.0.0.0:8081`. Anywhere it is reachable over a network, set `WHISPER_API_KEY`
+on the service and the same value as `Speech:ApiKey` on the backend: the
+backend sends it as `X-Api-Key` and `/transcribe` answers `401` without it.
+`/health` stays open for platform probes and reports `"auth": true` when a key
+is set.
+
+For Azure, `bash deploy/azure-whisper-deploy.sh` does all of it — see
+"Adding Whisper later" in [`deploy/DEPLOY.md`](../deploy/DEPLOY.md).
