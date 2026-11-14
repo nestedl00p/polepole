@@ -8,6 +8,8 @@ export default function Flashcards() {
   const [i, setI] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [mode, setMode] = useState('cards'); // 'cards' | 'practice'
+  // "Nitakumbuka hii": the learner's own deck inside the course's.
+  const [pinnedOnly, setPinnedOnly] = useState(false);
 
   // practice state
   const [pq, setPq] = useState([]);
@@ -91,18 +93,43 @@ export default function Flashcards() {
   }
 
   // ---- Card mode ----
-  const card = cards[i];
+  const pinnedCount = cards.filter((c) => c.pinned).length;
+  // Unpinning the last pinned card drops back to the whole deck rather than
+  // leaving an empty one on screen.
+  const deck = pinnedOnly && pinnedCount > 0 ? cards.filter((c) => c.pinned) : cards;
+  const card = deck[i % deck.length];
+
+  const togglePin = async (e) => {
+    e.stopPropagation(); // the card itself flips on click
+    const key = card.target ?? card.swahili;
+    try {
+      const res = await api.pinCard(key, !card.pinned);
+      // The same word can sit in more than one lesson; it is one card.
+      setCards((all) => all.map((c) => ((c.target ?? c.swahili) === key ? { ...c, pinned: res.pinned } : c)));
+    } catch {
+      /* leave it as it was */
+    }
+  };
   // `target` is the word being learned (front, and what 🔊 speaks); `source` is
   // its translation. The API sets them per course direction.
   const target = card.target ?? card.swahili;
   const source = card.source ?? card.english;
-  const go = (delta) => { setFlipped(false); setI((x) => (x + delta + cards.length) % cards.length); };
+  const go = (delta) => { setFlipped(false); setI((x) => ((x % deck.length) + delta + deck.length) % deck.length); };
 
   return (
     <div className="container page narrow">
       <div className="page-head" style={{ textAlign: 'center' }}>
         <h1>Flashcards</h1>
-        <p>{cards.length} words from your lessons · Card {i + 1}</p>
+        <p>{deck.length} {pinnedOnly && pinnedCount > 0 ? 'pinned' : 'words from your lessons'} · Card {(i % deck.length) + 1}</p>
+        {pinnedCount > 0 && (
+          <button
+            className={`btn btn-ghost btn-sm deck-filter ${pinnedOnly ? 'active' : ''}`}
+            aria-pressed={pinnedOnly}
+            onClick={() => { setPinnedOnly((p) => !p); setI(0); setFlipped(false); }}
+          >
+            📌 {pinnedOnly ? 'Showing pinned' : `Pinned only (${pinnedCount})`}
+          </button>
+        )}
       </div>
 
       <div className={`flashcard ${flipped ? 'flipped' : ''}`} onClick={() => setFlipped((f) => !f)}>
@@ -122,6 +149,9 @@ export default function Flashcards() {
 
       <div className="row center" style={{ gap: 12 }}>
         <button className="btn btn-ghost" onClick={() => go(-1)}>← Previous</button>
+        <button className={`dose-pin ${card.pinned ? 'on' : ''}`} aria-pressed={!!card.pinned} onClick={togglePin}>
+          📌 {card.pinned ? 'Pinned' : 'Pin'}
+        </button>
         <button className="btn btn-ghost" onClick={() => go(1)}>Next →</button>
       </div>
 

@@ -34,6 +34,14 @@ public class ReviewController : AuthedController
             .Select(p => p.LessonId)
             .ToListAsync();
 
+        // "Nitakumbuka hii": which of these the learner has pinned, so the deck
+        // can show the pin and filter down to it.
+        var pinnedKeys = (await _db.CardStates
+            .Where(c => c.UserId == CurrentUserId && c.CourseId == course.Id && c.Pinned)
+            .Select(c => c.ItemKey)
+            .ToListAsync())
+            .ToHashSet(StringComparer.Ordinal);
+
         var cards = _courses.For(user.CourseId).All
             .Where(l => viewedLessonIds.Contains(l.Id))
             .SelectMany(l => l.Vocabulary.Select(v =>
@@ -49,7 +57,9 @@ public class ReviewController : AuthedController
                     swahili = v.Swahili,
                     english = v.English,
                     lessonId = l.Id,
-                    lessonTitle = l.Title
+                    lessonTitle = l.Title,
+                    // The card's key is its target word — see CardState.ItemKey.
+                    pinned = pinnedKeys.Contains(target)
                 };
             }))
             .ToList();

@@ -9,6 +9,9 @@ public class AppDbContext : DbContext
 
     public DbSet<User> Users => Set<User>();
     public DbSet<LessonProgress> LessonProgress => Set<LessonProgress>();
+    public DbSet<CardState> CardStates => Set<CardState>();
+    public DbSet<PracticeDay> PracticeDays => Set<PracticeDay>();
+    public DbSet<VoiceTake> VoiceTakes => Set<VoiceTake>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -24,6 +27,44 @@ public class AppDbContext : DbContext
             .HasOne(p => p.User)
             .WithMany(u => u.Progress)
             .HasForeignKey(p => p.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // One row per item per learner, so a word met again in a later lesson
+        // keeps the history it already has rather than starting over.
+        modelBuilder.Entity<CardState>()
+            .HasIndex(c => new { c.UserId, c.CourseId, c.ItemKey })
+            .IsUnique();
+
+        // The hot query — "what has come due for this learner?" — runs on every
+        // Dose build.
+        modelBuilder.Entity<CardState>()
+            .HasIndex(c => new { c.UserId, c.DueAt });
+
+        modelBuilder.Entity<CardState>()
+            .HasOne(c => c.User)
+            .WithMany(u => u.Cards)
+            .HasForeignKey(c => c.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // One row per learner per local day.
+        modelBuilder.Entity<PracticeDay>()
+            .HasIndex(d => new { d.UserId, d.Day })
+            .IsUnique();
+
+        modelBuilder.Entity<PracticeDay>()
+            .HasOne(d => d.User)
+            .WithMany()
+            .HasForeignKey(d => d.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // "This learner's takes of this word, oldest first."
+        modelBuilder.Entity<VoiceTake>()
+            .HasIndex(v => new { v.UserId, v.ItemKey, v.CreatedAt });
+
+        modelBuilder.Entity<VoiceTake>()
+            .HasOne(v => v.User)
+            .WithMany()
+            .HasForeignKey(v => v.UserId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

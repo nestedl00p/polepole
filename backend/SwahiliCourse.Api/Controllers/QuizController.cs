@@ -15,10 +15,12 @@ public class QuizController : AuthedController
 {
     private readonly AppDbContext _db;
     private readonly CourseCatalog _courses;
+    private readonly StreakService _streaks;
+    private readonly PracticeLog _practice;
 
-    public QuizController(AppDbContext db, CourseCatalog courses)
+    public QuizController(AppDbContext db, CourseCatalog courses, StreakService streaks, PracticeLog practice)
     {
-        _db = db; _courses = courses;
+        _db = db; _courses = courses; _streaks = streaks; _practice = practice;
     }
 
     private const double PassThreshold = 0.7; // 70% to pass and unlock the next lesson
@@ -75,7 +77,10 @@ public class QuizController : AuthedController
                 // Award full XP on first pass, scaled by accuracy.
                 xpEarned = (int)Math.Round(lesson.XpReward * ((double)correct / Math.Max(total, 1)));
                 user.TotalXp += xpEarned;
-                UpdateStreak(user);
+                _streaks.Record(user, DateTime.UtcNow);
+                // The streak credits a quiz pass, so the last-7-days strip
+                // has to show it too or the two would disagree.
+                await _practice.QuizPassedAsync(user, DateTime.UtcNow);
             }
         }
 
@@ -111,22 +116,5 @@ public class QuizController : AuthedController
             if ((double)overlap / aWords.Length >= 0.85) return true;
         }
         return false;
-    }
-
-    private static void UpdateStreak(User user)
-    {
-        var today = DateTime.UtcNow.Date;
-        if (user.LastActivityDate is null)
-        {
-            user.StreakCount = 1;
-        }
-        else
-        {
-            var last = user.LastActivityDate.Value.Date;
-            if (last == today) { /* already counted today */ }
-            else if (last == today.AddDays(-1)) user.StreakCount += 1;
-            else user.StreakCount = 1; // streak broken, restart
-        }
-        user.LastActivityDate = today;
     }
 }

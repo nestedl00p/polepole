@@ -9,8 +9,12 @@ import { AuthProvider, useAuth } from './src/context/AuthContext';
 import { Spinner, Pill } from './src/components/ui';
 import { colors } from './src/theme';
 
+import { linking } from './src/lib/reminders';
 import AuthScreen from './src/screens/AuthScreen';
+import TasterScreen from './src/screens/TasterScreen';
+import OnboardingScreen from './src/screens/OnboardingScreen';
 import DashboardScreen from './src/screens/DashboardScreen';
+import DoseScreen from './src/screens/DoseScreen';
 import LessonScreen from './src/screens/LessonScreen';
 import QuizScreen from './src/screens/QuizScreen';
 import FlashcardsScreen from './src/screens/FlashcardsScreen';
@@ -30,8 +34,8 @@ function HeaderStats() {
   if (!user) return null;
   return (
     <View style={styles.headerStats}>
-      <Pill>🔥 {user.streakCount}</Pill>
-      <Pill>⭐ {user.totalXp} XP</Pill>
+      <Pill>ð¥ {user.streakCount}</Pill>
+      <Pill>â­ {user.totalXp} XP</Pill>
     </View>
   );
 }
@@ -54,24 +58,29 @@ function Tabs() {
       <Tab.Screen
         name="Dashboard"
         component={DashboardScreen}
-        options={{ tabBarIcon: ({ focused }) => <TabIcon emoji="🏠" focused={focused} /> }}
+        options={{ tabBarIcon: ({ focused }) => <TabIcon emoji="ð " focused={focused} /> }}
+      />
+      <Tab.Screen
+        name="Dose"
+        component={DoseScreen}
+        options={{ title: 'Dose ya leo', tabBarIcon: ({ focused }) => <TabIcon emoji="🎯" focused={focused} /> }}
       />
       <Tab.Screen
         name="Flashcards"
         component={FlashcardsScreen}
-        options={{ tabBarIcon: ({ focused }) => <TabIcon emoji="🃏" focused={focused} /> }}
+        options={{ tabBarIcon: ({ focused }) => <TabIcon emoji="ð" focused={focused} /> }}
       />
       <Tab.Screen
         name="Settings"
         component={SettingsScreen}
-        options={{ tabBarIcon: ({ focused }) => <TabIcon emoji="⚙️" focused={focused} /> }}
+        options={{ tabBarIcon: ({ focused }) => <TabIcon emoji="âï¸" focused={focused} /> }}
       />
     </Tab.Navigator>
   );
 }
 
 function RootNavigator() {
-  const { user, loading } = useAuth();
+  const { user, loading, onboarding } = useAuth();
 
   if (loading) {
     return (
@@ -84,7 +93,14 @@ function RootNavigator() {
   return (
     <Stack.Navigator>
       {!user ? (
-        <Stack.Screen name="Auth" component={AuthScreen} options={{ headerShown: false }} />
+        <>
+          {/* Three words first; the account is offered afterwards. Auth stays
+              one tap away for someone who already has one. */}
+          <Stack.Screen name="Taster" component={TasterScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Auth" component={AuthScreen} options={{ headerShown: false }} />
+        </>
+      ) : onboarding ? (
+        <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{ headerShown: false }} />
       ) : (
         <>
           <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
@@ -100,7 +116,9 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <AuthProvider>
-        <NavigationContainer>
+        {/* `linking` is what lets a tapped reminder (polepole://dose) open
+            straight into the Dose tab. */}
+        <NavigationContainer linking={linking}>
           <StatusBar style="light" />
           <RootNavigator />
         </NavigationContainer>

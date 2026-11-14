@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { View, Text, ScrollView, Pressable, Alert, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, Pressable, Alert, Switch, StyleSheet } from 'react-native';
 import { api } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import { Button, Card, Field, Input } from '../components/ui';
+import { registerForReminders } from '../lib/reminders';
+import { ChipRow, WHYS, timeOptions } from '../components/ReminderControls';
 import { colors } from '../theme';
 
 const PACE_OPTIONS = [
@@ -62,8 +64,10 @@ export default function SettingsScreen() {
     <ScrollView contentContainerStyle={styles.page}>
       <View style={styles.head}>
         <Text style={styles.h1}>Settings</Text>
-        <Text style={styles.muted}>Adjust your learning pace or restart the course.</Text>
+        <Text style={styles.muted}>Your reminder, your pace, or a fresh start.</Text>
       </View>
+
+      <ReminderCard user={user} setUser={setUser} />
 
       <Card style={{ marginBottom: 18 }}>
         <Text style={styles.cardTitle}>Your pace</Text>
@@ -132,7 +136,77 @@ export default function SettingsScreen() {
   );
 }
 
+// One reminder a day, at a time the learner picks. Each control saves as it
+// is changed.
+function ReminderCard({ user, setUser }) {
+  const [note, setNote] = useState('');
+
+  const update = async (payload) => {
+    try {
+      setUser(await api.updateReminders(payload));
+    } catch (e) {
+      setNote(e.message || 'Could not save that.');
+    }
+  };
+
+  const toggle = async (on) => {
+    setNote('');
+    await update({ enabled: on });
+    if (!on) return;
+    // The system prompt appears here, because here is where the learner
+    // asked for reminders.
+    const outcome = await registerForReminders({ ask: true });
+    if (outcome === 'denied') {
+      setNote('Notifications are off for PolePole in your phone settings, so nothing will arrive until you allow them there.');
+    } else if (outcome === 'unavailable') {
+      setNote('This build cannot receive push notifications yet. Your time is saved for when it can.');
+    } else {
+      setUser(await api.me());
+    }
+  };
+
+  const setWhy = async (why) => {
+    try {
+      setUser(await api.updateWhy(user.why === why ? null : why));
+    } catch (e) {
+      setNote(e.message || 'Could not save that.');
+    }
+  };
+
+  return (
+    <Card style={{ marginBottom: 18 }}>
+      <Text style={styles.cardTitle}>Daily reminder</Text>
+      <Text style={[styles.muted, { marginBottom: 14, lineHeight: 21 }]}>
+        One a day, at the time you choose. It names the words waiting in your dose and nothing else.
+      </Text>
+
+      <View style={styles.reminderRow}>
+        <Text style={styles.bold}>Remind me</Text>
+        <Switch
+          value={!!user.remindersEnabled}
+          onValueChange={toggle}
+          trackColor={{ true: colors.teal, false: colors.line }}
+        />
+      </View>
+
+      <ChipRow
+        options={timeOptions(user.reminderLocalTime)}
+        value={user.reminderLocalTime}
+        disabled={!user.remindersEnabled}
+        onChange={(localTime) => update({ localTime })}
+      />
+
+      {note ? <Text style={[styles.muted, styles.reminderNote]}>{note}</Text> : null}
+
+      <Text style={[styles.bold, { marginTop: 18, marginBottom: 8 }]}>What's your why?</Text>
+      <ChipRow options={WHYS} value={user.why} onChange={setWhy} />
+    </Card>
+  );
+}
+
 const styles = StyleSheet.create({
+  reminderRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 },
+  reminderNote: { fontSize: 13, lineHeight: 19, marginTop: 12 },
   page: { padding: 20, paddingBottom: 60, backgroundColor: colors.cream },
   head: { marginBottom: 20 },
   h1: { fontSize: 24, color: colors.navy, fontWeight: '800' },

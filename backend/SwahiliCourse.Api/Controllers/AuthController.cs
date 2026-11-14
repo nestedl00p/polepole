@@ -17,10 +17,16 @@ public class AuthController : ControllerBase
     private readonly AppDbContext _db;
     private readonly TokenService _tokens;
     private readonly PaceService _pace;
+    private readonly StreakService _streaks;
+    private readonly TasterService _taster;
+    private readonly ReviewScheduler _scheduler;
 
-    public AuthController(AppDbContext db, TokenService tokens, PaceService pace)
+    public AuthController(
+        AppDbContext db, TokenService tokens, PaceService pace, StreakService streaks,
+        TasterService taster, ReviewScheduler scheduler)
     {
-        _db = db; _tokens = tokens; _pace = pace;
+        _db = db; _tokens = tokens; _pace = pace; _streaks = streaks;
+        _taster = taster; _scheduler = scheduler;
     }
 
     [HttpPost("register")]
@@ -50,12 +56,23 @@ public class AuthController : ControllerBase
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
             PlanLengthDays = plan,
             CourseId = courseId,
+            // Streak days are counted here, so an unrecognised or missing zone
+            // falls back to UTC rather than being rejected at sign-up.
+            TimeZoneId = TimeZones.Normalize(dto.TimeZoneId),
             StartDate = DateTime.UtcNow,
             CreatedAt = DateTime.UtcNow
         };
 
         _db.Users.Add(user);
         await _db.SaveChangesAsync();
+
+        // Someone who did the taster before signing up keeps what they did
+        // there: their answers become their first cards.
+        if (dto.TasterAnswers is { Count: > 0 }
+            && _taster.Seed(user, dto.TasterAnswers, _scheduler, DateTime.UtcNow) > 0)
+        {
+            await _db.SaveChangesAsync();
+        }
 
         return Ok(new AuthResponse(_tokens.CreateToken(user), ToDto(user)));
     }
@@ -72,5 +89,5 @@ public class AuthController : ControllerBase
         return Ok(new AuthResponse(_tokens.CreateToken(user), ToDto(user)));
     }
 
-    private UserDto ToDto(User u) => UserMapper.ToDto(u, _pace);
+    private UserDto ToDto(User u) => UserMapper.ToDto(u, _pace, _streaks);
 }

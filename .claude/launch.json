@@ -8,6 +8,14 @@
       "runtimeArgs": ["run", "dev"],
       "port": 5173,
       "autoPort": false
+    },
+    {
+      "name": "backend",
+      "cwd": "backend/SwahiliCourse.Api",
+      "runtimeExecutable": "dotnet",
+      "runtimeArgs": ["run", "--launch-profile", "http"],
+      "port": 5167,
+      "autoPort": false
     }
   ]
 }
