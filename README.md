@@ -188,6 +188,17 @@ content reaches the browser.
 
 ---
 
+## Backoffice (admin)
+
+Admins get an **Admin** button in the top bar that opens `/admin`: accounts
+(search, edit, password reset, suspend, delete, export, grant admin), course
+content checks and completion per lesson, the habit report, system status and
+an audit log of every admin change. The API behind it is `/api/admin/*`.
+
+To make the first admin, register an account and then start the API with
+`Admin__Emails=<that email>`. Details and the reasoning are in
+[deploy/DEPLOY.md](deploy/DEPLOY.md#backoffice).
+
 ## Configuration & secrets
 
 All configuration keys are documented in **[`.env.example`](.env.example)**.

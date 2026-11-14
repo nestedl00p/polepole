@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Text;
 using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -48,6 +49,9 @@ builder.Services.AddScoped<HabitReport>();
 builder.Services.AddScoped<DoseService>();
 builder.Services.AddSingleton<TasterService>();
 builder.Services.AddSingleton<VoiceStore>();
+
+// The backoffice: writes the audit trail behind every /api/admin change.
+builder.Services.AddScoped<AdminAudit>();
 
 // Cloud text-to-speech (Google/Azure) with on-disk caching. Optional — falls back
 // to the browser/device built-in voice when no provider key is configured.
@@ -212,8 +216,50 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidAudience = jwtIssuer,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
         };
+
+        // A token is good for 30 days, which is far too long to wait for a
+        // suspension, a deletion or a revoked admin role to take effect. So the
+        // signature only proves who is asking; what they may do is read from
+        // their row on each request. One primary-key lookup, and it is also
+        // where "last seen" is kept.
+        opt.Events = new JwtBearerEvents
+        {
+            OnTokenValidated = async ctx =>
+            {
+                var identity = ctx.Principal?.Identity as ClaimsIdentity;
+                if (identity is null || !int.TryParse((identity.FindFirst("sub") ?? identity.FindFirst(ClaimTypes.NameIdentifier))?.Value, out var userId))
+                {
+                    ctx.Fail("Token carries no user id.");
+                    return;
+                }
+
+                var db = ctx.HttpContext.RequestServices.GetRequiredService<AppDbContext>();
+                var account = await db.Users.AsNoTracking()
+                    .Where(u => u.Id == userId)
+                    .Select(u => new { u.IsAdmin, u.IsDisabled, u.LastSeenAt })
+                    .FirstOrDefaultAsync(ctx.HttpContext.RequestAborted);
+
+                if (account is null || account.IsDisabled)
+                {
+                    ctx.Fail("This account is no longer available.");
+                    return;
+                }
+
+                if (account.IsAdmin) identity.AddClaim(new Claim(AdminPolicy.Claim, "true"));
+
+                // Throttled so an afternoon of practice is a handful of writes,
+                // not one per request.
+                var now = DateTime.UtcNow;
+                if (account.LastSeenAt is null || now - account.LastSeenAt > AdminPolicy.SeenThrottle)
+                {
+                    await db.Users.Where(u => u.Id == userId)
+                        .ExecuteUpdateAsync(s => s.SetProperty(u => u.LastSeenAt, now), ctx.HttpContext.RequestAborted);
+                }
+            },
+        };
     });
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(o =>
+    o.AddPolicy(AdminPolicy.Name, p => p.RequireAuthenticatedUser().RequireClaim(AdminPolicy.Claim, "true")));
 
 var app = builder.Build();
 
@@ -234,6 +280,16 @@ using (var scope = app.Services.CreateScope())
     // Creates the file and the full schema when there is none, and applies only the
     // pending migrations when there is — so an upgrade keeps accounts and progress.
     db.Database.Migrate();
+
+    // The first admin has to come from somewhere other than the backoffice.
+    // Admin:Emails (comma-separated; env var Admin__Emails) names accounts to
+    // promote. Only accounts that already exist at startup are touched, and
+    // registering never checks this list. Sign-up does not verify email
+    // addresses, so the order matters: register the account first, then name
+    // it here. See deploy/DEPLOY.md, "Backoffice".
+    AccountAdmin.PromoteConfiguredAdmins(
+        db, app.Configuration["Admin:Emails"],
+        app.Services.GetRequiredService<ILoggerFactory>().CreateLogger("Admin.Bootstrap"));
 }
 
 // Must run before anything that reads the client address or scheme.

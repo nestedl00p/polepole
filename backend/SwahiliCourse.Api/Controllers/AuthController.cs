@@ -86,6 +86,12 @@ public class AuthController : ControllerBase
         if (user is null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
             return Unauthorized(new { message = "Invalid email or password." });
 
+        // Only after the password checks out, so this cannot be used to probe
+        // which addresses have accounts.
+        if (user.IsDisabled)
+            return StatusCode(StatusCodes.Status403Forbidden,
+                new { message = "This account has been suspended. Contact support if you think that is a mistake." });
+
         return Ok(new AuthResponse(_tokens.CreateToken(user), ToDto(user)));
     }
 

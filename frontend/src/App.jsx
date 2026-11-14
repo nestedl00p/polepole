@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate, Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import LandingPage from './pages/LandingPage';
@@ -12,6 +13,9 @@ import TasterPage from './pages/TasterPage';
 import { useDoseReminder } from './lib/reminders';
 import Logo from './components/Logo';
 
+// The backoffice is its own chunk: a learner never downloads it.
+const AdminApp = lazy(() => import('./pages/admin/AdminApp'));
+
 function NavBar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
@@ -21,6 +25,8 @@ function NavBar() {
   // things to ask. A bar full of other places to go would be an exit offered
   // in the middle of that.
   if (pathname === '/try') return null;
+  // The backoffice has its own header and navigation.
+  if (pathname.startsWith('/admin')) return null;
 
   return (
     <header className="topbar">
@@ -40,6 +46,7 @@ function NavBar() {
         <div className="topbar-meta">
           <span className="pill">🔥 <span className="streak">{user.streakCount}</span></span>
           <span className="pill">⭐ {user.totalXp} XP</span>
+          {user.isAdmin && <Link to="/admin" className="btn btn-sm btn-ghost">Admin</Link>}
           <button className="btn btn-sm btn-ghost" onClick={() => { logout(); navigate('/'); }}>
             Logout
           </button>
@@ -60,6 +67,16 @@ function Protected({ children }) {
   const { user, loading } = useAuth();
   if (loading) return <div className="spinner" />;
   if (!user) return <Navigate to="/login" replace />;
+  return children;
+}
+
+// The server refuses /api/admin to anyone else regardless; this just keeps a
+// learner who types the URL from seeing an empty shell.
+function AdminOnly({ children }) {
+  const { user, loading } = useAuth();
+  if (loading) return <div className="spinner" />;
+  if (!user) return <Navigate to="/login" replace />;
+  if (!user.isAdmin) return <Navigate to="/app" replace />;
   return children;
 }
 
@@ -85,6 +102,10 @@ export default function App() {
         <Route path="/lesson/:id/quiz" element={<Protected><QuizPage /></Protected>} />
         <Route path="/flashcards" element={<Protected><Flashcards /></Protected>} />
         <Route path="/settings" element={<Protected><Settings /></Protected>} />
+        <Route
+          path="/admin/*"
+          element={<AdminOnly><Suspense fallback={<div className="spinner" />}><AdminApp /></Suspense></AdminOnly>}
+        />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </>

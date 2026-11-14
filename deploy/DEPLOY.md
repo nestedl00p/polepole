@@ -201,6 +201,48 @@ az webapp config appsettings set -g polepole-rg -n <app> --settings DataDir=/hom
 ```
 
 
+## Backoffice
+
+The web app has an admin area at `/admin` (API: `/api/admin/*`) for managing
+accounts and checking on the service:
+
+| Page | What it is for |
+|------|----------------|
+| Overview | Accounts, who has been seen recently, sign-ups and practice per day |
+| Users | Search and filter accounts; open one to edit it, set a new password, export its data, reset progress, suspend, delete, or grant/revoke admin |
+| Content | What each course contains, how far learners get through it, and checks on the lesson files (duplicate ids, unanswerable questions, gaps) |
+| Habit report | The habit-test metrics from `docs/DAILY-PRACTICE-LOOP.md` |
+| System | Database, migrations, TTS cache, Whisper sidecar, reminders, CORS — state only, never secret values |
+| Audit log | Every change an admin made, who made it and when |
+
+**Making the first admin.** Admins grant the role to each other from the Users
+page, so only the first one needs help:
+
+1. Register a normal account in the app with the email you want to administer from.
+2. Name that email in `Admin:Emails` (comma-separated for several):
+
+   ```bash
+   az webapp config appsettings set -g "$RG" -n "$APP" --settings Admin__Emails="you@example.com"
+   ```
+
+3. The setting change restarts the app; at startup the account is promoted and
+   the grant is written to the audit log. Sign in and open `/admin`.
+
+Do it in that order. Sign-up does not verify email addresses, so an address
+listed before its account exists could be registered by someone else, who
+would be promoted at the next restart. Startup only ever promotes accounts that
+already exist, never demotes, and you can clear the setting once you are in.
+
+**How access is enforced.** The admin flag is read from the account's row on
+every request, not stored in the 30-day sign-in token. Revoking admin,
+suspending an account, or deleting it therefore takes effect on the very next
+request, with no need to wait for a token to expire. An admin cannot remove
+their own role, suspend or delete themselves — so the last admin cannot be
+locked out from inside the backoffice.
+
+**Locally**, register an account, then run the API once with the variable set
+(`Admin__Emails=you@example.com dotnet run --launch-profile http`).
+
 ## Point the mobile app at it
 
 In `mobile/src/config.js`, set `API_HOST_OVERRIDE` to your deployed URL:

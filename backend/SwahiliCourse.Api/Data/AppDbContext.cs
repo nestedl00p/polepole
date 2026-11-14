@@ -12,6 +12,7 @@ public class AppDbContext : DbContext
     public DbSet<CardState> CardStates => Set<CardState>();
     public DbSet<PracticeDay> PracticeDays => Set<PracticeDay>();
     public DbSet<VoiceTake> VoiceTakes => Set<VoiceTake>();
+    public DbSet<AdminAuditEntry> AdminAudit => Set<AdminAuditEntry>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -66,5 +67,9 @@ public class AppDbContext : DbContext
             .WithMany()
             .HasForeignKey(v => v.UserId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        // The backoffice reads the audit log newest first, and per account.
+        modelBuilder.Entity<AdminAuditEntry>().HasIndex(a => a.CreatedAt);
+        modelBuilder.Entity<AdminAuditEntry>().HasIndex(a => a.TargetUserId);
     }
 }

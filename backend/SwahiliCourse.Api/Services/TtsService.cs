@@ -36,6 +36,27 @@ public class TtsService
 
     public record TtsResult(byte[] Bytes, string ContentType, string Ext);
 
+    // Clips on disk, for the backoffice.
+    public (int Files, long Bytes) CacheUsage()
+    {
+        var files = new DirectoryInfo(_cacheDir).GetFiles();
+        return (files.Length, files.Sum(f => f.Length));
+    }
+
+    // Drops every cached clip. They regenerate on next play — which is paid
+    // for again when a cloud provider is configured, so this is for after a
+    // voice or rate change, not routine housekeeping.
+    public int ClearCache()
+    {
+        var removed = 0;
+        foreach (var file in new DirectoryInfo(_cacheDir).GetFiles())
+        {
+            try { file.Delete(); removed++; }
+            catch (IOException ex) { _log.LogWarning(ex, "Could not delete cached clip {File}.", file.Name); }
+        }
+        return removed;
+    }
+
     // The voice for a course's target language. Override per course with
     // Tts:Voices:<courseId>; the legacy global Tts:Voice still applies to the
     // default (Swahili) course so existing configs keep working.
