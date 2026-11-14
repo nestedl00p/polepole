@@ -18,16 +18,21 @@ Config via env vars:
     WHISPER_MODEL    tiny | base | small | medium | large-v3   (default: small)
     WHISPER_DEVICE   cpu | cuda                                 (default: cpu)
     WHISPER_COMPUTE  int8 | int8_float16 | float16 | float32    (default: int8)
+    WHISPER_API_KEY  shared secret; when set, /transcribe requires it in the
+                     X-Api-Key header. Unset (local dev on 127.0.0.1) = open.
+                     Always set it when the service is reachable over a network.
 """
+import hmac
 import os
 import tempfile
 
-from fastapi import FastAPI, File, Query, UploadFile
+from fastapi import Depends, FastAPI, File, Header, HTTPException, Query, UploadFile
 from faster_whisper import WhisperModel
 
 MODEL_SIZE = os.getenv("WHISPER_MODEL", "small")
 DEVICE = os.getenv("WHISPER_DEVICE", "cpu")
 COMPUTE = os.getenv("WHISPER_COMPUTE", "int8")
+API_KEY = os.getenv("WHISPER_API_KEY", "").strip()
 
 app = FastAPI(title="PolePole Whisper sidecar")
 
@@ -35,12 +40,23 @@ app = FastAPI(title="PolePole Whisper sidecar")
 model = WhisperModel(MODEL_SIZE, device=DEVICE, compute_type=COMPUTE)
 
 
+def require_api_key(x_api_key: str | None = Header(default=None)):
+    """Reject callers without the shared secret. A no-op when no key is set."""
+    if not API_KEY:
+        return
+    # Compare as bytes: compare_digest raises on non-ASCII str input.
+    if not hmac.compare_digest((x_api_key or "").encode(), API_KEY.encode()):
+        raise HTTPException(status_code=401, detail="Missing or invalid X-Api-Key.")
+
+
+# Deliberately unauthenticated: the container platform's probes call it.
 @app.get("/health")
 def health():
-    return {"ok": True, "model": MODEL_SIZE, "device": DEVICE, "compute": COMPUTE}
+    return {"ok": True, "model": MODEL_SIZE, "device": DEVICE, "compute": COMPUTE,
+            "auth": bool(API_KEY)}
 
 
-@app.post("/transcribe")
+@app.post("/transcribe", dependencies=[Depends(require_api_key)])
 async def transcribe(file: UploadFile = File(...), lang: str = Query("sw")):
     """Transcribe an uploaded audio clip. Returns text + per-word timing/confidence."""
     data = await file.read()

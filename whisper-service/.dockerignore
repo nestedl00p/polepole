@@ -1,0 +1,6 @@
+# No trailing slashes: `az acr build` compiles each rule to a regex and a
+# trailing slash makes it never match (see the repo-root .dockerignore).
+.venv
+__pycache__
+models
+README.md

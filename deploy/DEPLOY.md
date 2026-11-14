@@ -228,14 +228,57 @@ Add a CNAME from `app.polepole.com` → `<app>.azurewebsites.net` at your regist
 
 ## Adding Whisper later (pronunciation scoring)
 
-The sidecar is a separate service. Two options:
+The sidecar runs as its own **Azure Container App** next to the web app, built
+from `whisper-service/Dockerfile` with the Whisper model baked into the image.
 
-- **Azure Container Apps** — deploy `whisper-service/` as its own container
-  (give it 2 GB RAM), then set `Speech__Enabled=true` and
-  `Speech__WhisperUrl=https://<whisper-app>...` on the web app.
-- **A small VPS** running `whisper-service` behind HTTPS, same two settings.
+```bash
+bash deploy/azure-deploy.sh           # 1) web app image that can send the API key
+```
 
-Keep it private/network-restricted — it has no auth of its own.
+```bash
+bash deploy/azure-whisper-deploy.sh   # 2) build + run the sidecar, wire up the web app
+```
+
+Step 1 matters the first time: the sidecar's URL is public, so `/transcribe`
+requires a shared secret in an `X-Api-Key` header. A web app image built before
+`Speech:ApiKey` existed does not send it, every transcription gets a `401`, and
+the drill quietly stays listen-only.
+
+What the second script does:
+
+1. `az acr build` on `whisper-service/` (a few minutes — it downloads the model).
+2. Creates the `polepole-env` Container Apps environment and the
+   `polepole-whisper` app: 1 vCPU, 2 GiB, external HTTPS ingress on port 8081.
+3. Generates the shared secret once (reused on re-runs) and stores it as a
+   Container App secret (`WHISPER_API_KEY`).
+4. Waits for `/health` to report the model loaded and auth on, and only then
+   sets `Speech__Enabled`, `Speech__WhisperUrl` and `Speech__ApiKey` on the web
+   app. If the sidecar never comes up, the web app is left untouched.
+
+Check it: `https://<app>.azurewebsites.net/api/speech/status` → `{"enabled":true}`,
+and the mic appears on the pronunciation drill.
+
+Knobs (environment variables, same style as `azure-deploy.sh`):
+
+| Variable | Default | Notes |
+|----------|---------|-------|
+| `MIN_REPLICAS` | `0` | `0` scales to zero after 5 idle minutes and is nearly free at low traffic, at the price of a ~25 s cold start. The backend pings the sidecar when a drill opens (`GET /api/speech/status`) so the boot usually overlaps with the learner listening, and waits up to `Speech__TimeoutSeconds` (default 90) for a transcription. `1` keeps a replica warm around the clock (roughly US$20–25/month — check current Container Apps pricing). |
+| `WHISPER_MODEL` | `small` | Baked in at build time. `medium` needs `MEMORY=6.0Gi CPU=2.0` or so. |
+| `CPU` / `MEMORY` | `1.0` / `2.0Gi` | Consumption plan pairs: memory is 2× the vCPU count. |
+
+Redeploy after changing `whisper-service/`: re-run the script. Each run pushes
+a fresh timestamped tag, which is what makes Container Apps roll a new revision.
+
+Logs: `az containerapp logs show -n polepole-whisper -g polepole-rg --follow`.
+The environment is created without a Log Analytics workspace to avoid its
+per-GB charge, so there is no log history — only the live stream.
+
+Turn it off again: set `Speech__Enabled=false` on the web app; delete
+`polepole-whisper` and `polepole-env` to stop paying for them.
+
+**Elsewhere (a VPS, another container host):** run the same image, set
+`WHISPER_API_KEY` on it, put it behind HTTPS, and set the same three
+`Speech__*` settings on the web app.
 
 ---
 

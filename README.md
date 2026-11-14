@@ -255,7 +255,8 @@ SwahiliCourse/
    `deploy/DEPLOY.md` for baselining a database created before migrations.
 3. **Lock down CORS** in `Program.cs` to your real frontend domain.
 4. Consider **PostgreSQL/SQL Server** over SQLite for multi-user scale.
-5. Bind the Whisper sidecar to `127.0.0.1` only — it has no auth (internal service).
+5. Never expose the Whisper sidecar without `WHISPER_API_KEY` set (and the same
+   value in `Speech:ApiKey`). `deploy/azure-whisper-deploy.sh` handles this.
 
 ---
 

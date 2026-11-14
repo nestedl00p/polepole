@@ -31,6 +31,42 @@ public class SpeechService
 
     private string WhisperUrl => (_config["Speech:WhisperUrl"] ?? "http://localhost:8081").TrimEnd('/');
 
+    // How long one transcription may take. Generous on purpose: a sidecar that
+    // scales to zero needs ~25 s to boot and load the model before it can even
+    // start on the first clip after an idle spell (measured 29.9 s end to end).
+    private TimeSpan Timeout =>
+        TimeSpan.FromSeconds(Math.Clamp(_config.GetValue("Speech:TimeoutSeconds", 90), 5, 200));
+
+    private long _lastWarmUpTicks; // Environment.TickCount64 of the last ping; 0 = never
+
+    // Fire-and-forget ping that wakes a scaled-to-zero sidecar. Called when a
+    // client asks for speech status — i.e. when a drill appears on screen — so
+    // the replica boots while the learner is still listening to the model
+    // phrase, not after they have recorded. Throttled; never throws.
+    public void WarmUp()
+    {
+        if (!IsConfigured) return;
+
+        var now = Environment.TickCount64;
+        var last = Interlocked.Read(ref _lastWarmUpTicks);
+        if (last != 0 && now - last < 60_000) return;
+        if (Interlocked.CompareExchange(ref _lastWarmUpTicks, now, last) != last) return;
+
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+                var client = _http.CreateClient();
+                client.Timeout = Timeout;
+                using var resp = await client.GetAsync($"{WhisperUrl}/health");
+            }
+            catch (Exception ex)
+            {
+                _log.LogDebug(ex, "Whisper warm-up ping to {Url} failed.", WhisperUrl);
+            }
+        });
+    }
+
     // Whisper language code for the course's target language (what the learner
     // is speaking). Speech:Language still overrides globally if set.
     private string LanguageFor(Models.Course? course) =>
@@ -83,7 +119,7 @@ public class SpeechService
         try
         {
             var client = _http.CreateClient();
-            client.Timeout = TimeSpan.FromSeconds(30);
+            client.Timeout = Timeout;
 
             using var form = new MultipartFormDataContent();
             var audioContent = new StreamContent(audio);
@@ -91,7 +127,17 @@ public class SpeechService
                 MediaTypeHeaderValue.Parse(string.IsNullOrWhiteSpace(contentType) ? "application/octet-stream" : contentType);
             form.Add(audioContent, "file", string.IsNullOrWhiteSpace(fileName) ? "audio.webm" : fileName);
 
-            using var resp = await client.PostAsync($"{WhisperUrl}/transcribe?lang={language}", form, ct);
+            using var req = new HttpRequestMessage(HttpMethod.Post, $"{WhisperUrl}/transcribe?lang={language}")
+            {
+                Content = form,
+            };
+            // Shared secret for a sidecar that is reachable over a network (see
+            // deploy/azure-whisper-deploy.sh). Unset for a localhost sidecar.
+            var apiKey = _config["Speech:ApiKey"];
+            if (!string.IsNullOrWhiteSpace(apiKey))
+                req.Headers.TryAddWithoutValidation("X-Api-Key", apiKey.Trim());
+
+            using var resp = await client.SendAsync(req, ct);
             if (!resp.IsSuccessStatusCode)
             {
                 _log.LogWarning("Whisper transcribe returned {Status}: {Body}",
