@@ -41,6 +41,11 @@ public class User
     public DateTime? LastDoseAt { get; set; }
     public int TotalXp { get; set; } = 0;
 
+    // Comma-separated keys of milestones already shown, so none is handed out
+    // twice and adding new thresholds later does not fire every one of them at
+    // a long-standing learner.
+    public string MilestonesSeen { get; set; } = string.Empty;
+
     public ICollection<LessonProgress> Progress { get; set; } = new List<LessonProgress>();
     public ICollection<CardState> Cards { get; set; } = new List<CardState>();
 }

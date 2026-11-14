@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useAudioRecorder, RecordingPresets, AudioModule, setAudioModeAsync } from 'expo-audio';
@@ -22,7 +22,16 @@ const LABELS = {
   tambua: 'What does this mean?',
   tunga: 'Which word is this?',
   sema: 'Say it out loud',
+  methali: 'Methali — a proverb for you',
 };
+
+// How long the learner took to answer. Feeds the strength bar and the XP
+// award, so a word answered instantly counts for more than one worked out.
+function useElapsed(key) {
+  const started = useRef(Date.now());
+  useEffect(() => { started.current = Date.now(); }, [key]);
+  return () => Date.now() - started.current;
+}
 
 const scoreColor = (s) => (s >= 80 ? colors.success : s >= 55 ? colors.gold : colors.danger);
 
@@ -119,6 +128,19 @@ export default function DoseScreen({ navigation }) {
               : "Each answer moved that word in your queue — tomorrow's dose is built from what you just did."}
           </Text>
 
+          {/* Arrives as news: nothing in the app counts toward these, so the
+              learner was not watching a bar fill. */}
+          {closing?.milestones?.map((m) => (
+            <View key={m.key} style={styles.milestone}>
+              <Text style={styles.milestoneTitle}>🏅 {m.title}</Text>
+              <Text style={styles.milestoneDetail}>{m.detail}</Text>
+            </View>
+          ))}
+
+          {closing?.xpEarned > 0 && (
+            <Text style={styles.xpTotal}>+{closing.xpEarned} XP for finishing</Text>
+          )}
+
           {closing?.streakAdvanced && (
             <View style={styles.streak}>
               <Text style={styles.streakNum}>{closing.streakCount} 🔥</Text>
@@ -177,16 +199,37 @@ export default function DoseScreen({ navigation }) {
       <Card>
         <Text style={styles.label}>{LABELS[item.exercise]?.toUpperCase()}</Text>
 
-        {item.exercise === 'sema' ? (
+        {item.exercise === 'methali' ? (
+          <MethaliItem item={item} result={result} onAnswered={onAnswered} />
+        ) : item.exercise === 'sema' ? (
           <SemaItem item={item} result={result} onAnswered={onAnswered} onSkip={advance} />
         ) : (
           <TapItem item={item} result={result} onAnswered={onAnswered} />
         )}
 
-        {result && (
+        {/* A proverb has no right answer to reveal — acknowledging it is the
+            whole interaction, and it joins the review queue from tomorrow. */}
+        {result && item.exercise === 'methali' && (
+          <View style={styles.feedback}>
+            {result.xpEarned > 0 && (
+              <Text style={{ color: colors.success, fontWeight: '800' }}>
+                Imehifadhiwa — saved to your deck  +{result.xpEarned} XP
+              </Text>
+            )}
+            <Button
+              title={idx + 1 < items.length ? 'Next →' : 'Finish'}
+              variant="gold"
+              style={styles.mt}
+              onPress={advance}
+            />
+          </View>
+        )}
+
+        {result && item.exercise !== 'methali' && (
           <View style={styles.feedback}>
             <Text style={{ color: result.correct ? colors.success : colors.danger, fontWeight: '800' }}>
               {result.correct ? '✓ Sawa!' : `✗ It's "${result.correctAnswer}"`}
+              {result.xpEarned > 0 ? `  +${result.xpEarned} XP` : ''}
             </Text>
             <View style={styles.strengthRow}>
               <Text style={styles.strengthLbl}>STRENGTH</Text>
@@ -217,9 +260,48 @@ export default function DoseScreen({ navigation }) {
   );
 }
 
+// The bonus. Not a test — the learner is handed something they can use, and
+// the only thing asked of them is to read it.
+function MethaliItem({ item, result, onAnswered }) {
+  const [busy, setBusy] = useState(false);
+
+  const keep = async () => {
+    if (result || busy) return;
+    setBusy(true);
+    try {
+      onAnswered(await api.answerDose({ itemKey: item.itemKey, exercise: 'methali' }));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <>
+      <View style={styles.methali}>
+        <View style={styles.methaliRow}>
+          <Text style={styles.methaliText}>{item.target}</Text>
+          <SpeakButton text={item.target} />
+        </View>
+        <Text style={styles.methaliGloss}>{item.prompt}</Text>
+        {item.note ? <Text style={styles.methaliNote}>{item.note}</Text> : null}
+      </View>
+
+      {!result && (
+        <Button
+          title={busy ? 'Saving…' : 'Nimeelewa — got it'}
+          variant="gold"
+          style={styles.mt}
+          onPress={keep}
+        />
+      )}
+    </>
+  );
+}
+
 function TapItem({ item, result, onAnswered }) {
   const [picked, setPicked] = useState(null);
   const [busy, setBusy] = useState(false);
+  const elapsed = useElapsed(item.itemKey);
 
   useEffect(() => { setPicked(null); setBusy(false); }, [item.itemKey]);
 
@@ -232,6 +314,7 @@ function TapItem({ item, result, onAnswered }) {
         itemKey: item.itemKey,
         exercise: item.exercise,
         answer: opt,
+        elapsedMs: elapsed(),
       }));
     } finally {
       setBusy(false);
@@ -277,6 +360,7 @@ function SemaItem({ item, result, onAnswered, onSkip }) {
   const [enabled, setEnabled] = useState(null);
   const [err, setErr] = useState(null);
   const recorder = useAudioRecorder(RecordingPresets.HIGH_QUALITY);
+  const elapsed = useElapsed(item.itemKey);
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/api/speech/status`)
@@ -317,6 +401,7 @@ function SemaItem({ item, result, onAnswered, onSkip }) {
         itemKey: item.itemKey,
         exercise: 'sema',
         speechScore: Math.round(a.score),
+        elapsedMs: elapsed(),
       }));
       setPhase('idle');
     } catch {
@@ -436,6 +521,24 @@ const styles = StyleSheet.create({
   semaScore: { fontSize: 34, fontWeight: '800' },
   note: { color: colors.muted, fontSize: 14, lineHeight: 20 },
   err: { color: colors.danger, fontSize: 13.5, marginTop: 10 },
+
+  // The bonus proverb, set apart from the drill items so it reads as a gift.
+  methali: { alignItems: 'center', paddingVertical: 6 },
+  methaliRow: { flexDirection: 'row', alignItems: 'center', gap: 12, flexWrap: 'wrap', justifyContent: 'center' },
+  methaliText: { fontSize: 22, fontWeight: '800', color: colors.navy, textAlign: 'center', lineHeight: 30 },
+  methaliGloss: { color: colors.tealDark, fontSize: 15.5, fontWeight: '600', marginTop: 10, textAlign: 'center' },
+  methaliNote: {
+    color: colors.muted, fontSize: 13.5, lineHeight: 20, marginTop: 12, paddingTop: 12,
+    borderTopWidth: 1, borderTopColor: colors.line, textAlign: 'center',
+  },
+
+  xpTotal: { marginTop: 14, fontWeight: '800', color: colors.gold, fontSize: 15.5 },
+  milestone: {
+    alignSelf: 'stretch', marginTop: 16, padding: 14, borderRadius: radius,
+    backgroundColor: colors.cream, borderWidth: 1, borderColor: colors.goldLight,
+  },
+  milestoneTitle: { fontWeight: '800', color: colors.gold, fontSize: 15.5 },
+  milestoneDetail: { color: colors.muted, fontSize: 13.5, lineHeight: 19, marginTop: 4 },
 
   streak: {
     alignSelf: 'stretch', marginTop: 18, padding: 16, borderRadius: radius,

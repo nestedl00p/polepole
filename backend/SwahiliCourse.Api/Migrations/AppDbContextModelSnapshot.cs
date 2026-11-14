@@ -143,6 +143,10 @@ namespace SwahiliCourse.Api.Migrations
                     b.Property<DateTime?>("LastRestDayAt")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("MilestonesSeen")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("TEXT");

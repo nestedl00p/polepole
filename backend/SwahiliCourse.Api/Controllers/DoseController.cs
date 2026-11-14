@@ -59,13 +59,9 @@ public class DoseController : AuthedController
         var item = await _dose.FindAsync(user, dto.ItemKey, ct);
         if (item is null) return NotFound(new { error = "That item is not in your deck." });
 
-        var (card, correct) = await _dose.AnswerAsync(
-            user, item, dto.Exercise, dto.Answer, dto.SpeechScore, ct);
+        var (card, correct, xp) = await _dose.AnswerAsync(
+            user, item, dto.Exercise, dto.Answer, dto.SpeechScore, dto.ElapsedMs, ct);
 
-        // No XP and no streak here yet. Both are deliberately left until the
-        // variable-reward and streak steps of the plan: a flat, predictable
-        // award is the exact defect the design set out to fix, so it is better
-        // to have none than to ship the wrong one.
         // Revealed only now that the answer is in — which is also why it was not
         // in the GET payload.
         var correctAnswer = dto.Exercise == DoseExercises.Tambua ? item.Source : item.Target;
@@ -78,7 +74,9 @@ public class DoseController : AuthedController
             card.Strength,
             card.DueAt,
             _dose.IntervalDays(card),
-            card.Lapses));
+            card.Lapses,
+            xp,
+            user.TotalXp));
     }
 
     // Close the session: credits the day in the learner's own time zone and

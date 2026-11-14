@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../api/client';
 import { useAuth } from '../context/AuthContext';
@@ -26,7 +26,16 @@ const LABELS = {
   tambua: 'What does this mean?',
   tunga: 'Which word is this?',
   sema: 'Say it out loud',
+  methali: 'Methali — a proverb for you',
 };
+
+// How long the learner took to answer. Feeds the strength bar and the XP
+// award, so a word answered instantly counts for more than one worked out.
+function useElapsed(key) {
+  const started = useRef(Date.now());
+  useEffect(() => { started.current = Date.now(); }, [key]);
+  return () => Date.now() - started.current;
+}
 
 const scoreClass = (s) => (s >= 80 ? 'good' : s >= 55 ? 'ok' : 'low');
 
@@ -127,6 +136,19 @@ export default function DosePage() {
               : 'Each answer moved that word in your queue — tomorrow\'s dose is built from what you just did.'}
           </p>
 
+          {/* Arrives as news: nothing in the app counts toward these, so the
+              learner was not watching a bar fill. */}
+          {closing?.milestones?.map((m) => (
+            <div key={m.key} className="dose-milestone">
+              <div className="dose-milestone-title">🏅 {m.title}</div>
+              <div className="dose-milestone-detail">{m.detail}</div>
+            </div>
+          ))}
+
+          {closing?.xpEarned > 0 && (
+            <div className="dose-xp-total">+{closing.xpEarned} XP for finishing</div>
+          )}
+
           {closing?.streakAdvanced && (
             <div className="dose-streak">
               <div className="dose-streak-num">{closing.streakCount} 🔥</div>
@@ -188,19 +210,22 @@ export default function DosePage() {
         <span className="sb-count">{idx + 1} / {items.length}</span>
       </div>
 
-      <div className="question-card">
+      <div className={`question-card ${item.exercise === 'methali' ? 'dose-methali-card' : ''}`}>
         <div className="dose-label">{LABELS[item.exercise]}</div>
 
-        {item.exercise === 'sema' ? (
+        {item.exercise === 'methali' ? (
+          <MethaliItem item={item} result={result} onAnswered={onAnswered} />
+        ) : item.exercise === 'sema' ? (
           <SemaItem item={item} result={result} onAnswered={onAnswered} onSkip={skip} />
         ) : (
           <TapItem item={item} result={result} onAnswered={onAnswered} />
         )}
 
-        {result && (
+        {result && item.exercise !== 'methali' && (
           <div className="dose-feedback">
             <div className={result.correct ? 'feedback-correct' : 'feedback-wrong'}>
               {result.correct ? '✓ Sawa!' : `✗ It's "${result.correctAnswer}"`}
+              {result.xpEarned > 0 && <span className="dose-xp">+{result.xpEarned} XP</span>}
             </div>
             <div className="dose-strength">
               <span className="dose-strength-lbl">Strength</span>
@@ -223,6 +248,24 @@ export default function DosePage() {
             </div>
           </div>
         )}
+
+        {/* A proverb has no right answer to reveal — acknowledging it is the
+            whole interaction, and it joins the review queue from tomorrow. */}
+        {result && item.exercise === 'methali' && (
+          <div className="dose-feedback">
+            {result.xpEarned > 0 && (
+              <div className="feedback-correct">
+                Imehifadhiwa — saved to your deck
+                <span className="dose-xp">+{result.xpEarned} XP</span>
+              </div>
+            )}
+            <div className="row center mt">
+              <button className="btn btn-gold" onClick={next} autoFocus>
+                {idx + 1 < items.length ? 'Next →' : 'Finish'}
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       <p className="muted dose-foot">
@@ -232,10 +275,48 @@ export default function DosePage() {
   );
 }
 
+// The bonus. Not a test — the learner is handed something they can use, and
+// the only thing asked of them is to read it.
+function MethaliItem({ item, result, onAnswered }) {
+  const [busy, setBusy] = useState(false);
+
+  const keep = async () => {
+    if (result || busy) return;
+    setBusy(true);
+    try {
+      onAnswered(await api.answerDose({ itemKey: item.itemKey, exercise: 'methali' }));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <>
+      <div className="dose-methali">
+        <div className="dose-methali-text">
+          <span>{item.target}</span>
+          <SpeakButton text={item.target} />
+        </div>
+        <div className="dose-methali-gloss">{item.prompt}</div>
+        {item.note && <div className="dose-methali-note">{item.note}</div>}
+      </div>
+
+      {!result && (
+        <div className="row center mt">
+          <button className="btn btn-gold" onClick={keep} disabled={busy} autoFocus>
+            {busy ? 'Saving…' : 'Nimeelewa — got it'}
+          </button>
+        </div>
+      )}
+    </>
+  );
+}
+
 // Recognise / produce: four options, one tap, no typing.
 function TapItem({ item, result, onAnswered }) {
   const [picked, setPicked] = useState(null);
   const [busy, setBusy] = useState(false);
+  const elapsed = useElapsed(item.itemKey);
 
   useEffect(() => { setPicked(null); setBusy(false); }, [item.itemKey]);
 
@@ -248,6 +329,7 @@ function TapItem({ item, result, onAnswered }) {
         itemKey: item.itemKey,
         exercise: item.exercise,
         answer: opt,
+        elapsedMs: elapsed(),
       }));
     } finally {
       setBusy(false);
@@ -292,6 +374,7 @@ function SemaItem({ item, result, onAnswered, onSkip }) {
   const [assessed, setAssessed] = useState(null);
   const [enabled, setEnabled] = useState(null);
   const rec = useMicRecorder();
+  const elapsed = useElapsed(item.itemKey);
 
   useEffect(() => { speechEnabled().then(setEnabled); }, []);
   useEffect(() => { setPhase('idle'); setAssessed(null); }, [item.itemKey]);
@@ -310,6 +393,7 @@ function SemaItem({ item, result, onAnswered, onSkip }) {
           itemKey: item.itemKey,
           exercise: 'sema',
           speechScore: Math.round(a.score),
+          elapsedMs: elapsed(),
         }));
         setPhase('idle');
       } catch {

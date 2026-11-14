@@ -70,4 +70,7 @@ public static class DoseExercises
     public const string Tunga = "tunga";
     // Speak: say the target word aloud, scored by the Whisper sidecar.
     public const string Sema = "sema";
+    // Receive: a proverb handed to the learner, with its meaning. Not a test
+    // — reading it is the interaction — and it joins the queue afterwards.
+    public const string Methali = "methali";
 }

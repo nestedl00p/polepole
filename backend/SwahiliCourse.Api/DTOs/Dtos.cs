@@ -48,13 +48,21 @@ public record DoseItemDto(
     // where naming it would be the answer.
     string? Target,
     List<string> Options,
-    int Strength, int Box, int LessonId, string LessonTitle);
+    int Strength, int Box, int LessonId, string LessonTitle,
+    // One line of context, for a proverb. Null for vocabulary.
+    string? Note);
 
-public record DoseAnswerDto(string ItemKey, string Exercise, string? Answer, int? SpeechScore);
+public record DoseAnswerDto(
+    string ItemKey, string Exercise, string? Answer, int? SpeechScore,
+    // Milliseconds from the item appearing to the learner answering. Feeds the
+    // strength bar and the XP award; optional, and a client that omits it is
+    // treated as middling rather than punished.
+    int? ElapsedMs);
 
 public record DoseAnswerResultDto(
     string ItemKey, bool Correct, string CorrectAnswer,
-    int Box, int Strength, DateTime DueAt, int IntervalDays, int Lapses);
+    int Box, int Strength, DateTime DueAt, int IntervalDays, int Lapses,
+    int XpEarned, int TotalXp);
 
 public record UpdateTimeZoneDto(string TimeZoneId);
 
@@ -63,4 +71,8 @@ public record UpdateTimeZoneDto(string TimeZoneId);
 public record DoseCompleteResultDto(
     string Date, int ItemsAnswered,
     int StreakCount, bool StreakAdvanced, bool RestDayUsed,
-    bool AlreadyCountedToday, bool RestDayAvailable);
+    bool AlreadyCountedToday, bool RestDayAvailable,
+    int XpEarned, int TotalXp, List<MilestoneDto> Milestones);
+
+// A threshold the learner has just crossed. Shown once, never counted toward.
+public record MilestoneDto(string Key, string Title, string Detail);

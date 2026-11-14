@@ -645,3 +645,37 @@ ul.sw-list li { margin-bottom: 5px; }
   margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line);
   color: var(--muted); font-size: 0.86rem; line-height: 1.45;
 }
+
+/* ---------- The variable reward: methali, XP, milestones ---------- */
+/* The bonus proverb. Styled apart from the drill items on purpose — the
+   learner should be able to tell at a glance that this one is a gift. */
+.dose-methali-card { border-color: var(--gold); border-width: 2px; }
+.dose-methali { text-align: center; padding: 6px 0 2px; }
+.dose-methali-text {
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  flex-wrap: wrap; font-size: 1.4rem; font-weight: 800;
+  color: var(--navy); line-height: 1.35;
+}
+.dose-methali-gloss { color: var(--teal-dark); font-size: 1rem; font-weight: 600; margin-top: 10px; }
+.dose-methali-note {
+  color: var(--muted); font-size: 0.88rem; line-height: 1.5; margin-top: 12px;
+  padding-top: 12px; border-top: 1px solid var(--line);
+}
+
+/* XP is jittered, so it reads as a small surprise rather than a running total. */
+.dose-xp {
+  margin-left: 10px; font-size: 0.8rem; font-weight: 800; color: var(--gold);
+  background: var(--cream); border: 1px solid var(--line);
+  padding: 2px 8px; border-radius: 999px;
+}
+.dose-xp-total {
+  margin-top: 14px; font-weight: 800; color: var(--gold); font-size: 1rem;
+}
+
+.dose-milestone {
+  margin-top: 16px; padding: 14px 16px; border-radius: var(--radius);
+  background: linear-gradient(135deg, #fdf6e6, var(--cream));
+  border: 1px solid var(--gold-light); text-align: left;
+}
+.dose-milestone-title { font-weight: 800; color: var(--gold); font-size: 1rem; }
+.dose-milestone-detail { color: var(--muted); font-size: 0.86rem; line-height: 1.45; margin-top: 4px; }
