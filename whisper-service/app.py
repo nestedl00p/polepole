@@ -26,7 +26,7 @@ import hmac
 import os
 import tempfile
 
-from fastapi import Depends, FastAPI, File, Header, HTTPException, Query, UploadFile
+from fastapi import Depends, FastAPI, File, Form, Header, HTTPException, Query, UploadFile
 from faster_whisper import WhisperModel
 
 MODEL_SIZE = os.getenv("WHISPER_MODEL", "small")
@@ -57,8 +57,18 @@ def health():
 
 
 @app.post("/transcribe", dependencies=[Depends(require_api_key)])
-async def transcribe(file: UploadFile = File(...), lang: str = Query("sw")):
-    """Transcribe an uploaded audio clip. Returns text + per-word timing/confidence."""
+async def transcribe(
+    file: UploadFile = File(...),
+    lang: str = Query("sw"),
+    prompt: str | None = Form(default=None),
+):
+    """Transcribe an uploaded audio clip. Returns text + per-word timing/confidence.
+
+    `prompt` is an optional vocabulary hint (Whisper's initial_prompt): words the
+    speaker is likely to say. Free conversation has no reference phrase to score
+    against, so this is what keeps short Swahili words spelled the expected way.
+    Whisper only reads the tail of a long prompt, so it is capped here.
+    """
     data = await file.read()
 
     # faster-whisper decodes via PyAV (bundled ffmpeg), so browser webm/opus,
@@ -75,6 +85,7 @@ async def transcribe(file: UploadFile = File(...), lang: str = Query("sw")):
             word_timestamps=True,
             vad_filter=True,          # drop leading/trailing silence
             beam_size=5,
+            initial_prompt=(prompt or "").strip()[:600] or None,
         )
 
         words = []

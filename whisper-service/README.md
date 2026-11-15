@@ -64,6 +64,11 @@ NVIDIA GPU, use `WHISPER_DEVICE=cuda WHISPER_COMPUTE=float16` for a big speedup.
 
 ## Notes / limitations
 
+- `/transcribe` takes an optional `prompt` form field: words the speaker is
+  likely to say, passed to Whisper as its initial prompt. Conversation practice
+  sends the scenario's vocabulary, since free speech has no target phrase for
+  the backend's fuzzy matching to fall back on.
+
 - Whisper is a *transcriber*, so it grades **"did you say the right words?"** —
   not phoneme-level accent. That's the right signal for beginners. For per-sound
   scoring you'd add a pronunciation-assessment pass (e.g. Azure) later; the

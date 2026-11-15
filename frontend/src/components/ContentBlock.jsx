@@ -5,6 +5,7 @@ import AdjectiveBuilder from './AdjectiveBuilder';
 import NounSorter from './NounSorter';
 import SentenceBuilder from './SentenceBuilder';
 import PronunciationDrill from './PronunciationDrill';
+import ConversationPractice from './ConversationPractice';
 import LessonTable from './LessonTable';
 import Dialogue from './Dialogue';
 import QuickCheck from './QuickCheck';
@@ -15,7 +16,7 @@ import EnglishVerbBuilder from './EnglishVerbBuilder';
 
 // Renders a single content block from a lesson. New block types must be
 // registered BOTH here and in the mobile ContentBlock.js.
-export default function ContentBlock({ block }) {
+export default function ContentBlock({ block, lessonId }) {
   switch (block.type) {
     case 'heading':
       return <div className="block"><h2>{block.heading}</h2></div>;
@@ -40,6 +41,9 @@ export default function ContentBlock({ block }) {
 
     case 'pronunciationDrill':
       return <PronunciationDrill block={block} />;
+
+    case 'conversation':
+      return <ConversationPractice block={block} lessonId={lessonId} />;
 
     case 'articleBuilder':
       return <ArticleBuilder block={block} />;

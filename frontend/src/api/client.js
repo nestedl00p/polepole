@@ -67,6 +67,11 @@ export const api = {
   updatePace: (planLengthDays) => request('/user/pace', { method: 'PUT', body: { planLengthDays } }),
   restart: () => request('/user/restart', { method: 'POST' }),
 
+  // Conversation practice (spoken role-play with an AI partner)
+  conversationStatus: () => request('/conversation/status'),
+  // form: lessonId, history (JSON), and either file (recording) or text
+  conversationTurn: (form) => upload('/conversation/turn', form),
+
   // Lessons
   listLessons: () => request('/lessons'),
   getLesson: (id) => request(`/lessons/${id}`),

@@ -277,6 +277,26 @@
         ]
       },
       {
+        "type": "conversation",
+        "calloutTitle": "Sasa jaribu — zungumza na Maria",
+        "intro": "Mazungumzo halisi, kwa sauti. Maria atajibu chochote utakachosema — tumia sentensi zilizo hapa chini ukikwama.",
+        "scenario": {
+          "setting": "Ni siku ya kwanza darasani. Maria, mwanafunzi mwenzako, anakusalimia.",
+          "goal": "Msalimie, mwambie jina lako na unakotoka, kisha muulize yeye pia.",
+          "role": "Maria, a friendly classmate from Nairobi, Kenya, on the first day of an English class. You want to learn the other student's name and where they are from, and you are happy to say that you are a student from Nairobi when asked.",
+          "opening": "Hello! What is your name?",
+          "openingTranslation": "Habari! Jina lako ni nani?",
+          "phrases": [
+            { "swahili": "My name is …", "english": "Jina langu ni …" },
+            { "swahili": "I am from …", "english": "Ninatoka …" },
+            { "swahili": "Where are you from?", "english": "Unatoka wapi?" },
+            { "swahili": "And you?", "english": "Na wewe?" },
+            { "swahili": "I am a student.", "english": "Mimi ni mwanafunzi." },
+            { "swahili": "Thank you. Goodbye!", "english": "Asante. Kwa heri!" }
+          ]
+        }
+      },
+      {
         "type": "quickCheck",
         "calloutTitle": "Jipime Haraka",
         "questions": [

@@ -67,6 +67,11 @@ builder.Services.AddHostedService<ReminderService>();
 // Optional — disabled unless Speech:Enabled is true and the sidecar is running.
 builder.Services.AddSingleton<SpeechService>();
 
+// Spoken role-play with an AI partner (the "conversation" lesson block): Whisper
+// hears the learner, Claude answers in character, TTS speaks the answer.
+// Optional — disabled unless Conversation:Enabled is true and an API key is set.
+builder.Services.AddSingleton<ConversationService>();
+
 builder.Services.AddControllers()
     .AddJsonOptions(o => o.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase);
 
