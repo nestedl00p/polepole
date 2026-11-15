@@ -292,6 +292,13 @@ using (var scope = app.Services.CreateScope())
     // registering never checks this list. Sign-up does not verify email
     // addresses, so the order matters: register the account first, then name
     // it here. See deploy/DEPLOY.md, "Backoffice".
+    // The backoffice's conversation switch, if an admin has ever flipped it.
+    var conversationSwitch = db.ServiceSettings.AsNoTracking()
+        .FirstOrDefault(s => s.Key == SwahiliCourse.Api.Models.ServiceSettingKeys.ConversationEnabled);
+    if (conversationSwitch is not null)
+        app.Services.GetRequiredService<ConversationService>()
+            .SetAdminSwitch(string.Equals(conversationSwitch.Value, "true", StringComparison.OrdinalIgnoreCase));
+
     AccountAdmin.PromoteConfiguredAdmins(
         db, app.Configuration["Admin:Emails"],
         app.Services.GetRequiredService<ILoggerFactory>().CreateLogger("Admin.Bootstrap"));

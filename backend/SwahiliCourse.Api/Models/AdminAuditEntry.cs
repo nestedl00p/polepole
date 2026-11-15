@@ -39,4 +39,6 @@ public static class AdminActions
     public const string UserExport = "user.export";
     public const string TtsCacheClear = "system.tts-cache.clear";
     public const string BootstrapAdmin = "system.bootstrap-admin";
+    public const string ConversationOn = "system.conversation.on";
+    public const string ConversationOff = "system.conversation.off";
 }

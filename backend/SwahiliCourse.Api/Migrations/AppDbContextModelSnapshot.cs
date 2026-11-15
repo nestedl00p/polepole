@@ -192,6 +192,23 @@ namespace SwahiliCourse.Api.Migrations
                     b.ToTable("PracticeDays");
                 });
 
+            modelBuilder.Entity("SwahiliCourse.Api.Models.ServiceSetting", b =>
+                {
+                    b.Property<string>("Key")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Key");
+
+                    b.ToTable("ServiceSettings");
+                });
+
             modelBuilder.Entity("SwahiliCourse.Api.Models.User", b =>
                 {
                     b.Property<int>("Id")

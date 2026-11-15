@@ -128,6 +128,21 @@
 .bo-action > span { color: var(--muted); font-size: 0.86rem; }
 .bo-btn-danger { background: var(--danger); color: #fff; }
 .bo-btn-danger:hover { background: #b83a25; }
+/* On/off switch (System → Conversation practice) */
+.bo-switch-row { display: flex; align-items: center; gap: 14px; padding-bottom: 12px; margin-bottom: 4px; border-bottom: 1px solid #eeeeea; }
+.bo-switch-row > div { display: flex; flex-direction: column; gap: 2px; }
+.bo-switch-row > div > span { color: var(--muted); font-size: 0.86rem; }
+.bo-switch {
+  flex: none; width: 46px; height: 26px; border-radius: 999px; border: none; padding: 3px;
+  background: #c3c8cc; cursor: pointer; transition: background .15s;
+}
+.bo-switch > span { display: block; width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform .15s; }
+.bo-switch.on { background: var(--success); }
+.bo-switch.on > span { transform: translateX(20px); }
+.bo-switch:disabled { opacity: 0.6; cursor: default; }
+.bo-switch:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+.bo-switch-error { color: #a3301e; font-size: 0.88rem; margin: 6px 0; }
+
 .bo-btn-danger-ghost { background: transparent; color: #a3301e; border: 1.5px solid var(--danger); }
 .bo-btn-danger-ghost:hover { background: #fdecea; }
 

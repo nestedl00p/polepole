@@ -12,6 +12,25 @@ export default function System() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
+  const [switching, setSwitching] = useState(false);
+  const [switchError, setSwitchError] = useState('');
+
+  const setConversation = async (enabled) => {
+    setSwitching(true); setSwitchError('');
+    try {
+      const r = await api.admin.setConversation(enabled);
+      setNotice(!enabled
+        ? 'Conversation practice is off.'
+        : r.live
+          ? 'Conversation practice is on.'
+          : 'Conversation practice is switched on, but it stays unavailable until an API key is set.');
+      await state.reload();
+    } catch (e) {
+      setSwitchError(e.message || 'That did not work.');
+    } finally {
+      setSwitching(false);
+    }
+  };
 
   const runPing = async () => {
     setPinging(true); setPing(null);
@@ -112,6 +131,39 @@ export default function System() {
                       : s.speech.enabled ? 'A live request to its health check.' : 'Enable Speech:Enabled to use it.'}
                   </span>
                 </div>
+              </Section>
+
+              <Section title="Conversation practice">
+                <div className="bo-switch-row">
+                  <button
+                    type="button" role="switch" aria-checked={s.conversation.switchedOn}
+                    aria-label="Conversation practice"
+                    className={`bo-switch ${s.conversation.switchedOn ? 'on' : ''}`}
+                    disabled={switching}
+                    onClick={() => setConversation(!s.conversation.switchedOn)}
+                  ><span /></button>
+                  <div>
+                    <strong>{s.conversation.switchedOn ? 'On' : 'Off'}</strong>
+                    <span>
+                      {s.conversation.switchedOn
+                        ? 'Learners can talk to the AI partner in lessons that have a role-play.'
+                        : 'Lessons show the role-play as not available.'}
+                      {' '}Takes effect immediately.
+                    </span>
+                  </div>
+                </div>
+                {switchError && <div className="bo-switch-error" role="alert">{switchError}</div>}
+                <Facts rows={[
+                  ['Status', s.conversation.live
+                    ? <Badge tone="good">Live</Badge>
+                    : s.conversation.switchedOn
+                      ? <Badge tone="warn">On, but no API key — not available</Badge>
+                      : <Badge tone="neutral">Off</Badge>],
+                  ['API key', onOff(s.conversation.apiKeySet, 'Set', 'Not set')],
+                  ['Switch set by', s.conversation.switchSource === 'admin' ? 'An admin, here' : 'Configuration (Conversation:Enabled)'],
+                  ['Model', <code className="bo-wrap">{s.conversation.model}</code>],
+                  ['Limits', `${fmtNum(s.conversation.dailyTurnLimit)} turns per learner per day · ${s.conversation.maxTurns} turns per role-play`],
+                ]} />
               </Section>
 
               <Section title="Reminders">
