@@ -385,7 +385,8 @@ Locally: `dotnet user-secrets set Conversation:ApiKey "<key>"` and
   account gets `Conversation:DailyTurnLimit` turns a day (default 40, counted
   in memory, so a restart resets it), and one role-play is
   `Conversation:MaxTurns` learner turns (default 8). `Conversation:Model`
-  defaults to `claude-haiku-5-5`.
+  defaults to `claude-sonnet-5-5`; `claude-haiku-5-5` is about 20x cheaper and
+  a little faster, but made Swahili agreement mistakes when tested.
 - **Redeploy the sidecar too** (`bash deploy/azure-whisper-deploy.sh`). The
   backend now sends the scenario's vocabulary with each recording so Whisper
   spells expected words the expected way; an older sidecar ignores it and

@@ -65,7 +65,7 @@ public class ConversationService
     // On, and able to answer: the switch alone is not enough without a key.
     public bool IsConfigured => SwitchedOn && ApiKeySet;
 
-    public string Model => _config["Conversation:Model"] is { Length: > 0 } m ? m.Trim() : "claude-haiku-5-5";
+    public string Model => _config["Conversation:Model"] is { Length: > 0 } m ? m.Trim() : "claude-sonnet-5-5";
 
     // Learner turns in one role-play. Short on purpose: a beginner runs out of
     // things to say, and it bounds what one conversation can cost.
@@ -139,11 +139,17 @@ public class ConversationService
             var response = await _client.Value.Messages.Create(new MessageCreateParams
             {
                 Model = Model,
-                MaxTokens = 1024,
+                // Room for the reply plus whatever brief thinking the model does first.
+                MaxTokens = 4096,
                 System = SystemPrompt(course, lesson, knownWords, scenario),
-                // The reply is a sentence or two that a learner is waiting on:
-                // spend the time on answering, not on deliberating.
-                Thinking = new ThinkingConfigDisabled(),
+                // The reply is a sentence or two that a learner is waiting on, so
+                // effort is low. Thinking is left at the model's default: Sonnet
+                // 5.5 rejects a request that disables it, and at low effort it
+                // thinks briefly if at all. Haiku does accept "disabled", and
+                // there it saves a little time.
+                Thinking = Model.StartsWith("claude-haiku", StringComparison.OrdinalIgnoreCase)
+                    ? (ThinkingConfigParam?)new ThinkingConfigDisabled()
+                    : null,
                 OutputConfig = new OutputConfig
                 {
                     Effort = Effort.Low,
