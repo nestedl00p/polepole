@@ -4,16 +4,24 @@ using System.Text.Json;
 
 namespace SwahiliCourse.Api.Services;
 
-// Speech-to-text pronunciation scoring. Forwards recorded learner audio to a
-// self-hosted Whisper sidecar (faster-whisper) for transcription, then scores
-// the transcription against the target phrase:
+// Speech-to-text pronunciation scoring. Sends recorded learner audio to Whisper
+// for transcription, then scores the transcription against the target phrase:
 //   • word match (ordered)  — did they say the right words, in order?
 //   • completeness          — how many target words were spoken at all?
 //   • confidence            — Whisper's average per-word probability
 //   • words-per-minute      — rough fluency from word timestamps
 //
-// The Whisper service is optional/self-hosted. When it isn't reachable or
-// Speech:Enabled is false, IsConfigured is false and the frontend hides the
+// Whisper runs in one of two places, chosen by Speech:Provider:
+//   • Sidecar (default) — the self-hosted faster-whisper service in
+//     whisper-service/. No third party, but ~5 s per clip on one vCPU and a
+//     ~25 s cold start when it has scaled to zero.
+//   • Groq — Groq's hosted Whisper large-v3 (OpenAI-compatible API). Measured
+//     ~0.25 s per clip and noticeably better on Swahili phrases, but learner
+//     audio leaves our infrastructure and it needs Speech:Groq:ApiKey. If a
+//     Groq call fails, the sidecar is tried as a fallback.
+//
+// Speech is optional. When Speech:Enabled is false (or the chosen provider is
+// missing its settings) IsConfigured is false and the frontend hides the
 // speak-and-check UI (still offering the 🔊 model pronunciation).
 public class SpeechService
 {
@@ -27,9 +35,48 @@ public class SpeechService
     }
 
     public bool IsConfigured =>
-        _config.GetValue("Speech:Enabled", false) && !string.IsNullOrWhiteSpace(WhisperUrl);
+        _config.GetValue("Speech:Enabled", false)
+        && (UsesGroq ? GroqApiKey is not null : !string.IsNullOrWhiteSpace(WhisperUrl));
+
+    // "Sidecar" or "Groq" — what is actually in use, for the backoffice.
+    public string Provider => UsesGroq ? "Groq" : "Sidecar";
+
+    private bool UsesGroq =>
+        string.Equals(_config["Speech:Provider"]?.Trim(), "Groq", StringComparison.OrdinalIgnoreCase);
 
     private string WhisperUrl => (_config["Speech:WhisperUrl"] ?? "http://localhost:8081").TrimEnd('/');
+
+    // --- Groq (hosted Whisper) settings ---
+
+    // Speech:Groq:ApiKey, or the conventional GROQ_API_KEY environment variable.
+    private string? GroqApiKey
+    {
+        get
+        {
+            var key = _config["Speech:Groq:ApiKey"];
+            if (string.IsNullOrWhiteSpace(key)) key = Environment.GetEnvironmentVariable("GROQ_API_KEY");
+            return string.IsNullOrWhiteSpace(key) ? null : key.Trim();
+        }
+    }
+
+    public bool GroqApiKeySet => GroqApiKey is not null;
+
+    private string GroqBaseUrl =>
+        (_config["Speech:Groq:BaseUrl"] is { Length: > 0 } u ? u : "https://api.groq.com/openai/v1").TrimEnd('/');
+
+    // whisper-large-v3 by default. whisper-large-v3-turbo is cheaper and scored
+    // the same on our Swahili test clips, but it reports no_speech_prob as 0 for
+    // everything, so the silence filter in ParseVerboseJson cannot work with it.
+    public string GroqModel =>
+        _config["Speech:Groq:Model"] is { Length: > 0 } m ? m.Trim() : "whisper-large-v3";
+
+    // A hosted call that has not answered in this long is treated as failed,
+    // which leaves time to try the sidecar before the learner gives up.
+    private TimeSpan GroqTimeout =>
+        TimeSpan.FromSeconds(Math.Clamp(_config.GetValue("Speech:Groq:TimeoutSeconds", 20), 2, 120));
+
+    // Whether a failed Groq call may be retried on the self-hosted sidecar.
+    private bool FallbackToSidecar => _config.GetValue("Speech:Groq:FallbackToSidecar", true);
 
     // How long one transcription may take. Generous on purpose: a sidecar that
     // scales to zero needs ~25 s to boot and load the model before it can even
@@ -45,7 +92,8 @@ public class SpeechService
     // phrase, not after they have recorded. Throttled; never throws.
     public void WarmUp()
     {
-        if (!IsConfigured) return;
+        // A hosted provider has no cold start, so there is nothing to wake.
+        if (!IsConfigured || UsesGroq) return;
 
         var now = Environment.TickCount64;
         var last = Interlocked.Read(ref _lastWarmUpTicks);
@@ -67,8 +115,10 @@ public class SpeechService
         });
     }
 
-    // Host of the sidecar, without path or credentials — safe to show an admin.
-    public string? Host => Uri.TryCreate(WhisperUrl, UriKind.Absolute, out var uri) ? uri.Authority : null;
+    // Host of the speech provider in use, without path or credentials — safe
+    // to show an admin.
+    public string? Host =>
+        Uri.TryCreate(UsesGroq ? GroqBaseUrl : WhisperUrl, UriKind.Absolute, out var uri) ? uri.Authority : null;
 
     // A live check for the backoffice. Short timeout on purpose: a sidecar
     // that has scaled to zero will miss it, and the caller says so rather
@@ -82,6 +132,22 @@ public class SpeechService
         {
             var client = _http.CreateClient();
             client.Timeout = TimeSpan.FromSeconds(6);
+
+            if (UsesGroq)
+            {
+                // Listing models costs nothing and proves both reachability and
+                // that the API key is accepted.
+                using var req = new HttpRequestMessage(HttpMethod.Get, $"{GroqBaseUrl}/models");
+                req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", GroqApiKey);
+                using var groq = await client.SendAsync(req, ct);
+                var groqMs = Environment.TickCount64 - started;
+                return groq.IsSuccessStatusCode
+                    ? (true, $"Groq accepted the API key (model {GroqModel}).", groqMs)
+                    : ((int)groq.StatusCode is 401 or 403)
+                        ? (false, "Groq rejected the API key.", groqMs)
+                        : (false, $"Groq answered {(int)groq.StatusCode}.", groqMs);
+            }
+
             using var resp = await client.GetAsync($"{WhisperUrl}/health", ct);
             var ms = Environment.TickCount64 - started;
             return resp.IsSuccessStatusCode
@@ -91,7 +157,9 @@ public class SpeechService
         catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException)
         {
             return (false,
-                "No answer within 6 seconds. If the sidecar scales to zero this is normal when idle — it is waking now; try again in half a minute.",
+                UsesGroq
+                    ? "No answer from Groq within 6 seconds."
+                    : "No answer within 6 seconds. If the sidecar scales to zero this is normal when idle — it is waking now; try again in half a minute.",
                 Environment.TickCount64 - started);
         }
     }
@@ -111,8 +179,8 @@ public class SpeechService
         List<WordScore> Words,
         string ReferenceText);
 
-    // Transcribes the audio via the Whisper sidecar and scores it against referenceText.
-    // Returns null if speech scoring isn't configured or the sidecar can't be reached.
+    // Transcribes the audio with the configured provider and scores it against referenceText.
+    // Returns null if speech scoring isn't configured or no provider could be reached.
     public async Task<AssessResult?> AssessAsync(
         Stream audio, string? contentType, string? fileName, string referenceText,
         Models.Course? course = null, CancellationToken ct = default)
@@ -155,22 +223,136 @@ public class SpeechService
         return t?.Text;
     }
 
-    private sealed record Transcription(string Text, double? Duration, double? AvgProbability);
+    internal sealed record Transcription(string Text, double? Duration, double? AvgProbability);
 
+    // Transcribes with the configured provider. The audio is buffered first so
+    // a failed hosted call can be retried on the sidecar with the same bytes.
     private async Task<Transcription?> TranscribeAsync(
         Stream audio, string? contentType, string? fileName, string language, CancellationToken ct,
         string? prompt = null)
+    {
+        byte[] bytes;
+        using (var buffer = new MemoryStream())
+        {
+            await audio.CopyToAsync(buffer, ct);
+            bytes = buffer.ToArray();
+        }
+
+        if (!UsesGroq)
+            return await TranscribeViaSidecarAsync(bytes, contentType, fileName, language, prompt, ct);
+
+        var hosted = await TranscribeViaGroqAsync(bytes, contentType, fileName, language, prompt, ct);
+        if (hosted is not null || !FallbackToSidecar || ct.IsCancellationRequested) return hosted;
+
+        _log.LogWarning("Groq transcription failed; falling back to the Whisper sidecar.");
+        return await TranscribeViaSidecarAsync(bytes, contentType, fileName, language, prompt, ct);
+    }
+
+    private static MultipartFormDataContent AudioForm(byte[] bytes, string? contentType, string? fileName)
+    {
+        var form = new MultipartFormDataContent();
+        var audioContent = new ByteArrayContent(bytes);
+        audioContent.Headers.ContentType =
+            MediaTypeHeaderValue.TryParse(contentType, out var parsed) ? parsed : new MediaTypeHeaderValue("application/octet-stream");
+        // The extension matters: both providers pick the decoder from it.
+        form.Add(audioContent, "file", string.IsNullOrWhiteSpace(fileName) ? "audio.webm" : fileName);
+        return form;
+    }
+
+    // Groq's hosted Whisper, via its OpenAI-compatible transcription endpoint.
+    private async Task<Transcription?> TranscribeViaGroqAsync(
+        byte[] bytes, string? contentType, string? fileName, string language, string? prompt, CancellationToken ct)
+    {
+        try
+        {
+            var client = _http.CreateClient();
+            client.Timeout = GroqTimeout;
+
+            using var form = AudioForm(bytes, contentType, fileName);
+            form.Add(new StringContent(GroqModel), "model");
+            form.Add(new StringContent(language), "language");
+            // verbose_json carries the duration and per-segment confidence.
+            form.Add(new StringContent("verbose_json"), "response_format");
+            form.Add(new StringContent("0"), "temperature");
+            if (!string.IsNullOrWhiteSpace(prompt))
+                form.Add(new StringContent(prompt), "prompt");
+
+            using var req = new HttpRequestMessage(HttpMethod.Post, $"{GroqBaseUrl}/audio/transcriptions")
+            {
+                Content = form,
+            };
+            req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", GroqApiKey);
+
+            using var resp = await client.SendAsync(req, ct);
+            if (!resp.IsSuccessStatusCode)
+            {
+                _log.LogWarning("Groq transcribe returned {Status}: {Body}",
+                    (int)resp.StatusCode, await resp.Content.ReadAsStringAsync(ct));
+                return null;
+            }
+
+            using var doc = JsonDocument.Parse(await resp.Content.ReadAsStringAsync(ct));
+            return ParseVerboseJson(doc.RootElement);
+        }
+        catch (Exception ex)
+        {
+            _log.LogWarning(ex, "Groq transcription at {Url} failed.", GroqBaseUrl);
+            return null;
+        }
+    }
+
+    // Reads an OpenAI-style verbose_json transcription. Unlike the sidecar there
+    // is no voice-activity filter in front of the model, and Whisper invents
+    // text for silence ("Kwa hivyo." is its Swahili favourite) with a perfectly
+    // confident log-probability — so the only usable signal is the model's own
+    // no_speech_prob. Measured on whisper-large-v3: real speech 0.00–0.04,
+    // digital silence 0.70, a steady tone 0.96. Faint room noise came in at
+    // 0.32 and still gets through; that is the price of not rejecting quiet
+    // speakers. Confidence comes from the kept segments' average log-probability.
+    private const double NoSpeechThreshold = 0.5;
+
+    internal static Transcription ParseVerboseJson(JsonElement root)
+    {
+        double? duration = root.TryGetProperty("duration", out var d) && d.ValueKind == JsonValueKind.Number
+            ? d.GetDouble() : null;
+
+        if (!root.TryGetProperty("segments", out var segs) || segs.ValueKind != JsonValueKind.Array)
+        {
+            var whole = root.TryGetProperty("text", out var t) ? (t.GetString() ?? "") : "";
+            return new Transcription(whole.Trim(), duration, null);
+        }
+
+        var text = new StringBuilder();
+        double logProbSum = 0; int kept = 0;
+        foreach (var seg in segs.EnumerateArray())
+        {
+            double? avgLogProb = seg.TryGetProperty("avg_logprob", out var lp) && lp.ValueKind == JsonValueKind.Number
+                ? lp.GetDouble() : null;
+            double noSpeech = seg.TryGetProperty("no_speech_prob", out var ns) && ns.ValueKind == JsonValueKind.Number
+                ? ns.GetDouble() : 0;
+            if (noSpeech >= NoSpeechThreshold) continue;
+
+            var piece = seg.TryGetProperty("text", out var st) ? (st.GetString() ?? "").Trim() : "";
+            if (piece.Length == 0) continue;
+            if (text.Length > 0) text.Append(' ');
+            text.Append(piece);
+            if (avgLogProb is { } v) { logProbSum += v; kept++; }
+        }
+
+        double? avgProb = kept > 0 ? Math.Clamp(Math.Exp(logProbSum / kept), 0, 1) : null;
+        return new Transcription(text.ToString(), duration, avgProb);
+    }
+
+    // The self-hosted faster-whisper sidecar (whisper-service/).
+    private async Task<Transcription?> TranscribeViaSidecarAsync(
+        byte[] bytes, string? contentType, string? fileName, string language, string? prompt, CancellationToken ct)
     {
         try
         {
             var client = _http.CreateClient();
             client.Timeout = Timeout;
 
-            using var form = new MultipartFormDataContent();
-            var audioContent = new StreamContent(audio);
-            audioContent.Headers.ContentType =
-                MediaTypeHeaderValue.Parse(string.IsNullOrWhiteSpace(contentType) ? "application/octet-stream" : contentType);
-            form.Add(audioContent, "file", string.IsNullOrWhiteSpace(fileName) ? "audio.webm" : fileName);
+            using var form = AudioForm(bytes, contentType, fileName);
             if (!string.IsNullOrWhiteSpace(prompt))
                 form.Add(new StringContent(prompt), "prompt");
 

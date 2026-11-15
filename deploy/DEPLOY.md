@@ -322,6 +322,40 @@ Turn it off again: set `Speech__Enabled=false` on the web app; delete
 `WHISPER_API_KEY` on it, put it behind HTTPS, and set the same three
 `Speech__*` settings on the web app.
 
+### Hosted Whisper instead (Groq)
+
+The sidecar is slow on one vCPU: about 5–7 s per recording, plus a ~25 s cold
+start after it has scaled to zero. `Speech__Provider=Groq` sends recordings to
+Groq's hosted Whisper large-v3 instead. Measured on twelve Swahili test clips:
+
+| | Time per clip | Scored 100 |
+|---|---|---|
+| Sidecar (`small`, 1 vCPU) | 5–7 s | 8 of 12 |
+| Groq `whisper-large-v3` | ~0.25 s | 11 of 12 |
+
+What it costs you: an API key from <https://console.groq.com>, a per-use bill
+(about US$0.11 per audio hour, each request billed as at least 10 s — roughly
+30 cents per 1,000 recordings; check Groq's pricing page), and **learner voice
+recordings leave your infrastructure** — read Groq's data terms first.
+
+Turn it on (the key is yours to set; nothing in the repo or the deploy scripts
+writes it):
+
+```bash
+az webapp config appsettings set -n polepole-app-a82a5661 -g polepole-rg --settings "Speech__Enabled=true" "Speech__Provider=Groq" "Speech__Groq__ApiKey=<your-groq-key>" -o none
+```
+
+- **Fallback.** If a Groq call fails (outage, rate limit, bad key) the backend
+  retries on the sidecar at `Speech__WhisperUrl`, so leave the sidecar deployed
+  — scaled to zero it costs next to nothing. `Speech__Groq__FallbackToSidecar=false`
+  turns that off; without a sidecar the drill simply degrades to listen-only.
+- **Model.** Keep `whisper-large-v3`. `whisper-large-v3-turbo` is cheaper and
+  scored the same on speech, but it reports no "this is not speech" signal, so
+  a silent recording comes back as invented words instead of empty.
+- **Check it.** The backoffice System page shows the provider and has a
+  "Check Groq now" button that verifies the key is accepted.
+- **Back to the sidecar:** `Speech__Provider=Sidecar`.
+
 ---
 
 ## Conversation practice (spoken role-play)

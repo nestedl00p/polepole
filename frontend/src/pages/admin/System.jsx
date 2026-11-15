@@ -117,18 +117,23 @@ export default function System() {
               <Section title="Pronunciation scoring (Whisper)">
                 <Facts rows={[
                   ['Status', onOff(s.speech.enabled, 'Enabled', 'Disabled')],
-                  ['Sidecar', s.speech.host || '—'],
-                  ['Shared key', onOff(s.speech.apiKeySet, 'Set', 'Not set')],
+                  ['Provider', s.speech.provider === 'Groq'
+                    ? `Groq (hosted) · ${s.speech.model}`
+                    : 'Sidecar (self-hosted)'],
+                  [s.speech.provider === 'Groq' ? 'Endpoint' : 'Sidecar', s.speech.host || '—'],
+                  [s.speech.provider === 'Groq' ? 'API key' : 'Shared key', onOff(s.speech.apiKeySet, 'Set', 'Not set')],
                   ['Recordings kept', `${fmtNum(s.voice.files)} · ${fmtBytes(s.voice.bytes)}`],
                 ]} />
                 <div className="bo-action">
                   <button className="btn btn-sm btn-ghost" onClick={runPing} disabled={pinging || !s.speech.enabled}>
-                    {pinging ? 'Checking…' : 'Check sidecar now'}
+                    {pinging ? 'Checking…' : s.speech.provider === 'Groq' ? 'Check Groq now' : 'Check sidecar now'}
                   </button>
                   <span>
                     {ping
                       ? <><Badge tone={ping.reachable ? 'good' : 'bad'}>{ping.reachable ? 'Reachable' : 'No answer'}</Badge> {ping.detail} ({ping.milliseconds} ms)</>
-                      : s.speech.enabled ? 'A live request to its health check.' : 'Enable Speech:Enabled to use it.'}
+                      : !s.speech.enabled ? 'Enable Speech:Enabled to use it.'
+                        : s.speech.provider === 'Groq' ? 'A live request that checks the API key is accepted.'
+                        : 'A live request to its health check.'}
                   </span>
                 </div>
               </Section>
