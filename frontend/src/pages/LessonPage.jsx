@@ -52,7 +52,7 @@ export default function LessonPage() {
         </div>
       </div>
 
-      {lesson.blocks.map((b, i) => <ContentBlock key={i} block={b} />)}
+      {lesson.blocks.map((b, i) => <ContentBlock key={i} block={b} lessonId={lesson.id} />)}
 
       {lesson.vocabulary?.length > 0 && (
         <div className="block">

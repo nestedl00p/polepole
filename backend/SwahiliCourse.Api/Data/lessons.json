@@ -1348,6 +1348,27 @@
         ]
       },
       {
+        "type": "conversation",
+        "calloutTitle": "Now you try — talk to Juma",
+        "intro": "A real back-and-forth, out loud. Juma answers whatever you say, so there is no script — use the phrases below if you get stuck.",
+        "scenario": {
+          "setting": "You are at a café in Arusha, Tanzania. Juma, a student at the next table, turns to say hello.",
+          "goal": "Greet him, tell him your name and where you are from, and ask him the same.",
+          "role": "Juma, a friendly university student who was born and lives in Arusha, Tanzania. You are curious about the visitor: their name, where they come from, and whether they like Swahili. You are happy to say your own name and where you are from when asked.",
+          "opening": "Hujambo! Karibu.",
+          "openingTranslation": "Hello! Welcome.",
+          "phrases": [
+            { "swahili": "Sijambo.", "english": "I'm well." },
+            { "swahili": "Jina langu ni …", "english": "My name is …" },
+            { "swahili": "Ninatoka …", "english": "I'm from …" },
+            { "swahili": "Unatoka wapi?", "english": "Where are you from?" },
+            { "swahili": "Wewe je?", "english": "And you?" },
+            { "swahili": "Ninapenda Kiswahili.", "english": "I like Swahili." },
+            { "swahili": "Asante. Kwa heri!", "english": "Thank you. Goodbye!" }
+          ]
+        }
+      },
+      {
         "type": "quickCheck",
         "calloutTitle": "Quick check",
         "questions": [

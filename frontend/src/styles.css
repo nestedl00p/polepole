@@ -737,6 +737,56 @@ ul.sw-list li { margin-bottom: 5px; }
 .pd-meta { color: var(--muted); font-size: 0.85rem; margin-top: 6px; display: flex; gap: 6px; flex-wrap: wrap; }
 .pd-actions { display: flex; gap: 10px; margin-top: 12px; }
 
+/* ---- Conversation practice (spoken role-play) ---- */
+.cv-scene {
+  background: var(--cream); border: 1px solid var(--line); border-radius: 12px;
+  padding: 14px 18px; margin: 6px 0 16px; color: var(--ink);
+}
+.cv-goal { margin-top: 6px; color: var(--muted); font-size: 0.95rem; }
+.cv-goal strong { color: var(--navy); }
+.cv-thread {
+  display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;
+  max-height: 420px; overflow-y: auto; padding: 4px 2px;
+}
+.cv-row { display: flex; flex-direction: column; max-width: 85%; }
+.cv-row.partner { align-self: flex-start; align-items: flex-start; }
+.cv-row.learner { align-self: flex-end; align-items: flex-end; }
+.cv-bubble { padding: 10px 14px; border-radius: 16px; background: var(--light); color: var(--navy); }
+.cv-row.partner .cv-bubble { border-bottom-left-radius: 4px; }
+.cv-row.learner .cv-bubble { background: var(--teal); color: #fff; border-bottom-right-radius: 4px; }
+.cv-line { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.05rem; }
+.cv-tr { color: var(--muted); font-size: 0.88rem; margin-top: 3px; }
+.cv-typing { color: var(--muted); font-weight: 800; letter-spacing: 3px; animation: cv-blink 1.2s ease-in-out infinite; }
+@keyframes cv-blink { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+.cv-feedback {
+  margin-top: 5px; padding: 6px 10px; border-radius: 10px; font-size: 0.88rem;
+  background: #fff7e2; color: #7a5200; border: 1px solid #f1dca6; text-align: left;
+}
+.cv-redo, .cv-toggle {
+  background: none; border: none; padding: 0; margin-top: 4px; cursor: pointer;
+  color: var(--teal-dark); font-size: 0.82rem; text-decoration: underline;
+}
+.cv-notice { margin-bottom: 10px; }
+.cv-type { display: flex; gap: 8px; flex: 1; min-width: 220px; }
+.cv-type input {
+  flex: 1; min-width: 0; padding: 9px 12px; border: 1.5px solid var(--line);
+  border-radius: 10px; font: inherit; font-size: 0.95rem;
+}
+.cv-type input:focus { outline: none; border-color: var(--teal); }
+.cv-hint { color: var(--muted); font-size: 0.85rem; margin-top: 8px; }
+.cv-done {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  background: #e4f4ea; color: var(--success); font-weight: 700;
+  border-radius: 12px; padding: 12px 16px;
+}
+.cv-help { margin-top: 14px; padding-top: 10px; border-top: 1px dashed var(--line); }
+.cv-phrases { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.cv-phrase {
+  background: #fff; border: 1px solid var(--line); border-radius: 999px;
+  padding: 4px 12px; font-size: 0.88rem; color: var(--navy);
+}
+.cv-phrase i { color: var(--muted); font-style: normal; }
+
 /* ---------- Dose ya leo (the daily practice loop) ---------- */
 /* The dashboard hero: the one primary action on the page. */
 .dose-hero {

@@ -56,6 +56,30 @@ public class ContentBlock
     // quickCheck config — in-lesson practice questions with instant feedback.
     // Unlike Quiz, answers are sent to the client: this is ungraded practice.
     public List<CheckQuestion>? Questions { get; set; }
+
+    // conversation config — a spoken role-play with an AI partner. The client
+    // only names the lesson; the server reads the scenario from the catalog, so
+    // what the model is told can't be rewritten from the browser.
+    public ConversationScenario? Scenario { get; set; }
+}
+
+// A role-play the learner speaks through, one turn at a time. Setting and
+// Goal are shown to the learner (in the language the lessons are written in);
+// Role is only ever read by the model.
+public class ConversationScenario
+{
+    public string Setting { get; set; } = string.Empty;   // "You have just met Juma at a café in Arusha."
+    public string Goal { get; set; } = string.Empty;      // "Greet him, say your name and where you are from."
+    public string Role { get; set; } = string.Empty;      // "Juma, a friendly student from Arusha…" (English, for the model)
+
+    // The partner's first line, in the language being learned, and its translation.
+    public string Opening { get; set; } = string.Empty;
+    public string OpeningTranslation { get; set; } = string.Empty;
+
+    // Phrases the learner can lean on. Shown as hints, and passed to Whisper
+    // as the words it should expect to hear. Same field convention as the
+    // drill: Swahili = the language being learned, English = its translation.
+    public List<PronunciationPrompt> Phrases { get; set; } = new();
 }
 
 public class CheckQuestion

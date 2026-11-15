@@ -78,7 +78,9 @@ public class TtsService
 
     // Returns synthesized audio for the given text, or null if TTS isn't configured / fails.
     // The course determines which language/voice the text is spoken in.
-    public async Task<TtsResult?> SynthesizeAsync(string text, Models.Course? course = null, CancellationToken ct = default)
+    // cache:false is for one-off sentences (conversation replies) that will never
+    // be asked for again — synthesized, returned, and not kept on disk.
+    public async Task<TtsResult?> SynthesizeAsync(string text, Models.Course? course = null, CancellationToken ct = default, bool cache = true)
     {
         if (!IsConfigured) return null;
 
@@ -115,7 +117,7 @@ public class TtsService
 
             if (bytes is { Length: > 0 })
             {
-                await File.WriteAllBytesAsync(cachePath, bytes, ct);
+                if (cache) await File.WriteAllBytesAsync(cachePath, bytes, ct);
                 return new TtsResult(bytes, contentType, ext);
             }
             return null;

@@ -141,9 +141,25 @@ public class SpeechService
         return new AssessResult(transcription.Text, score, completeness, confidence, wpm, words, referenceText.Trim());
     }
 
+    // Plain transcription for free speech (conversation practice), where there
+    // is no reference phrase to score against. `vocabularyHint` is passed to
+    // Whisper as its initial prompt so expected words come back spelled the
+    // expected way. Returns null when speech isn't configured or the sidecar
+    // can't be reached.
+    public async Task<string?> TranscribeFreeAsync(
+        Stream audio, string? contentType, string? fileName,
+        Models.Course? course = null, string? vocabularyHint = null, CancellationToken ct = default)
+    {
+        if (!IsConfigured) return null;
+        var t = await TranscribeAsync(audio, contentType, fileName, LanguageFor(course), ct, vocabularyHint);
+        return t?.Text;
+    }
+
     private sealed record Transcription(string Text, double? Duration, double? AvgProbability);
 
-    private async Task<Transcription?> TranscribeAsync(Stream audio, string? contentType, string? fileName, string language, CancellationToken ct)
+    private async Task<Transcription?> TranscribeAsync(
+        Stream audio, string? contentType, string? fileName, string language, CancellationToken ct,
+        string? prompt = null)
     {
         try
         {
@@ -155,6 +171,8 @@ public class SpeechService
             audioContent.Headers.ContentType =
                 MediaTypeHeaderValue.Parse(string.IsNullOrWhiteSpace(contentType) ? "application/octet-stream" : contentType);
             form.Add(audioContent, "file", string.IsNullOrWhiteSpace(fileName) ? "audio.webm" : fileName);
+            if (!string.IsNullOrWhiteSpace(prompt))
+                form.Add(new StringContent(prompt), "prompt");
 
             using var req = new HttpRequestMessage(HttpMethod.Post, $"{WhisperUrl}/transcribe?lang={language}")
             {

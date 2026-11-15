@@ -324,6 +324,39 @@ Turn it off again: set `Speech__Enabled=false` on the web app; delete
 
 ---
 
+## Conversation practice (spoken role-play)
+
+The `conversation` lesson block lets a learner talk with an AI partner: Whisper
+transcribes what they say, Claude answers in character (and adds a short
+correction when one is needed), and the course's TTS voice reads the answer.
+It is off until the web app has an Anthropic API key:
+
+```bash
+az webapp config appsettings set -g polepole-rg -n <app> --settings Conversation__Enabled=true Conversation__ApiKey="<anthropic-api-key>"
+```
+
+Locally: `dotnet user-secrets set Conversation:ApiKey "<key>"` and
+`dotnet user-secrets set Conversation:Enabled true` in `backend/SwahiliCourse.Api`.
+
+- **Each piece is optional.** Without Whisper the learner types instead of
+  speaking; without cloud TTS the device voice reads the reply. Only the API
+  key is required.
+- **Cost control.** `/api/conversation/turn` needs a signed-in account, each
+  account gets `Conversation:DailyTurnLimit` turns a day (default 40, counted
+  in memory, so a restart resets it), and one role-play is
+  `Conversation:MaxTurns` learner turns (default 8). `Conversation:Model`
+  defaults to `claude-haiku-5-5`.
+- **Redeploy the sidecar too** (`bash deploy/azure-whisper-deploy.sh`). The
+  backend now sends the scenario's vocabulary with each recording so Whisper
+  spells expected words the expected way; an older sidecar ignores it and
+  still works, just less accurately.
+- **Adding a scenario** is content only: put a `"type": "conversation"` block
+  with a `scenario` in the lesson file (see lesson 7 of `lessons.json`). One
+  per lesson. The model only ever sees the scenario stored on the server.
+- Not in the mobile app yet — it skips the block.
+
+---
+
 ## Hosting the frontend on Vercel instead
 
 The container above is self-contained — it serves the frontend itself. If you'd
