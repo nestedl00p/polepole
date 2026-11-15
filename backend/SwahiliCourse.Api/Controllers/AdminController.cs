@@ -294,8 +294,14 @@ public class AdminController : AuthedController
             speech = new
             {
                 enabled = _speech.IsConfigured,
+                // "Sidecar" (self-hosted Whisper) or "Groq" (hosted Whisper).
+                provider = _speech.Provider,
+                model = _speech.Provider == "Groq" ? _speech.GroqModel : null,
                 host = _speech.Host,
-                apiKeySet = !string.IsNullOrWhiteSpace(_config["Speech:ApiKey"]),
+                // The key that the provider in use needs.
+                apiKeySet = _speech.Provider == "Groq"
+                    ? _speech.GroqApiKeySet
+                    : !string.IsNullOrWhiteSpace(_config["Speech:ApiKey"]),
             },
             conversation = new
             {
@@ -328,7 +334,8 @@ public class AdminController : AuthedController
         });
     }
 
-    // POST /api/admin/system/speech/ping — a live check of the Whisper sidecar.
+    // POST /api/admin/system/speech/ping — a live check of the speech provider
+    // in use (the Whisper sidecar's health check, or Groq accepting the key).
     // Separate from /system because it waits on the network.
     [HttpPost("system/speech/ping")]
     public async Task<IActionResult> PingSpeech(CancellationToken ct)
