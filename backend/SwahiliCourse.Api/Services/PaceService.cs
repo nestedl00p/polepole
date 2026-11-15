@@ -34,9 +34,12 @@ public class PaceService
     //  (a) it's within the scheduled window for today, AND
     //  (b) the previous lesson's quiz has been passed (sequential unlock).
     // Lesson 1 is always unlocked.
+    // Admins skip both rules: they need to open any lesson to check its content
+    // without working through the course first. Their progress is still recorded
+    // normally, so the dashboard keeps showing what they have actually completed.
     public bool IsUnlocked(User user, int lessonId, IDictionary<int, LessonProgress> progressByLesson)
     {
-        if (lessonId <= 1) return true;
+        if (lessonId <= 1 || user.IsAdmin) return true;
 
         // Previous lesson must be completed (quiz passed).
         if (!progressByLesson.TryGetValue(lessonId - 1, out var prev) || !prev.QuizCompleted)
