@@ -28,17 +28,18 @@ public class AdminController : AuthedController
     private readonly HabitReport _habit;
     private readonly TtsService _tts;
     private readonly SpeechService _speech;
+    private readonly ConversationService _conversation;
     private readonly VoiceStore _voice;
     private readonly IConfiguration _config;
     private readonly IWebHostEnvironment _env;
 
     public AdminController(
         AppDbContext db, AdminAudit audit, CourseCatalog courses, HabitReport habit,
-        TtsService tts, SpeechService speech, VoiceStore voice,
+        TtsService tts, SpeechService speech, ConversationService conversation, VoiceStore voice,
         IConfiguration config, IWebHostEnvironment env)
     {
         _db = db; _audit = audit; _courses = courses; _habit = habit;
-        _tts = tts; _speech = speech; _voice = voice; _config = config; _env = env;
+        _tts = tts; _speech = speech; _conversation = conversation; _voice = voice; _config = config; _env = env;
     }
 
     // GET /api/admin/overview
@@ -296,6 +297,18 @@ public class AdminController : AuthedController
                 host = _speech.Host,
                 apiKeySet = !string.IsNullOrWhiteSpace(_config["Speech:ApiKey"]),
             },
+            conversation = new
+            {
+                // live = learners can use it now: switched on AND a key is set.
+                live = _conversation.IsConfigured,
+                switchedOn = _conversation.SwitchedOn,
+                // Who decided: an admin in the backoffice, or configuration.
+                switchSource = _conversation.AdminSwitch is null ? "config" : "admin",
+                apiKeySet = _conversation.ApiKeySet,
+                model = _conversation.Model,
+                dailyTurnLimit = _conversation.DailyTurnLimit,
+                maxTurns = _conversation.MaxTurns,
+            },
             voice = new { files = voiceUsage.Files, bytes = voiceUsage.Bytes },
             reminders = new
             {
@@ -322,6 +335,36 @@ public class AdminController : AuthedController
     {
         var (reachable, detail, ms) = await _speech.PingAsync(ct);
         return Ok(new { reachable, detail, milliseconds = ms });
+    }
+
+    public record ConversationSwitchDto(bool Enabled);
+
+    // POST /api/admin/system/conversation  { "enabled": true|false }
+    // The on/off switch for conversation practice. Takes effect at once and
+    // survives restarts and redeploys; it overrides Conversation:Enabled.
+    // Switching on does not conjure an API key — `live` in the answer says
+    // whether learners can actually use it.
+    [HttpPost("system/conversation")]
+    public async Task<IActionResult> SetConversation([FromBody] ConversationSwitchDto dto, CancellationToken ct)
+    {
+        var row = await _db.ServiceSettings.FindAsync([ServiceSettingKeys.ConversationEnabled], ct);
+        if (row is null)
+        {
+            row = new ServiceSetting { Key = ServiceSettingKeys.ConversationEnabled };
+            _db.ServiceSettings.Add(row);
+        }
+        row.Value = dto.Enabled ? "true" : "false";
+        row.UpdatedAt = DateTime.UtcNow;
+
+        _audit.Record(User, dto.Enabled ? AdminActions.ConversationOn : AdminActions.ConversationOff,
+            detail: dto.Enabled ? "Switched conversation practice on." : "Switched conversation practice off.");
+        await _db.SaveChangesAsync(ct);
+
+        // Only after the row is saved, so memory never says something the
+        // database does not.
+        _conversation.SetAdminSwitch(dto.Enabled);
+
+        return Ok(new { switchedOn = _conversation.SwitchedOn, live = _conversation.IsConfigured, apiKeySet = _conversation.ApiKeySet });
     }
 
     // POST /api/admin/system/tts-cache/clear

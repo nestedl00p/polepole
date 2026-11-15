@@ -17,8 +17,9 @@ namespace SwahiliCourse.Api.Services;
 // and sends it with each turn, so nothing is stored. The scenario itself always
 // comes from the lesson catalog, never from the client.
 //
-// Optional. Without Conversation:Enabled and an API key IsConfigured is false
-// and the lesson block tells the learner the partner is unavailable.
+// Optional. It answers only when it is switched on (Conversation:Enabled, or
+// the backoffice switch that overrides it) and an API key is configured;
+// otherwise the lesson block tells the learner the partner is unavailable.
 public class ConversationService
 {
     private readonly IConfiguration _config;
@@ -47,7 +48,22 @@ public class ConversationService
         }
     }
 
-    public bool IsConfigured => _config.GetValue("Conversation:Enabled", false) && ApiKey is not null;
+    public bool ApiKeySet => ApiKey is not null;
+
+    // ---- the on/off switch ----
+    // Conversation:Enabled is the default. An admin can override it from the
+    // backoffice (System page); that choice is stored in ServiceSettings, read
+    // once at startup and kept here so each request doesn't cost a query. Null
+    // means no admin has touched the switch.
+    private volatile object? _adminSwitch; // boxed bool, or null
+
+    public bool? AdminSwitch => (bool?)_adminSwitch;
+    public void SetAdminSwitch(bool? on) => _adminSwitch = on;
+
+    public bool SwitchedOn => AdminSwitch ?? _config.GetValue("Conversation:Enabled", false);
+
+    // On, and able to answer: the switch alone is not enough without a key.
+    public bool IsConfigured => SwitchedOn && ApiKeySet;
 
     public string Model => _config["Conversation:Model"] is { Length: > 0 } m ? m.Trim() : "claude-haiku-5-5";
 
@@ -59,7 +75,7 @@ public class ConversationService
     // Every turn is a paid model call, so each account gets a daily budget.
     // Kept in memory: a restart hands everyone a fresh day, which is an
     // acceptable leak for a single small instance and saves a table.
-    private int DailyTurnLimit => Math.Max(1, _config.GetValue("Conversation:DailyTurnLimit", 40));
+    public int DailyTurnLimit => Math.Max(1, _config.GetValue("Conversation:DailyTurnLimit", 40));
     private readonly ConcurrentDictionary<int, (DateOnly Day, int Used)> _usage = new();
     private static DateOnly Today => DateOnly.FromDateTime(DateTime.UtcNow);
 

@@ -212,7 +212,7 @@ accounts and checking on the service:
 | Users | Search and filter accounts; open one to edit it, set a new password, export its data, reset progress, suspend, delete, or grant/revoke admin |
 | Content | What each course contains, how far learners get through it, and checks on the lesson files (duplicate ids, unanswerable questions, gaps) |
 | Habit report | The habit-test metrics from `docs/DAILY-PRACTICE-LOOP.md` |
-| System | Database, migrations, TTS cache, Whisper sidecar, reminders, CORS — state only, never secret values |
+| System | Database, migrations, TTS cache, Whisper sidecar, the conversation practice switch, reminders, CORS — state only, never secret values |
 | Audit log | Every change an admin made, who made it and when |
 
 **Making the first admin.** Admins grant the role to each other from the Users
@@ -338,6 +338,12 @@ az webapp config appsettings set -g polepole-rg -n <app> --settings Conversation
 Locally: `dotnet user-secrets set Conversation:ApiKey "<key>"` and
 `dotnet user-secrets set Conversation:Enabled true` in `backend/SwahiliCourse.Api`.
 
+- **The switch.** `Conversation__Enabled` is only the default. Admins can turn
+  conversation practice on or off from the backoffice (**System → Conversation
+  practice**); it takes effect at once, is written to the audit trail, and
+  from then on overrides the setting, across restarts and redeploys. The API
+  key still has to be set here — the switch cannot supply one, and the page
+  says "On, but no API key" when that is what is missing.
 - **Each piece is optional.** Without Whisper the learner types instead of
   speaking; without cloud TTS the device voice reads the reply. Only the API
   key is required.

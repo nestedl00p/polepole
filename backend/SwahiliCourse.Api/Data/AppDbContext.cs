@@ -13,9 +13,12 @@ public class AppDbContext : DbContext
     public DbSet<PracticeDay> PracticeDays => Set<PracticeDay>();
     public DbSet<VoiceTake> VoiceTakes => Set<VoiceTake>();
     public DbSet<AdminAuditEntry> AdminAudit => Set<AdminAuditEntry>();
+    public DbSet<ServiceSetting> ServiceSettings => Set<ServiceSetting>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<ServiceSetting>().HasKey(s => s.Key);
+
         modelBuilder.Entity<User>()
             .HasIndex(u => u.Email)
             .IsUnique();

@@ -156,6 +156,7 @@ export const api = {
     system: () => request('/admin/system'),
     pingSpeech: () => request('/admin/system/speech/ping', { method: 'POST' }),
     clearTtsCache: () => request('/admin/system/tts-cache/clear', { method: 'POST' }),
+    setConversation: (enabled) => request('/admin/system/conversation', { method: 'POST', body: { enabled } }),
     audit: (page = 1) => request(`/admin/audit?page=${page}`),
   },
 };
