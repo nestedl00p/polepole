@@ -1947,7 +1947,7 @@
         "calloutTitle": "N-class sounds & borrowed words",
         "lines": [
           "* With N-class nouns the prefix blends into the sound: nyumba kubwa (big), nyumba ndefu (refu → ndefu), nyumba mbaya (baya → mbaya).",
-          "Borrowed adjectives never change at all: chai safi (clean tea), nyumba safi, kitu rahisi (a cheap thing). Also ghali, tayari, bora."
+          "Borrowed adjectives never change at all: chai safi (good tea), nyumba safi (a clean house), kitu rahisi (a cheap thing). Also ghali, tayari, bora."
         ]
       },
       {
@@ -1977,7 +1977,7 @@
       { "swahili": "refu", "english": "tall" },
       { "swahili": "pya", "english": "new" },
       { "swahili": "zito", "english": "heavy" },
-      { "swahili": "safi", "english": "clean (never changes)" }
+      { "swahili": "safi", "english": "clean; also “good, great” (never changes)" }
     ],
     "quiz": [
       {

@@ -860,7 +860,7 @@
           ],
           [
             "-sema",
-            "hablar"
+            "decir/hablar"
           ],
           [
             "-ona",
@@ -987,7 +987,7 @@
       },
       {
         "swahili": "sema",
-        "english": "hablar"
+        "english": "decir/hablar"
       },
       {
         "swahili": "ona",
@@ -1874,7 +1874,7 @@
       },
       {
         "swahili": "mgeni",
-        "english": "invitado"
+        "english": "invitado/visitante"
       },
       {
         "swahili": "walimu",
@@ -2337,7 +2337,7 @@
         "calloutTitle": "Sonidos de la clase N y palabras prestadas",
         "lines": [
           "* Con sustantivos de la clase N el prefijo se funde con el sonido: nyumba kubwa (grande), nyumba ndefu (refu → ndefu), nyumba mbaya (baya → mbaya).",
-          "Los adjetivos prestados no cambian nunca: chai safi (té limpio), nyumba safi, kitu rahisi (una cosa barata). También ghali, tayari, bora."
+          "Los adjetivos prestados no cambian nunca: chai safi (un buen té), nyumba safi (una casa limpia), kitu rahisi (una cosa barata). También ghali, tayari, bora."
         ]
       },
       {
@@ -2392,7 +2392,7 @@
     "vocabulary": [
       {
         "swahili": "zuri",
-        "english": "bueno"
+        "english": "bueno/bonito"
       },
       {
         "swahili": "baya",
@@ -2408,7 +2408,7 @@
       },
       {
         "swahili": "refu",
-        "english": "alto"
+        "english": "alto/largo"
       },
       {
         "swahili": "pya",
@@ -2420,7 +2420,7 @@
       },
       {
         "swahili": "safi",
-        "english": "limpio (nunca cambia)"
+        "english": "limpio; también «bueno, genial» (nunca cambia)"
       }
     ],
     "quiz": [
@@ -3397,7 +3397,7 @@
       },
       {
         "swahili": "gani",
-        "english": "cuál"
+        "english": "qué / cuál"
       }
     ],
     "quiz": [
@@ -4498,7 +4498,7 @@
       },
       {
         "swahili": "wali",
-        "english": "arroz"
+        "english": "arroz cocido"
       },
       {
         "swahili": "nyama",
@@ -5422,7 +5422,7 @@
       },
       {
         "swahili": "lazima",
-        "english": "deber"
+        "english": "hay que / tener que"
       },
       {
         "swahili": "tukutane",
@@ -6558,7 +6558,7 @@
           {
             "speaker": "Halima",
             "swahili": "Eh, Daudi! Kumbe ni wewe! Habari za siku nyingi?",
-            "english": "¡Eh, Daudi! ¡Así que eres tú! ¿Cómo has estado?"
+            "english": "¡Eh, Daudi! ¡Pero si eres tú! ¡Cuánto tiempo! ¿Cómo has estado?"
           },
           {
             "speaker": "Daudi",
@@ -6619,7 +6619,7 @@
           "goal": "Di dónde has estado, pregúntale por su trabajo y queden para tomar un té: acuerden un día y una hora.",
           "role": "Daudi, an old friend of the learner, an accountant living in Dar es Salaam, Tanzania. You have not seen each other for months and are delighted. Ask where they have been and how their work is going, say your own work is going well but is busy, then suggest meeting for tea and settle a day and a time. Use Swahili clock times (for example saa nne asubuhi for 10 am).",
           "opening": "Eh, kumbe ni wewe! Habari za siku nyingi?",
-          "openingTranslation": "¡Eh, así que eres tú! ¿Cómo has estado?",
+          "openingTranslation": "¡Eh, pero si eres tú! ¡Cuánto tiempo! ¿Cómo has estado?",
           "phrases": [
             {
               "swahili": "Nzuri! Nimefurahi kukuona.",
@@ -6695,7 +6695,7 @@
     "vocabulary": [
       {
         "swahili": "kumbe",
-        "english": "así que"
+        "english": "¡vaya!, resulta que (sorpresa)"
       },
       {
         "swahili": "umekuwa",
@@ -7035,7 +7035,7 @@
       },
       {
         "swahili": "kila la heri",
-        "english": "todo lo mejor"
+        "english": "¡que te vaya muy bien!"
       },
       {
         "swahili": "safari njema",
@@ -7074,10 +7074,15 @@
       },
       {
         "id": 152,
-        "type": "translate",
-        "prompt": "Traduce al español: kila la heri",
-        "options": [],
-        "answer": "todo lo mejor",
+        "type": "multiple_choice",
+        "prompt": "«Kila la heri» significa:",
+        "options": [
+          "¡Que te vaya muy bien!",
+          "Hasta mañana",
+          "Muchas gracias",
+          "Bienvenido de nuevo"
+        ],
+        "answer": "¡Que te vaya muy bien!",
         "hint": null
       }
     ],
