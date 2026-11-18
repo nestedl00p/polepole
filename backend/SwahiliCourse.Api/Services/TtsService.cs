@@ -4,10 +4,15 @@ using System.Text.Json;
 
 namespace SwahiliCourse.Api.Services;
 
-// Synthesizes Swahili speech via a cloud TTS provider (Google or Azure) and
-// caches the resulting MP3 on disk so each distinct word is only ever paid for
-// and generated once. If no provider/key is configured the service returns null,
-// and the frontend falls back to the browser/device built-in voice.
+// Synthesizes speech via a cloud TTS provider (Google or Azure) or the
+// self-hosted sidecar (tts-service/, for Kinyarwanda) and caches the resulting
+// clip on disk so each distinct word is only ever paid for and generated once.
+// If no provider/key is configured the service returns null, and the frontend
+// falls back to the browser/device built-in voice.
+//
+// Tts:Provider is the provider for every course; Tts:Providers:<courseId>
+// overrides it for one course, which is how Kinyarwanda uses the sidecar while
+// Swahili and English stay on a cloud voice.
 public class TtsService
 {
     private readonly IHttpClientFactory _http;
@@ -25,14 +30,50 @@ public class TtsService
 
     public string Provider => (_config["Tts:Provider"] ?? "None").Trim();
 
-    public bool IsConfigured => Provider switch
+    // The default provider's state — what the backoffice reports.
+    public bool IsConfigured => HasCredentials(Provider);
+
+    private bool HasCredentials(string provider) => provider switch
     {
         "Google" => !string.IsNullOrWhiteSpace(_config["Tts:Google:ApiKey"]),
         "Azure" => !string.IsNullOrWhiteSpace(_config["Tts:Azure:Key"]) && !string.IsNullOrWhiteSpace(_config["Tts:Azure:Region"]),
         "Knowlez" => !string.IsNullOrWhiteSpace(_config["Tts:Knowlez:ApiKey"]),
+        "Sidecar" => !string.IsNullOrWhiteSpace(_config["Tts:Sidecar:Url"]),
         "Mock" => true, // local demo/test tone — no key needed
         _ => false
     };
+
+    private string? OwnProvider(Models.Course course)
+    {
+        var p = _config[$"Tts:Providers:{course.Id}"]?.Trim();
+        return string.IsNullOrEmpty(p) ? null : p;
+    }
+
+    public string ProviderFor(Models.Course course) => OwnProvider(course) ?? Provider;
+
+    // Can this course's text be synthesized? A NeedsOwnVoice course never uses
+    // the default provider: an Azure Swahili voice reading Kinyarwanda is worse
+    // than silence.
+    public bool IsConfiguredFor(Models.Course course) =>
+        course.NeedsOwnVoice
+            ? OwnProvider(course) is string own && HasCredentials(own)
+            : HasCredentials(ProviderFor(course));
+
+    public bool UsesSidecar(Models.Course course) => ProviderFor(course) == "Sidecar";
+
+    // Run once at startup: a NeedsOwnVoice course has audio exactly when a
+    // provider is configured for it. Configuration only changes with a
+    // restart, so the answer is stored on the course, where every DTO that
+    // describes the course already reads it.
+    public void ApplyAudioAvailability()
+    {
+        foreach (var course in Models.Courses.All.Where(c => c.NeedsOwnVoice))
+        {
+            course.HasAudio = IsConfiguredFor(course);
+            _log.LogInformation("Course '{Course}': audio {State} (provider {Provider}).",
+                course.Id, course.HasAudio ? "on" : "off", OwnProvider(course) ?? "none");
+        }
+    }
 
     public record TtsResult(byte[] Bytes, string ContentType, string Ext);
 
@@ -82,21 +123,19 @@ public class TtsService
     // be asked for again — synthesized, returned, and not kept on disk.
     public async Task<TtsResult?> SynthesizeAsync(string text, Models.Course? course = null, CancellationToken ct = default, bool cache = true)
     {
-        if (!IsConfigured) return null;
-
         course ??= Models.Courses.Get(Models.Courses.Default);
-        // A language with no voice gets silence, not another language's voice
-        // mispronouncing it. Tts:Voices:<courseId> opts a course back in.
-        if (!course.HasAudio && string.IsNullOrWhiteSpace(_config[$"Tts:Voices:{course.Id}"])) return null;
+        if (!IsConfiguredFor(course)) return null;
+
+        var provider = ProviderFor(course);
         var voice = VoiceFor(course);
         var locale = course.TtsLocale;
         var rate = _config["Tts:Rate"] ?? "0.85";
-        var ext = Provider == "Mock" ? "wav" : "mp3";
+        var ext = provider is "Mock" or "Sidecar" ? "wav" : "mp3";
         var contentType = ext == "wav" ? "audio/wav" : "audio/mpeg";
         // The voice already determines the locale (sw-KE-ZuriNeural vs
         // en-US-JennyNeural), so it isn't part of the key — keeping the key
         // format stable preserves clips cached before courses existed.
-        var cacheKey = Hash($"{Provider}|{voice}|{rate}|{text}");
+        var cacheKey = Hash($"{provider}|{voice}|{rate}|{text}");
         var cachePath = Path.Combine(_cacheDir, cacheKey + "." + ext);
 
         if (File.Exists(cachePath))
@@ -109,11 +148,12 @@ public class TtsService
             if (File.Exists(cachePath))
                 return new TtsResult(await File.ReadAllBytesAsync(cachePath, ct), contentType, ext);
 
-            byte[]? bytes = Provider switch
+            byte[]? bytes = provider switch
             {
                 "Google" => await SynthesizeGoogleAsync(text, voice, locale, rate, ct),
                 "Azure" => await SynthesizeAzureAsync(text, voice, locale, rate, ct),
                 "Knowlez" => await SynthesizeKnowlezAsync(text, ct),
+                "Sidecar" => await SynthesizeSidecarAsync(text, rate, ct),
                 "Mock" => MockTone(text),
                 _ => null
             };
@@ -127,7 +167,7 @@ public class TtsService
         }
         catch (Exception ex)
         {
-            _log.LogWarning(ex, "TTS synthesis failed for \"{Text}\" via {Provider}", text, Provider);
+            _log.LogWarning(ex, "TTS synthesis failed for \"{Text}\" via {Provider}", text, provider);
             return null;
         }
         finally
@@ -193,6 +233,56 @@ public class TtsService
         if (doc.RootElement.TryGetProperty("audioContent", out var audioEl))
             return Convert.FromBase64String(audioEl.GetString() ?? "");
         return null;
+    }
+
+    // The self-hosted sidecar (tts-service/): POST {text, rate} -> WAV. It
+    // scales to zero, so the first call after an idle spell waits for a
+    // container to boot and load the voice — hence the long timeout.
+    private async Task<byte[]?> SynthesizeSidecarAsync(string text, string rate, CancellationToken ct)
+    {
+        var client = _http.CreateClient();
+        client.Timeout = TimeSpan.FromSeconds(Math.Clamp(_config.GetValue("Tts:Sidecar:TimeoutSeconds", 120), 5, 600));
+
+        var req = new HttpRequestMessage(HttpMethod.Post, SidecarUrl("synthesize"))
+        {
+            Content = new StringContent(
+                JsonSerializer.Serialize(new { text, rate = ParseRate(rate) }), Encoding.UTF8, "application/json")
+        };
+        var key = _config["Tts:Sidecar:ApiKey"];
+        if (!string.IsNullOrWhiteSpace(key)) req.Headers.Add("X-Api-Key", key);
+
+        using var resp = await client.SendAsync(req, ct);
+        if (!resp.IsSuccessStatusCode)
+        {
+            _log.LogWarning("TTS sidecar returned {Status}: {Body}", (int)resp.StatusCode, await resp.Content.ReadAsStringAsync(ct));
+            return null;
+        }
+        return await resp.Content.ReadAsByteArrayAsync(ct);
+    }
+
+    private string SidecarUrl(string path) => (_config["Tts:Sidecar:Url"] ?? "").TrimEnd('/') + "/" + path;
+
+    // Blocks until the sidecar answers /health, or the wait runs out. Used by
+    // the warm-up so its first words are not lost to a cold start.
+    public async Task<bool> WaitForSidecarAsync(TimeSpan patience, CancellationToken ct)
+    {
+        var client = _http.CreateClient();
+        client.Timeout = TimeSpan.FromSeconds(15);
+        var deadline = DateTime.UtcNow + patience;
+        while (DateTime.UtcNow < deadline && !ct.IsCancellationRequested)
+        {
+            try
+            {
+                using var resp = await client.GetAsync(SidecarUrl("health"), ct);
+                if (resp.IsSuccessStatusCode) return true;
+            }
+            catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException && !ct.IsCancellationRequested)
+            {
+                // Still booting — keep waiting.
+            }
+            await Task.Delay(TimeSpan.FromSeconds(5), ct);
+        }
+        return false;
     }
 
     // Knowlez TTS — a simple "X-API-Key + {text} -> MP3" HTTP service.

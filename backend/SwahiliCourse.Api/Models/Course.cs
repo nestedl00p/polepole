@@ -23,9 +23,16 @@ public class Course
     public string TtsVoice { get; set; } = "sw-KE-ZuriNeural";
     public string SttLanguage { get; set; } = "sw";
 
-    // False while no natural voice exists for the target language. Clients then
-    // hide the 🔊 buttons instead of reading the text in the wrong language's
-    // voice, and the server synthesizes nothing for the course.
+    // True for a language no cloud provider or device can speak (Kinyarwanda).
+    // Such a course has audio only when a provider is configured for it by
+    // name — Tts:Providers:<courseId> — in practice the self-hosted sidecar.
+    public bool NeedsOwnVoice { get; init; }
+
+    // Whether the 🔊 buttons should exist for this course. When false, clients
+    // hide them instead of reading the text in the wrong language's voice.
+    // Always true for ordinary courses (they can fall back to the device
+    // voice); for a NeedsOwnVoice course it is set once at startup from the
+    // configuration, by TtsService.ApplyAudioAvailability.
     public bool HasAudio { get; set; } = true;
 
     // False while no speech recogniser handles the target language. The Dose
@@ -94,11 +101,12 @@ public static class Courses
             TargetLanguage = "rw",
             SourceLanguage = "en",
             // Neither Azure nor Google ships a Kinyarwanda voice, and browsers
-            // have none either, so the course runs silent until a voice is
-            // wired in (a self-hosted model such as MMS). Set TtsVoice and flip
-            // HasAudio when there is one.
+            // have none either. The voice comes from the self-hosted sidecar
+            // (tts-service/): set Tts:Providers:rw=Sidecar and Tts:Sidecar:Url.
+            // Until then the course runs silent.
             TtsLocale = "rw-RW",
             TtsVoice = "",
+            NeedsOwnVoice = true,
             HasAudio = false,
             // Stock Whisper has no Kinyarwanda; the fine-tuned checkpoints run
             // under the Swahili language token. Until one is deployed, lessons

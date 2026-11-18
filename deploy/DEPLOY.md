@@ -358,6 +358,52 @@ az webapp config appsettings set -n polepole-app-a82a5661 -g polepole-rg --setti
 
 ---
 
+## Kinyarwanda audio (the voice sidecar)
+
+No cloud provider has a Kinyarwanda voice, so the `rw` course gets its audio
+from a second sidecar: `tts-service/`, a small service wrapping Digital
+Umuganda's open Kinyarwanda voice (CC-BY-SA 4.0). Until it is deployed the
+course works but has no 🔊 buttons.
+
+```bash
+bash deploy/azure-deploy.sh       # 1) web app image that knows the Sidecar provider
+```
+
+```bash
+bash deploy/azure-tts-deploy.sh   # 2) build + run the sidecar, wire up the web app
+```
+
+What the second script does:
+
+1. `az acr build` on `tts-service/` (ten minutes or more — it installs PyTorch,
+   downloads the 1.1 GB voice and synthesizes a test phrase).
+2. Creates the `polepole-tts` Container App in the existing `polepole-env`:
+   2 vCPU, 4 GiB, external HTTPS ingress on port 8082, scale to zero.
+3. Generates a shared secret (`TTS_API_KEY`) and stores it as a Container App
+   secret.
+4. Waits for `/health`, synthesizes one phrase through the deployed service,
+   and only then sets `Tts__Providers__rw=Sidecar`, `Tts__Sidecar__Url` and
+   `Tts__Sidecar__ApiKey` on the web app.
+
+`Tts__Provider` is untouched, so Swahili and English stay on their cloud voice.
+
+- **Cold starts.** A sleeping sidecar takes minutes to come back (large image,
+  about a minute to load the voice). Learners should not notice: on every
+  start the web app waits for the sidecar and pre-generates all vocabulary,
+  dialogue lines and proverbs of the course (`Tts__Sidecar__Warmup`, default
+  on), then serves them from its clip cache. A phrase outside the lesson files
+  is synthesized on demand and waits up to `Tts__Sidecar__TimeoutSeconds`
+  (default 120).
+- **After editing `lessons-rw.json`:** redeploy the web app as usual; the new
+  phrases are generated on its next start.
+- **Check it.** `https://<app>.azurewebsites.net/api/tts/status?course=rw`
+  returns `{"enabled":true}`, and `/api/tts?text=amazi&course=rw` plays a clip.
+- **Logs:** `az containerapp logs show -n polepole-tts -g polepole-rg --follow`.
+- **Turn it off:** delete the three settings above; the course goes back to
+  running without sound.
+
+---
+
 ## Conversation practice (spoken role-play)
 
 The `conversation` lesson block lets a learner talk with an AI partner: Whisper
