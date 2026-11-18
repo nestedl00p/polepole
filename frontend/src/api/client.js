@@ -152,6 +152,7 @@ export const api = {
       URL.revokeObjectURL(url);
     },
     content: () => request('/admin/content'),
+    lesson: (courseId, id) => request(`/admin/content/${encodeURIComponent(courseId)}/lessons/${id}`),
     habit: () => request('/admin/habit'),
     system: () => request('/admin/system'),
     pingSpeech: () => request('/admin/system/speech/ping', { method: 'POST' }),

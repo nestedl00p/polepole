@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, useCallback } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState, useCallback } from 'react';
 import { api } from '../api/client';
 import { setSpeechCourse } from '../lib/speak';
 import { setAssessCourse } from '../lib/speechAssess';
@@ -93,6 +93,27 @@ export function AuthProvider({ children }) {
       {children}
     </AuthContext.Provider>
   );
+}
+
+// Renders its children as though the signed-in account belonged to `course`.
+// The lesson components read the course from useAuth() and the speech layer
+// from module state; the backoffice uses this to show a lesson from a course
+// the admin's own account is not on. The account's course is put back on
+// unmount.
+export function CourseOverride({ course, children }) {
+  const ctx = useAuth();
+  const own = ctx.user?.course;
+
+  useEffect(() => {
+    setSpeechCourse(course);
+    setAssessCourse(course.id);
+    return () => {
+      if (own) { setSpeechCourse(own); setAssessCourse(own.id); }
+    };
+  }, [course, own]);
+
+  const value = useMemo(() => ({ ...ctx, user: { ...ctx.user, course } }), [ctx, course]);
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {

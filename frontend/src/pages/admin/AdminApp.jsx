@@ -9,6 +9,7 @@ import Overview from './Overview';
 import Users from './Users';
 import UserDetail from './UserDetail';
 import Content from './Content';
+import LessonPreview from './LessonPreview';
 import Habit from './Habit';
 import System from './System';
 import Audit from './Audit';
@@ -54,6 +55,7 @@ export default function AdminApp() {
             <Route path="users" element={<Users />} />
             <Route path="users/:id" element={<UserDetail />} />
             <Route path="content" element={<Content />} />
+            <Route path="content/:courseId/lessons/:id" element={<LessonPreview />} />
             <Route path="habit" element={<Habit />} />
             <Route path="system" element={<System />} />
             <Route path="audit" element={<Audit />} />
