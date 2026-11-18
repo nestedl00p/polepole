@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Logo from '../components/Logo';
+import { SUBSCRIPTIONS_ENABLED } from '../config';
 
 const FEATURES = [
   { icon: '🧭', title: 'A guided 0-to-conversational path', body: 'A structured curriculum that takes you from your first “Jambo” to holding real conversations — no guessing what to study next.' },
@@ -27,9 +28,9 @@ const STEPS = [
 const FAQS = [
   { q: 'Do I need any prior Swahili?', a: 'None at all. PolePole starts from absolute zero — your first lesson is greetings and pronunciation.' },
   { q: 'How long does the course take?', a: 'That’s up to you. Choose a 30-day intensive sprint or a relaxed 90-day plan — you can change your pace anytime.' },
-  { q: 'How much does it cost?', a: 'PolePole is free while in beta. Create an account and start the full course today.' },
+  { q: 'How much does it cost?', a: 'PolePole is free while in beta. Create an account and start the full course today.', pricing: true },
   { q: 'Is there a mobile app?', a: 'Yes — PolePole also runs as a mobile app, so you can keep learning on your phone wherever you are.' },
-];
+].filter((f) => SUBSCRIPTIONS_ENABLED || !f.pricing);
 
 export default function LandingPage() {
   const { user } = useAuth();
@@ -49,7 +50,7 @@ export default function LandingPage() {
             <a href="#features">Course</a>
             <a href="#curriculum">Curriculum</a>
             <a href="#how">How it works</a>
-            <a href="#pricing">Pricing</a>
+            {SUBSCRIPTIONS_ENABLED && <a href="#pricing">Pricing</a>}
           </nav>
           <div className="lp-header-cta">
             {user ? (
@@ -57,7 +58,7 @@ export default function LandingPage() {
             ) : (
               <>
                 <Link to="/login" className="btn btn-ghost btn-sm">Log in</Link>
-                <Link to="/try" className="btn btn-gold btn-sm">Start free</Link>
+                <Link to="/try" className="btn btn-gold btn-sm">Get started</Link>
               </>
             )}
           </div>
@@ -79,7 +80,7 @@ export default function LandingPage() {
               <Link to={primaryCta.to} className="btn btn-gold">{primaryCta.label}</Link>
               <a href="#curriculum" className="btn btn-ghost">See the curriculum</a>
             </div>
-            <p className="lp-trust">30 seconds · No account needed · Free while in beta</p>
+            <p className="lp-trust">30 seconds · No account needed</p>
           </div>
           <div className="lp-hero-art">
             <div className="lp-hero-badge"><Logo size={150} wordmark={false} /></div>
@@ -154,7 +155,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ---------- Pricing ---------- */}
+      {/* ---------- Pricing (hidden until subscriptions are enabled) ---------- */}
+      {SUBSCRIPTIONS_ENABLED && (
       <section className="lp-section lp-section-alt" id="pricing">
         <div className="container lp-pricing">
           <div className="lp-section-head">
@@ -175,9 +177,12 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+      )}
 
       {/* ---------- FAQ ---------- */}
-      <section className="lp-section" id="faq">
+      {/* Takes over the alternate background when Pricing is hidden, so two
+          plain sections don't sit back to back. */}
+      <section className={`lp-section${SUBSCRIPTIONS_ENABLED ? '' : ' lp-section-alt'}`} id="faq">
         <div className="container lp-faq">
           <div className="lp-section-head">
             <h2>Questions, answered</h2>
@@ -210,7 +215,7 @@ export default function LandingPage() {
           <div className="lp-footer-links">
             <a href="#features">Course</a>
             <a href="#curriculum">Curriculum</a>
-            <a href="#pricing">Pricing</a>
+            {SUBSCRIPTIONS_ENABLED && <a href="#pricing">Pricing</a>}
             <Link to="/login">Log in</Link>
           </div>
         </div>

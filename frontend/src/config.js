@@ -13,6 +13,11 @@ const configured = (import.meta.env.VITE_API_BASE ?? '').trim();
 // Stored without a trailing slash so apiUrl('/api/...') never doubles it.
 export const API_BASE = configured.replace(/\/+$/, '');
 
+// Whether paid subscriptions are live. Off by default: until they are, the
+// landing page shows no pricing (section, nav links, cost FAQ). Build with
+// VITE_SUBSCRIPTIONS_ENABLED=true to bring it back.
+export const SUBSCRIPTIONS_ENABLED = import.meta.env.VITE_SUBSCRIPTIONS_ENABLED === 'true';
+
 // Absolute URL for an API path. Pass a leading-slash path, e.g. apiUrl('/api/tts').
 export function apiUrl(path) {
   return `${API_BASE}${path}`;
