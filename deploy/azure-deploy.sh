@@ -120,6 +120,28 @@ az webapp show -n "$APP" -g "$RG" -o none 2>/dev/null \
   || az webapp create -n "$APP" -g "$RG" -p "$PLAN" \
        --container-image-name "$ACR.azurecr.io/$IMAGE" -o none
 
+# Stop the app before touching its configuration, and start it once at the
+# end. Each of the changes below (container config, app settings) restarts a
+# running app by itself, and a third restart used to follow them. A container
+# that Azure kills during one of those back-to-back restarts can die while it
+# holds the EF migration lock — a row in __EFMigrationsLock in the SQLite
+# database, which outlives the container. Every later container then waits on
+# that row until the 230s startup probe kills it, and the site stays down
+# until the row is deleted by hand (see DEPLOY.md, "Site down after a
+# deploy"). A stopped app does not restart on config changes, so this way
+# exactly one container starts, on the final configuration.
+echo "==> Stopping the app while its configuration is updated…"
+az webapp stop -n "$APP" -g "$RG" -o none
+# Whatever goes wrong from here on, do not leave the app stopped.
+STOPPED=1
+start_if_stopped() {
+  if [ "$STOPPED" = "1" ]; then
+    echo "==> Deploy did not finish; starting the app again…" >&2
+    az webapp start -n "$APP" -g "$RG" -o none || true
+  fi
+}
+trap start_if_stopped EXIT
+
 # Wire the web app to pull from the registry (admin creds).
 ACR_USER=$(az acr credential show -n "$ACR" --query username -o tsv)
 ACR_PASS=$(az acr credential show -n "$ACR" --query "passwords[0].value" -o tsv)
@@ -157,13 +179,32 @@ if [ -n "${AZURE_TTS_KEY:-}" ]; then
 fi
 az webapp config appsettings set -n "$APP" -g "$RG" --settings "${SETTINGS[@]}" -o none
 
-echo "==> Restarting…"
-az webapp restart -n "$APP" -g "$RG" -o none
+echo "==> Starting…"
+az webapp start -n "$APP" -g "$RG" -o none
+STOPPED=0
 
+# Do not report success until the new container actually answers. Startup
+# pulls the image and applies migrations, so allow it a few minutes.
 URL="https://$APP.azurewebsites.net"
+echo "==> Waiting for $URL/healthz…"
+HEALTHY=0
+for _ in $(seq 1 30); do
+  if [ "$(curl -s -m 20 -o /dev/null -w '%{http_code}' "$URL/healthz" 2>/dev/null || true)" = "200" ]; then
+    HEALTHY=1
+    break
+  fi
+  sleep 10
+done
+
 echo ""
 echo "============================================================"
-echo " Deployed:  $URL"
-echo " Health:    $URL/healthz"
-echo " (first request may take ~30s while the container starts)"
+if [ "$HEALTHY" = "1" ]; then
+  echo " Deployed:  $URL"
+  echo " Health:    $URL/healthz"
+else
+  echo " NOT HEALTHY: $URL/healthz did not return 200 within 5 minutes." >&2
+  echo " The new image is in place but the app is not answering." >&2
+  echo " See deploy/DEPLOY.md, \"Site down after a deploy\"." >&2
+fi
 echo "============================================================"
+[ "$HEALTHY" = "1" ]
