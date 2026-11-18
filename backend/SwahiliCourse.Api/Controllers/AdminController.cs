@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SwahiliCourse.Api.Data;
+using SwahiliCourse.Api.DTOs;
 using SwahiliCourse.Api.Models;
 using SwahiliCourse.Api.Services;
 
@@ -176,6 +177,31 @@ public class AdminController : AuthedController
         });
 
         return Ok(new { courses });
+    }
+
+    // GET /api/admin/content/{courseId}/lessons/{id} — one lesson of any course,
+    // whole: an account belongs to a single course, so this is the only way to
+    // read the other direction's lessons. Unlike /api/lessons/{id} it ignores
+    // locks, records no progress, and keeps the quiz answers.
+    [HttpGet("content/{courseId}/lessons/{id:int}")]
+    public IActionResult LessonPreview(string courseId, int id)
+    {
+        // CourseCatalog.For falls back to the default course for an unknown id;
+        // here that would show the wrong course's lesson under this address.
+        if (!Courses.IsValid(courseId)) return NotFound();
+
+        var course = Courses.Get(courseId);
+        var lessons = _courses.For(course.Id).All;
+        var index = lessons.ToList().FindIndex(l => l.Id == id);
+        if (index < 0) return NotFound();
+
+        return Ok(new
+        {
+            course = UserMapper.ToDto(course),
+            lesson = lessons[index],
+            previousId = index > 0 ? lessons[index - 1].Id : (int?)null,
+            nextId = index < lessons.Count - 1 ? lessons[index + 1].Id : (int?)null,
+        });
     }
 
     private record ContentIssue(string Severity, int? LessonId, string Message);

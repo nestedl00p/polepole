@@ -119,6 +119,12 @@
 }
 .bo-tabs button.active { border-color: var(--navy); background: var(--navy); color: #fff; }
 
+/* ---------- Lesson preview: the quiz with its answers ---------- */
+.bo-quiz { margin: 0; padding-left: 22px; }
+.bo-quiz > li { padding: 8px 0; border-bottom: 1px solid #eeeeea; }
+.bo-quiz > li:last-child { border-bottom: none; }
+.bo-quiz ul { margin: 4px 0 2px; padding-left: 20px; }
+
 /* ---------- Actions ---------- */
 .bo-actions { display: flex; flex-direction: column; }
 .bo-action { display: grid; grid-template-columns: 190px 1fr; gap: 14px; align-items: center; padding: 9px 0; border-bottom: 1px solid #eeeeea; }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { api } from '../../api/client';
 import { Badge, Loading, Meter, PageHead, Section, Stat, fmtNum, fmtPct, useLoad } from './ui';
 
@@ -6,12 +6,17 @@ const TONE = { error: 'bad', warning: 'warn' };
 
 export default function Content() {
   const state = useLoad(() => api.admin.content(), []);
-  const [picked, setPicked] = useState(null);
+  // The picked course lives in the address, so coming back from a lesson
+  // lands on the course it belongs to.
+  const [params, setParams] = useSearchParams();
+  const picked = params.get('course');
+  const setPicked = (id) => setParams({ course: id }, { replace: true });
 
   return (
     <>
       <PageHead title="Content">
         What each course contains, how far learners get, and anything in the lesson files that needs fixing.
+        Open a lesson to read it as a learner on that course would.
       </PageHead>
 
       <Loading state={state}>
@@ -67,7 +72,7 @@ export default function Content() {
                       {course.lessons.map((l) => (
                         <tr key={l.id}>
                           <td>
-                            {l.id}. {l.title}
+                            <Link to={`/admin/content/${course.id}/lessons/${l.id}`}>{l.id}. {l.title}</Link>
                             <div className="bo-sub">Week {l.week} · {l.blocks} blocks · {l.xpReward} XP</div>
                           </td>
                           <td className="num">{l.vocab}</td>
