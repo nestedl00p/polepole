@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import { UI_STRINGS } from '../lib/uiStrings';
@@ -86,19 +86,82 @@ export function useLocale() {
 }
 
 // The picker used wherever the language can be changed afterwards.
+// A button and a menu rather than a <select>, whose open list the browser
+// draws and CSS cannot reach.
 export function LocaleSelect({ className = '' }) {
   const { locale, setLocale, t } = useLocale();
+  const [open, setOpen] = useState(false);
+  const root = useRef(null);
+  const current = LOCALES.find((l) => l.code === locale) ?? LOCALES[0];
+
+  useEffect(() => {
+    if (!open) return undefined;
+    root.current?.querySelector('[aria-checked="true"]')?.focus();
+    const onPointerDown = (e) => { if (!root.current?.contains(e.target)) setOpen(false); };
+    document.addEventListener('pointerdown', onPointerDown);
+    return () => document.removeEventListener('pointerdown', onPointerDown);
+  }, [open]);
+
+  const closeAndRefocus = () => {
+    setOpen(false);
+    root.current?.querySelector('.locale-select-btn')?.focus();
+  };
+
+  const onKeyDown = (e) => {
+    if (!open) {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); setOpen(true); }
+      return;
+    }
+    if (e.key === 'Escape') { e.stopPropagation(); closeAndRefocus(); return; }
+    if (e.key === 'Tab') { setOpen(false); return; }
+    const items = [...root.current.querySelectorAll('[role="menuitemradio"]')];
+    const at = items.indexOf(document.activeElement);
+    const to = { ArrowDown: at + 1, ArrowUp: at - 1, Home: 0, End: items.length - 1 }[e.key];
+    if (to === undefined) return;
+    e.preventDefault();
+    items[(to + items.length) % items.length].focus();
+  };
+
   return (
-    <select
-      className={`locale-select ${className}`}
-      aria-label={t.common.language}
-      value={locale}
-      onChange={(e) => setLocale(e.target.value)}
-    >
-      {LOCALES.map((l) => (
-        <option key={l.code} value={l.code} lang={l.code}>{l.label}</option>
-      ))}
-    </select>
+    <div className={`locale-select ${className}`} ref={root} onKeyDown={onKeyDown}>
+      <button
+        type="button"
+        className="locale-select-btn"
+        aria-label={`${t.common.language}: ${current.label}`}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        onClick={() => setOpen((o) => !o)}
+      >
+        <svg className="locale-globe" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9c-2.6-2.6-3.8-5.6-3.8-9S9.4 5.6 12 3z" />
+        </svg>
+        <span lang={current.code}>{current.label}</span>
+        <svg className="locale-chevron" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </button>
+      {open && (
+        <div className="locale-menu" role="menu" aria-label={t.common.language}>
+          {LOCALES.map((l) => (
+            <button
+              key={l.code}
+              type="button"
+              role="menuitemradio"
+              aria-checked={l.code === locale}
+              lang={l.code}
+              className="locale-option"
+              onClick={() => { setLocale(l.code); closeAndRefocus(); }}
+            >
+              {l.label}
+              <svg className="locale-check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M5 12.5l4.5 4.5L19 7.5" />
+              </svg>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 
