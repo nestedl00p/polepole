@@ -255,15 +255,15 @@ Testers running Expo Go will then hit the cloud backend instead of your laptop.
 
 ---
 
-## Custom domain (optional, for polepole.com)
+## Custom domain (optional, for pole-pole.app)
 
 ```bash
 az webapp config hostname add -g polepole-rg --webapp-name <app> \
-  --hostname app.polepole.com
+  --hostname app.pole-pole.app
 az webapp config ssl create -g polepole-rg --name <app> \
-  --hostname app.polepole.com          # free managed certificate
+  --hostname app.pole-pole.app          # free managed certificate
 ```
-Add a CNAME from `app.polepole.com` → `<app>.azurewebsites.net` at your registrar.
+Add a CNAME from `app.pole-pole.app` → `<app>.azurewebsites.net` at your registrar.
 (The marketing landing page can live separately on Vercel at the apex domain.)
 
 ---

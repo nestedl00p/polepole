@@ -61,7 +61,7 @@ const en = {
     paceLabel: 'Choose your pace (you can change this later)',
     newHere: 'New here?',
     createAnAccount: 'Create an account',
-    backHome: '← Back to polepole.com',
+    backHome: '← Back to pole-pole.app',
   },
 
   taster: {
@@ -327,7 +327,7 @@ const es = {
     paceLabel: 'Elige tu ritmo (puedes cambiarlo después)',
     newHere: '¿Primera vez aquí?',
     createAnAccount: 'Crea una cuenta',
-    backHome: '← Volver a polepole.com',
+    backHome: '← Volver a pole-pole.app',
   },
 
   taster: {
@@ -592,7 +592,7 @@ const sw = {
     paceLabel: 'Chagua kasi yako (unaweza kuibadilisha baadaye)',
     newHere: 'Mgeni hapa?',
     createAnAccount: 'Fungua akaunti',
-    backHome: '← Rudi polepole.com',
+    backHome: '← Rudi pole-pole.app',
   },
 
   taster: {
