@@ -1,0 +1,25 @@
+# Tested on Python 3.11. torch and torchaudio are installed separately, from
+# the CPU wheel index (see the Dockerfile / app.py):
+#   torch==2.8.0  torchaudio==2.8.0
+# Stay below torch 2.9: from 2.9 on, Coqui TTS needs torchcodec (and system
+# ffmpeg libraries) just to import.
+coqui-tts==0.28.0
+fastapi==0.138.2
+uvicorn[standard]==0.49.0
+huggingface_hub==2.4.0
+
+# Coqui's own dependencies, pinned to the set this was tested with — the same
+# lesson as whisper-service: a floating transitive dependency broke that image
+# while /health stayed green.
+coqui-tts-trainer==0.4.0
+coqpit-config==0.2.5
+transformers==5.23.0
+tokenizers==0.23.3
+numpy==2.4.6
+scipy==1.17.1
+librosa==0.11.0
+numba==0.68.1
+llvmlite==0.50.0
+soundfile==0.14.0
+# Imported by Coqui's text cleaners but not declared by the package.
+six==1.17.0

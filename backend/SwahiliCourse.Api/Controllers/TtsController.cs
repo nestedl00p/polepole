@@ -14,10 +14,13 @@ public class TtsController : ControllerBase
     private readonly TtsService _tts;
     public TtsController(TtsService tts) => _tts = tts;
 
-    // GET /api/tts/status — lets clients decide whether to use cloud audio or the built-in voice.
+    // GET /api/tts/status?course=sw — lets clients decide whether to use cloud
+    // audio or the built-in voice. Per course, because one course can have a
+    // provider of its own.
     [HttpGet("status")]
     [AllowAnonymous]
-    public IActionResult Status() => Ok(new { enabled = _tts.IsConfigured });
+    public IActionResult Status([FromQuery] string? course) =>
+        Ok(new { enabled = _tts.IsConfiguredFor(Models.Courses.Get(course)) });
 
     // GET /api/tts?text=ninasoma&course=sw
     // Public so it can be used directly as an <audio> source. The course selects
@@ -37,9 +40,10 @@ public class TtsController : ControllerBase
         if (text.Length > 60) return BadRequest("text too long");
         if (text.Any(char.IsControl)) return BadRequest("invalid characters");
 
-        if (!_tts.IsConfigured) return NoContent();
+        var forCourse = Models.Courses.Get(course);
+        if (!_tts.IsConfiguredFor(forCourse)) return NoContent();
 
-        var audio = await _tts.SynthesizeAsync(text, Models.Courses.Get(course), ct);
+        var audio = await _tts.SynthesizeAsync(text, forCourse, ct);
         if (audio is null || audio.Bytes.Length == 0) return NoContent();
 
         // Words are immutable — let the browser cache aggressively.

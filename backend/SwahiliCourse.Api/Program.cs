@@ -268,6 +268,10 @@ builder.Services.AddAuthorization(o =>
 
 var app = builder.Build();
 
+// Before the host starts (and with it the TTS warm-up): decide which courses
+// have audio, so every course DTO and the warm-up agree from the first request.
+app.Services.GetRequiredService<TtsService>().ApplyAudioAvailability();
+
 // --- Bring the database up to the current schema ---
 using (var scope = app.Services.CreateScope())
 {

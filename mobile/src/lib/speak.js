@@ -7,7 +7,7 @@ import * as Speech from 'expo-speech';
 import { createAudioPlayer } from 'expo-audio';
 import { API_BASE_URL } from '../config';
 
-let enabledPromise = null;
+const enabledByCourse = new Map(); // course id -> Promise<boolean>
 let player = null;
 
 // The learner's course direction decides which language is spoken. Set once from
@@ -26,15 +26,17 @@ export function hasVoice() {
   return course.hasAudio;
 }
 
-// Check once whether the backend has cloud TTS configured.
+// Check once per course whether the backend can synthesize its audio — one
+// course can have a provider of its own (Kinyarwanda uses the sidecar).
 function backendEnabled() {
-  if (!enabledPromise) {
-    enabledPromise = fetch(`${API_BASE_URL}/api/tts/status`)
+  const id = course.id;
+  if (!enabledByCourse.has(id)) {
+    enabledByCourse.set(id, fetch(`${API_BASE_URL}/api/tts/status?course=${encodeURIComponent(id)}`)
       .then((r) => (r.ok ? r.json() : { enabled: false }))
       .then((j) => !!j.enabled)
-      .catch(() => false);
+      .catch(() => false));
   }
-  return enabledPromise;
+  return enabledByCourse.get(id);
 }
 
 export const isSpeechSupported = () => true;

@@ -4,6 +4,10 @@ namespace SwahiliCourse.Api.Services;
 // for every word the lesson verbBuilders can produce, so playback is instant for
 // learners. Runs in the background — never blocks app startup. Words already in
 // the cache are skipped cheaply, so re-runs are nearly free.
+//
+// A course on the self-hosted sidecar is warmed even when Tts:Warmup:Enabled
+// is off (Tts:Sidecar:Warmup, default true): the sidecar scales to zero and
+// takes minutes to boot, so a learner's tap must find the clip already cached.
 public class TtsWarmupService : BackgroundService
 {
     private readonly TtsService _tts;
@@ -24,31 +28,45 @@ public class TtsWarmupService : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        if (!_tts.IsConfigured) return; // built-in voice in use — nothing to warm
-        if (!_config.GetValue("Tts:Warmup:Enabled", true)) return;
+        var cloudWarmup = _config.GetValue("Tts:Warmup:Enabled", true);
+        var sidecarWarmup = _config.GetValue("Tts:Sidecar:Warmup", true);
 
         // Spacing between calls. Default 1100ms keeps us under a typical 60 req/min
         // provider rate limit; lower it if your plan allows faster warming.
-        var delayMs = Math.Max(0, _config.GetValue("Tts:Warmup:DelayMs", 1100));
+        var cloudDelayMs = Math.Max(0, _config.GetValue("Tts:Warmup:DelayMs", 1100));
 
         try
         {
-            int done = 0;
+            int done = 0, failed = 0;
             foreach (var (course, catalog) in _courses.AllCourses)
             {
+                if (!_tts.IsConfiguredFor(course)) continue; // built-in voice in use — nothing to warm
+                var sidecar = _tts.UsesSidecar(course);
+                if (!(sidecar ? sidecarWarmup : cloudWarmup)) continue;
+
                 var words = BuildWordList(catalog, course);
                 if (words.Count == 0) continue;
+
+                // Our own service has no rate limit to stay under, but it may
+                // be asleep: wait for it rather than burn the list on timeouts.
+                var delayMs = sidecar ? 0 : cloudDelayMs;
+                if (sidecar && !await _tts.WaitForSidecarAsync(TimeSpan.FromMinutes(10), stoppingToken))
+                {
+                    _log.LogWarning("TTS warm-up [{Course}]: the sidecar did not come up; skipping.", course.Id);
+                    continue;
+                }
+
                 _log.LogInformation("TTS warm-up [{Course}]: pre-generating {Count} words, {Delay}ms apart…",
                     course.Id, words.Count, delayMs);
                 foreach (var word in words)
                 {
                     if (stoppingToken.IsCancellationRequested) break;
-                    await _tts.SynthesizeAsync(word, course, stoppingToken); // caches to disk
-                    done++;
+                    var clip = await _tts.SynthesizeAsync(word, course, stoppingToken); // caches to disk
+                    if (clip is null) failed++; else done++;
                     await Task.Delay(delayMs, stoppingToken);
                 }
             }
-            _log.LogInformation("TTS warm-up complete: {Done} words ready.", done);
+            _log.LogInformation("TTS warm-up complete: {Done} words ready, {Failed} failed.", done, failed);
         }
         catch (OperationCanceledException) { /* shutting down */ }
         catch (Exception ex)
@@ -73,6 +91,19 @@ public class TtsWarmupService : BackgroundService
                 var word = Models.Courses.Sides(course, v.Swahili, v.English).Target?.Trim();
                 if (!string.IsNullOrEmpty(word) && word.Length <= 60)
                     words.Add(word);
+            }
+
+            // A course on its own voice has no instant fallback, so everything
+            // else its lessons put a 🔊 on is warmed too: dialogue lines here,
+            // proverbs below. (The cloud courses fetch those on first play.)
+            if (course.NeedsOwnVoice)
+            {
+                foreach (var line in lesson.Blocks.SelectMany(b => b.Dialogue ?? new()))
+                {
+                    var spoken = Models.Courses.Sides(course, line.Swahili, line.English).Target?.Trim();
+                    if (!string.IsNullOrEmpty(spoken) && spoken.Length <= 60)
+                        words.Add(spoken);
+                }
             }
 
             // The remaining enumerations mirror the Swahili grammar builders, which
@@ -126,6 +157,16 @@ public class TtsWarmupService : BackgroundService
                         break;
                     }
                 }
+            }
+        }
+
+        if (course.NeedsOwnVoice)
+        {
+            foreach (var m in _courses.MethaliFor(course.Id).All)
+            {
+                var proverb = m.Target?.Trim();
+                if (!string.IsNullOrEmpty(proverb) && proverb.Length <= 60)
+                    words.Add(proverb);
             }
         }
         return words;
