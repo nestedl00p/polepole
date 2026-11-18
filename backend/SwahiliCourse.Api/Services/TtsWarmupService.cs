@@ -62,7 +62,7 @@ public class TtsWarmupService : BackgroundService
     private HashSet<string> BuildWordList(LessonCatalog catalog, Models.Course course)
     {
         var words = new HashSet<string>(StringComparer.Ordinal);
-        var targetIsEnglish = course.TargetLanguage == "en";
+        if (!course.HasAudio) return words; // no voice for this language yet
 
         foreach (var lesson in catalog.All)
         {
@@ -70,14 +70,14 @@ public class TtsWarmupService : BackgroundService
             // 🔊 buttons speak.
             foreach (var v in lesson.Vocabulary)
             {
-                var word = (targetIsEnglish ? v.English : v.Swahili)?.Trim();
+                var word = Models.Courses.Sides(course, v.Swahili, v.English).Target?.Trim();
                 if (!string.IsNullOrEmpty(word) && word.Length <= 60)
                     words.Add(word);
             }
 
             // The remaining enumerations mirror the Swahili grammar builders, which
             // only appear in the Swahili course.
-            if (targetIsEnglish) continue;
+            if (course.TargetLanguage != "sw") continue;
 
             foreach (var b in lesson.Blocks)
             {

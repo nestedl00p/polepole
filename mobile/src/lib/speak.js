@@ -12,11 +12,18 @@ let player = null;
 
 // The learner's course direction decides which language is spoken. Set once from
 // AuthContext so components can keep calling speakSwahili(text) unchanged.
-let course = { id: 'sw', ttsLocale: 'sw-KE' };
+let course = { id: 'sw', ttsLocale: 'sw-KE', hasAudio: true };
 
 export function setSpeechCourse(c) {
   if (!c) return;
-  course = { id: c.id || 'sw', ttsLocale: c.ttsLocale || 'sw-KE' };
+  course = { id: c.id || 'sw', ttsLocale: c.ttsLocale || 'sw-KE', hasAudio: c.hasAudio !== false };
+}
+
+// False for a course whose language has no voice yet (Kinyarwanda): there is
+// no cloud voice and no device voice, so the 🔊 controls hide rather than read
+// the text out in another language's accent.
+export function hasVoice() {
+  return course.hasAudio;
 }
 
 // Check once whether the backend has cloud TTS configured.
@@ -38,7 +45,7 @@ function speakWithDevice(text, rate) {
 }
 
 export async function speakSwahili(text, { rate = 0.85 } = {}) {
-  if (!text) return;
+  if (!text || !course.hasAudio) return;
 
   try {
     if (await backendEnabled()) {
@@ -60,7 +67,7 @@ export async function speakSwahili(text, { rate = 0.85 } = {}) {
 // used to play a whole dialogue line by line. A timeout guards against a
 // player or voice that never reports its end.
 export async function speakAndWait(text, { rate = 0.85 } = {}) {
-  if (!text) return;
+  if (!text || !course.hasAudio) return;
   const guard = new Promise((resolve) => setTimeout(resolve, 4000 + text.length * 150));
 
   try {

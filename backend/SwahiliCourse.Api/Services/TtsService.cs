@@ -85,6 +85,9 @@ public class TtsService
         if (!IsConfigured) return null;
 
         course ??= Models.Courses.Get(Models.Courses.Default);
+        // A language with no voice gets silence, not another language's voice
+        // mispronouncing it. Tts:Voices:<courseId> opts a course back in.
+        if (!course.HasAudio && string.IsNullOrWhiteSpace(_config[$"Tts:Voices:{course.Id}"])) return null;
         var voice = VoiceFor(course);
         var locale = course.TtsLocale;
         var rate = _config["Tts:Rate"] ?? "0.85";

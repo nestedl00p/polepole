@@ -37,7 +37,8 @@ public class TasterService
 
         var seen = new HashSet<string>(StringComparer.Ordinal);
         return first.Vocabulary
-            .Select(v => course.TargetLanguage == "en" ? new Pair(v.English, v.Swahili) : new Pair(v.Swahili, v.English))
+            .Select(v => course.Sides(v.Swahili, v.English))
+            .Select(s => new Pair(s.Target, s.Source))
             .Where(p => !string.IsNullOrWhiteSpace(p.Target) && !string.IsNullOrWhiteSpace(p.Source))
             .Where(p => seen.Add(p.Target))
             .Take(PoolSize)
@@ -60,7 +61,7 @@ public class TasterService
             // A fixed seed: the taster is the same on every load, so a visitor
             // who reloads cannot fish for an easier one, and the options do
             // not jump around under them.
-            var rng = new Random(20_240 + (course.Id == Courses.English ? 1 : 0));
+            var rng = new Random(20_240 + Math.Max(0, Courses.All.ToList().FindIndex(c => c.Id == course.Id)));
 
             for (var i = 0; i < Size; i++)
             {

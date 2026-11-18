@@ -184,7 +184,7 @@ public class ConversationController : AuthedController
     }
 
     private static string Target(Course course, VocabItem v) =>
-        course.TargetLanguage == "en" ? v.English : v.Swahili;
+        course.Sides(v.Swahili, v.English).Target;
 
     // Everything taught up to and including this lesson, most recent first, so
     // the model keeps to words the learner has actually met.

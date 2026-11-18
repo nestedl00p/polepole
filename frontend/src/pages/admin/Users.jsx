@@ -94,7 +94,7 @@ export default function Users() {
                             <Link to={`/admin/users/${u.id}`} onClick={(e) => e.stopPropagation()}>{u.displayName}</Link>
                             <div className="bo-sub">{u.email}</div>
                           </td>
-                          <td>{u.courseId === 'en' ? 'English' : 'Swahili'}</td>
+                          <td>{{ en: 'English', rw: 'Kinyarwanda' }[u.courseId] || 'Swahili'}</td>
                           <td>{fmtDate(u.createdAt)}</td>
                           <td>{relTime(u.lastSeenAt, '—')}</td>
                           <td className="num">{u.lessonsCompleted}</td>

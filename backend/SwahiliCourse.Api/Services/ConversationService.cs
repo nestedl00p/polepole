@@ -199,13 +199,11 @@ public class ConversationService
         }
     }
 
-    private static string LanguageName(string code) => code == "sw" ? "Swahili" : "English";
-
     private static string SystemPrompt(
         Course course, Lesson lesson, IEnumerable<string> knownWords, ConversationScenario s)
     {
-        var target = LanguageName(course.TargetLanguage);
-        var source = LanguageName(course.SourceLanguage);
+        var target = Courses.LanguageName(course.TargetLanguage);
+        var source = Courses.LanguageName(course.SourceLanguage);
 
         return $"""
             You are the conversation partner in a spoken role-play inside PolePole, an app that teaches {target} to {source} speakers. The learner is a beginner who has reached lesson {lesson.Id} of the course ("{lesson.Title}"). They speak into a microphone, their speech is transcribed automatically, and your reply is read aloud to them by a text-to-speech voice. This is often the first time they have used {target} with anyone, so the aim is for them to come away feeling they managed a real exchange.

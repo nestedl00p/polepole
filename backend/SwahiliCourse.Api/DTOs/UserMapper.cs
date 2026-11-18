@@ -9,7 +9,7 @@ public static class UserMapper
 {
     public static CourseDto ToDto(Course c) => new(
         c.Id, c.Title, c.Subtitle, c.Description,
-        c.TargetLanguage, c.SourceLanguage, c.TtsLocale, c.Flag);
+        c.TargetLanguage, c.SourceLanguage, c.TtsLocale, c.Flag, c.HasAudio);
 
     public static UserDto ToDto(User u, PaceService pace, StreakService streaks)
     {

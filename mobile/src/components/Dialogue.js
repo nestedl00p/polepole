@@ -3,7 +3,7 @@ import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { colors } from '../theme';
 import SpeakButton from './SpeakButton';
 import { Button } from './ui';
-import { speakSwahili, speakAndWait, stopSpeaking } from '../lib/speak';
+import { speakSwahili, speakAndWait, stopSpeaking, hasVoice } from '../lib/speak';
 import { useAuth } from '../context/AuthContext';
 import { lessonStrings } from '../lib/lessonStrings';
 
@@ -48,7 +48,7 @@ export default function Dialogue({ block }) {
   return (
     <View style={styles.block}>
       <View style={styles.bar}>
-        <Button title={playing === -1 ? t.listen : t.stop} size="sm" onPress={listen} />
+        {hasVoice() && <Button title={playing === -1 ? t.listen : t.stop} size="sm" onPress={listen} />}
         <Button
           title={hideTr ? t.showTranslations : t.hideTranslations}
           variant="ghost"

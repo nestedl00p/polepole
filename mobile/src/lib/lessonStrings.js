@@ -52,7 +52,9 @@ const SW = {
   newRound: 'Mzunguko mpya',
 };
 
-// course: the account's course ({ targetLanguage: 'sw' | 'en' }).
+// course: the account's course ({ targetLanguage: 'sw' | 'en' | 'rw' }). The
+// strings follow the language the lessons are written in, so every course
+// taught in English shares EN.
 export function lessonStrings(course) {
   return course?.targetLanguage === 'en' ? SW : EN;
 }
@@ -64,8 +66,8 @@ export function lessonStrings(course) {
 // A header missing from these lists just leaves that table plain.
 const TABLE_COLUMNS = {
   sw: {
-    speak: /^(swahili|stem|example)$/i,
-    target: /^(swahili|stem|prefix|infix)$/i,
+    speak: /^(swahili|kinyarwanda|stem|example)$/i,
+    target: /^(swahili|kinyarwanda|stem|prefix|infix)$/i,
     known: /^(english|number|meaning)$/i,
   },
   en: {
