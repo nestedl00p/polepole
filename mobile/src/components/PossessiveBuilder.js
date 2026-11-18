@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { colors, shadow } from '../theme';
 import { speakSwahili } from '../lib/speak';
+import { useAuth } from '../context/AuthContext';
+import { builderStrings } from '../lib/builderStrings';
 
 // Interactive Swahili possessive builder: NOUN + link(agreement) + STEM.
 // The stem (whose) is constant; the link changes with the noun's class.
@@ -34,6 +36,8 @@ const ROLE_COLOR = { stem: colors.navy, mark: colors.gold, sub: colors.teal };
 const ROLE_TEXT = { stem: colors.navy, mark: colors.gold, sub: colors.tealDark };
 
 export default function PossessiveBuilder({ block = {} }) {
+  const { user } = useAuth();
+  const t = builderStrings(user?.course);
   const nouns = block.nouns || NOUNS;
   const possessors = block.possessors || POSSESSORS;
 
@@ -43,7 +47,7 @@ export default function PossessiveBuilder({ block = {} }) {
   const poss = possessors[pi];
 
   const word = `${noun.noun} ${noun.concord}${poss.stem}`;
-  const english = `${poss.en} ${noun.en}`;
+  const english = t.possessive?.(pi, noun.en) ?? `${poss.en} ${noun.en}`;
 
   const steps = [
     { accent: 'stem', label: '1 · Which thing?', options: nouns.map((n) => ({ sw: n.noun, en: n.en })), index: ni, set: setNi },
@@ -51,25 +55,25 @@ export default function PossessiveBuilder({ block = {} }) {
   ];
 
   const pieces = [
-    { text: noun.noun, role: 'stem', tag: `noun · ${noun.cls}` },
-    { text: noun.concord, role: 'mark', tag: 'link' },
-    { text: poss.stem, role: 'sub', tag: 'whose' },
+    { text: noun.noun, role: 'stem', tag: `${t.g('noun')} · ${noun.cls}` },
+    { text: noun.concord, role: 'mark', tag: t.g('link') },
+    { text: poss.stem, role: 'sub', tag: t.g('whose') },
   ];
 
   return (
     <View style={styles.block}>
       <View style={styles.card}>
-        <Text style={styles.title}>{block.calloutTitle || 'Build a possessive: NOUN + link + stem'}</Text>
+        <Text style={styles.title}>{block.calloutTitle || t.g('Build a possessive: NOUN + link + stem')}</Text>
         <Text style={styles.intro}>
           {block.intro ||
-            'A possessive has two parts: a stem that says whose it is, and a “link” that agrees with the noun’s class. The stem never changes — only the link does.'}
+            t.g('A possessive has two parts: a stem that says whose it is, and a “link” that agrees with the noun’s class. The stem never changes — only the link does.')}
         </Text>
 
         {steps.map((step, idx) => (
           <View style={styles.step} key={idx}>
             <View style={styles.stepLabel}>
               <View style={[styles.dot, { backgroundColor: ROLE_COLOR[step.accent] }]} />
-              <Text style={styles.stepLabelText}>{step.label}</Text>
+              <Text style={styles.stepLabelText}>{t.g(step.label)}</Text>
             </View>
             <View style={styles.pills}>
               {step.options.map((o, i) => {
@@ -81,7 +85,7 @@ export default function PossessiveBuilder({ block = {} }) {
                     style={[styles.pill, active && { borderColor: ROLE_COLOR[step.accent], backgroundColor: ROLE_COLOR[step.accent] }]}
                   >
                     <Text style={[styles.pillSw, active && styles.pillActiveText]}>{o.sw}</Text>
-                    <Text style={[styles.pillEn, active && styles.pillActiveText]}>{o.en}</Text>
+                    <Text style={[styles.pillEn, active && styles.pillActiveText]}>{t.g(o.en)}</Text>
                   </Pressable>
                 );
               })}
@@ -112,7 +116,7 @@ export default function PossessiveBuilder({ block = {} }) {
               <Text style={{ color: ROLE_TEXT.mark }}>{noun.concord}</Text>
               <Text style={{ color: ROLE_TEXT.sub }}>{poss.stem}</Text>
             </Text>
-            <Pressable onPress={() => speakSwahili(word)} style={styles.speak} accessibilityRole="button" accessibilityLabel={`Hear ${word} spoken`}>
+            <Pressable onPress={() => speakSwahili(word)} style={styles.speak} accessibilityRole="button" accessibilityLabel={t.hear(word)}>
               <Text style={styles.speakIcon}>🔊</Text>
             </Pressable>
           </View>

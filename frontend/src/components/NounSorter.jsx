@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { speakSwahili, isSpeechSupported } from '../lib/speak';
+import { useAuth } from '../context/AuthContext';
+import { builderStrings } from '../lib/builderStrings';
 
 // Interactive noun-class explorer for the "Noun Classes" lessons.
 // Tap a noun → see its class, its plural, and how it changes the verb.
@@ -28,6 +30,8 @@ function segments(ex) {
 }
 
 export default function NounSorter({ block = {} }) {
+  const { user } = useAuth();
+  const t = builderStrings(user?.course);
   const nouns = block.nouns || SETS[block.mode] || SETS.set1;
   const [i, setI] = useState(0);
   const n = nouns[i];
@@ -35,23 +39,23 @@ export default function NounSorter({ block = {} }) {
   return (
     <div className="block">
       <div className="vb">
-        <div className="vb-title">{block.calloutTitle || 'Sort the noun'}</div>
+        <div className="vb-title">{block.calloutTitle || t.g('Sort the noun')}</div>
         {block.intro && <p className="vb-intro">{block.intro}</p>}
 
         <div className="vb-step">
-          <div className="vb-step-label"><span className="vb-dot vb-dot-stem" /> Tap a noun</div>
+          <div className="vb-step-label"><span className="vb-dot vb-dot-stem" /> {t.g('Tap a noun')}</div>
           <div className="vb-pills">
             {nouns.map((item, idx) => (
               <button key={item.sing} className={`vb-pill ${idx === i ? 'active stem' : ''}`} onClick={() => setI(idx)}>
                 <span className="vb-pill-sw">{item.sing}</span>
-                <span className="vb-pill-en">{item.en}</span>
+                <span className="vb-pill-en">{t.g(item.en)}</span>
               </button>
             ))}
           </div>
         </div>
 
         <div className="vb-result">
-          <span className="vb-ns-badge">{n.cls} · {n.note}</span>
+          <span className="vb-ns-badge">{n.cls} · {t.g(n.note)}</span>
           <div className="vb-word-row">
             <div className="vb-word">
               <span className="vb-t-stem">{n.sing}</span>
@@ -59,16 +63,16 @@ export default function NounSorter({ block = {} }) {
               <span className="vb-t-stem">{n.pl}</span>
             </div>
             {isSpeechSupported() && (
-              <button type="button" className="vb-speak" onClick={() => speakSwahili(`${n.sing}, ${n.pl}`)} title="Hear it — pole pole" aria-label={`Hear ${n.sing}, ${n.pl}`}>🔊</button>
+              <button type="button" className="vb-speak" onClick={() => speakSwahili(`${n.sing}, ${n.pl}`)} title={t.g('Hear it — pole pole')} aria-label={t.hear(`${n.sing}, ${n.pl}`)}>🔊</button>
             )}
           </div>
-          <div className="vb-en">“{n.en} → {n.en}s”</div>
+          <div className="vb-en">“{t.pluralPair?.(n.en) ?? `${n.en} → ${n.en}s`}”</div>
           <div className="vb-ns-verb">
             {segments(n.ex).map((s, k) => (
               <span key={k} className={s.hl ? 'vb-t-mark' : undefined}>{s.text}</span>
             ))}
           </div>
-          <div className="vb-en-alt">{n.exEn}</div>
+          <div className="vb-en-alt">{t.g(n.exEn)}</div>
         </div>
       </div>
     </div>

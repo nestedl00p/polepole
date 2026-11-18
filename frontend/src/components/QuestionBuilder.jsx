@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { speakSwahili, isSpeechSupported } from '../lib/speak';
+import { useAuth } from '../context/AuthContext';
+import { builderStrings } from '../lib/builderStrings';
 
 // Interactive question-word explorer. Tap a question word to see it inside a
 // real sentence (the word highlighted), hear it, and learn where it sits.
@@ -24,6 +26,8 @@ function segments(ex) {
 }
 
 export default function QuestionBuilder({ block = {} }) {
+  const { user } = useAuth();
+  const t = builderStrings(user?.course);
   const questions = block.questions || QUESTIONS;
   const [qi, setQi] = useState(2); // wapi — a good "goes at the end" example
   const q = questions[qi];
@@ -32,11 +36,11 @@ export default function QuestionBuilder({ block = {} }) {
   return (
     <div className="block">
       <div className="vb vb-question">
-        <div className="vb-title">{block.calloutTitle || 'Ask a question'}</div>
+        <div className="vb-title">{block.calloutTitle || t.g('Ask a question')}</div>
         {block.intro && <p className="vb-intro">{block.intro}</p>}
 
         <div className="vb-step">
-          <div className="vb-step-label"><span className="vb-dot vb-dot-mark" /> Tap a question word</div>
+          <div className="vb-step-label"><span className="vb-dot vb-dot-mark" /> {t.g('Tap a question word')}</div>
           <div className="vb-pills">
             {questions.map((item, i) => (
               <button
@@ -45,7 +49,7 @@ export default function QuestionBuilder({ block = {} }) {
                 onClick={() => setQi(i)}
               >
                 <span className="vb-pill-sw">{item.word}</span>
-                <span className="vb-pill-en">{item.en}</span>
+                <span className="vb-pill-en">{t.g(item.en)}</span>
               </button>
             ))}
           </div>
@@ -59,11 +63,11 @@ export default function QuestionBuilder({ block = {} }) {
               ))}
             </div>
             {isSpeechSupported() && (
-              <button type="button" className="vb-speak" onClick={() => speakSwahili(plain)} title="Hear it — pole pole" aria-label={`Hear ${plain} spoken`}>🔊</button>
+              <button type="button" className="vb-speak" onClick={() => speakSwahili(plain)} title={t.g('Hear it — pole pole')} aria-label={t.hear(plain)}>🔊</button>
             )}
           </div>
-          <div className="vb-en">“{q.exEn}”</div>
-          <div className="vb-qtip">💡 <strong>{q.word}</strong> — {q.tip}</div>
+          <div className="vb-en">“{t.g(q.exEn)}”</div>
+          <div className="vb-qtip">💡 <strong>{q.word}</strong> — {t.g(q.tip)}</div>
         </div>
       </div>
     </div>

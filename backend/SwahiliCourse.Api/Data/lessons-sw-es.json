@@ -1,0 +1,7086 @@
+[
+  {
+    "id": 1,
+    "week": 1,
+    "title": "Sonidos y el alfabeto",
+    "subtitle": "Domina las cinco vocales",
+    "theme": "Pronunciación",
+    "blocks": [
+      {
+        "type": "heading",
+        "heading": "Las cinco vocales"
+      },
+      {
+        "type": "paragraph",
+        "text": "La pronunciación del suajili se apoya en cinco vocales puras que nunca cambian, aparezcan donde aparezcan. Buena noticia: son prácticamente las mismas cinco vocales del español."
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Letra",
+          "Suena como",
+          "Ejemplo"
+        ],
+        "tableRows": [
+          [
+            "a",
+            "la a de «casa»",
+            "baba (padre)"
+          ],
+          [
+            "e",
+            "la e de «mesa»",
+            "meza (mesa)"
+          ],
+          [
+            "i",
+            "la i de «sí»",
+            "kiti (silla)"
+          ],
+          [
+            "o",
+            "la o de «como»",
+            "moto (fuego)"
+          ],
+          [
+            "u",
+            "la u de «luna»",
+            "sukari (azúcar)"
+          ]
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Consonantes especiales"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Letras",
+          "Suena como",
+          "Ejemplo"
+        ],
+        "tableRows": [
+          [
+            "ch",
+            "la ch de «chico»",
+            "chai (té)"
+          ],
+          [
+            "ny",
+            "la ñ de «niño»",
+            "nyumba (casa)"
+          ],
+          [
+            "sh",
+            "la sh del inglés «show» (no existe en español)",
+            "shule (escuela)"
+          ],
+          [
+            "ng'",
+            "la n de «tengo», sin pronunciar la g",
+            "ng'ombe (vaca)"
+          ],
+          [
+            "dh",
+            "la d suave de «cada»",
+            "dhahabu (oro)"
+          ]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Regla del acento",
+        "lines": [
+          "Casi todas las palabras en suajili llevan el acento en la penúltima sílaba, como las palabras llanas del español: ka-RI-bu, a-SAN-te, ha-BA-ri. Domina este ritmo y sonarás natural al instante."
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "Lee en voz alta: jambo, karibu, asante, rafiki, maji, chakula, safari, simba, kitabu, daktari. Ojo: la j suena como la j del inglés «jeans» (no como la jota española) y la h siempre se pronuncia, suave y aspirada."
+      },
+      {
+        "type": "pronunciationDrill",
+        "calloutTitle": "Dilo en voz alta",
+        "intro": "Toca el altavoz para escuchar cada palabra, luego presiona el micrófono y dila. Revisaremos lo que dijiste y resaltaremos los sonidos que debes practicar.",
+        "prompts": [
+          {
+            "swahili": "jambo",
+            "english": "hola"
+          },
+          {
+            "swahili": "karibu",
+            "english": "bienvenido"
+          },
+          {
+            "swahili": "asante",
+            "english": "gracias"
+          },
+          {
+            "swahili": "rafiki",
+            "english": "amigo"
+          },
+          {
+            "swahili": "chakula",
+            "english": "comida"
+          },
+          {
+            "swahili": "kitabu",
+            "english": "libro"
+          }
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "¿Qué sílaba lleva el acento en 'karibu'?",
+            "options": [
+              "ka-RI-bu",
+              "KA-ri-bu",
+              "ka-ri-BU",
+              "Ninguna: todas son iguales"
+            ],
+            "answer": "ka-RI-bu",
+            "explain": "El acento cae en la penúltima sílaba, como en las palabras llanas del español."
+          },
+          {
+            "prompt": "La 'a' de 'baba' suena como:",
+            "options": [
+              "la a de «casa»",
+              "la a del inglés «cat»",
+              "la a del inglés «cake»",
+              "una a débil, casi muda"
+            ],
+            "answer": "la a de «casa»",
+            "explain": "Las vocales del suajili son puras y nunca cambian, igual que en español."
+          },
+          {
+            "prompt": "La 'ch' de 'chai' suena como:",
+            "options": [
+              "la ch de «chico»",
+              "la sh del inglés «shoe»",
+              "la k de «kilo»",
+              "la j del inglés «jam»"
+            ],
+            "answer": "la ch de «chico»"
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "jambo",
+        "english": "hola"
+      },
+      {
+        "swahili": "karibu",
+        "english": "bienvenido"
+      },
+      {
+        "swahili": "simba",
+        "english": "león"
+      },
+      {
+        "swahili": "rafiki",
+        "english": "amigo"
+      },
+      {
+        "swahili": "maji",
+        "english": "agua"
+      },
+      {
+        "swahili": "shule",
+        "english": "escuela"
+      },
+      {
+        "swahili": "baba",
+        "english": "padre"
+      },
+      {
+        "swahili": "daktari",
+        "english": "doctor"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 1,
+        "type": "multiple_choice",
+        "prompt": "¿Qué vocal del suajili suena como la vocal de la palabra española «sí»?",
+        "options": [
+          "a",
+          "e",
+          "i",
+          "u"
+        ],
+        "answer": "i",
+        "hint": null
+      },
+      {
+        "id": 2,
+        "type": "multiple_choice",
+        "prompt": "¿Dónde suele caer el acento en una palabra en suajili?",
+        "options": [
+          "Primera sílaba",
+          "Penúltima sílaba",
+          "Última sílaba",
+          "Varía al azar"
+        ],
+        "answer": "Penúltima sílaba",
+        "hint": null
+      },
+      {
+        "id": 3,
+        "type": "multiple_choice",
+        "prompt": "¿Cómo se pronuncia 'ny' en 'nyumba'?",
+        "options": [
+          "n + y por separado",
+          "como la ñ de «niño»",
+          "con la n muda",
+          "como 'ng'"
+        ],
+        "answer": "como la ñ de «niño»",
+        "hint": null
+      },
+      {
+        "id": 4,
+        "type": "translate",
+        "prompt": "Traduce al español: maji",
+        "options": [],
+        "answer": "agua",
+        "hint": "Es una bebida"
+      },
+      {
+        "id": 5,
+        "type": "translate",
+        "prompt": "Traduce al español: rafiki",
+        "options": [],
+        "answer": "amigo",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 2,
+    "week": 1,
+    "title": "Saludos y cortesía",
+    "subtitle": "Las palabras que más vas a usar",
+    "theme": "Saludos",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Los saludos son sagrados en la cultura suajili. Apréndelos a fondo: los usarás todos los días."
+      },
+      {
+        "type": "heading",
+        "heading": "Saludos esenciales"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "Hujambo",
+            "Hola (¿estás bien?)"
+          ],
+          [
+            "Sijambo",
+            "Estoy bien"
+          ],
+          [
+            "Habari?",
+            "¿Cómo estás?"
+          ],
+          [
+            "Nzuri",
+            "Bien / bueno"
+          ],
+          [
+            "Shikamoo",
+            "Saludo respetuoso a una persona mayor"
+          ],
+          [
+            "Marahaba",
+            "Respuesta de la persona mayor"
+          ],
+          [
+            "Karibu",
+            "Bienvenido"
+          ],
+          [
+            "Kwa heri",
+            "Adiós"
+          ],
+          [
+            "Lala salama",
+            "Buenas noches"
+          ]
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Palabras de cortesía"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "Asante",
+            "Gracias"
+          ],
+          [
+            "Asante sana",
+            "Muchas gracias"
+          ],
+          [
+            "Tafadhali",
+            "Por favor"
+          ],
+          [
+            "Samahani",
+            "Disculpa / perdón"
+          ],
+          [
+            "Pole",
+            "Lo siento (compasión)"
+          ],
+          [
+            "Hakuna matata",
+            "No hay problema"
+          ],
+          [
+            "Ndiyo",
+            "Sí"
+          ],
+          [
+            "Hapana",
+            "No"
+          ]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Nota cultural: Shikamoo",
+        "lines": [
+          "Se usa para saludar a cualquier persona mayor o respetada. La persona mayor responde 'Marahaba'. Usarlo demuestra respeto y la gente te tomará cariño de inmediato."
+        ]
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          {
+            "speaker": "Amina",
+            "swahili": "Hujambo, Juma!",
+            "english": "¡Hola, Juma!"
+          },
+          {
+            "speaker": "Juma",
+            "swahili": "Sijambo, Amina. Habari za asubuhi?",
+            "english": "Estoy bien, Amina. ¿Qué tal la mañana?"
+          },
+          {
+            "speaker": "Amina",
+            "swahili": "Nzuri sana, asante. Na wewe?",
+            "english": "Muy bien, gracias. ¿Y tú?"
+          },
+          {
+            "speaker": "Juma",
+            "swahili": "Nzuri. Karibu!",
+            "english": "Bien. ¡Bienvenida!"
+          }
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "Una persona mayor te responde 'Marahaba'. ¿Qué le dijiste primero?",
+            "options": [
+              "Shikamoo",
+              "Hujambo",
+              "Karibu",
+              "Asante"
+            ],
+            "answer": "Shikamoo",
+            "explain": "Shikamoo es el saludo respetuoso para las personas mayores; Marahaba es la respuesta."
+          },
+          {
+            "prompt": "Alguien choca contigo y dice 'Samahani'. ¿Qué respuesta queda mejor?",
+            "options": [
+              "Hakuna matata",
+              "Lala salama",
+              "Shikamoo",
+              "Tafadhali"
+            ],
+            "answer": "Hakuna matata",
+            "explain": "Hakuna matata = no hay problema."
+          },
+          {
+            "prompt": "Un amigo te cuenta que se siente mal. Le dices:",
+            "options": [
+              "Pole",
+              "Karibu",
+              "Ndiyo",
+              "Kwa heri"
+            ],
+            "answer": "Pole",
+            "explain": "Pole expresa compasión."
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "hujambo",
+        "english": "hola"
+      },
+      {
+        "swahili": "sijambo",
+        "english": "estoy bien"
+      },
+      {
+        "swahili": "habari",
+        "english": "noticias/¿cómo estás?"
+      },
+      {
+        "swahili": "nzuri",
+        "english": "bien"
+      },
+      {
+        "swahili": "shikamoo",
+        "english": "saludo respetuoso"
+      },
+      {
+        "swahili": "asante",
+        "english": "gracias"
+      },
+      {
+        "swahili": "tafadhali",
+        "english": "por favor"
+      },
+      {
+        "swahili": "samahani",
+        "english": "disculpa"
+      },
+      {
+        "swahili": "kwa heri",
+        "english": "adiós"
+      },
+      {
+        "swahili": "ndiyo",
+        "english": "sí"
+      },
+      {
+        "swahili": "hapana",
+        "english": "no"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 6,
+        "type": "multiple_choice",
+        "prompt": "¿Cómo respondes a 'Hujambo'?",
+        "options": [
+          "Habari",
+          "Sijambo",
+          "Karibu",
+          "Kwa heri"
+        ],
+        "answer": "Sijambo",
+        "hint": null
+      },
+      {
+        "id": 7,
+        "type": "multiple_choice",
+        "prompt": "¿Qué responde una persona mayor a 'Shikamoo'?",
+        "options": [
+          "Asante",
+          "Marahaba",
+          "Nzuri",
+          "Pole"
+        ],
+        "answer": "Marahaba",
+        "hint": null
+      },
+      {
+        "id": 8,
+        "type": "multiple_choice",
+        "prompt": "'Hakuna matata' significa:",
+        "options": [
+          "Adiós",
+          "No hay problema",
+          "Buenos días",
+          "Gracias"
+        ],
+        "answer": "No hay problema",
+        "hint": null
+      },
+      {
+        "id": 9,
+        "type": "translate",
+        "prompt": "Traduce al suajili: muchas gracias",
+        "options": [],
+        "answer": "asante sana",
+        "hint": null
+      },
+      {
+        "id": 10,
+        "type": "translate",
+        "prompt": "Traduce al suajili: buenas noches",
+        "options": [],
+        "answer": "lala salama",
+        "hint": null
+      },
+      {
+        "id": 11,
+        "type": "multiple_choice",
+        "prompt": "¿Qué palabra significa 'por favor'?",
+        "options": [
+          "Pole",
+          "Tafadhali",
+          "Samahani",
+          "Karibu"
+        ],
+        "answer": "Tafadhali",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 3,
+    "week": 1,
+    "title": "Pronombres y 'ser/estar'",
+    "subtitle": "Prefijos de sujeto: el corazón de los verbos",
+    "theme": "Gramática",
+    "blocks": [
+      {
+        "type": "heading",
+        "heading": "Pronombres de sujeto"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "Mimi",
+            "Yo"
+          ],
+          [
+            "Wewe",
+            "Tú"
+          ],
+          [
+            "Yeye",
+            "Él/Ella"
+          ],
+          [
+            "Sisi",
+            "Nosotros"
+          ],
+          [
+            "Ninyi",
+            "Ustedes"
+          ],
+          [
+            "Wao",
+            "Ellos"
+          ]
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Prefijos de sujeto"
+      },
+      {
+        "type": "paragraph",
+        "text": "Cada verbo lleva un pequeño prefijo que indica quién hace la acción. Funciona como las terminaciones del español (como, comes, come), que ya dicen la persona, solo que en suajili va al principio del verbo. Memorízalos hoy."
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Prefijo",
+          "Significado",
+          "Ejemplo"
+        ],
+        "tableRows": [
+          [
+            "ni-",
+            "yo",
+            "ninakula (estoy comiendo)"
+          ],
+          [
+            "u-",
+            "tú",
+            "unakula"
+          ],
+          [
+            "a-",
+            "él/ella",
+            "anakula"
+          ],
+          [
+            "tu-",
+            "nosotros",
+            "tunakula"
+          ],
+          [
+            "m-",
+            "ustedes",
+            "mnakula"
+          ],
+          [
+            "wa-",
+            "ellos",
+            "wanakula"
+          ]
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "'Ser' y 'estar' — ni y si"
+      },
+      {
+        "type": "paragraph",
+        "text": "En presente, 'soy/eres/es/somos/son' es simplemente 'ni' (afirmativo) o 'si' (negativo), igual para todas las personas. Además, sirve tanto para 'ser' como para 'estar'."
+      },
+      {
+        "type": "list",
+        "lines": [
+          "Mimi ni mwalimu — Yo soy maestro",
+          "Yeye si mgonjwa — Él/Ella no está enfermo/a",
+          "Sisi ni marafiki — Nosotros somos amigos"
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "¿Qué prefijo de sujeto significa 'ustedes' (plural)?",
+            "options": [
+              "m-",
+              "u-",
+              "tu-",
+              "wa-"
+            ],
+            "answer": "m-",
+            "explain": "m- es 'ustedes', cuando le hablas a más de una persona: mnakula — ustedes están comiendo."
+          },
+          {
+            "prompt": "'Yeye si mgonjwa' significa:",
+            "options": [
+              "Él/Ella no está enfermo/a",
+              "Él/Ella está enfermo/a",
+              "Ellos no están enfermos",
+              "Yo no estoy enfermo"
+            ],
+            "answer": "Él/Ella no está enfermo/a",
+            "explain": "si es el negativo de ni."
+          },
+          {
+            "prompt": "Completa: Sisi ___ marafiki. (Somos amigos.)",
+            "options": [
+              "ni",
+              "si",
+              "tu",
+              "wa"
+            ],
+            "answer": "ni",
+            "explain": "ni significa soy / eres / es / somos / son: es igual para todas las personas."
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "mimi",
+        "english": "yo"
+      },
+      {
+        "swahili": "wewe",
+        "english": "tú"
+      },
+      {
+        "swahili": "yeye",
+        "english": "él/ella"
+      },
+      {
+        "swahili": "sisi",
+        "english": "nosotros"
+      },
+      {
+        "swahili": "wao",
+        "english": "ellos"
+      },
+      {
+        "swahili": "mwalimu",
+        "english": "maestro"
+      },
+      {
+        "swahili": "mwanafunzi",
+        "english": "estudiante"
+      },
+      {
+        "swahili": "mgonjwa",
+        "english": "enfermo"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 12,
+        "type": "multiple_choice",
+        "prompt": "¿Qué prefijo significa 'nosotros'?",
+        "options": [
+          "ni-",
+          "tu-",
+          "wa-",
+          "u-"
+        ],
+        "answer": "tu-",
+        "hint": null
+      },
+      {
+        "id": 13,
+        "type": "multiple_choice",
+        "prompt": "'Anakula' significa:",
+        "options": [
+          "Yo estoy comiendo",
+          "Tú estás comiendo",
+          "Él/Ella está comiendo",
+          "Ellos están comiendo"
+        ],
+        "answer": "Él/Ella está comiendo",
+        "hint": null
+      },
+      {
+        "id": 14,
+        "type": "multiple_choice",
+        "prompt": "¿Cómo se dice 'soy/eres/es' (afirmativo)?",
+        "options": [
+          "si",
+          "ni",
+          "na",
+          "wa"
+        ],
+        "answer": "ni",
+        "hint": null
+      },
+      {
+        "id": 15,
+        "type": "translate",
+        "prompt": "Traduce al suajili: Nosotros somos amigos",
+        "options": [],
+        "answer": "sisi ni marafiki",
+        "hint": "Usa 'ni'"
+      },
+      {
+        "id": 16,
+        "type": "fill_blank",
+        "prompt": "Completa: Yeye ___ mwalimu (Él es maestro)",
+        "options": [],
+        "answer": "ni",
+        "hint": null
+      },
+      {
+        "id": 17,
+        "type": "multiple_choice",
+        "prompt": "¿Qué prefijo se usa para 'ellos'?",
+        "options": [
+          "a-",
+          "wa-",
+          "m-",
+          "tu-"
+        ],
+        "answer": "wa-",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 4,
+    "week": 1,
+    "title": "Tiempo presente (-na-)",
+    "subtitle": "Construye miles de oraciones",
+    "theme": "Gramática",
+    "blocks": [
+      {
+        "type": "verbBuilder",
+        "calloutTitle": "Construye un verbo: SUJETO + na + RAÍZ",
+        "intro": "Los verbos en suajili se arman como bloques. Elige quién hace la acción, deja -na- en medio para el «ahora» y luego agrega la acción. La raíz nunca cambia: solo cambia la pieza de adelante. Toca las opciones de abajo y mira cómo se arma la palabra sola."
+      },
+      {
+        "type": "heading",
+        "heading": "Verbos comunes"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Raíz",
+          "Significado"
+        ],
+        "tableRows": [
+          [
+            "-soma",
+            "leer/estudiar"
+          ],
+          [
+            "-kula",
+            "comer"
+          ],
+          [
+            "-kunywa",
+            "beber"
+          ],
+          [
+            "-enda",
+            "ir"
+          ],
+          [
+            "-taka",
+            "querer"
+          ],
+          [
+            "-penda",
+            "gustar/amar"
+          ],
+          [
+            "-sema",
+            "hablar"
+          ],
+          [
+            "-ona",
+            "ver"
+          ],
+          [
+            "-jua",
+            "saber"
+          ],
+          [
+            "-fanya",
+            "hacer"
+          ]
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Conjugación completa: -penda"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "Ninapenda",
+            "Me gusta"
+          ],
+          [
+            "Unapenda",
+            "Te gusta"
+          ],
+          [
+            "Anapenda",
+            "Le gusta (a él/ella)"
+          ],
+          [
+            "Tunapenda",
+            "Nos gusta"
+          ],
+          [
+            "Mnapenda",
+            "Les gusta (a ustedes)"
+          ],
+          [
+            "Wanapenda",
+            "Les gusta (a ellos)"
+          ]
+        ]
+      },
+      {
+        "type": "list",
+        "lines": [
+          "Ninasoma kitabu — Estoy leyendo un libro",
+          "Anakunywa maji — Él/Ella bebe agua",
+          "Wanaenda shule — Ellos van a la escuela"
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "'Tunasoma' significa:",
+            "options": [
+              "Nosotros estamos leyendo",
+              "Yo estoy leyendo",
+              "Ellos están leyendo",
+              "Tú estás leyendo"
+            ],
+            "answer": "Nosotros estamos leyendo",
+            "explain": "tu- (nosotros) + -na- (ahora) + soma (leer)."
+          },
+          {
+            "prompt": "Constrúyelo: tú (una persona) + presente + querer",
+            "options": [
+              "unataka",
+              "ninataka",
+              "anataka",
+              "wanataka"
+            ],
+            "answer": "unataka",
+            "explain": "u- (tú) + -na- + taka."
+          },
+          {
+            "prompt": "¿Cómo se dice 'Ellos beben agua'?",
+            "options": [
+              "Wanakunywa maji",
+              "Anakunywa maji",
+              "Tunakunywa maji",
+              "Mnakunywa maji"
+            ],
+            "answer": "Wanakunywa maji"
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "soma",
+        "english": "leer"
+      },
+      {
+        "swahili": "kula",
+        "english": "comer"
+      },
+      {
+        "swahili": "kunywa",
+        "english": "beber"
+      },
+      {
+        "swahili": "enda",
+        "english": "ir"
+      },
+      {
+        "swahili": "taka",
+        "english": "querer"
+      },
+      {
+        "swahili": "penda",
+        "english": "gustar"
+      },
+      {
+        "swahili": "sema",
+        "english": "hablar"
+      },
+      {
+        "swahili": "ona",
+        "english": "ver"
+      },
+      {
+        "swahili": "jua",
+        "english": "saber"
+      },
+      {
+        "swahili": "fanya",
+        "english": "hacer"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 18,
+        "type": "multiple_choice",
+        "prompt": "¿Qué indica -na-?",
+        "options": [
+          "Tiempo pasado",
+          "Tiempo presente",
+          "Tiempo futuro",
+          "Negación"
+        ],
+        "answer": "Tiempo presente",
+        "hint": null
+      },
+      {
+        "id": 19,
+        "type": "translate",
+        "prompt": "Traduce al suajili: Estamos comiendo",
+        "options": [],
+        "answer": "tunakula",
+        "hint": null
+      },
+      {
+        "id": 20,
+        "type": "translate",
+        "prompt": "Traduce al suajili: Yo quiero",
+        "options": [],
+        "answer": "ninataka",
+        "hint": null
+      },
+      {
+        "id": 21,
+        "type": "fill_blank",
+        "prompt": "Constrúyelo: ella + presente + saber = ___",
+        "options": [],
+        "answer": "anajua",
+        "hint": null
+      },
+      {
+        "id": 22,
+        "type": "multiple_choice",
+        "prompt": "'Wanaenda' significa:",
+        "options": [
+          "Nosotros vamos",
+          "Tú vas",
+          "Ellos van",
+          "Yo voy"
+        ],
+        "answer": "Ellos van",
+        "hint": null
+      },
+      {
+        "id": 23,
+        "type": "translate",
+        "prompt": "Traduce al español: ninapenda",
+        "options": [],
+        "answer": "me gusta",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 5,
+    "week": 1,
+    "title": "Negaciones y preguntas",
+    "subtitle": "Decir que no y hacer preguntas de sí o no",
+    "theme": "Gramática",
+    "blocks": [
+      {
+        "type": "verbBuilder",
+        "mode": "negative",
+        "calloutTitle": "Construye un negativo: prefijo NEGATIVO + verbo (-a → -i)",
+        "intro": "Para decir que NO haces algo, cambia el prefijo de sujeto por su gemelo negativo y cambia la -a final del verbo por -i. En el presente negativo no hay -na-. Toca para construirlo:"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Prefijo",
+          "Significado",
+          "Ejemplo"
+        ],
+        "tableRows": [
+          [
+            "si-",
+            "yo no",
+            "sisomi"
+          ],
+          [
+            "hu-",
+            "tú no",
+            "husomi"
+          ],
+          [
+            "ha-",
+            "él/ella no",
+            "hasomi"
+          ],
+          [
+            "hatu-",
+            "nosotros no",
+            "hatusomi"
+          ],
+          [
+            "ham-",
+            "ustedes no",
+            "hamsomi"
+          ],
+          [
+            "hawa-",
+            "ellos no",
+            "hawasomi"
+          ]
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Preguntas de sí o no"
+      },
+      {
+        "type": "paragraph",
+        "text": "Una pregunta de sí o no se ve igual que una afirmación, como en español: sube la entonación, o agrega 'Je' al principio."
+      },
+      {
+        "type": "list",
+        "lines": [
+          "Unapenda chai? — ¿Te gusta el té?",
+          "Ndiyo, ninapenda chai — Sí, me gusta",
+          "Hapana, sipendi chai — No, no me gusta"
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Diálogo — ¿Té o café?"
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          {
+            "speaker": "Asha",
+            "swahili": "Je, unapenda kahawa?",
+            "english": "¿Te gusta el café?"
+          },
+          {
+            "speaker": "Tom",
+            "swahili": "Hapana, sipendi kahawa. Ninapenda chai.",
+            "english": "No, no me gusta el café. Me gusta el té."
+          },
+          {
+            "speaker": "Asha",
+            "swahili": "Unataka chai?",
+            "english": "¿Quieres té?"
+          },
+          {
+            "speaker": "Tom",
+            "swahili": "Ndiyo, tafadhali. Asante sana!",
+            "english": "Sí, por favor. ¡Muchas gracias!"
+          },
+          {
+            "speaker": "Asha",
+            "swahili": "Karibu.",
+            "english": "De nada."
+          }
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "El negativo de 'ninasoma' (yo leo) es:",
+            "options": [
+              "sisomi",
+              "sinasoma",
+              "hasomi",
+              "sisoma"
+            ],
+            "answer": "sisomi",
+            "explain": "si- reemplaza a ni-, -na- desaparece y la -a final se convierte en -i."
+          },
+          {
+            "prompt": "'Hatusomi' significa:",
+            "options": [
+              "Nosotros no leemos",
+              "Ellos no leen",
+              "Yo no leo",
+              "Tú no lees"
+            ],
+            "answer": "Nosotros no leemos",
+            "explain": "hatu- = nosotros no."
+          },
+          {
+            "prompt": "'Unapenda chai?' — ¿cómo respondes 'No, no me gusta'?",
+            "options": [
+              "Hapana, sipendi chai",
+              "Ndiyo, ninapenda chai",
+              "Hapana, hapendi chai",
+              "Hapana, ninapenda chai"
+            ],
+            "answer": "Hapana, sipendi chai"
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "chai",
+        "english": "té"
+      },
+      {
+        "swahili": "kahawa",
+        "english": "café"
+      },
+      {
+        "swahili": "sipendi",
+        "english": "no me gusta"
+      },
+      {
+        "swahili": "je",
+        "english": "partícula interrogativa"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 24,
+        "type": "multiple_choice",
+        "prompt": "En el presente negativo, la -a final normalmente cambia a:",
+        "options": [
+          "-e",
+          "-i",
+          "-o",
+          "-u"
+        ],
+        "answer": "-i",
+        "hint": null
+      },
+      {
+        "id": 25,
+        "type": "translate",
+        "prompt": "Pon en negativo: Ninakula (yo como) →",
+        "options": [],
+        "answer": "sili",
+        "hint": "quita -na-, cambia -a por -i"
+      },
+      {
+        "id": 26,
+        "type": "multiple_choice",
+        "prompt": "'Hawaendi' significa:",
+        "options": [
+          "Ellos van",
+          "Ellos no van",
+          "Nosotros no vamos",
+          "Tú no vas"
+        ],
+        "answer": "Ellos no van",
+        "hint": null
+      },
+      {
+        "id": 27,
+        "type": "translate",
+        "prompt": "Responde 'no' a: Unasoma Kiswahili?",
+        "options": [],
+        "answer": "hapana, sisomi kiswahili",
+        "hint": null
+      },
+      {
+        "id": 28,
+        "type": "multiple_choice",
+        "prompt": "¿Cuál inicia una pregunta de sí o no más formal?",
+        "options": [
+          "Je",
+          "Ni",
+          "Na",
+          "Wa"
+        ],
+        "answer": "Je",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 6,
+    "week": 1,
+    "title": "Sustantivos básicos y este/ese",
+    "subtitle": "Nombra el mundo que te rodea",
+    "theme": "Vocabulario",
+    "blocks": [
+      {
+        "type": "heading",
+        "heading": "Sustantivos cotidianos"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "mtu / watu",
+            "persona / personas"
+          ],
+          [
+            "mtoto / watoto",
+            "niño / niños"
+          ],
+          [
+            "nyumba",
+            "casa"
+          ],
+          [
+            "chakula",
+            "comida"
+          ],
+          [
+            "kitabu",
+            "libro"
+          ],
+          [
+            "gari",
+            "carro"
+          ],
+          [
+            "soko",
+            "mercado"
+          ],
+          [
+            "kazi",
+            "trabajo"
+          ],
+          [
+            "rafiki",
+            "amigo"
+          ]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Fíjate en el patrón",
+        "lines": [
+          "mtu → watu, mtoto → watoto. Muchas palabras para personas empiezan con m- (singular) y wa- (plural): el plural se marca al principio de la palabra, no al final como en español. ¡Tu primer vistazo a las clases nominales!"
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Este y ese"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "huyu",
+            "este/esta (persona)"
+          ],
+          [
+            "hawa",
+            "estos/estas (personas)"
+          ],
+          [
+            "yule",
+            "ese/esa (persona)"
+          ],
+          [
+            "wale",
+            "esos/esas (personas)"
+          ],
+          [
+            "hiki",
+            "este (libro/cosa)"
+          ],
+          [
+            "hii",
+            "esta (casa)"
+          ]
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "'Hii nyumba' significa:",
+            "options": [
+              "esta casa",
+              "esa casa",
+              "estas casas",
+              "esta persona"
+            ],
+            "answer": "esta casa",
+            "explain": "hii es 'este/esta' para cosas de la clase N, como nyumba."
+          },
+          {
+            "prompt": "Completa: ___ mtu (esta persona)",
+            "options": [
+              "huyu",
+              "hiki",
+              "hii",
+              "hawa"
+            ],
+            "answer": "huyu",
+            "explain": "huyu = este/esta (persona); hiki y hii son para cosas."
+          },
+          {
+            "prompt": "'Yule mtoto' significa:",
+            "options": [
+              "ese niño",
+              "este niño",
+              "esos niños",
+              "estos niños"
+            ],
+            "answer": "ese niño",
+            "explain": "yule = ese/esa (una persona); wale = esos/esas (personas)."
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "mtu",
+        "english": "persona"
+      },
+      {
+        "swahili": "watu",
+        "english": "personas"
+      },
+      {
+        "swahili": "mtoto",
+        "english": "niño"
+      },
+      {
+        "swahili": "watoto",
+        "english": "niños"
+      },
+      {
+        "swahili": "nyumba",
+        "english": "casa"
+      },
+      {
+        "swahili": "gari",
+        "english": "carro"
+      },
+      {
+        "swahili": "soko",
+        "english": "mercado"
+      },
+      {
+        "swahili": "kazi",
+        "english": "trabajo"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 29,
+        "type": "multiple_choice",
+        "prompt": "Plural de 'mtoto':",
+        "options": [
+          "mtotos",
+          "watoto",
+          "mitoto",
+          "vitoto"
+        ],
+        "answer": "watoto",
+        "hint": null
+      },
+      {
+        "id": 30,
+        "type": "multiple_choice",
+        "prompt": "'Huyu' significa:",
+        "options": [
+          "estas personas",
+          "esta persona",
+          "esa persona",
+          "este libro"
+        ],
+        "answer": "esta persona",
+        "hint": null
+      },
+      {
+        "id": 31,
+        "type": "translate",
+        "prompt": "Traduce al suajili: este es un niño",
+        "options": [],
+        "answer": "huyu ni mtoto",
+        "hint": null
+      },
+      {
+        "id": 32,
+        "type": "translate",
+        "prompt": "Traduce al español: watu",
+        "options": [],
+        "answer": "personas",
+        "hint": null
+      },
+      {
+        "id": 33,
+        "type": "multiple_choice",
+        "prompt": "¿Cuál significa 'esas personas'?",
+        "options": [
+          "hawa",
+          "huyu",
+          "wale",
+          "yule"
+        ],
+        "answer": "wale",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 7,
+    "week": 1,
+    "title": "Repaso y primera conversación",
+    "subtitle": "Pon en práctica la Semana 1",
+    "theme": "Repaso",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Nada de gramática nueva: consolida la Semana 1 y ten una conversación de verdad."
+      },
+      {
+        "type": "heading",
+        "heading": "Lista de la Semana 1"
+      },
+      {
+        "type": "list",
+        "lines": [
+          "Pronunciar las cinco vocales",
+          "Saludar a la gente, incluidas las personas mayores",
+          "Conocer los seis prefijos de sujeto",
+          "Construir verbos en presente con -na-",
+          "Poner verbos en negativo",
+          "Usar ni/si y huyu/yule"
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Diálogo completo — Conocer a alguien"
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          {
+            "speaker": "Maria",
+            "swahili": "Hujambo! Jina langu ni Maria.",
+            "english": "¡Hola! Mi nombre es Maria."
+          },
+          {
+            "speaker": "Tom",
+            "swahili": "Sijambo. Mimi ni Tom. Karibu!",
+            "english": "Estoy bien. Yo soy Tom. ¡Bienvenida!"
+          },
+          {
+            "speaker": "Maria",
+            "swahili": "Asante. Unatoka wapi?",
+            "english": "Gracias. ¿De dónde eres?"
+          },
+          {
+            "speaker": "Tom",
+            "swahili": "Ninatoka Tanzania. Wewe je?",
+            "english": "Soy de Tanzania. ¿Y tú?"
+          },
+          {
+            "speaker": "Maria",
+            "swahili": "Ninatoka Marekani. Ninapenda Kiswahili!",
+            "english": "Soy de Estados Unidos. ¡Me gusta el suajili!"
+          }
+        ]
+      },
+      {
+        "type": "conversation",
+        "calloutTitle": "Ahora tú — habla con Juma",
+        "intro": "Una conversación real, en voz alta. Juma responde a lo que le digas, así que no hay guion: usa las frases de abajo si te atoras.",
+        "scenario": {
+          "setting": "Estás en un café en Arusha, Tanzania. Juma, un estudiante de la mesa de al lado, se voltea para saludarte.",
+          "goal": "Salúdalo, dile tu nombre y de dónde eres, y pregúntale lo mismo.",
+          "role": "Juma, a friendly university student who was born and lives in Arusha, Tanzania. You are curious about the visitor: their name, where they come from, and whether they like Swahili. You are happy to say your own name and where you are from when asked.",
+          "opening": "Hujambo! Karibu.",
+          "openingTranslation": "¡Hola! Bienvenido.",
+          "phrases": [
+            {
+              "swahili": "Sijambo.",
+              "english": "Estoy bien."
+            },
+            {
+              "swahili": "Jina langu ni …",
+              "english": "Mi nombre es …"
+            },
+            {
+              "swahili": "Ninatoka …",
+              "english": "Soy de …"
+            },
+            {
+              "swahili": "Unatoka wapi?",
+              "english": "¿De dónde eres?"
+            },
+            {
+              "swahili": "Wewe je?",
+              "english": "¿Y tú?"
+            },
+            {
+              "swahili": "Ninapenda Kiswahili.",
+              "english": "Me gusta el suajili."
+            },
+            {
+              "swahili": "Asante. Kwa heri!",
+              "english": "Gracias. ¡Adiós!"
+            }
+          ]
+        }
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "¿Cómo se dice 'Soy de Estados Unidos'?",
+            "options": [
+              "Ninatoka Marekani",
+              "Unatoka Marekani",
+              "Ninapenda Marekani",
+              "Jina langu ni Marekani"
+            ],
+            "answer": "Ninatoka Marekani",
+            "explain": "ni- (yo) + -na- + toka (venir de)."
+          },
+          {
+            "prompt": "¿Cómo se dice 'Mi nombre es Maria'?",
+            "options": [
+              "Jina langu ni Maria",
+              "Ninatoka Maria",
+              "Mimi si Maria",
+              "Ninapenda Maria"
+            ],
+            "answer": "Jina langu ni Maria"
+          },
+          {
+            "prompt": "Alguien te saluda con 'Hujambo!'. Tú respondes:",
+            "options": [
+              "Sijambo",
+              "Marahaba",
+              "Asante",
+              "Kwa heri"
+            ],
+            "answer": "Sijambo"
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "jina",
+        "english": "nombre"
+      },
+      {
+        "swahili": "ninatoka",
+        "english": "vengo de"
+      },
+      {
+        "swahili": "unatoka",
+        "english": "vienes de"
+      },
+      {
+        "swahili": "Kiswahili",
+        "english": "suajili (el idioma)"
+      },
+      {
+        "swahili": "Marekani",
+        "english": "Estados Unidos"
+      },
+      {
+        "swahili": "Tanzania",
+        "english": "Tanzania"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 34,
+        "type": "translate",
+        "prompt": "Traduce al suajili: Mi nombre es (tu nombre) — completa: Jina ___ ni...",
+        "options": [],
+        "answer": "langu",
+        "hint": null
+      },
+      {
+        "id": 35,
+        "type": "multiple_choice",
+        "prompt": "'Unatoka wapi?' significa:",
+        "options": [
+          "¿A dónde vas?",
+          "¿De dónde eres?",
+          "¿Cómo te llamas?",
+          "¿Cómo estás?"
+        ],
+        "answer": "¿De dónde eres?",
+        "hint": null
+      },
+      {
+        "id": 36,
+        "type": "translate",
+        "prompt": "Traduce al español: ninapenda Kiswahili",
+        "options": [],
+        "answer": "me gusta el suajili",
+        "hint": null
+      },
+      {
+        "id": 37,
+        "type": "multiple_choice",
+        "prompt": "¿Cómo le darías la bienvenida a alguien?",
+        "options": [
+          "Kwa heri",
+          "Karibu",
+          "Pole",
+          "Samahani"
+        ],
+        "answer": "Karibu",
+        "hint": null
+      }
+    ],
+    "xpReward": 150
+  },
+  {
+    "id": 8,
+    "week": 2,
+    "title": "Clases nominales I",
+    "subtitle": "M-/WA- y M-/MI-",
+    "theme": "Gramática",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Los sustantivos se agrupan en clases que controlan los prefijos de los adjetivos y los verbos. Se parece un poco a la concordancia de género del español (el niño alto / la niña alta), pero con más grupos. Es maravillosamente regular una vez que lo aprendes."
+      },
+      {
+        "type": "heading",
+        "heading": "Clase M-/WA- (personas)"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "mtu / watu",
+            "persona / personas"
+          ],
+          [
+            "mtoto / watoto",
+            "niño / niños"
+          ],
+          [
+            "mwalimu / walimu",
+            "maestro(s)"
+          ],
+          [
+            "mgeni / wageni",
+            "invitado(s)"
+          ]
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "Concordancia del verbo: a- (singular) / wa- (plural). Mtoto anacheza / Watoto wanacheza."
+      },
+      {
+        "type": "heading",
+        "heading": "Clase M-/MI- (plantas y cosas)"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "mti / miti",
+            "árbol(es)"
+          ],
+          [
+            "mlango / milango",
+            "puerta(s)"
+          ],
+          [
+            "mji / miji",
+            "ciudad(es)"
+          ],
+          [
+            "mkono / mikono",
+            "mano(s)"
+          ]
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "Concordancia: u- (singular) / i- (plural). Mti unaanguka / Miti inaanguka."
+      },
+      {
+        "type": "nounSorter",
+        "mode": "set1",
+        "calloutTitle": "Clasifica el sustantivo",
+        "intro": "Toca un sustantivo para ver su clase, su plural y cómo cambia el verbo."
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "El plural de 'mgeni' (invitado) es:",
+            "options": [
+              "wageni",
+              "migeni",
+              "mageni",
+              "vigeni"
+            ],
+            "answer": "wageni",
+            "explain": "Un invitado es una persona, así que va en M-/WA-: m- se convierte en wa-."
+          },
+          {
+            "prompt": "Completa: Watoto ___cheza. (Los niños están jugando.)",
+            "options": [
+              "wana",
+              "ana",
+              "ina",
+              "una"
+            ],
+            "answer": "wana",
+            "explain": "Las personas en plural llevan wa-."
+          },
+          {
+            "prompt": "Completa: Miti ___anguka. (Los árboles se están cayendo.)",
+            "options": [
+              "ina",
+              "wana",
+              "una",
+              "ana"
+            ],
+            "answer": "ina",
+            "explain": "El plural de M-/MI- lleva i-."
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "mti",
+        "english": "árbol"
+      },
+      {
+        "swahili": "miti",
+        "english": "árboles"
+      },
+      {
+        "swahili": "mlango",
+        "english": "puerta"
+      },
+      {
+        "swahili": "mji",
+        "english": "ciudad"
+      },
+      {
+        "swahili": "mkono",
+        "english": "mano"
+      },
+      {
+        "swahili": "mgeni",
+        "english": "invitado"
+      },
+      {
+        "swahili": "walimu",
+        "english": "maestros"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 38,
+        "type": "multiple_choice",
+        "prompt": "Plural de 'mti':",
+        "options": [
+          "mtis",
+          "miti",
+          "watri",
+          "vimti"
+        ],
+        "answer": "miti",
+        "hint": null
+      },
+      {
+        "id": 39,
+        "type": "multiple_choice",
+        "prompt": "La clase M-/WA- es principalmente para:",
+        "options": [
+          "plantas",
+          "personas",
+          "objetos",
+          "ideas abstractas"
+        ],
+        "answer": "personas",
+        "hint": null
+      },
+      {
+        "id": 40,
+        "type": "translate",
+        "prompt": "Traduce al suajili: árboles (plural de mti)",
+        "options": [],
+        "answer": "miti",
+        "hint": null
+      },
+      {
+        "id": 41,
+        "type": "translate",
+        "prompt": "Traduce al español: walimu",
+        "options": [],
+        "answer": "maestros",
+        "hint": null
+      },
+      {
+        "id": 42,
+        "type": "multiple_choice",
+        "prompt": "¿A qué clase pertenece 'mlango' (puerta)?",
+        "options": [
+          "M-/WA-",
+          "M-/MI-",
+          "KI-/VI-",
+          "N-"
+        ],
+        "answer": "M-/MI-",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 9,
+    "week": 2,
+    "title": "Clases nominales II",
+    "subtitle": "KI-/VI- y N-",
+    "theme": "Gramática",
+    "blocks": [
+      {
+        "type": "heading",
+        "heading": "Clase KI-/VI- (cosas)"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "kitabu / vitabu",
+            "libro(s)"
+          ],
+          [
+            "kiti / viti",
+            "silla(s)"
+          ],
+          [
+            "kikombe / vikombe",
+            "taza(s)"
+          ],
+          [
+            "chakula / vyakula",
+            "comida(s)"
+          ]
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Clase N- (muchos sustantivos comunes)"
+      },
+      {
+        "type": "paragraph",
+        "text": "Una clase enorme: el singular y el plural casi siempre se ven IGUALES."
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "nyumba",
+            "casa(s)"
+          ],
+          [
+            "barabara",
+            "carretera(s)"
+          ],
+          [
+            "chai",
+            "té"
+          ],
+          [
+            "meza",
+            "mesa(s)"
+          ],
+          [
+            "safari",
+            "viaje(s)"
+          ],
+          [
+            "pesa",
+            "dinero"
+          ]
+        ]
+      },
+      {
+        "type": "nounSorter",
+        "mode": "set2",
+        "calloutTitle": "Clasifica el sustantivo",
+        "intro": "Toca un sustantivo para ver su clase, su plural y cómo cambia el verbo."
+      },
+      {
+        "type": "heading",
+        "heading": "Cómo reconocer la clase"
+      },
+      {
+        "type": "paragraph",
+        "text": "Ya conoces las cuatro clases principales. La mayoría de los sustantivos muestran su clase en el prefijo, y el plural es la mejor pista: pon el sustantivo en plural y el nuevo prefijo te dice la clase."
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Si el sustantivo es…",
+          "Clase",
+          "Singular → Plural",
+          "Ejemplos"
+        ],
+        "tableRows": [
+          [
+            "una persona",
+            "M/WA",
+            "m-/mw- → wa-",
+            "mtu → watu, mwalimu → walimu"
+          ],
+          [
+            "un árbol, una planta o una parte del cuerpo",
+            "M/MI",
+            "m-/mw- → mi-",
+            "mti → miti, mkono → mikono"
+          ],
+          [
+            "una cosa / un objeto (o un idioma)",
+            "KI/VI",
+            "ki-/ch- → vi-/vy-",
+            "kitabu → vitabu, chakula → vyakula"
+          ],
+          [
+            "un animal o una palabra prestada",
+            "N",
+            "sin cambio",
+            "rafiki, simu, paka, ndizi"
+          ],
+          [
+            "algo con plural en ma-",
+            "JI/MA",
+            "(ji-/—) → ma-",
+            "gari → magari, jina → majina"
+          ],
+          [
+            "abstracto / empieza con u-",
+            "U",
+            "u-/w- → (a menudo N)",
+            "uhuru, uso, wimbo"
+          ]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "La m- engañosa",
+        "lines": [
+          "Tanto las personas (M/WA) como las plantas y objetos (M/MI) empiezan con m-. Distínguelos por el significado: una PERSONA es M/WA (plural wa-); un ÁRBOL o una COSA es M/MI (plural mi-).",
+          "mtoto → watoto (personas) · mti → miti (cosas)"
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Por qué importan las clases",
+        "lines": [
+          "'Bueno' cambia de forma según la clase: mtu mzuri, kitabu kizuri, nyumba nzuri. Es parecido a 'bueno / buena / buenos' en español, solo que con más clases. Mañana aprenderás cómo."
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "El plural de 'kikombe' (taza) es:",
+            "options": [
+              "vikombe",
+              "mikombe",
+              "wakombe",
+              "kikombe"
+            ],
+            "answer": "vikombe",
+            "explain": "KI-/VI-: ki- se convierte en vi-."
+          },
+          {
+            "prompt": "El plural de 'nyumba' (casa) es:",
+            "options": [
+              "nyumba",
+              "minyumba",
+              "vinyumba",
+              "wanyumba"
+            ],
+            "answer": "nyumba",
+            "explain": "Los sustantivos de la clase N se ven igual en plural."
+          },
+          {
+            "prompt": "'gari → magari' muestra ¿qué clase?",
+            "options": [
+              "JI/MA",
+              "M/WA",
+              "KI/VI",
+              "N"
+            ],
+            "answer": "JI/MA",
+            "explain": "Un plural en ma- indica JI/MA."
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "kitabu",
+        "english": "libro"
+      },
+      {
+        "swahili": "vitabu",
+        "english": "libros"
+      },
+      {
+        "swahili": "kiti",
+        "english": "silla"
+      },
+      {
+        "swahili": "kikombe",
+        "english": "taza"
+      },
+      {
+        "swahili": "meza",
+        "english": "mesa"
+      },
+      {
+        "swahili": "pesa",
+        "english": "dinero"
+      },
+      {
+        "swahili": "barabara",
+        "english": "carretera"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 43,
+        "type": "multiple_choice",
+        "prompt": "Plural de 'kitabu':",
+        "options": [
+          "kitabus",
+          "vitabu",
+          "makitabu",
+          "nitabu"
+        ],
+        "answer": "vitabu",
+        "hint": null
+      },
+      {
+        "id": 44,
+        "type": "multiple_choice",
+        "prompt": "En la clase N-, el plural normalmente:",
+        "options": [
+          "añade wa-",
+          "añade mi-",
+          "se ve igual que el singular",
+          "añade vi-"
+        ],
+        "answer": "se ve igual que el singular",
+        "hint": null
+      },
+      {
+        "id": 45,
+        "type": "translate",
+        "prompt": "Traduce al suajili: sillas (plural de kiti)",
+        "options": [],
+        "answer": "viti",
+        "hint": null
+      },
+      {
+        "id": 46,
+        "type": "translate",
+        "prompt": "Traduce al español: pesa",
+        "options": [],
+        "answer": "dinero",
+        "hint": null
+      },
+      {
+        "id": 47,
+        "type": "multiple_choice",
+        "prompt": "¿Cuál es un sustantivo KI-/VI-?",
+        "options": [
+          "nyumba",
+          "kikombe",
+          "mti",
+          "mtu"
+        ],
+        "answer": "kikombe",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 10,
+    "week": 2,
+    "title": "Adjetivos y concordancia",
+    "subtitle": "Haz que las palabras que describen concuerden",
+    "theme": "Gramática",
+    "blocks": [
+      {
+        "type": "heading",
+        "heading": "Cómo concuerdan los adjetivos"
+      },
+      {
+        "type": "paragraph",
+        "text": "Como en español, el adjetivo va DESPUÉS del sustantivo y concuerda con él (casa bonita, libros bonitos). La diferencia: en suajili la concordancia es un prefijo que coincide con la clase del sustantivo. La regla fácil: mira el prefijo del sustantivo y repítelo en el adjetivo — ki-tabu → ki-zuri, vi-tabu → vi-zuri, mi-ti → mi-refu, wa-tu → wa-zuri."
+      },
+      {
+        "type": "heading",
+        "heading": "Raíces de adjetivos comunes"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Raíz",
+          "Significado"
+        ],
+        "tableRows": [
+          [
+            "-zuri",
+            "bueno/bonito"
+          ],
+          [
+            "-baya",
+            "malo"
+          ],
+          [
+            "-kubwa",
+            "grande"
+          ],
+          [
+            "-dogo",
+            "pequeño"
+          ],
+          [
+            "-refu",
+            "alto/largo"
+          ],
+          [
+            "-pya",
+            "nuevo"
+          ]
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Elige la concordancia"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Sustantivo (sing. / pl.)",
+          "Clase",
+          "Prefijo del adj.",
+          "Ejemplo"
+        ],
+        "tableRows": [
+          [
+            "mtu / watu (persona)",
+            "M/WA",
+            "m- / wa-",
+            "mtu mzuri / watu wazuri"
+          ],
+          [
+            "mti / miti (árbol)",
+            "M/MI",
+            "m- / mi-",
+            "mti mrefu / miti mirefu"
+          ],
+          [
+            "kitabu / vitabu (libro)",
+            "KI/VI",
+            "ki- / vi-",
+            "kitabu kizuri / vitabu vizuri"
+          ],
+          [
+            "gari / magari (carro)",
+            "JI/MA",
+            "(ninguno) / ma-",
+            "gari kubwa / magari makubwa"
+          ],
+          [
+            "nyumba (casa)",
+            "N",
+            "n- *",
+            "nyumba nzuri"
+          ]
+        ]
+      },
+      {
+        "type": "adjectiveBuilder",
+        "calloutTitle": "Arma una descripción: SUSTANTIVO + prefijo + adjetivo",
+        "intro": "Elige una cosa y una palabra que la describa. Mira cómo el prefijo dorado copia la clase del sustantivo. Toca el altavoz para escucharlo."
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Los seres animados siempre usan M/WA",
+        "lines": [
+          "Las personas y los animales llevan concordancia M/WA sin importar su clase. rafiki (amigo) es de la clase N, pero: rafiki mzuri (buen amigo), marafiki wazuri.",
+          "mbwa mkubwa — un perro grande · paka mdogo — un gato pequeño."
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Sonidos de la clase N y palabras prestadas",
+        "lines": [
+          "* Con sustantivos de la clase N el prefijo se funde con el sonido: nyumba kubwa (grande), nyumba ndefu (refu → ndefu), nyumba mbaya (baya → mbaya).",
+          "Los adjetivos prestados no cambian nunca: chai safi (té limpio), nyumba safi, kitu rahisi (una cosa barata). También ghali, tayari, bora."
+        ]
+      },
+      {
+        "type": "list",
+        "lines": [
+          "Mtoto mdogo — un niño pequeño",
+          "Vitabu vikubwa — libros grandes",
+          "Nyumba nzuri — una casa bonita",
+          "Mti huu ni mrefu — este árbol es alto"
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "Completa: kitabu ___ (un buen libro)",
+            "options": [
+              "kizuri",
+              "mzuri",
+              "nzuri",
+              "vizuri"
+            ],
+            "answer": "kizuri",
+            "explain": "El adjetivo repite el ki- del sustantivo."
+          },
+          {
+            "prompt": "Completa: watu ___ (buenas personas)",
+            "options": [
+              "wazuri",
+              "mzuri",
+              "vizuri",
+              "nzuri"
+            ],
+            "answer": "wazuri",
+            "explain": "watu → wa-zuri."
+          },
+          {
+            "prompt": "¿Cómo se dice 'una casa grande'?",
+            "options": [
+              "nyumba kubwa",
+              "nyumba mkubwa",
+              "nyumba kikubwa",
+              "kubwa nyumba"
+            ],
+            "answer": "nyumba kubwa",
+            "explain": "El adjetivo va después del sustantivo, y en la clase N kubwa no muestra prefijo."
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "zuri",
+        "english": "bueno"
+      },
+      {
+        "swahili": "baya",
+        "english": "malo"
+      },
+      {
+        "swahili": "kubwa",
+        "english": "grande"
+      },
+      {
+        "swahili": "dogo",
+        "english": "pequeño"
+      },
+      {
+        "swahili": "refu",
+        "english": "alto"
+      },
+      {
+        "swahili": "pya",
+        "english": "nuevo"
+      },
+      {
+        "swahili": "zito",
+        "english": "pesado"
+      },
+      {
+        "swahili": "safi",
+        "english": "limpio (nunca cambia)"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 48,
+        "type": "translate",
+        "prompt": "Agrega el adjetivo: mti (grande) → mti ___",
+        "options": [],
+        "answer": "mkubwa",
+        "hint": null
+      },
+      {
+        "id": 49,
+        "type": "translate",
+        "prompt": "Agrega el adjetivo: watoto (pequeños) → watoto ___",
+        "options": [],
+        "answer": "wadogo",
+        "hint": null
+      },
+      {
+        "id": 50,
+        "type": "multiple_choice",
+        "prompt": "'kitabu kipya' significa:",
+        "options": [
+          "libro pequeño",
+          "libro nuevo",
+          "libro grande",
+          "libro bueno"
+        ],
+        "answer": "libro nuevo",
+        "hint": null
+      },
+      {
+        "id": 51,
+        "type": "translate",
+        "prompt": "Traduce al suajili: una casa bonita",
+        "options": [],
+        "answer": "nyumba nzuri",
+        "hint": null
+      },
+      {
+        "id": 52,
+        "type": "multiple_choice",
+        "prompt": "Adjetivo 'bueno' para el plural de KI-/VI-:",
+        "options": [
+          "mzuri",
+          "wazuri",
+          "vizuri",
+          "nzuri"
+        ],
+        "answer": "vizuri",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 11,
+    "week": 2,
+    "title": "Números y contar",
+    "subtitle": "Cuenta hasta 1000 y más",
+    "theme": "Vocabulario",
+    "blocks": [
+      {
+        "type": "heading",
+        "heading": "Números del 1 al 10"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Número"
+        ],
+        "tableRows": [
+          [
+            "moja",
+            "1"
+          ],
+          [
+            "mbili",
+            "2"
+          ],
+          [
+            "tatu",
+            "3"
+          ],
+          [
+            "nne",
+            "4"
+          ],
+          [
+            "tano",
+            "5"
+          ],
+          [
+            "sita",
+            "6"
+          ],
+          [
+            "saba",
+            "7"
+          ],
+          [
+            "nane",
+            "8"
+          ],
+          [
+            "tisa",
+            "9"
+          ],
+          [
+            "kumi",
+            "10"
+          ]
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Decenas y más allá"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Número"
+        ],
+        "tableRows": [
+          [
+            "ishirini",
+            "20"
+          ],
+          [
+            "thelathini",
+            "30"
+          ],
+          [
+            "arobaini",
+            "40"
+          ],
+          [
+            "hamsini",
+            "50"
+          ],
+          [
+            "mia moja",
+            "100"
+          ],
+          [
+            "elfu moja",
+            "1000"
+          ]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Cómo formar números",
+        "lines": [
+          "Usa 'na' (y) para unir, como en 'treinta y cinco': 25 = ishirini na tano. 142 = mia moja arobaini na mbili."
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "¿Qué número es 'nane'?",
+            "options": [
+              "8",
+              "6",
+              "7",
+              "9"
+            ],
+            "answer": "8",
+            "explain": "sita 6, saba 7, nane 8, tisa 9."
+          },
+          {
+            "prompt": "¿Cómo se dice 25?",
+            "options": [
+              "ishirini na tano",
+              "thelathini na tano",
+              "ishirini na mbili",
+              "hamsini na mbili"
+            ],
+            "answer": "ishirini na tano",
+            "explain": "Une las partes con na: ishirini (20) na tano (5)."
+          },
+          {
+            "prompt": "'mia moja' es:",
+            "options": [
+              "100",
+              "10",
+              "50",
+              "1000"
+            ],
+            "answer": "100"
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "moja",
+        "english": "uno"
+      },
+      {
+        "swahili": "mbili",
+        "english": "dos"
+      },
+      {
+        "swahili": "tatu",
+        "english": "tres"
+      },
+      {
+        "swahili": "nne",
+        "english": "cuatro"
+      },
+      {
+        "swahili": "tano",
+        "english": "cinco"
+      },
+      {
+        "swahili": "kumi",
+        "english": "diez"
+      },
+      {
+        "swahili": "ishirini",
+        "english": "veinte"
+      },
+      {
+        "swahili": "mia",
+        "english": "cien"
+      },
+      {
+        "swahili": "elfu",
+        "english": "mil"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 53,
+        "type": "multiple_choice",
+        "prompt": "'saba' es:",
+        "options": [
+          "6",
+          "7",
+          "8",
+          "9"
+        ],
+        "answer": "7",
+        "hint": null
+      },
+      {
+        "id": 54,
+        "type": "translate",
+        "prompt": "Escribe en suajili: 5",
+        "options": [],
+        "answer": "tano",
+        "hint": null
+      },
+      {
+        "id": 55,
+        "type": "translate",
+        "prompt": "Escribe en suajili: 14 (kumi na ...)",
+        "options": [],
+        "answer": "kumi na nne",
+        "hint": null
+      },
+      {
+        "id": 56,
+        "type": "multiple_choice",
+        "prompt": "'ishirini na tatu' es:",
+        "options": [
+          "13",
+          "23",
+          "32",
+          "203"
+        ],
+        "answer": "23",
+        "hint": null
+      },
+      {
+        "id": 57,
+        "type": "translate",
+        "prompt": "Escribe en suajili: 100",
+        "options": [],
+        "answer": "mia moja",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 12,
+    "week": 2,
+    "title": "La hora y los días",
+    "subtitle": "El reloj suajili",
+    "theme": "Vocabulario",
+    "blocks": [
+      {
+        "type": "callout",
+        "calloutTitle": "El reloj suajili",
+        "lines": [
+          "La hora suajili empieza al amanecer (~6 a. m.). Así, las 7 a. m. = saa moja (la primera hora de luz); la 1 p. m. = saa saba. Para convertir, suma o resta 6."
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Decir la hora"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "Saa ngapi?",
+            "¿Qué hora es?"
+          ],
+          [
+            "Saa moja",
+            "7:00"
+          ],
+          [
+            "Saa sita",
+            "12:00 del mediodía"
+          ],
+          [
+            "Saa saba",
+            "1:00 p. m."
+          ],
+          [
+            "na nusu",
+            "y media"
+          ],
+          [
+            "na robo",
+            "y cuarto"
+          ]
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Días de la semana"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "Jumatatu",
+            "lunes"
+          ],
+          [
+            "Jumanne",
+            "martes"
+          ],
+          [
+            "Jumatano",
+            "miércoles"
+          ],
+          [
+            "Alhamisi",
+            "jueves"
+          ],
+          [
+            "Ijumaa",
+            "viernes"
+          ],
+          [
+            "Jumamosi",
+            "sábado"
+          ],
+          [
+            "Jumapili",
+            "domingo"
+          ]
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Diálogo — ¿Qué hora es?"
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          {
+            "speaker": "Neema",
+            "swahili": "Samahani, saa ngapi?",
+            "english": "Disculpa, ¿qué hora es?"
+          },
+          {
+            "speaker": "Daudi",
+            "swahili": "Saa tatu asubuhi.",
+            "english": "Las nueve de la mañana."
+          },
+          {
+            "speaker": "Neema",
+            "swahili": "Asante. Leo ni Ijumaa?",
+            "english": "Gracias. ¿Hoy es viernes?"
+          },
+          {
+            "speaker": "Daudi",
+            "swahili": "Hapana, leo ni Alhamisi. Kesho ni Ijumaa.",
+            "english": "No, hoy es jueves. Mañana es viernes."
+          },
+          {
+            "speaker": "Neema",
+            "swahili": "Ninafanya kazi kesho, saa mbili asubuhi.",
+            "english": "Mañana trabajo, a las ocho de la mañana."
+          }
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "'Saa moja' de la mañana, ¿qué hora es en un reloj occidental?",
+            "options": [
+              "7:00",
+              "1:00",
+              "6:00",
+              "12:00"
+            ],
+            "answer": "7:00",
+            "explain": "El reloj suajili empieza al amanecer: suma 6."
+          },
+          {
+            "prompt": "¿Cómo se dice la 1:00 p. m.?",
+            "options": [
+              "saa saba",
+              "saa moja",
+              "saa sita",
+              "saa tatu"
+            ],
+            "answer": "saa saba",
+            "explain": "La 1 p. m. es la séptima hora de luz."
+          },
+          {
+            "prompt": "¿Qué día es 'Jumatatu'?",
+            "options": [
+              "lunes",
+              "martes",
+              "sábado",
+              "domingo"
+            ],
+            "answer": "lunes",
+            "explain": "La semana empieza el Jumamosi (sábado), así que Jumatatu — 'día tres' — es lunes."
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "saa",
+        "english": "hora"
+      },
+      {
+        "swahili": "leo",
+        "english": "hoy"
+      },
+      {
+        "swahili": "jana",
+        "english": "ayer"
+      },
+      {
+        "swahili": "kesho",
+        "english": "mañana"
+      },
+      {
+        "swahili": "asubuhi",
+        "english": "la mañana"
+      },
+      {
+        "swahili": "jioni",
+        "english": "la tarde"
+      },
+      {
+        "swahili": "usiku",
+        "english": "la noche"
+      },
+      {
+        "swahili": "Ijumaa",
+        "english": "viernes"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 58,
+        "type": "multiple_choice",
+        "prompt": "La hora suajili empieza:",
+        "options": [
+          "a la medianoche",
+          "al amanecer (~6 a. m.)",
+          "al mediodía",
+          "al atardecer"
+        ],
+        "answer": "al amanecer (~6 a. m.)",
+        "hint": null
+      },
+      {
+        "id": 59,
+        "type": "multiple_choice",
+        "prompt": "Las 8 a. m. en hora suajili son:",
+        "options": [
+          "saa mbili",
+          "saa nane",
+          "saa moja",
+          "saa sita"
+        ],
+        "answer": "saa mbili",
+        "hint": null
+      },
+      {
+        "id": 60,
+        "type": "translate",
+        "prompt": "Traduce al español: kesho",
+        "options": [],
+        "answer": "mañana",
+        "hint": null
+      },
+      {
+        "id": 61,
+        "type": "translate",
+        "prompt": "¿Qué día es 'Ijumaa'?",
+        "options": [],
+        "answer": "viernes",
+        "hint": null
+      },
+      {
+        "id": 62,
+        "type": "multiple_choice",
+        "prompt": "'na nusu' significa:",
+        "options": [
+          "y cuarto",
+          "y media",
+          "en punto",
+          "menos cuarto"
+        ],
+        "answer": "y media",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 13,
+    "week": 2,
+    "title": "Posesivos",
+    "subtitle": "'Mi', 'tu' y los enlaces de clase",
+    "theme": "Gramática",
+    "blocks": [
+      {
+        "type": "heading",
+        "heading": "Raíces posesivas"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Raíz",
+          "Significado"
+        ],
+        "tableRows": [
+          [
+            "-angu",
+            "mi"
+          ],
+          [
+            "-ako",
+            "tu"
+          ],
+          [
+            "-ake",
+            "su (de él / ella)"
+          ],
+          [
+            "-etu",
+            "nuestro"
+          ],
+          [
+            "-enu",
+            "su (de ustedes)"
+          ],
+          [
+            "-ao",
+            "su (de ellos)"
+          ]
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "Un posesivo suajili tiene DOS partes: una raíz que dice de quién es (-angu = mi, -ako = tu…) y un pequeño \"enlace\" delante que debe concordar con la clase del sustantivo. Es la misma idea que en español \"nuestro libro / nuestra casa\", solo que con más clases. La raíz nunca cambia; solo cambia el enlace. Por eso \"mi\" es wangu, yangu, changu o langu según el sustantivo."
+      },
+      {
+        "type": "heading",
+        "heading": "El enlace de concordancia"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Clase (sing. / pl.)",
+          "Enlace",
+          "Ejemplo"
+        ],
+        "tableRows": [
+          [
+            "M/WA — mtoto / watoto",
+            "w- / w-",
+            "mtoto wangu / watoto wangu"
+          ],
+          [
+            "M/MI — mti / miti",
+            "w- / y-",
+            "mti wangu / miti yangu"
+          ],
+          [
+            "KI/VI — kitabu / vitabu",
+            "ch- / vy-",
+            "kitabu changu / vitabu vyangu"
+          ],
+          [
+            "JI/MA — gari / magari",
+            "l- / y-",
+            "gari langu / magari yangu"
+          ],
+          [
+            "N — nyumba / ndizi",
+            "y- / z-",
+            "nyumba yangu / ndizi zangu"
+          ],
+          [
+            "U — uso",
+            "w-",
+            "uso wangu"
+          ]
+        ]
+      },
+      {
+        "type": "possessiveBuilder",
+        "calloutTitle": "Arma un posesivo: SUSTANTIVO + enlace + raíz",
+        "intro": "Elige una cosa y un dueño. Mira cómo el ENLACE dorado cambia con la clase del sustantivo mientras la raíz (de quién) se queda igual. Toca 🔊 para escucharlo."
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Ojo",
+        "lines": [
+          "El enlace concuerda con el SUSTANTIVO, no con el dueño. \"Mi libro\" y \"su libro (de ellos)\" usan los dos ch-: changu, chao.",
+          "Acierta la clase del sustantivo y el enlace sale solo."
+        ]
+      },
+      {
+        "type": "list",
+        "lines": [
+          "Hili ni gari langu — Este es mi carro",
+          "Rafiki yako anakuja — Tu amigo viene",
+          "Watoto wao ni wadogo — Sus hijos (de ellos) son pequeños",
+          "Vitabu vyetu viko wapi? — ¿Dónde están nuestros libros?"
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "Completa: kitabu ___ (mi libro)",
+            "options": [
+              "changu",
+              "wangu",
+              "yangu",
+              "langu"
+            ],
+            "answer": "changu",
+            "explain": "Los sustantivos en KI- llevan el enlace ch-."
+          },
+          {
+            "prompt": "Completa: gari ___ (mi carro)",
+            "options": [
+              "langu",
+              "changu",
+              "wangu",
+              "zangu"
+            ],
+            "answer": "langu",
+            "explain": "gari es JI/MA: enlace l-."
+          },
+          {
+            "prompt": "'Watoto wao' significa:",
+            "options": [
+              "sus hijos (de ellos)",
+              "nuestros hijos",
+              "tus hijos",
+              "sus hijos (de él / ella)"
+            ],
+            "answer": "sus hijos (de ellos)",
+            "explain": "-ao = su (de ellos)."
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "yangu",
+        "english": "mi (clase N)"
+      },
+      {
+        "swahili": "wangu",
+        "english": "mi (M/WA)"
+      },
+      {
+        "swahili": "changu",
+        "english": "mi (KI/VI)"
+      },
+      {
+        "swahili": "langu",
+        "english": "mi (JI/MA)"
+      },
+      {
+        "swahili": "yako",
+        "english": "tu"
+      },
+      {
+        "swahili": "yake",
+        "english": "su (de él / ella)"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 63,
+        "type": "translate",
+        "prompt": "Traduce al suajili: mi libro",
+        "options": [],
+        "answer": "kitabu changu",
+        "hint": null
+      },
+      {
+        "id": 64,
+        "type": "multiple_choice",
+        "prompt": "¿Cómo se dice 'mis libros' (vitabu)?",
+        "options": [
+          "vitabu wangu",
+          "vitabu vyangu",
+          "vitabu yangu",
+          "vitabu changu"
+        ],
+        "answer": "vitabu vyangu",
+        "hint": "vitabu es el plural de KI/VI → enlace vy-"
+      },
+      {
+        "id": 65,
+        "type": "translate",
+        "prompt": "Traduce al suajili: mis hijos (watoto)",
+        "options": [],
+        "answer": "watoto wangu",
+        "hint": null
+      },
+      {
+        "id": 66,
+        "type": "translate",
+        "prompt": "Traduce al suajili: tu casa",
+        "options": [],
+        "answer": "nyumba yako",
+        "hint": null
+      },
+      {
+        "id": 67,
+        "type": "multiple_choice",
+        "prompt": "'kitabu' forma 'changu', así que pertenece a la clase:",
+        "options": [
+          "M/WA",
+          "KI/VI",
+          "N",
+          "JI/MA"
+        ],
+        "answer": "KI/VI",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 14,
+    "week": 2,
+    "title": "Hacer preguntas",
+    "subtitle": "Quién, qué, dónde, cuándo, por qué",
+    "theme": "Gramática",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Las preguntas en suajili son fáciles: deja tu oración normal y mete una palabra interrogativa. La gran diferencia con el español: la palabra interrogativa suele ir donde iría la RESPUESTA, que muchas veces es al FINAL y no al principio."
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Orden de las palabras",
+        "lines": [
+          "El español pone la palabra interrogativa al principio (\"¿Dónde vives?\"). El suajili la deja en su lugar: Unakaa wapi? — literalmente \"¿Vives dónde?\".",
+          "Por lo general solo nani (quién) y kwa nini (por qué) empiezan la oración."
+        ]
+      },
+      {
+        "type": "questionBuilder",
+        "calloutTitle": "Haz una pregunta",
+        "intro": "Toca una palabra interrogativa para verla y escucharla dentro de una oración real, y fíjate dónde va."
+      },
+      {
+        "type": "heading",
+        "heading": "Las palabras interrogativas"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "nani?",
+            "¿quién?"
+          ],
+          [
+            "nini?",
+            "¿qué?"
+          ],
+          [
+            "wapi?",
+            "¿dónde?"
+          ],
+          [
+            "lini?",
+            "¿cuándo?"
+          ],
+          [
+            "kwa nini?",
+            "¿por qué?"
+          ],
+          [
+            "ngapi?",
+            "¿cuántos?"
+          ],
+          [
+            "gani?",
+            "¿cuál?"
+          ]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Dos que se portan distinto",
+        "lines": [
+          "ngapi (cuántos) lleva un prefijo de clase como un adjetivo: watu wangapi? (¿cuántas personas?), vitabu vingapi? (¿cuántos libros?).",
+          "gani (cuál) nunca cambia y simplemente va después de su sustantivo: chai gani? (¿cuál té?)."
+        ]
+      },
+      {
+        "type": "list",
+        "lines": [
+          "Jina lako ni nani? — ¿Cómo te llamas? (lit. ¿tu nombre es quién?)",
+          "Unatoka wapi? — ¿De dónde eres?",
+          "Ni saa ngapi? — ¿Qué hora es? (¿cuántas horas?)",
+          "Kwa nini unajifunza Kiswahili? — ¿Por qué estás aprendiendo suajili?"
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Diálogo — Conociéndonos"
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          {
+            "speaker": "Zawadi",
+            "swahili": "Unakaa wapi?",
+            "english": "¿Dónde vives?"
+          },
+          {
+            "speaker": "Peter",
+            "swahili": "Ninakaa Arusha.",
+            "english": "Vivo en Arusha."
+          },
+          {
+            "speaker": "Zawadi",
+            "swahili": "Unafanya kazi gani?",
+            "english": "¿En qué trabajas?"
+          },
+          {
+            "speaker": "Peter",
+            "swahili": "Mimi ni mwalimu.",
+            "english": "Soy profesor."
+          },
+          {
+            "speaker": "Zawadi",
+            "swahili": "Kwa nini unajifunza Kiswahili?",
+            "english": "¿Por qué estás aprendiendo suajili?"
+          },
+          {
+            "speaker": "Peter",
+            "swahili": "Kwa sababu ninapenda Tanzania. Na wewe, unafanya nini?",
+            "english": "Porque me encanta Tanzania. Y tú, ¿qué haces?"
+          },
+          {
+            "speaker": "Zawadi",
+            "swahili": "Mimi ni daktari. Ninafanya kazi Arusha.",
+            "english": "Soy doctora. Trabajo en Arusha."
+          }
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "¿Cómo preguntas '¿Dónde vives?'?",
+            "options": [
+              "Unakaa wapi?",
+              "Wapi unakaa?",
+              "Unakaa nini?",
+              "Unakaa lini?"
+            ],
+            "answer": "Unakaa wapi?",
+            "explain": "La palabra interrogativa se queda donde iría la respuesta: al final."
+          },
+          {
+            "prompt": "Completa: Vitabu ___? (¿Cuántos libros?)",
+            "options": [
+              "vingapi",
+              "ngapi",
+              "wangapi",
+              "gani"
+            ],
+            "answer": "vingapi",
+            "explain": "ngapi lleva el prefijo del sustantivo: vi-ngapi."
+          },
+          {
+            "prompt": "'Chai gani?' significa:",
+            "options": [
+              "¿Cuál té?",
+              "¿Cuánto té?",
+              "¿Dónde está el té?",
+              "¿Por qué té?"
+            ],
+            "answer": "¿Cuál té?"
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "nani",
+        "english": "quién"
+      },
+      {
+        "swahili": "nini",
+        "english": "qué"
+      },
+      {
+        "swahili": "wapi",
+        "english": "dónde"
+      },
+      {
+        "swahili": "lini",
+        "english": "cuándo"
+      },
+      {
+        "swahili": "kwa nini",
+        "english": "por qué"
+      },
+      {
+        "swahili": "ngapi",
+        "english": "cuántos"
+      },
+      {
+        "swahili": "gani",
+        "english": "cuál"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 153,
+        "type": "multiple_choice",
+        "prompt": "'Unaenda wapi?' significa:",
+        "options": [
+          "¿Qué quieres?",
+          "¿Adónde vas?",
+          "¿Quién eres?",
+          "¿Cuándo vas?"
+        ],
+        "answer": "¿Adónde vas?",
+        "hint": null
+      },
+      {
+        "id": 154,
+        "type": "translate",
+        "prompt": "¿Qué palabra interrogativa significa 'por qué'?",
+        "options": [],
+        "answer": "kwa nini",
+        "hint": null
+      },
+      {
+        "id": 155,
+        "type": "multiple_choice",
+        "prompt": "En suajili, ¿dónde suele ir la palabra interrogativa?",
+        "options": [
+          "Al principio, como en español",
+          "Donde iría la respuesta (a menudo al final)",
+          "Siempre en el medio",
+          "Se omite"
+        ],
+        "answer": "Donde iría la respuesta (a menudo al final)",
+        "hint": null
+      },
+      {
+        "id": 156,
+        "type": "translate",
+        "prompt": "Traduce al español: Unataka nini?",
+        "options": [],
+        "answer": "qué quieres",
+        "hint": null
+      },
+      {
+        "id": 157,
+        "type": "multiple_choice",
+        "prompt": "'nani' significa:",
+        "options": [
+          "qué",
+          "dónde",
+          "quién",
+          "cuándo"
+        ],
+        "answer": "quién",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 15,
+    "week": 2,
+    "title": "Repaso y descripción de personas",
+    "subtitle": "Combínalo todo",
+    "theme": "Repaso",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Consolida la Semana 2 describiendo personas y cosas."
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Verbo nuevo: kuwa na (tener)",
+        "lines": [
+          "'Tener' = 'estar con': nina (tengo), una (tienes), ana (él / ella tiene), tuna, mna, wana. Nina watoto wawili — Tengo dos hijos."
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Ejemplo resuelto"
+      },
+      {
+        "type": "paragraph",
+        "text": "Huyu ni rafiki yangu. Jina lake ni Asha. Yeye ni mwalimu. Ana watoto wawili. Watoto wake ni wadogo lakini wazuri sana."
+      },
+      {
+        "type": "paragraph",
+        "text": "(Esta es mi amiga. Su nombre es Asha. Es profesora. Tiene dos hijos. Sus hijos son pequeños pero muy lindos.)"
+      },
+      {
+        "type": "heading",
+        "heading": "Tu turno — Ármala"
+      },
+      {
+        "type": "sentenceBuilder",
+        "calloutTitle": "Arma la oración",
+        "intro": "Arrastra las palabras al orden correcto y luego toca el botón para comprobar. Si aciertas, la escucharás en voz alta — ¡pole pole!"
+      },
+      {
+        "type": "heading",
+        "heading": "Diálogo — Hablando de la familia"
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          {
+            "speaker": "Juma",
+            "swahili": "Una watoto?",
+            "english": "¿Tienes hijos?"
+          },
+          {
+            "speaker": "Asha",
+            "swahili": "Ndiyo, nina watoto wawili.",
+            "english": "Sí, tengo dos hijos."
+          },
+          {
+            "speaker": "Juma",
+            "swahili": "Majina yao ni nani?",
+            "english": "¿Cómo se llaman?"
+          },
+          {
+            "speaker": "Asha",
+            "swahili": "Baraka na Neema. Baraka ni mrefu, Neema ni mdogo.",
+            "english": "Baraka y Neema. Baraka es alto, Neema es pequeña."
+          },
+          {
+            "speaker": "Juma",
+            "swahili": "Wana miaka mingapi?",
+            "english": "¿Cuántos años tienen?"
+          },
+          {
+            "speaker": "Asha",
+            "swahili": "Baraka ana miaka kumi, na Neema ana miaka sita.",
+            "english": "Baraka tiene diez años y Neema tiene seis."
+          },
+          {
+            "speaker": "Juma",
+            "swahili": "Watoto wako ni wazuri sana!",
+            "english": "¡Tus hijos son muy lindos!"
+          }
+        ]
+      },
+      {
+        "type": "conversation",
+        "calloutTitle": "Ahora tú — habla con Asha",
+        "intro": "Una conversación de verdad, en voz alta. No hay guion: di lo que quieras y usa las frases de abajo si te atoras.",
+        "scenario": {
+          "setting": "Estás tomando té con Asha, una maestra que conociste en Dar es Salaam. Tiene curiosidad por las personas de tu vida.",
+          "goal": "Cuéntale sobre tu familia o un amigo — quiénes son y cómo son — y pregúntale por sus hijos.",
+          "role": "Asha, a warm primary-school teacher from Dar es Salaam with two young children, Baraka (10) and Neema (6). You ask the learner about their family and friends: whether they have children, brothers or sisters, their names, their ages and what they are like. You happily describe your own children when asked.",
+          "opening": "Karibu chai! Una watoto?",
+          "openingTranslation": "¡Toma un té! ¿Tienes hijos?",
+          "phrases": [
+            {
+              "swahili": "Nina …",
+              "english": "Tengo …"
+            },
+            {
+              "swahili": "Sina watoto.",
+              "english": "No tengo hijos."
+            },
+            {
+              "swahili": "Jina lake ni …",
+              "english": "Su nombre es …"
+            },
+            {
+              "swahili": "Yeye ni mrefu.",
+              "english": "Él es alto. / Ella es alta."
+            },
+            {
+              "swahili": "Rafiki yangu ni …",
+              "english": "Mi amigo es …"
+            },
+            {
+              "swahili": "Na wewe?",
+              "english": "¿Y tú?"
+            },
+            {
+              "swahili": "Watoto wako ni wazuri!",
+              "english": "¡Tus hijos son lindos!"
+            }
+          ]
+        }
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "¿Cómo se dice 'Tenemos un carro'?",
+            "options": [
+              "Tuna gari",
+              "Nina gari",
+              "Wana gari",
+              "Ana gari"
+            ],
+            "answer": "Tuna gari",
+            "explain": "tu- (nosotros) + na: tuna — tenemos."
+          },
+          {
+            "prompt": "'Jina lake ni Asha' significa:",
+            "options": [
+              "Su nombre (de ella) es Asha",
+              "Mi nombre es Asha",
+              "Tu nombre es Asha",
+              "Su nombre (de ellos) es Asha"
+            ],
+            "answer": "Su nombre (de ella) es Asha",
+            "explain": "lake = su (de él / ella)."
+          },
+          {
+            "prompt": "'Wana' significa:",
+            "options": [
+              "ellos tienen",
+              "nosotros tenemos",
+              "él / ella tiene",
+              "tú tienes"
+            ],
+            "answer": "ellos tienen"
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "nina",
+        "english": "tengo"
+      },
+      {
+        "swahili": "una",
+        "english": "tienes"
+      },
+      {
+        "swahili": "ana",
+        "english": "él / ella tiene"
+      },
+      {
+        "swahili": "wana",
+        "english": "ellos tienen"
+      },
+      {
+        "swahili": "lakini",
+        "english": "pero"
+      },
+      {
+        "swahili": "sana",
+        "english": "muy"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 68,
+        "type": "translate",
+        "prompt": "Traduce al suajili: tengo",
+        "options": [],
+        "answer": "nina",
+        "hint": null
+      },
+      {
+        "id": 69,
+        "type": "multiple_choice",
+        "prompt": "'Ana watoto wawili' significa:",
+        "options": [
+          "Tengo dos hijos",
+          "Ella tiene dos hijos",
+          "Ellos tienen hijos",
+          "Tenemos dos hijos"
+        ],
+        "answer": "Ella tiene dos hijos",
+        "hint": null
+      },
+      {
+        "id": 70,
+        "type": "translate",
+        "prompt": "Traduce al español: lakini",
+        "options": [],
+        "answer": "pero",
+        "hint": null
+      },
+      {
+        "id": 71,
+        "type": "fill_blank",
+        "prompt": "Completa: ___ rafiki yangu (él / ella tiene un amigo)",
+        "options": [],
+        "answer": "ana",
+        "hint": null
+      },
+      {
+        "id": 72,
+        "type": "translate",
+        "prompt": "Traduce al español: watoto wake",
+        "options": [],
+        "answer": "sus hijos",
+        "hint": null
+      }
+    ],
+    "xpReward": 150
+  },
+  {
+    "id": 16,
+    "week": 3,
+    "title": "Tiempo pasado (-li-)",
+    "subtitle": "Habla de lo que pasó",
+    "theme": "Gramática",
+    "blocks": [
+      {
+        "type": "verbBuilder",
+        "mode": "tense",
+        "tense": "past",
+        "calloutTitle": "Arma el pasado: SUJETO + li + RAÍZ",
+        "intro": "El pasado es el cambio más fácil de todos: deja todo igual que en el presente, pero cambia la pieza del medio de -na- a -li-. La raíz sigue sin cambiar nunca. Toca para armarlo:",
+        "stemKeys": [
+          "soma",
+          "penda",
+          "kula",
+          "kunywa",
+          "sema",
+          "safiri"
+        ]
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "Nilikula",
+            "Comí"
+          ],
+          [
+            "Ulikula",
+            "Comiste"
+          ],
+          [
+            "Alikula",
+            "Él / Ella comió"
+          ],
+          [
+            "Tulikula",
+            "Comimos"
+          ],
+          [
+            "Walikula",
+            "Ellos comieron"
+          ]
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Pasado negativo (-ku-)"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "Sikula",
+            "No comí"
+          ],
+          [
+            "Hukula",
+            "No comiste"
+          ],
+          [
+            "Hakula",
+            "Él / Ella no comió"
+          ],
+          [
+            "Hawakula",
+            "Ellos no comieron"
+          ]
+        ]
+      },
+      {
+        "type": "list",
+        "lines": [
+          "Jana nilienda sokoni — Ayer fui al mercado",
+          "Sikuona rafiki yangu — No vi a mi amigo"
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "'Nilisoma' significa:",
+            "options": [
+              "Leí",
+              "Estoy leyendo",
+              "Leeré",
+              "No he leído"
+            ],
+            "answer": "Leí",
+            "explain": "-li- marca el pasado."
+          },
+          {
+            "prompt": "Pasa al pasado: Tunakula → ___",
+            "options": [
+              "Tulikula",
+              "Tutakula",
+              "Tumekula",
+              "Tunakula"
+            ],
+            "answer": "Tulikula",
+            "explain": "Cambia -na- por -li-."
+          },
+          {
+            "prompt": "'Sikuona' significa:",
+            "options": [
+              "No vi",
+              "No veo",
+              "No veré",
+              "Vi"
+            ],
+            "answer": "No vi",
+            "explain": "Pasado negativo: si- + -ku- + raíz."
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "nilikula",
+        "english": "comí"
+      },
+      {
+        "swahili": "nilienda",
+        "english": "fui"
+      },
+      {
+        "swahili": "sikula",
+        "english": "no comí"
+      },
+      {
+        "swahili": "sokoni",
+        "english": "en el mercado"
+      },
+      {
+        "swahili": "sikuona",
+        "english": "no vi"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 73,
+        "type": "multiple_choice",
+        "prompt": "¿Qué marcador indica el tiempo pasado?",
+        "options": [
+          "-na-",
+          "-li-",
+          "-ta-",
+          "-me-"
+        ],
+        "answer": "-li-",
+        "hint": null
+      },
+      {
+        "id": 74,
+        "type": "translate",
+        "prompt": "Pasa al pasado: Ninakunywa chai →",
+        "options": [],
+        "answer": "nilikunywa chai",
+        "hint": null
+      },
+      {
+        "id": 75,
+        "type": "multiple_choice",
+        "prompt": "'Walienda' significa:",
+        "options": [
+          "Ellos van",
+          "Ellos irán",
+          "Ellos fueron",
+          "Ellos no van"
+        ],
+        "answer": "Ellos fueron",
+        "hint": null
+      },
+      {
+        "id": 76,
+        "type": "translate",
+        "prompt": "Forma el pasado negativo: comí →",
+        "options": [],
+        "answer": "sikula",
+        "hint": null
+      },
+      {
+        "id": 77,
+        "type": "translate",
+        "prompt": "Traduce al español: jana nilienda sokoni",
+        "options": [],
+        "answer": "ayer fui al mercado",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 17,
+    "week": 3,
+    "title": "Tiempo futuro (-ta-)",
+    "subtitle": "Habla de tus planes",
+    "theme": "Gramática",
+    "blocks": [
+      {
+        "type": "verbBuilder",
+        "mode": "tense",
+        "tense": "future",
+        "calloutTitle": "Construye el futuro: SUJETO + ta + RAÍZ",
+        "intro": "¿Haciendo planes? Cambia el marcador de tiempo a -ta-. Los mismos prefijos de sujeto, la misma raíz que no cambia. Toca para construirlo:",
+        "stemKeys": [
+          "soma",
+          "penda",
+          "kula",
+          "kunywa",
+          "sema",
+          "safiri"
+        ]
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "Nitakwenda",
+            "Yo iré"
+          ],
+          [
+            "Utakwenda",
+            "Tú irás"
+          ],
+          [
+            "Atakwenda",
+            "Él/Ella irá"
+          ],
+          [
+            "Tutakwenda",
+            "Nosotros iremos"
+          ],
+          [
+            "Watakwenda",
+            "Ellos irán"
+          ]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Nota sobre «ir»",
+        "lines": [
+          "La raíz de «ir» es -enda, pero a menudo conserva el ku- del infinitivo (kwenda). Oirás tanto nitakwenda como nitaenda, nilikwenda y nilienda: ambas formas son correctas."
+        ]
+      },
+      {
+        "type": "list",
+        "lines": [
+          "Kesho nitakwenda sokoni — Mañana iré al mercado",
+          "Sitakunywa kahawa usiku — No tomaré café por la noche"
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Diálogo — Planes para mañana"
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          {
+            "speaker": "Rehema",
+            "swahili": "Utafanya nini kesho?",
+            "english": "¿Qué harás mañana?"
+          },
+          {
+            "speaker": "Musa",
+            "swahili": "Kesho nitakwenda Zanzibar.",
+            "english": "Mañana iré a Zanzíbar."
+          },
+          {
+            "speaker": "Rehema",
+            "swahili": "Utakwenda na nani?",
+            "english": "¿Con quién irás?"
+          },
+          {
+            "speaker": "Musa",
+            "swahili": "Nitakwenda pamoja na rafiki yangu.",
+            "english": "Iré junto con mi amigo."
+          },
+          {
+            "speaker": "Rehema",
+            "swahili": "Mtarudi lini?",
+            "english": "¿Cuándo volverán ustedes?"
+          },
+          {
+            "speaker": "Musa",
+            "swahili": "Tutarudi Jumapili. Na wewe?",
+            "english": "Volveremos el domingo. ¿Y tú?"
+          },
+          {
+            "speaker": "Rehema",
+            "swahili": "Mimi sitasafiri. Nitasoma Kiswahili!",
+            "english": "Yo no viajaré. ¡Estudiaré suajili!"
+          }
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "«Watasoma» significa:",
+            "options": [
+              "Ellos leerán",
+              "Ellos leyeron",
+              "Ellos están leyendo",
+              "Nosotros leeremos"
+            ],
+            "answer": "Ellos leerán",
+            "explain": "wa- (ellos) + -ta- (futuro)."
+          },
+          {
+            "prompt": "¿Cómo se dice «Comeremos»?",
+            "options": [
+              "Tutakula",
+              "Tulikula",
+              "Tunakula",
+              "Nitakula"
+            ],
+            "answer": "Tutakula"
+          },
+          {
+            "prompt": "«Sitakunywa kahawa» significa:",
+            "options": [
+              "No tomaré café",
+              "No tomé café",
+              "No tomo café",
+              "Tomaré café"
+            ],
+            "answer": "No tomaré café"
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "nitakwenda",
+        "english": "iré"
+      },
+      {
+        "swahili": "nitasafiri",
+        "english": "viajaré"
+      },
+      {
+        "swahili": "sitakunywa",
+        "english": "no tomaré"
+      },
+      {
+        "swahili": "safiri",
+        "english": "viajar"
+      },
+      {
+        "swahili": "pamoja",
+        "english": "juntos"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 78,
+        "type": "multiple_choice",
+        "prompt": "¿Qué marcador indica futuro?",
+        "options": [
+          "-li-",
+          "-na-",
+          "-ta-",
+          "-me-"
+        ],
+        "answer": "-ta-",
+        "hint": null
+      },
+      {
+        "id": 79,
+        "type": "translate",
+        "prompt": "Traduce al suajili: comeré",
+        "options": [],
+        "answer": "nitakula",
+        "hint": null
+      },
+      {
+        "id": 80,
+        "type": "translate",
+        "prompt": "Traduce al suajili: ellos viajarán mañana",
+        "options": [],
+        "answer": "watasafiri kesho",
+        "hint": null
+      },
+      {
+        "id": 81,
+        "type": "multiple_choice",
+        "prompt": "La forma negativa «no iré» es:",
+        "options": [
+          "sitakwenda",
+          "sikwenda",
+          "hatakwenda",
+          "sendi"
+        ],
+        "answer": "sitakwenda",
+        "hint": null
+      },
+      {
+        "id": 82,
+        "type": "translate",
+        "prompt": "Traduce al español: tutasoma Kiswahili",
+        "options": [],
+        "answer": "estudiaremos suajili",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 18,
+    "week": 3,
+    "title": "Perfecto y habitual",
+    "subtitle": "«He hecho» y los hábitos",
+    "theme": "Gramática",
+    "blocks": [
+      {
+        "type": "heading",
+        "heading": "Tiempo perfecto (-me-)"
+      },
+      {
+        "type": "paragraph",
+        "text": "Indica una acción terminada que sigue siendo relevante ahora, como el «he comido» del español."
+      },
+      {
+        "type": "verbBuilder",
+        "mode": "tense",
+        "tense": "perfect",
+        "calloutTitle": "Construye el perfecto: SUJETO + me + RAÍZ",
+        "intro": "«He hecho» se dice con -me-. El mismo patrón de construcción, con un marcador nuevo: señala una acción terminada que todavía importa ahora. Toca para construirlo:",
+        "stemKeys": [
+          "soma",
+          "penda",
+          "kula",
+          "kunywa",
+          "sema",
+          "fanya"
+        ]
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "Nimekula",
+            "He comido"
+          ],
+          [
+            "Amefika",
+            "Él/Ella ha llegado"
+          ],
+          [
+            "Tumemaliza",
+            "Hemos terminado"
+          ]
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "El perfecto negativo usa -ja- («todavía no»): Sijala — Todavía no he comido."
+      },
+      {
+        "type": "heading",
+        "heading": "Habitual (hu-)"
+      },
+      {
+        "type": "paragraph",
+        "text": "Para los hábitos generales (lo que en español dirías con «suelo…»), usa hu- SIN prefijo de sujeto: Hunywa chai kila asubuhi — (por lo general) se toma té cada mañana."
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "«Amefika» significa:",
+            "options": [
+              "Él/Ella ha llegado",
+              "Él/Ella llegará",
+              "Él/Ella está llegando",
+              "Él/Ella no llegó"
+            ],
+            "answer": "Él/Ella ha llegado",
+            "explain": "-me- = ha hecho."
+          },
+          {
+            "prompt": "¿Qué marcador forma el perfecto negativo («todavía no»)?",
+            "options": [
+              "-ja-",
+              "-me-",
+              "-ku-",
+              "-ta-"
+            ],
+            "answer": "-ja-",
+            "explain": "si- + -ja- + raíz: sijafika — todavía no he llegado."
+          },
+          {
+            "prompt": "¿Qué oración describe un hábito?",
+            "options": [
+              "Hunywa chai kila asubuhi",
+              "Nimekunywa chai",
+              "Nitakunywa chai",
+              "Nilikunywa chai"
+            ],
+            "answer": "Hunywa chai kila asubuhi",
+            "explain": "hu- sin prefijo de sujeto = habitual."
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "nimekula",
+        "english": "he comido"
+      },
+      {
+        "swahili": "amefika",
+        "english": "él/ella ha llegado"
+      },
+      {
+        "swahili": "nimechoka",
+        "english": "estoy cansado"
+      },
+      {
+        "swahili": "nimemaliza",
+        "english": "he terminado"
+      },
+      {
+        "swahili": "bado",
+        "english": "todavía"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 83,
+        "type": "multiple_choice",
+        "prompt": "¿Qué marcador indica el perfecto («he hecho»)?",
+        "options": [
+          "-li-",
+          "-me-",
+          "-ta-",
+          "-na-"
+        ],
+        "answer": "-me-",
+        "hint": null
+      },
+      {
+        "id": 84,
+        "type": "translate",
+        "prompt": "Traduce al suajili: he llegado",
+        "options": [],
+        "answer": "nimefika",
+        "hint": null
+      },
+      {
+        "id": 85,
+        "type": "multiple_choice",
+        "prompt": "«Nimechoka» significa:",
+        "options": [
+          "He comido",
+          "Estoy cansado",
+          "He terminado",
+          "Descansaré"
+        ],
+        "answer": "Estoy cansado",
+        "hint": null
+      },
+      {
+        "id": 86,
+        "type": "translate",
+        "prompt": "Perfecto negativo «todavía no he comido»:",
+        "options": [],
+        "answer": "sijala",
+        "hint": null
+      },
+      {
+        "id": 87,
+        "type": "translate",
+        "prompt": "Traduce al español: tumemaliza",
+        "options": [],
+        "answer": "hemos terminado",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 19,
+    "week": 3,
+    "title": "La comida y el mercado",
+    "subtitle": "Compras y regateo",
+    "theme": "Vocabulario",
+    "blocks": [
+      {
+        "type": "heading",
+        "heading": "Vocabulario de comida"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "chakula",
+            "comida"
+          ],
+          [
+            "wali",
+            "arroz"
+          ],
+          [
+            "nyama",
+            "carne"
+          ],
+          [
+            "samaki",
+            "pescado"
+          ],
+          [
+            "mboga",
+            "verduras"
+          ],
+          [
+            "matunda",
+            "frutas"
+          ],
+          [
+            "mkate",
+            "pan"
+          ],
+          [
+            "maziwa",
+            "leche"
+          ]
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "En el mercado"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "Bei gani?",
+            "¿Cuánto cuesta?"
+          ],
+          [
+            "Ghali sana!",
+            "¡Muy caro!"
+          ],
+          [
+            "Punguza bei",
+            "Baja el precio"
+          ],
+          [
+            "Nataka kilo moja",
+            "Quiero un kilo"
+          ],
+          [
+            "Nitanunua",
+            "Lo compraré"
+          ]
+        ]
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          {
+            "speaker": "Mnunuzi",
+            "swahili": "Ndizi bei gani?",
+            "english": "¿Cuánto cuestan los plátanos?"
+          },
+          {
+            "speaker": "Muuzaji",
+            "swahili": "Shilingi mia tano.",
+            "english": "Quinientos chelines."
+          },
+          {
+            "speaker": "Mnunuzi",
+            "swahili": "Ghali sana! Punguza bei.",
+            "english": "¡Muy caro! Baja el precio."
+          },
+          {
+            "speaker": "Muuzaji",
+            "swahili": "Sawa, mia nne.",
+            "english": "Está bien, cuatrocientos."
+          }
+        ]
+      },
+      {
+        "type": "conversation",
+        "calloutTitle": "Ahora tú — regatea en el mercado",
+        "intro": "Una conversación de verdad, en voz alta. No hay guion: di lo que quieras y usa las frases de abajo si te atoras.",
+        "scenario": {
+          "setting": "Estás en el mercado de Kariakoo, en Dar es Salaam. Mama Rehema tiene un puesto repleto de frutas y verduras.",
+          "goal": "Pregunta el precio de algo, di que es muy caro, acuerda un precio más bajo y cómpralo.",
+          "role": "Mama Rehema, a cheerful market seller at Kariakoo market in Dar es Salaam. You sell bananas (ndizi), fruit, fish, rice and vegetables. Open with a price that is a little high — for example 1,000 shillings for the bananas — and enjoy the haggling: come down once or twice, then agree. Keep prices to simple round numbers.",
+          "opening": "Karibu, mteja! Unataka nini leo?",
+          "openingTranslation": "¡Bienvenido, cliente! ¿Qué quieres hoy?",
+          "phrases": [
+            {
+              "swahili": "Ndizi bei gani?",
+              "english": "¿Cuánto cuestan los plátanos?"
+            },
+            {
+              "swahili": "Ghali sana!",
+              "english": "¡Muy caro!"
+            },
+            {
+              "swahili": "Punguza bei, tafadhali.",
+              "english": "Baja el precio, por favor."
+            },
+            {
+              "swahili": "Nataka kilo moja.",
+              "english": "Quiero un kilo."
+            },
+            {
+              "swahili": "Sawa, nitanunua.",
+              "english": "Está bien, lo compraré."
+            },
+            {
+              "swahili": "Asante. Kwa heri!",
+              "english": "Gracias. ¡Adiós!"
+            }
+          ]
+        }
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "Acuerdas un precio y decides comprar. Dices:",
+            "options": [
+              "Nitanunua",
+              "Ghali sana!",
+              "Punguza bei",
+              "Bei gani?"
+            ],
+            "answer": "Nitanunua",
+            "explain": "ni- + -ta- + nunua: (lo) compraré."
+          },
+          {
+            "prompt": "«Nataka kilo moja» significa:",
+            "options": [
+              "Quiero un kilo",
+              "Quiero uno más",
+              "Cuesta un chelín",
+              "Dame el precio"
+            ],
+            "answer": "Quiero un kilo",
+            "explain": "nataka es la forma corta y cotidiana de ninataka."
+          },
+          {
+            "prompt": "¿Qué palabra significa «pan»?",
+            "options": [
+              "mkate",
+              "maziwa",
+              "mboga",
+              "wali"
+            ],
+            "answer": "mkate",
+            "explain": "maziwa = leche, mboga = verduras, wali = arroz cocido."
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "chakula",
+        "english": "comida"
+      },
+      {
+        "swahili": "wali",
+        "english": "arroz"
+      },
+      {
+        "swahili": "nyama",
+        "english": "carne"
+      },
+      {
+        "swahili": "samaki",
+        "english": "pescado"
+      },
+      {
+        "swahili": "matunda",
+        "english": "frutas"
+      },
+      {
+        "swahili": "bei",
+        "english": "precio"
+      },
+      {
+        "swahili": "ghali",
+        "english": "caro"
+      },
+      {
+        "swahili": "nunua",
+        "english": "comprar"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 88,
+        "type": "multiple_choice",
+        "prompt": "«Bei gani?» significa:",
+        "options": [
+          "¿Cómo estás?",
+          "¿Cuánto cuesta?",
+          "¿Dónde está?",
+          "¿Cuántos son?"
+        ],
+        "answer": "¿Cuánto cuesta?",
+        "hint": null
+      },
+      {
+        "id": 89,
+        "type": "translate",
+        "prompt": "Traduce al español: ghali sana",
+        "options": [],
+        "answer": "muy caro",
+        "hint": null
+      },
+      {
+        "id": 90,
+        "type": "translate",
+        "prompt": "Traduce al suajili: pescado",
+        "options": [],
+        "answer": "samaki",
+        "hint": null
+      },
+      {
+        "id": 91,
+        "type": "multiple_choice",
+        "prompt": "«Punguza bei» significa:",
+        "options": [
+          "sube el precio",
+          "baja el precio",
+          "paga ahora",
+          "es barato"
+        ],
+        "answer": "baja el precio",
+        "hint": null
+      },
+      {
+        "id": 92,
+        "type": "translate",
+        "prompt": "Traduce al español: matunda",
+        "options": [],
+        "answer": "frutas",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 20,
+    "week": 3,
+    "title": "Viajes y direcciones",
+    "subtitle": "Cómo moverte",
+    "theme": "Vocabulario",
+    "blocks": [
+      {
+        "type": "heading",
+        "heading": "Vocabulario de viajes"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "safari",
+            "viaje"
+          ],
+          [
+            "basi",
+            "autobús"
+          ],
+          [
+            "gari",
+            "carro"
+          ],
+          [
+            "ndege",
+            "avión"
+          ],
+          [
+            "stesheni",
+            "estación"
+          ],
+          [
+            "hoteli",
+            "hotel"
+          ],
+          [
+            "tikiti",
+            "boleto"
+          ]
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Direcciones"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "kushoto",
+            "izquierda"
+          ],
+          [
+            "kulia",
+            "derecha"
+          ],
+          [
+            "moja kwa moja",
+            "todo recto"
+          ],
+          [
+            "mbele",
+            "adelante"
+          ],
+          [
+            "nyuma",
+            "detrás"
+          ],
+          [
+            "karibu",
+            "cerca"
+          ],
+          [
+            "mbali",
+            "lejos"
+          ]
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Diálogo — Preguntar el camino"
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          {
+            "speaker": "Msafiri",
+            "swahili": "Samahani, stesheni iko wapi?",
+            "english": "Disculpa, ¿dónde está la estación?"
+          },
+          {
+            "speaker": "Mwenyeji",
+            "swahili": "Endelea moja kwa moja, kisha geuka kushoto.",
+            "english": "Sigue todo recto y luego gira a la izquierda."
+          },
+          {
+            "speaker": "Msafiri",
+            "swahili": "Ni mbali?",
+            "english": "¿Está lejos?"
+          },
+          {
+            "speaker": "Mwenyeji",
+            "swahili": "Hapana, ni karibu. Iko nyuma ya hoteli.",
+            "english": "No, está cerca. Está detrás del hotel."
+          },
+          {
+            "speaker": "Msafiri",
+            "swahili": "Asante sana. Tikiti ni bei gani?",
+            "english": "Muchas gracias. ¿Cuánto cuesta el boleto?"
+          },
+          {
+            "speaker": "Mwenyeji",
+            "swahili": "Shilingi elfu tano. Safari njema!",
+            "english": "Cinco mil chelines. ¡Buen viaje!"
+          }
+        ]
+      },
+      {
+        "type": "conversation",
+        "calloutTitle": "Ahora tú — pregunta el camino",
+        "intro": "Una conversación de verdad, en voz alta. No hay guion: di lo que quieras y usa las frases de abajo si te atoras.",
+        "scenario": {
+          "setting": "Acabas de bajar de un autobús en Moshi, Tanzania, y necesitas encontrar tu hotel. Mama Grace vende fruta al borde del camino.",
+          "goal": "Salúdala con respeto, pregunta dónde está el hotel y si está lejos, y dale las gracias.",
+          "role": "Mama Grace, a kind fruit seller in her fifties in Moshi, Tanzania. The hotel the visitor wants is close: straight ahead, then left, behind the bus station — about five minutes on foot. Give directions one short step at a time and check they understood. If asked, you can also say where the bus station or the market is.",
+          "opening": "Karibu, mgeni! Unakwenda wapi?",
+          "openingTranslation": "¡Bienvenido, visitante! ¿A dónde vas?",
+          "phrases": [
+            {
+              "swahili": "Shikamoo, mama.",
+              "english": "Saludo respetuoso a una persona mayor."
+            },
+            {
+              "swahili": "Hoteli iko wapi?",
+              "english": "¿Dónde está el hotel?"
+            },
+            {
+              "swahili": "Ni mbali?",
+              "english": "¿Está lejos?"
+            },
+            {
+              "swahili": "Kushoto au kulia?",
+              "english": "¿A la izquierda o a la derecha?"
+            },
+            {
+              "swahili": "Tafadhali sema polepole.",
+              "english": "Por favor, habla despacio."
+            },
+            {
+              "swahili": "Asante sana!",
+              "english": "¡Muchas gracias!"
+            }
+          ]
+        }
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "¿Hacia dónde te manda «Geuka kulia»?",
+            "options": [
+              "A la derecha",
+              "A la izquierda",
+              "Hacia atrás",
+              "Todo recto"
+            ],
+            "answer": "A la derecha",
+            "explain": "kulia = derecha, kushoto = izquierda."
+          },
+          {
+            "prompt": "¿Qué palabra significa «boleto»?",
+            "options": [
+              "tikiti",
+              "basi",
+              "ndege",
+              "stesheni"
+            ],
+            "answer": "tikiti",
+            "explain": "basi = autobús, ndege = avión, stesheni = estación."
+          },
+          {
+            "prompt": "«Nyuma» significa:",
+            "options": [
+              "detrás",
+              "adelante",
+              "cerca",
+              "izquierda"
+            ],
+            "answer": "detrás",
+            "explain": "mbele = adelante, nyuma = detrás."
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "safari",
+        "english": "viaje"
+      },
+      {
+        "swahili": "basi",
+        "english": "autobús"
+      },
+      {
+        "swahili": "ndege",
+        "english": "avión"
+      },
+      {
+        "swahili": "hoteli",
+        "english": "hotel"
+      },
+      {
+        "swahili": "kushoto",
+        "english": "izquierda"
+      },
+      {
+        "swahili": "kulia",
+        "english": "derecha"
+      },
+      {
+        "swahili": "mbali",
+        "english": "lejos"
+      },
+      {
+        "swahili": "karibu na",
+        "english": "cerca de"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 93,
+        "type": "multiple_choice",
+        "prompt": "«kushoto» significa:",
+        "options": [
+          "derecha",
+          "izquierda",
+          "recto",
+          "detrás"
+        ],
+        "answer": "izquierda",
+        "hint": null
+      },
+      {
+        "id": 94,
+        "type": "translate",
+        "prompt": "Traduce al suajili: avión",
+        "options": [],
+        "answer": "ndege",
+        "hint": null
+      },
+      {
+        "id": 95,
+        "type": "multiple_choice",
+        "prompt": "«moja kwa moja» significa:",
+        "options": [
+          "gira a la izquierda",
+          "gira a la derecha",
+          "todo recto",
+          "detente"
+        ],
+        "answer": "todo recto",
+        "hint": null
+      },
+      {
+        "id": 96,
+        "type": "translate",
+        "prompt": "Traduce al español: hoteli iko wapi",
+        "options": [],
+        "answer": "dónde está el hotel",
+        "hint": null
+      },
+      {
+        "id": 97,
+        "type": "translate",
+        "prompt": "Traduce al español: mbali",
+        "options": [],
+        "answer": "lejos",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 21,
+    "week": 3,
+    "title": "Locativos y «hay»",
+    "subtitle": "-ni, kuna, niko",
+    "theme": "Gramática",
+    "blocks": [
+      {
+        "type": "heading",
+        "heading": "El locativo -ni"
+      },
+      {
+        "type": "paragraph",
+        "text": "Añade -ni al final de un lugar para decir «en» o «a» ese lugar."
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "nyumbani",
+            "en casa"
+          ],
+          [
+            "shuleni",
+            "en la escuela"
+          ],
+          [
+            "sokoni",
+            "en el mercado"
+          ],
+          [
+            "mjini",
+            "en la ciudad"
+          ],
+          [
+            "chumbani",
+            "en el cuarto"
+          ]
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "«Hay» — kuna / hakuna"
+      },
+      {
+        "type": "list",
+        "lines": [
+          "Kuna chakula mezani — Hay comida en la mesa",
+          "Hakuna maji — No hay agua"
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "«Estar en» — -ko"
+      },
+      {
+        "type": "list",
+        "lines": [
+          "Niko nyumbani — Estoy en casa",
+          "Uko wapi? — ¿Dónde estás?"
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "¿Cómo se dice «en la escuela»?",
+            "options": [
+              "shuleni",
+              "sokoni",
+              "mjini",
+              "chumbani"
+            ],
+            "answer": "shuleni",
+            "explain": "Añade -ni al lugar: shule → shuleni."
+          },
+          {
+            "prompt": "«Kuna chakula mezani» significa:",
+            "options": [
+              "Hay comida en la mesa",
+              "No hay comida en la mesa",
+              "La comida está en el mercado",
+              "Estoy en la mesa"
+            ],
+            "answer": "Hay comida en la mesa",
+            "explain": "kuna = hay; meza + -ni = en la mesa."
+          },
+          {
+            "prompt": "«Uko sokoni?» pregunta:",
+            "options": [
+              "¿Estás en el mercado?",
+              "¿Hay un mercado?",
+              "¿Dónde está el mercado?",
+              "¿Estoy en el mercado?"
+            ],
+            "answer": "¿Estás en el mercado?",
+            "explain": "u- (tú) + -ko (estar en), y luego soko + -ni."
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "nyumbani",
+        "english": "en casa"
+      },
+      {
+        "swahili": "shuleni",
+        "english": "en la escuela"
+      },
+      {
+        "swahili": "mjini",
+        "english": "en la ciudad"
+      },
+      {
+        "swahili": "kuna",
+        "english": "hay"
+      },
+      {
+        "swahili": "hakuna",
+        "english": "no hay"
+      },
+      {
+        "swahili": "niko",
+        "english": "estoy en"
+      },
+      {
+        "swahili": "uko",
+        "english": "estás en"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 98,
+        "type": "translate",
+        "prompt": "Añade -ni: nyumba (casa) → «en casa»",
+        "options": [],
+        "answer": "nyumbani",
+        "hint": null
+      },
+      {
+        "id": 99,
+        "type": "multiple_choice",
+        "prompt": "«Hakuna maji» significa:",
+        "options": [
+          "Hay agua",
+          "No hay agua",
+          "Dónde está el agua",
+          "Quiero agua"
+        ],
+        "answer": "No hay agua",
+        "hint": null
+      },
+      {
+        "id": 100,
+        "type": "translate",
+        "prompt": "Traduce al suajili: ¿Dónde estás? (uko ...)",
+        "options": [],
+        "answer": "uko wapi",
+        "hint": null
+      },
+      {
+        "id": 101,
+        "type": "translate",
+        "prompt": "Traduce al español: niko nyumbani",
+        "options": [],
+        "answer": "estoy en casa",
+        "hint": null
+      },
+      {
+        "id": 102,
+        "type": "multiple_choice",
+        "prompt": "«kuna» significa:",
+        "options": [
+          "no hay",
+          "hay",
+          "estoy en",
+          "dónde"
+        ],
+        "answer": "hay",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 22,
+    "week": 3,
+    "title": "Repaso y contar una historia",
+    "subtitle": "Combina los tiempos",
+    "theme": "Repaso",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Ya tienes los cuatro tiempos básicos. Hoy los combinas en un relato."
+      },
+      {
+        "type": "heading",
+        "heading": "Conectores"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "na",
+            "y"
+          ],
+          [
+            "lakini",
+            "pero"
+          ],
+          [
+            "kwa sababu",
+            "porque"
+          ],
+          [
+            "kisha",
+            "luego"
+          ],
+          [
+            "kwanza",
+            "primero"
+          ],
+          [
+            "kwa hiyo",
+            "por eso"
+          ]
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Historia modelo — Mi día"
+      },
+      {
+        "type": "paragraph",
+        "text": "Jana niliamka asubuhi. Kwanza nilikunywa chai, kisha nilienda sokoni. Nilinunua matunda. Baadaye nilirudi nyumbani na nilipika chakula. Jioni nilikuwa nimechoka, kwa hiyo nililala mapema. Kesho nitafanya kazi."
+      },
+      {
+        "type": "paragraph",
+        "text": "(Ayer me desperté por la mañana. Primero tomé té, luego fui al mercado. Compré frutas. Más tarde volví a casa y cociné. Por la tarde estaba cansado, por eso me dormí temprano. Mañana trabajaré.)"
+      },
+      {
+        "type": "conversation",
+        "calloutTitle": "Ahora tú — cuéntale tu día a Juma",
+        "intro": "Una conversación de verdad, en voz alta. No hay guion: di lo que quieras y usa las frases de abajo si te atoras.",
+        "scenario": {
+          "setting": "Es por la tarde y te encuentras con tu amigo Juma. Quiere saber qué hiciste ayer.",
+          "goal": "Cuéntale tres o cuatro cosas que hiciste ayer, en orden —usa kwanza, kisha y baadaye— y dile qué harás mañana.",
+          "role": "Juma, a friendly university student in Arusha, Tanzania, and a friend of the learner. You are curious about what they did yesterday: ask follow-up questions such as where they went, what they ate or bought and who they were with, then ask about their plans for tomorrow. Share one or two short things about your own day if asked.",
+          "opening": "Habari za jioni, rafiki! Ulifanya nini jana?",
+          "openingTranslation": "¡Buenas tardes, amigo! ¿Qué hiciste ayer?",
+          "phrases": [
+            {
+              "swahili": "Kwanza niliamka asubuhi.",
+              "english": "Primero me desperté por la mañana."
+            },
+            {
+              "swahili": "Kisha nilienda sokoni.",
+              "english": "Luego fui al mercado."
+            },
+            {
+              "swahili": "Baadaye nilirudi nyumbani.",
+              "english": "Más tarde volví a casa."
+            },
+            {
+              "swahili": "Nilinunua matunda.",
+              "english": "Compré frutas."
+            },
+            {
+              "swahili": "Kesho nitafanya kazi.",
+              "english": "Mañana trabajaré."
+            },
+            {
+              "swahili": "Na wewe, ulifanya nini?",
+              "english": "Y tú, ¿qué hiciste?"
+            }
+          ]
+        }
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "¿Qué conector significa «pero»?",
+            "options": [
+              "lakini",
+              "kisha",
+              "kwanza",
+              "na"
+            ],
+            "answer": "lakini",
+            "explain": "kisha = luego, kwanza = primero, na = y."
+          },
+          {
+            "prompt": "En la historia, ¿qué pasó justo después de tomar té?",
+            "options": [
+              "El narrador fue al mercado",
+              "El narrador cocinó",
+              "El narrador se fue a dormir",
+              "El narrador fue a trabajar"
+            ],
+            "answer": "El narrador fue al mercado",
+            "explain": "Kwanza nilikunywa chai, kisha nilienda sokoni."
+          },
+          {
+            "prompt": "¿En qué tiempo está «Kesho nitafanya kazi»?",
+            "options": [
+              "Futuro",
+              "Pasado",
+              "Presente",
+              "Perfecto"
+            ],
+            "answer": "Futuro",
+            "explain": "-ta- marca el futuro."
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "kwanza",
+        "english": "primero"
+      },
+      {
+        "swahili": "kisha",
+        "english": "luego"
+      },
+      {
+        "swahili": "baadaye",
+        "english": "más tarde"
+      },
+      {
+        "swahili": "kwa sababu",
+        "english": "porque"
+      },
+      {
+        "swahili": "kwa hiyo",
+        "english": "por eso"
+      },
+      {
+        "swahili": "mapema",
+        "english": "temprano"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 103,
+        "type": "translate",
+        "prompt": "Traduce al español: kwa sababu",
+        "options": [],
+        "answer": "porque",
+        "hint": null
+      },
+      {
+        "id": 104,
+        "type": "multiple_choice",
+        "prompt": "«kisha» significa:",
+        "options": [
+          "primero",
+          "y",
+          "luego",
+          "pero"
+        ],
+        "answer": "luego",
+        "hint": null
+      },
+      {
+        "id": 105,
+        "type": "translate",
+        "prompt": "Traduce al español: nilirudi nyumbani",
+        "options": [],
+        "answer": "volví a casa",
+        "hint": null
+      },
+      {
+        "id": 106,
+        "type": "translate",
+        "prompt": "Traduce al suajili: me desperté (ni + li + amka)",
+        "options": [],
+        "answer": "niliamka",
+        "hint": null
+      },
+      {
+        "id": 107,
+        "type": "multiple_choice",
+        "prompt": "¿Qué conector significa «por eso»?",
+        "options": [
+          "lakini",
+          "kwa hiyo",
+          "kwanza",
+          "na"
+        ],
+        "answer": "kwa hiyo",
+        "hint": null
+      }
+    ],
+    "xpReward": 150
+  },
+  {
+    "id": 23,
+    "week": 4,
+    "title": "Subjuntivo y peticiones",
+    "subtitle": "Deseos, sugerencias y «vamos»",
+    "theme": "Gramática",
+    "blocks": [
+      {
+        "type": "verbBuilder",
+        "mode": "subjunctive",
+        "calloutTitle": "Construye una petición: SUJETO + verbo (-a → -e)",
+        "intro": "Para deseos, sugerencias y obligaciones, quita por completo el marcador de tiempo y cambia la -a final del verbo por -e. Te sonará del subjuntivo español: «hablas» → «que hables». Toca para construirlo:"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "Nisome?",
+            "¿Debería leer?"
+          ],
+          [
+            "Twende",
+            "Vamos"
+          ],
+          [
+            "Tukutane kesho",
+            "Encontrémonos mañana"
+          ],
+          [
+            "Tafadhali nipe maji",
+            "Por favor, dame agua"
+          ]
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "Después de taka (querer) y lazima (deber), el verbo siguiente va en subjuntivo, igual que en español después de «quiero que…»: Nataka uende — Quiero que vayas. Lazima tusome — Debemos estudiar."
+      },
+      {
+        "type": "heading",
+        "heading": "Diálogo — En casa de una amiga"
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          {
+            "speaker": "Mama Asha",
+            "swahili": "Karibu, Tom! Tafadhali ukae.",
+            "english": "¡Bienvenido, Tom! Por favor, siéntate."
+          },
+          {
+            "speaker": "Tom",
+            "swahili": "Asante, mama. Nipike chai?",
+            "english": "Gracias. ¿Preparo el té?"
+          },
+          {
+            "speaker": "Mama Asha",
+            "swahili": "Hapana, wewe ni mgeni! Lazima upumzike.",
+            "english": "¡No, tú eres el invitado! Debes descansar."
+          },
+          {
+            "speaker": "Tom",
+            "swahili": "Sawa. Tafadhali nipe maji.",
+            "english": "Está bien. Por favor, dame un poco de agua."
+          },
+          {
+            "speaker": "Mama Asha",
+            "swahili": "Haya, maji. Sasa tule!",
+            "english": "Aquí tienes, agua. ¡Ahora comamos!"
+          },
+          {
+            "speaker": "Tom",
+            "swahili": "Asante sana. Kesho twende sokoni pamoja?",
+            "english": "Muchas gracias. ¿Vamos juntos al mercado mañana?"
+          },
+          {
+            "speaker": "Mama Asha",
+            "swahili": "Wazo zuri! Tukutane saa tatu asubuhi.",
+            "english": "¡Buena idea! Encontrémonos a las nueve de la mañana."
+          }
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "«Nisome?» significa:",
+            "options": [
+              "¿Debería leer?",
+              "Estoy leyendo",
+              "Leí",
+              "¡Lee!"
+            ],
+            "answer": "¿Debería leer?",
+            "explain": "ni- + som- + -e: el subjuntivo pregunta o sugiere."
+          },
+          {
+            "prompt": "Completa: Nataka u___. (Quiero que vayas.)",
+            "options": [
+              "ende",
+              "enda",
+              "naenda",
+              "taenda"
+            ],
+            "answer": "ende",
+            "explain": "Después de taka, el verbo siguiente termina en -e: uende."
+          },
+          {
+            "prompt": "Después de «lazima» (deber), el verbo siguiente va en:",
+            "options": [
+              "subjuntivo",
+              "pasado",
+              "futuro",
+              "perfecto"
+            ],
+            "answer": "subjuntivo",
+            "explain": "Lazima twende — debemos ir."
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "twende",
+        "english": "vamos"
+      },
+      {
+        "swahili": "nisome",
+        "english": "que yo lea"
+      },
+      {
+        "swahili": "nipe",
+        "english": "dame"
+      },
+      {
+        "swahili": "lazima",
+        "english": "deber"
+      },
+      {
+        "swahili": "tukutane",
+        "english": "encontrémonos"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 108,
+        "type": "multiple_choice",
+        "prompt": "En el subjuntivo, la -a final cambia a:",
+        "options": [
+          "-i",
+          "-e",
+          "-o",
+          "-u"
+        ],
+        "answer": "-e",
+        "hint": null
+      },
+      {
+        "id": 109,
+        "type": "translate",
+        "prompt": "Traduce al suajili: Vamos",
+        "options": [],
+        "answer": "twende",
+        "hint": null
+      },
+      {
+        "id": 110,
+        "type": "translate",
+        "prompt": "Traduce al suajili: Por favor, dame té (tafadhali ___ chai)",
+        "options": [],
+        "answer": "nipe",
+        "hint": null
+      },
+      {
+        "id": 111,
+        "type": "multiple_choice",
+        "prompt": "«Lazima tusome» significa:",
+        "options": [
+          "Estamos estudiando",
+          "Debemos estudiar",
+          "Ya estudiamos",
+          "No estudiemos"
+        ],
+        "answer": "Debemos estudiar",
+        "hint": null
+      },
+      {
+        "id": 112,
+        "type": "translate",
+        "prompt": "Traduce al español: tukutane kesho",
+        "options": [],
+        "answer": "encontrémonos mañana",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 24,
+    "week": 4,
+    "title": "Infijos de objeto",
+    "subtitle": "Mete el objeto dentro del verbo",
+    "theme": "Gramática",
+    "blocks": [
+      {
+        "type": "verbBuilder",
+        "mode": "object",
+        "marker": "na",
+        "calloutTitle": "Encaja el objeto: SUJETO + na + OBJETO + RAÍZ",
+        "intro": "El suajili mete el pronombre de objeto DENTRO del verbo, justo antes de la raíz, parecido a como en español va justo antes del verbo: «te veo» ~ ninakuona. Elige un sujeto, un objeto y un verbo para ver cómo encajan:",
+        "stemKeys": [
+          "penda",
+          "ona",
+          "jua",
+          "taka"
+        ]
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Infijo",
+          "Significado",
+          "Ejemplo"
+        ],
+        "tableRows": [
+          [
+            "-ni-",
+            "me",
+            "ananiona (me ve)"
+          ],
+          [
+            "-ku-",
+            "te",
+            "ninakupenda (te amo)"
+          ],
+          [
+            "-m-",
+            "lo/la",
+            "ninamjua (lo/la conozco)"
+          ],
+          [
+            "-tu-",
+            "nos",
+            "wanatuona (nos ven)"
+          ],
+          [
+            "-wa-",
+            "los/las (a ustedes o a ellos)",
+            "ninawapenda"
+          ]
+        ]
+      },
+      {
+        "type": "list",
+        "lines": [
+          "Nilimwona jana — Lo/la vi ayer",
+          "Watakusaidia — Te ayudarán"
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "«Ninamjua» significa:",
+            "options": [
+              "Lo/la conozco",
+              "Él/Ella me conoce",
+              "Te conozco",
+              "Ellos lo/la conocen"
+            ],
+            "answer": "Lo/la conozco",
+            "explain": "-m- es el objeto «lo/la», metido justo antes de la raíz."
+          },
+          {
+            "prompt": "Completa: Ana___ona. (Él/Ella nos ve.)",
+            "options": [
+              "tu",
+              "ni",
+              "ku",
+              "wa"
+            ],
+            "answer": "tu",
+            "explain": "-tu- = nos."
+          },
+          {
+            "prompt": "«Nilimwona jana» significa:",
+            "options": [
+              "Lo/la vi ayer",
+              "Él/Ella me vio ayer",
+              "Te vi ayer",
+              "Lo/la veré mañana"
+            ],
+            "answer": "Lo/la vi ayer"
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "ninakupenda",
+        "english": "te amo"
+      },
+      {
+        "swahili": "aliniona",
+        "english": "él me vio"
+      },
+      {
+        "swahili": "ninamjua",
+        "english": "lo/la conozco"
+      },
+      {
+        "swahili": "watakusaidia",
+        "english": "te ayudarán"
+      },
+      {
+        "swahili": "saidia",
+        "english": "ayudar"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 113,
+        "type": "multiple_choice",
+        "prompt": "En «ninakupenda», ¿qué significa -ku-?",
+        "options": [
+          "me",
+          "te",
+          "lo",
+          "nos"
+        ],
+        "answer": "te",
+        "hint": null
+      },
+      {
+        "id": 114,
+        "type": "translate",
+        "prompt": "Traduce al suajili: Te amo",
+        "options": [],
+        "answer": "ninakupenda",
+        "hint": null
+      },
+      {
+        "id": 115,
+        "type": "multiple_choice",
+        "prompt": "«Aliniona» significa:",
+        "options": [
+          "Yo lo vi",
+          "Él me vio",
+          "Ellos nos vieron",
+          "Ella te ve"
+        ],
+        "answer": "Él me vio",
+        "hint": null
+      },
+      {
+        "id": 116,
+        "type": "translate",
+        "prompt": "Traduce al español: watakusaidia",
+        "options": [],
+        "answer": "te ayudarán",
+        "hint": null
+      },
+      {
+        "id": 117,
+        "type": "fill_blank",
+        "prompt": "Inserta el objeto «me»: ana___ona (él me ve)",
+        "options": [],
+        "answer": "ni",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 25,
+    "week": 4,
+    "title": "Oraciones de relativo",
+    "subtitle": "«que», «quien», «donde»",
+    "theme": "Gramática",
+    "blocks": [
+      {
+        "type": "heading",
+        "heading": "El método amba- (el más fácil)"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "ambaye",
+            "que / quien (persona)"
+          ],
+          [
+            "ambao",
+            "que / quienes (plural)"
+          ],
+          [
+            "ambacho",
+            "que (cosa con ki-)"
+          ],
+          [
+            "ambayo",
+            "que (clase N)"
+          ],
+          [
+            "ambapo",
+            "donde / cuando"
+          ]
+        ]
+      },
+      {
+        "type": "list",
+        "lines": [
+          "Mtu ambaye anasoma ni rafiki yangu — La persona que está leyendo es mi amigo",
+          "Kitabu ambacho nilinunua ni kizuri — El libro que compré es bueno"
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "En español casi siempre basta con «que»; en suajili, amba- cambia su terminación según el sustantivo. También existe una forma más compacta, con infijo: Mtu anayesoma... / Kitabu nilichonunua... Empieza con las formas con amba-; siempre funcionan."
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "Completa: Watu ___ wanasoma ni marafiki zangu.",
+            "options": [
+              "ambao",
+              "ambaye",
+              "ambacho",
+              "ambapo"
+            ],
+            "answer": "ambao",
+            "explain": "watu es plural, así que «que» es ambao."
+          },
+          {
+            "prompt": "Completa: Nyumba ___ nilinunua ni kubwa.",
+            "options": [
+              "ambayo",
+              "ambacho",
+              "ambaye",
+              "ambao"
+            ],
+            "answer": "ambayo",
+            "explain": "nyumba es de la clase N, así que «que» es ambayo."
+          },
+          {
+            "prompt": "«Mtu anayesoma» es una forma más corta de decir:",
+            "options": [
+              "Mtu ambaye anasoma",
+              "Mtu ambacho anasoma",
+              "Mtu ambapo anasoma",
+              "Mtu anasoma"
+            ],
+            "answer": "Mtu ambaye anasoma",
+            "explain": "-ye- dentro del verbo hace el trabajo de ambaye."
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "ambaye",
+        "english": "quien"
+      },
+      {
+        "swahili": "ambacho",
+        "english": "el cual"
+      },
+      {
+        "swahili": "ambapo",
+        "english": "donde"
+      },
+      {
+        "swahili": "anasoma",
+        "english": "está leyendo"
+      },
+      {
+        "swahili": "nilinunua",
+        "english": "compré"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 118,
+        "type": "multiple_choice",
+        "prompt": "¿Qué palabra de relativo se usa para una persona («que», «quien»)?",
+        "options": [
+          "ambacho",
+          "ambaye",
+          "ambapo",
+          "ambayo"
+        ],
+        "answer": "ambaye",
+        "hint": null
+      },
+      {
+        "id": 119,
+        "type": "translate",
+        "prompt": "Traduce al español: mtu ambaye anasoma",
+        "options": [],
+        "answer": "la persona que está leyendo",
+        "hint": null
+      },
+      {
+        "id": 120,
+        "type": "multiple_choice",
+        "prompt": "«ambapo» se refiere a:",
+        "options": [
+          "una persona",
+          "un libro",
+          "un lugar o momento",
+          "un animal"
+        ],
+        "answer": "un lugar o momento",
+        "hint": null
+      },
+      {
+        "id": 121,
+        "type": "translate",
+        "prompt": "Completa: Kitabu ___ nilinunua (el libro que compré)",
+        "options": [],
+        "answer": "ambacho",
+        "hint": null
+      },
+      {
+        "id": 122,
+        "type": "translate",
+        "prompt": "Traduce al español (el plural de «quien»): ambao",
+        "options": [],
+        "answer": "quienes",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 26,
+    "week": 4,
+    "title": "Comparaciones y adverbios",
+    "subtitle": "Más grande, mejor, despacio",
+    "theme": "Gramática",
+    "blocks": [
+      {
+        "type": "heading",
+        "heading": "Comparaciones"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "A ni mkubwa kuliko B",
+            "A es más grande que B"
+          ],
+          [
+            "zaidi ya",
+            "más de / más que"
+          ],
+          [
+            "kama",
+            "como"
+          ],
+          [
+            "bora kuliko",
+            "mejor que"
+          ]
+        ]
+      },
+      {
+        "type": "list",
+        "lines": [
+          "Tembo ni mkubwa kuliko simba — El elefante es más grande que el león"
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Adverbios comunes"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "sana",
+            "muy / mucho"
+          ],
+          [
+            "polepole",
+            "despacio"
+          ],
+          [
+            "haraka",
+            "rápido"
+          ],
+          [
+            "vizuri",
+            "bien"
+          ],
+          [
+            "pamoja",
+            "juntos"
+          ],
+          [
+            "kila siku",
+            "todos los días"
+          ]
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "«Zaidi ya» significa:",
+            "options": [
+              "más de",
+              "mejor que",
+              "igual que",
+              "menos de"
+            ],
+            "answer": "más de",
+            "explain": "zaidi ya kumi — más de diez."
+          },
+          {
+            "prompt": "«Haraka» significa:",
+            "options": [
+              "rápido",
+              "despacio",
+              "bien",
+              "juntos"
+            ],
+            "answer": "rápido",
+            "explain": "haraka = rápido; su opuesto es polepole."
+          },
+          {
+            "prompt": "¿Cómo se dice «Ella habla bien»?",
+            "options": [
+              "Anasema vizuri",
+              "Anasema haraka",
+              "Anasema sana",
+              "Anasema pamoja"
+            ],
+            "answer": "Anasema vizuri",
+            "explain": "vizuri = bien; el adverbio va después del verbo, igual que en español."
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "kuliko",
+        "english": "que (al comparar)"
+      },
+      {
+        "swahili": "zaidi",
+        "english": "más"
+      },
+      {
+        "swahili": "kama",
+        "english": "como"
+      },
+      {
+        "swahili": "polepole",
+        "english": "despacio"
+      },
+      {
+        "swahili": "haraka",
+        "english": "rápido"
+      },
+      {
+        "swahili": "vizuri",
+        "english": "bien"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 123,
+        "type": "multiple_choice",
+        "prompt": "«kuliko» significa:",
+        "options": [
+          "más",
+          "que (al comparar)",
+          "muy",
+          "como"
+        ],
+        "answer": "que (al comparar)",
+        "hint": null
+      },
+      {
+        "id": 124,
+        "type": "translate",
+        "prompt": "Traduce al español: anaongea polepole",
+        "options": [],
+        "answer": "habla despacio",
+        "hint": null
+      },
+      {
+        "id": 125,
+        "type": "translate",
+        "prompt": "Traduce al suajili: todos los días",
+        "options": [],
+        "answer": "kila siku",
+        "hint": null
+      },
+      {
+        "id": 126,
+        "type": "multiple_choice",
+        "prompt": "«bora kuliko» significa:",
+        "options": [
+          "peor que",
+          "mejor que",
+          "igual que",
+          "más grande que"
+        ],
+        "answer": "mejor que",
+        "hint": null
+      },
+      {
+        "id": 127,
+        "type": "translate",
+        "prompt": "Traduce al español: tunafanya kazi pamoja",
+        "options": [],
+        "answer": "trabajamos juntos",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 27,
+    "week": 4,
+    "title": "Sentimientos y charla casual",
+    "subtitle": "Emociones, salud y plática",
+    "theme": "Vocabulario",
+    "blocks": [
+      {
+        "type": "heading",
+        "heading": "Sentimientos"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "nina furaha",
+            "Estoy feliz"
+          ],
+          [
+            "nina njaa",
+            "Tengo hambre"
+          ],
+          [
+            "nina kiu",
+            "Tengo sed"
+          ],
+          [
+            "nimechoka",
+            "Estoy cansado/a"
+          ],
+          [
+            "nimekasirika",
+            "Estoy enojado/a"
+          ]
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Salud"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "Naumwa",
+            "Estoy enfermo/a / me duele"
+          ],
+          [
+            "Kichwa kinauma",
+            "Me duele la cabeza"
+          ],
+          [
+            "daktari",
+            "médico"
+          ],
+          [
+            "dawa",
+            "medicina"
+          ],
+          [
+            "Pole sana",
+            "Lo siento mucho"
+          ]
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Charla casual"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "Mambo vipi?",
+            "¿Qué tal?"
+          ],
+          [
+            "Poa",
+            "Bien / todo bien"
+          ],
+          [
+            "Habari za kazi?",
+            "¿Cómo va el trabajo?"
+          ],
+          [
+            "Nimefurahi kukutana nawe",
+            "Mucho gusto en conocerte"
+          ]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Suajili callejero (sheng)",
+        "lines": [
+          "«Mambo?» — «Poa!» es el saludo informal de todos los días. Reconocerlo te hace sonar amigable y al día."
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Diálogo — No me siento bien"
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          {
+            "speaker": "Amina",
+            "swahili": "Mambo vipi, Juma?",
+            "english": "¿Qué tal, Juma?"
+          },
+          {
+            "speaker": "Juma",
+            "swahili": "Si poa sana. Naumwa.",
+            "english": "No muy bien. Estoy enfermo."
+          },
+          {
+            "speaker": "Amina",
+            "swahili": "Pole sana! Unaumwa nini?",
+            "english": "¡Lo siento mucho! ¿Qué te duele?"
+          },
+          {
+            "speaker": "Juma",
+            "swahili": "Kichwa kinauma, na nimechoka sana.",
+            "english": "Me duele la cabeza y estoy muy cansado."
+          },
+          {
+            "speaker": "Amina",
+            "swahili": "Umekunywa dawa?",
+            "english": "¿Has tomado alguna medicina?"
+          },
+          {
+            "speaker": "Juma",
+            "swahili": "Bado. Nitakwenda kwa daktari kesho.",
+            "english": "Todavía no. Mañana iré al médico."
+          },
+          {
+            "speaker": "Amina",
+            "swahili": "Vizuri. Lazima upumzike. Ugua pole!",
+            "english": "Bien. Tienes que descansar. ¡Que te mejores!"
+          }
+        ]
+      },
+      {
+        "type": "conversation",
+        "calloutTitle": "Ahora tú — charla casual con Amina",
+        "intro": "Una conversación de verdad, en voz alta. No hay guion: di lo que quieras y usa las frases de abajo si te atoras.",
+        "scenario": {
+          "setting": "Te encuentras con tu vecina Amina afuera de la tienda, en Nairobi. Siempre se detiene a platicar.",
+          "goal": "Responde a su saludo, di cómo te sientes hoy, pregúntale cómo está ella y cómo va su trabajo, y despídete.",
+          "role": "Amina, a chatty, kind neighbour in Nairobi, Kenya, who works as a nurse. You greet casually (Mambo vipi?), ask how the learner is feeling, and respond with sympathy (Pole sana) if they are tired, hungry or unwell, or with gladness if they are happy. You are a little tired today after a long shift but in good spirits.",
+          "opening": "Mambo vipi? Habari za leo?",
+          "openingTranslation": "¿Qué tal? ¿Cómo va tu día?",
+          "phrases": [
+            {
+              "swahili": "Poa!",
+              "english": "¡Todo bien!"
+            },
+            {
+              "swahili": "Nina furaha leo.",
+              "english": "Hoy estoy feliz."
+            },
+            {
+              "swahili": "Nimechoka.",
+              "english": "Estoy cansado/a."
+            },
+            {
+              "swahili": "Nina njaa.",
+              "english": "Tengo hambre."
+            },
+            {
+              "swahili": "Habari za kazi?",
+              "english": "¿Cómo va el trabajo?"
+            },
+            {
+              "swahili": "Pole sana.",
+              "english": "Lo siento mucho."
+            },
+            {
+              "swahili": "Tutaonana!",
+              "english": "¡Nos vemos!"
+            }
+          ]
+        }
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "«Nina furaha» significa:",
+            "options": [
+              "Estoy feliz",
+              "Tengo hambre",
+              "Estoy cansado/a",
+              "Estoy enojado/a"
+            ],
+            "answer": "Estoy feliz",
+            "explain": "Literalmente «tengo felicidad», igual que en español decimos «tengo hambre» o «tengo sed»."
+          },
+          {
+            "prompt": "«Habari za kazi?» pregunta por:",
+            "options": [
+              "tu trabajo",
+              "tu salud",
+              "tu familia",
+              "tu nombre"
+            ],
+            "answer": "tu trabajo",
+            "explain": "kazi = trabajo. La respuesta habitual es «Nzuri»."
+          },
+          {
+            "prompt": "«Nimekasirika» significa:",
+            "options": [
+              "Estoy enojado/a",
+              "Estoy cansado/a",
+              "Estoy enfermo/a",
+              "Estoy feliz"
+            ],
+            "answer": "Estoy enojado/a",
+            "explain": "nimechoka = estoy cansado/a; nimekasirika = estoy enojado/a."
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "furaha",
+        "english": "felicidad"
+      },
+      {
+        "swahili": "njaa",
+        "english": "hambre"
+      },
+      {
+        "swahili": "kiu",
+        "english": "sed"
+      },
+      {
+        "swahili": "naumwa",
+        "english": "estoy enfermo"
+      },
+      {
+        "swahili": "dawa",
+        "english": "medicina"
+      },
+      {
+        "swahili": "mambo",
+        "english": "cosas/¿qué tal?"
+      },
+      {
+        "swahili": "poa",
+        "english": "todo bien"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 128,
+        "type": "translate",
+        "prompt": "Traduce al suajili: tengo hambre",
+        "options": [],
+        "answer": "nina njaa",
+        "hint": null
+      },
+      {
+        "id": 129,
+        "type": "multiple_choice",
+        "prompt": "La mejor respuesta a «Mambo vipi?» es:",
+        "options": [
+          "Kwa heri",
+          "Poa",
+          "Pole",
+          "Hapana"
+        ],
+        "answer": "Poa",
+        "hint": null
+      },
+      {
+        "id": 130,
+        "type": "translate",
+        "prompt": "Traduce al español: kichwa kinauma",
+        "options": [],
+        "answer": "me duele la cabeza",
+        "hint": null
+      },
+      {
+        "id": 131,
+        "type": "multiple_choice",
+        "prompt": "«Pole sana» expresa:",
+        "options": [
+          "felicitaciones",
+          "compasión",
+          "un saludo",
+          "agradecimiento"
+        ],
+        "answer": "compasión",
+        "hint": null
+      },
+      {
+        "id": 132,
+        "type": "translate",
+        "prompt": "Traduce al español: nina kiu",
+        "options": [],
+        "answer": "tengo sed",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 28,
+    "week": 4,
+    "title": "Modismos, refranes y cultura",
+    "subtitle": "Habla como un nativo",
+    "theme": "Cultura",
+    "blocks": [
+      {
+        "type": "heading",
+        "heading": "Refranes famosos"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "Haraka haraka haina baraka",
+            "La prisa no trae bendición («Vísteme despacio, que tengo prisa»)"
+          ],
+          [
+            "Pole pole ndiyo mwendo",
+            "Poco a poco se llega lejos"
+          ],
+          [
+            "Penye nia pana njia",
+            "Donde hay voluntad, hay camino («Querer es poder»)"
+          ],
+          [
+            "Haba na haba hujaza kibaba",
+            "De poquito en poquito se llena la medida"
+          ]
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Expresiones cotidianas"
+      },
+      {
+        "type": "table",
+        "tableHeaders": [
+          "Suajili",
+          "Español"
+        ],
+        "tableRows": [
+          [
+            "Hongera!",
+            "¡Felicidades!"
+          ],
+          [
+            "Bahati njema",
+            "Buena suerte"
+          ],
+          [
+            "Safari njema",
+            "Buen viaje"
+          ],
+          [
+            "Karibu tena",
+            "Vuelve pronto"
+          ]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Sabiduría cultural",
+        "lines": [
+          "La cultura de África Oriental valora la comunidad, la hospitalidad y la paciencia. Saluda sin prisas, acepta el té cuando te lo ofrezcan y nunca te apures. «Pole pole» es toda una filosofía."
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "«Haba na haba hujaza kibaba» enseña que:",
+            "options": [
+              "los pequeños esfuerzos suman",
+              "la prisa no trae nada bueno",
+              "los invitados siempre son bienvenidos",
+              "viajar enseña"
+            ],
+            "answer": "los pequeños esfuerzos suman",
+            "explain": "De poquito en poquito se llena la medida."
+          },
+          {
+            "prompt": "Un invitado se va de tu casa. Le dices:",
+            "options": [
+              "Karibu tena",
+              "Hongera!",
+              "Pole sana",
+              "Bahati njema"
+            ],
+            "answer": "Karibu tena",
+            "explain": "Karibu tena — vuelve pronto."
+          },
+          {
+            "prompt": "«Pole pole ndiyo mwendo» elogia:",
+            "options": [
+              "la paciencia",
+              "la rapidez",
+              "la suerte",
+              "la fuerza"
+            ],
+            "answer": "la paciencia",
+            "explain": "Ir despacio es, en efecto, la manera de avanzar."
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "methali",
+        "english": "refrán"
+      },
+      {
+        "swahili": "baraka",
+        "english": "bendición"
+      },
+      {
+        "swahili": "mwendo",
+        "english": "ritmo/marcha"
+      },
+      {
+        "swahili": "nia",
+        "english": "voluntad/intención"
+      },
+      {
+        "swahili": "njia",
+        "english": "camino"
+      },
+      {
+        "swahili": "hongera",
+        "english": "felicidades"
+      },
+      {
+        "swahili": "bahati",
+        "english": "suerte"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 133,
+        "type": "multiple_choice",
+        "prompt": "«Haraka haraka haina baraka» significa:",
+        "options": [
+          "Date prisa",
+          "La prisa no trae bendición",
+          "Buena suerte",
+          "Bienvenido de nuevo"
+        ],
+        "answer": "La prisa no trae bendición",
+        "hint": null
+      },
+      {
+        "id": 134,
+        "type": "translate",
+        "prompt": "Traduce al español: hongera",
+        "options": [],
+        "answer": "felicidades",
+        "hint": null
+      },
+      {
+        "id": 135,
+        "type": "multiple_choice",
+        "prompt": "«Penye nia pana njia» significa:",
+        "options": [
+          "No hay salida",
+          "Querer es poder",
+          "Buen viaje",
+          "Tómalo con calma"
+        ],
+        "answer": "Querer es poder",
+        "hint": null
+      },
+      {
+        "id": 136,
+        "type": "translate",
+        "prompt": "Traduce al suajili: buen viaje",
+        "options": [],
+        "answer": "safari njema",
+        "hint": null
+      },
+      {
+        "id": 137,
+        "type": "translate",
+        "prompt": "Traduce al español: bahati njema",
+        "options": [],
+        "answer": "buena suerte",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 29,
+    "week": 4,
+    "title": "Conversación extendida",
+    "subtitle": "Pura práctica oral",
+    "theme": "Práctica",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Lee este diálogo más largo en voz alta varias veces y luego interpreta los dos papeles de memoria."
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          {
+            "speaker": "Halima",
+            "swahili": "Eh, Daudi! Kumbe ni wewe! Habari za siku nyingi?",
+            "english": "¡Eh, Daudi! ¡Así que eres tú! ¿Cómo has estado?"
+          },
+          {
+            "speaker": "Daudi",
+            "swahili": "Halima! Nimefurahi kukuona. Umekuwa wapi?",
+            "english": "¡Halima! Me alegra verte. ¿Dónde has estado?"
+          },
+          {
+            "speaker": "Halima",
+            "swahili": "Nilikuwa Mombasa kwa kazi. Nilirudi wiki iliyopita.",
+            "english": "Estuve en Mombasa por trabajo. Regresé la semana pasada."
+          },
+          {
+            "speaker": "Daudi",
+            "swahili": "Vizuri! Kazi inaendeleaje?",
+            "english": "¡Qué bien! ¿Cómo va el trabajo?"
+          },
+          {
+            "speaker": "Halima",
+            "swahili": "Inaendelea vizuri, lakini ni ngumu kidogo.",
+            "english": "Va bien, pero es un poco difícil."
+          },
+          {
+            "speaker": "Daudi",
+            "swahili": "Tukutane kesho tunywe chai?",
+            "english": "¿Nos vemos mañana para tomar un té?"
+          },
+          {
+            "speaker": "Halima",
+            "swahili": "Wazo zuri! Saa ngapi?",
+            "english": "¡Buena idea! ¿A qué hora?"
+          },
+          {
+            "speaker": "Daudi",
+            "swahili": "Saa nne asubuhi, hapo mkahawani.",
+            "english": "A las 10 de la mañana, ahí en el café."
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Analízalo"
+      },
+      {
+        "type": "list",
+        "lines": [
+          "Encuentra el perfecto (nimefurahi, umekuwa)",
+          "Encuentra el pasado (nilikuwa, nilirudi)",
+          "Encuentra el subjuntivo (tukutane, tunywe)",
+          "Fíjate en el infijo de objeto en kukuona («te»)"
+        ]
+      },
+      {
+        "type": "conversation",
+        "calloutTitle": "Ahora tú — ponte al día con Daudi",
+        "intro": "Una conversación de verdad, en voz alta. No hay guion: di lo que quieras y usa las frases de abajo si te atoras.",
+        "scenario": {
+          "setting": "Te encuentras con Daudi, un viejo amigo al que no ves desde hace meses, en una calle de Dar es Salaam.",
+          "goal": "Di dónde has estado, pregúntale por su trabajo y queden para tomar un té: acuerden un día y una hora.",
+          "role": "Daudi, an old friend of the learner, an accountant living in Dar es Salaam, Tanzania. You have not seen each other for months and are delighted. Ask where they have been and how their work is going, say your own work is going well but is busy, then suggest meeting for tea and settle a day and a time. Use Swahili clock times (for example saa nne asubuhi for 10 am).",
+          "opening": "Eh, kumbe ni wewe! Habari za siku nyingi?",
+          "openingTranslation": "¡Eh, así que eres tú! ¿Cómo has estado?",
+          "phrases": [
+            {
+              "swahili": "Nzuri! Nimefurahi kukuona.",
+              "english": "¡Bien! Me alegra verte."
+            },
+            {
+              "swahili": "Nilikuwa Mombasa kwa kazi.",
+              "english": "Estuve en Mombasa por trabajo."
+            },
+            {
+              "swahili": "Kazi inaendeleaje?",
+              "english": "¿Cómo va el trabajo?"
+            },
+            {
+              "swahili": "Tukutane kesho?",
+              "english": "¿Nos vemos mañana?"
+            },
+            {
+              "swahili": "Saa ngapi?",
+              "english": "¿A qué hora?"
+            },
+            {
+              "swahili": "Wazo zuri!",
+              "english": "¡Buena idea!"
+            },
+            {
+              "swahili": "Tutaonana kesho.",
+              "english": "Nos vemos mañana."
+            }
+          ]
+        }
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "¿Dónde había estado Halima?",
+            "options": [
+              "Mombasa",
+              "Nairobi",
+              "En el café",
+              "En casa"
+            ],
+            "answer": "Mombasa",
+            "explain": "Nilikuwa Mombasa kwa kazi."
+          },
+          {
+            "prompt": "¿Qué palabra del diálogo lleva el infijo de objeto «te»?",
+            "options": [
+              "kukuona",
+              "nilirudi",
+              "umekuwa",
+              "tunywe"
+            ],
+            "answer": "kukuona",
+            "explain": "ku- (marca de infinitivo) + -ku- (te) + ona (ver): «verte»."
+          },
+          {
+            "prompt": "¿A qué hora quedan en verse?",
+            "options": [
+              "10 de la mañana",
+              "4 de la mañana",
+              "4 de la tarde",
+              "Mediodía"
+            ],
+            "answer": "10 de la mañana",
+            "explain": "Saa nne asubuhi: 4 + 6 = 10."
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "kumbe",
+        "english": "así que"
+      },
+      {
+        "swahili": "umekuwa",
+        "english": "has estado"
+      },
+      {
+        "swahili": "inaendelea",
+        "english": "va/continúa"
+      },
+      {
+        "swahili": "ngumu",
+        "english": "difícil"
+      },
+      {
+        "swahili": "wazo",
+        "english": "idea"
+      },
+      {
+        "swahili": "mkahawani",
+        "english": "en el café"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 138,
+        "type": "translate",
+        "prompt": "Traduce al español: nimefurahi kukuona",
+        "options": [],
+        "answer": "me alegra verte",
+        "hint": null
+      },
+      {
+        "id": 139,
+        "type": "multiple_choice",
+        "prompt": "¿En qué tiempo o modo está «Tukutane kesho»?",
+        "options": [
+          "pasado",
+          "futuro",
+          "subjuntivo",
+          "perfecto"
+        ],
+        "answer": "subjuntivo",
+        "hint": null
+      },
+      {
+        "id": 140,
+        "type": "translate",
+        "prompt": "Traduce al español: nilikuwa Mombasa",
+        "options": [],
+        "answer": "estuve en Mombasa",
+        "hint": null
+      },
+      {
+        "id": 141,
+        "type": "multiple_choice",
+        "prompt": "«wazo zuri» significa:",
+        "options": [
+          "mala idea",
+          "buena idea",
+          "buenos días",
+          "qué hora"
+        ],
+        "answer": "buena idea",
+        "hint": null
+      },
+      {
+        "id": 142,
+        "type": "translate",
+        "prompt": "Traduce al español: kazi inaendeleaje",
+        "options": [],
+        "answer": "cómo va el trabajo",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 30,
+    "week": 4,
+    "title": "Repaso completo y autoevaluación",
+    "subtitle": "Mide cuánto has avanzado",
+    "theme": "Repaso",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Ponte a prueba con honestidad en todo lo que has aprendido."
+      },
+      {
+        "type": "heading",
+        "heading": "Repaso de gramática"
+      },
+      {
+        "type": "list",
+        "lines": [
+          "Seis prefijos de sujeto: ni-, u-, a-, tu-, m-, wa-",
+          "Marcadores de tiempo: -na- (presente), -li- (pasado), -ta- (futuro), -me- (perfecto)",
+          "Cuatro clases nominales: M-/WA-, M-/MI-, KI-/VI-, N-"
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Reto de traducción"
+      },
+      {
+        "type": "list",
+        "lines": [
+          "Ayer fui al mercado y compré pescado",
+          "Mañana viajaremos a Mombasa en autobús",
+          "La persona que está cocinando es mi amigo",
+          "Por favor, dame una taza de té",
+          "Encontrémonos mañana en el café"
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "¿Qué marcador forma el pasado?",
+            "options": [
+              "-li-",
+              "-na-",
+              "-ta-",
+              "-me-"
+            ],
+            "answer": "-li-"
+          },
+          {
+            "prompt": "¿Qué oración está en perfecto?",
+            "options": [
+              "Nimefika",
+              "Nilifika",
+              "Nitafika",
+              "Ninafika"
+            ],
+            "answer": "Nimefika",
+            "explain": "-me- marca el perfecto: he llegado."
+          },
+          {
+            "prompt": "El plural de «kitabu» es:",
+            "options": [
+              "vitabu",
+              "vitu",
+              "watu",
+              "miti"
+            ],
+            "answer": "vitabu",
+            "explain": "Clase KI-/VI-: ki- se convierte en vi-."
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "pitia",
+        "english": "repasar"
+      },
+      {
+        "swahili": "jaribio",
+        "english": "prueba"
+      },
+      {
+        "swahili": "fika",
+        "english": "llegar"
+      },
+      {
+        "swahili": "pika",
+        "english": "cocinar"
+      },
+      {
+        "swahili": "tafsiri",
+        "english": "traducción"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 143,
+        "type": "translate",
+        "prompt": "Traduce al suajili: Ayer fui al mercado",
+        "options": [],
+        "answer": "jana nilienda sokoni",
+        "hint": null
+      },
+      {
+        "id": 144,
+        "type": "translate",
+        "prompt": "Traduce al suajili: Mañana viajaremos",
+        "options": [],
+        "answer": "kesho tutasafiri",
+        "hint": null
+      },
+      {
+        "id": 145,
+        "type": "multiple_choice",
+        "prompt": "«Mtu ambaye anapika» significa:",
+        "options": [
+          "La persona que cocina",
+          "La olla",
+          "Estoy cocinando",
+          "La comida está lista"
+        ],
+        "answer": "La persona que cocina",
+        "hint": null
+      },
+      {
+        "id": 146,
+        "type": "translate",
+        "prompt": "Traduce al suajili: Por favor, dame té",
+        "options": [],
+        "answer": "tafadhali nipe chai",
+        "hint": null
+      },
+      {
+        "id": 147,
+        "type": "translate",
+        "prompt": "Traduce al suajili: Encontrémonos mañana",
+        "options": [],
+        "answer": "tukutane kesho",
+        "hint": null
+      },
+      {
+        "id": 148,
+        "type": "multiple_choice",
+        "prompt": "Marcador del tiempo perfecto:",
+        "options": [
+          "-li-",
+          "-ta-",
+          "-me-",
+          "-na-"
+        ],
+        "answer": "-me-",
+        "hint": null
+      }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 31,
+    "week": 4,
+    "title": "Graduación y más allá",
+    "subtitle": "Hongera sana!",
+    "theme": "Hito",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Hongera sana! Completaste un mes intensivo de suajili."
+      },
+      {
+        "type": "heading",
+        "heading": "Lo que ya puedes hacer"
+      },
+      {
+        "type": "list",
+        "lines": [
+          "Saludar a cualquiera y mantener una charla casual",
+          "Hablar en presente, pasado, futuro y perfecto",
+          "Describir personas y cosas con concordancia",
+          "Desenvolverte en mercados, viajes e indicaciones",
+          "Construir oraciones complejas con subjuntivos y relativos",
+          "Contar una historia hilada sobre tu día"
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Tu reto final",
+        "lines": [
+          "Grábate hablando suajili durante dos minutos: preséntate, describe el día de ayer, tus planes para mañana y algo que te encante. Compáralo con el Día 1: esa distancia es tu logro."
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Hacia la fluidez real"
+      },
+      {
+        "type": "list",
+        "lines": [
+          "Habla a diario con hablantes nativos (apps de intercambio de idiomas)",
+          "Escucha 20 minutos al día: música Bongo Flava, noticias de África Oriental, películas",
+          "Lee lecturas graduadas y luego BBC Swahili",
+          "Lleva un diario de 5 oraciones al día",
+          "Aprende 10 palabras nuevas al día con repetición espaciada",
+          "Visita África Oriental si puedes: una semana de inmersión vale por meses"
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "Pole pole ndiyo mwendo. Safari njema na kila la heri!"
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Repaso rápido",
+        "questions": [
+          {
+            "prompt": "«Mwisho» significa:",
+            "options": [
+              "el final",
+              "el comienzo",
+              "el viaje",
+              "la lección"
+            ],
+            "answer": "el final",
+            "explain": "mwisho = el final — del curso, ¡no de tu suajili!"
+          },
+          {
+            "prompt": "¿Qué oración habla de mañana?",
+            "options": [
+              "Kesho nitasoma Kiswahili",
+              "Jana nilisoma Kiswahili",
+              "Nimesoma Kiswahili",
+              "Ninasoma Kiswahili"
+            ],
+            "answer": "Kesho nitasoma Kiswahili",
+            "explain": "kesho + -ta- = el futuro."
+          },
+          {
+            "prompt": "¿Cómo se dice «Me gusta mucho el suajili»?",
+            "options": [
+              "Ninapenda Kiswahili sana",
+              "Sipendi Kiswahili sana",
+              "Nilipenda Kiswahili",
+              "Ninapenda Kiswahili kidogo"
+            ],
+            "answer": "Ninapenda Kiswahili sana",
+            "explain": "sana (mucho) va al final."
+          }
+        ]
+      }
+    ],
+    "vocabulary": [
+      {
+        "swahili": "mafanikio",
+        "english": "éxito"
+      },
+      {
+        "swahili": "mwisho",
+        "english": "el final"
+      },
+      {
+        "swahili": "kila la heri",
+        "english": "todo lo mejor"
+      },
+      {
+        "swahili": "safari njema",
+        "english": "buen viaje"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 149,
+        "type": "translate",
+        "prompt": "Traduce al español: hongera sana",
+        "options": [],
+        "answer": "muchas felicidades",
+        "hint": null
+      },
+      {
+        "id": 150,
+        "type": "translate",
+        "prompt": "Traduce al español: safari njema",
+        "options": [],
+        "answer": "buen viaje",
+        "hint": null
+      },
+      {
+        "id": 151,
+        "type": "multiple_choice",
+        "prompt": "«Pole pole ndiyo mwendo» significa:",
+        "options": [
+          "Date prisa",
+          "Poco a poco se llega lejos",
+          "Adiós para siempre",
+          "Buena suerte hoy"
+        ],
+        "answer": "Poco a poco se llega lejos",
+        "hint": null
+      },
+      {
+        "id": 152,
+        "type": "translate",
+        "prompt": "Traduce al español: kila la heri",
+        "options": [],
+        "answer": "todo lo mejor",
+        "hint": null
+      }
+    ],
+    "xpReward": 200
+  }
+]

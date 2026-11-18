@@ -87,9 +87,10 @@ public class ReviewController : AuthedController
 
         if (vocab.Count < 4)
         {
-            var msg = course.SourceLanguage == "sw"
-                ? "Soma masomo machache zaidi ili kufungua mazoezi."
-                : "Study a few more lessons to unlock practice.";
+            var msg = Models.Courses.Say(course,
+                "Study a few more lessons to unlock practice.",
+                "Soma masomo machache zaidi ili kufungua mazoezi.",
+                "Estudia algunas lecciones más para desbloquear la práctica.");
             return Ok(new { questions = Array.Empty<object>(), message = msg });
         }
 
@@ -111,9 +112,10 @@ public class ReviewController : AuthedController
             {
                 id = i + 1,
                 type = "multiple_choice",
-                prompt = course.SourceLanguage == "sw"
-                    ? $"'{target}' ina maana gani?"
-                    : $"What does '{target}' mean?",
+                prompt = Models.Courses.Say(course,
+                    $"What does '{target}' mean?",
+                    $"'{target}' ina maana gani?",
+                    $"¿Qué significa '{target}'?"),
                 options,
                 answer = source
             };

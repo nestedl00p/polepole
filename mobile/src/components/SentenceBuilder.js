@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { View, Text, Pressable, Animated, StyleSheet } from 'react-native';
 import { colors, shadow, shadowLg } from '../theme';
 import { speakSwahili } from '../lib/speak';
+import { useAuth } from '../context/AuthContext';
+import { builderStrings } from '../lib/builderStrings';
 import { Button } from './ui';
 
 // Tap-to-build sentence exercise (mobile equivalent of the web drag-and-drop).
@@ -25,6 +27,8 @@ function scramble(answer) {
 }
 
 export default function SentenceBuilder({ block = {} }) {
+  const { user } = useAuth();
+  const t = builderStrings(user?.course);
   const challenges = block.challenges || CHALLENGES;
   const [ci, setCi] = useState(0);
   const [bank, setBank] = useState(() => scramble(challenges[0].answer));
@@ -94,9 +98,9 @@ export default function SentenceBuilder({ block = {} }) {
       <View style={styles.block}>
         <View style={[styles.card, { alignItems: 'center' }]}>
           <Text style={{ fontSize: 44 }}>🎉</Text>
-          <Text style={styles.doneTitle}>Hongera! — Well done!</Text>
+          <Text style={styles.doneTitle}>{t.g('Hongera! — Well done!')}</Text>
           <Text style={styles.doneSub}>You built all {challenges.length} sentences.</Text>
-          <Button title="Build them again" onPress={() => { setDone(false); setCi(0); }} />
+          <Button title={t.g('Build them again')} onPress={() => { setDone(false); setCi(0); }} />
         </View>
       </View>
     );
@@ -109,8 +113,8 @@ export default function SentenceBuilder({ block = {} }) {
   return (
     <View style={styles.block}>
       <View style={styles.card}>
-        <Text style={styles.title}>{block.calloutTitle || 'Build the sentence'}</Text>
-        <Text style={styles.intro}>{block.intro || 'Tap the words into the right order, then Check. Get it right to hear it spoken.'}</Text>
+        <Text style={styles.title}>{block.calloutTitle || t.g('Build the sentence')}</Text>
+        <Text style={styles.intro}>{block.intro || t.g('Tap the words into the right order, then Check. Get it right to hear it spoken.')}</Text>
 
         <View style={styles.progress}>
           {challenges.map((_, i) => (
@@ -119,10 +123,10 @@ export default function SentenceBuilder({ block = {} }) {
           <Text style={styles.count}>{ci + 1} / {challenges.length}</Text>
         </View>
 
-        <Text style={styles.prompt}>Say: <Text style={{ fontWeight: '800', color: colors.navy }}>“{ch.en}”</Text></Text>
+        <Text style={styles.prompt}>{t.g('Say:')} <Text style={{ fontWeight: '800', color: colors.navy }}>“{t.g(ch.en)}”</Text></Text>
 
         <Animated.View style={[styles.line, { borderColor: lineBorder, backgroundColor: lineBg, transform: [{ translateX }, { scale: pop }] }]}>
-          {line.length === 0 && <Text style={styles.linePlaceholder}>Tap words below…</Text>}
+          {line.length === 0 && <Text style={styles.linePlaceholder}>{t.g('Tap words below…')}</Text>}
           {line.map((t) => (
             <Pressable key={t.k} onPress={() => unplace(t)} style={[styles.tile, status === 'correct' && styles.tileCorrect]}>
               <Text style={[styles.tileText, status === 'correct' && { color: '#fff' }]}>{t.w}</Text>
@@ -139,8 +143,8 @@ export default function SentenceBuilder({ block = {} }) {
         </View>
 
         <View style={styles.actions}>
-          <Button title="Check ✓" variant="gold" onPress={check} disabled={line.length === 0 || status === 'correct'} />
-          {status === 'wrong' && <Text style={styles.msgWrong}>Not quite — try again</Text>}
+          <Button title={t.g('Check ✓')} variant="gold" onPress={check} disabled={line.length === 0 || status === 'correct'} />
+          {status === 'wrong' && <Text style={styles.msgWrong}>{t.g('Not quite — try again')}</Text>}
           {status === 'correct' && <Text style={styles.msgCorrect}>✓ Sawa!</Text>}
         </View>
       </View>

@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { colors, shadow } from '../theme';
 import { speakSwahili } from '../lib/speak';
+import { useAuth } from '../context/AuthContext';
+import { builderStrings } from '../lib/builderStrings';
 
 // Interactive Swahili adjective-agreement builder: NOUN + agreement-prefix + ADJ.
 // N-class sound changes are stored explicitly per adjective (nForm).
@@ -43,6 +45,8 @@ function splitAgreed(agreed, stem) {
 }
 
 export default function AdjectiveBuilder({ block = {} }) {
+  const { user } = useAuth();
+  const t = builderStrings(user?.course);
   const nouns = block.nouns || NOUNS;
   const adjectives = block.adjectives || ADJECTIVES;
 
@@ -54,7 +58,7 @@ export default function AdjectiveBuilder({ block = {} }) {
   const agreed = agree(noun.acord, adj);
   const { pre, body } = splitAgreed(agreed, adj.stem);
   const word = `${noun.noun} ${agreed}`;
-  const english = `${adj.en} ${noun.en}`;
+  const english = t.described?.(adj.en, noun.en) ?? `${adj.en} ${noun.en}`;
 
   const steps = [
     { accent: 'stem', label: '1 · Which thing?', options: nouns.map((n) => ({ sw: n.noun, en: n.en })), index: ni, set: setNi },
@@ -62,25 +66,25 @@ export default function AdjectiveBuilder({ block = {} }) {
   ];
 
   const pieces = [
-    { text: noun.noun, role: 'stem', tag: `noun · ${noun.cls}` },
-    { text: pre || '∅', role: 'mark', tag: 'agree' },
-    { text: adj.stem, role: 'sub', tag: 'describe' },
+    { text: noun.noun, role: 'stem', tag: `${t.g('noun')} · ${noun.cls}` },
+    { text: pre || '∅', role: 'mark', tag: t.g('agree') },
+    { text: adj.stem, role: 'sub', tag: t.g('describe') },
   ];
 
   return (
     <View style={styles.block}>
       <View style={styles.card}>
-        <Text style={styles.title}>{block.calloutTitle || 'Build a description: NOUN + prefix + adjective'}</Text>
+        <Text style={styles.title}>{block.calloutTitle || t.g('Build a description: NOUN + prefix + adjective')}</Text>
         <Text style={styles.intro}>
           {block.intro ||
-            'The adjective comes after the noun and echoes its class prefix. Pick a noun and an adjective — watch the gold prefix copy the noun’s class. (N-class nouns blend the sound a little.)'}
+            t.g('The adjective comes after the noun and echoes its class prefix. Pick a noun and an adjective — watch the gold prefix copy the noun’s class. (N-class nouns blend the sound a little.)')}
         </Text>
 
         {steps.map((step, idx) => (
           <View style={styles.step} key={idx}>
             <View style={styles.stepLabel}>
               <View style={[styles.dot, { backgroundColor: ROLE_COLOR[step.accent] }]} />
-              <Text style={styles.stepLabelText}>{step.label}</Text>
+              <Text style={styles.stepLabelText}>{t.g(step.label)}</Text>
             </View>
             <View style={styles.pills}>
               {step.options.map((o, i) => {
@@ -92,7 +96,7 @@ export default function AdjectiveBuilder({ block = {} }) {
                     style={[styles.pill, active && { borderColor: ROLE_COLOR[step.accent], backgroundColor: ROLE_COLOR[step.accent] }]}
                   >
                     <Text style={[styles.pillSw, active && styles.pillActiveText]}>{o.sw}</Text>
-                    <Text style={[styles.pillEn, active && styles.pillActiveText]}>{o.en}</Text>
+                    <Text style={[styles.pillEn, active && styles.pillActiveText]}>{t.g(o.en)}</Text>
                   </Pressable>
                 );
               })}
@@ -121,7 +125,7 @@ export default function AdjectiveBuilder({ block = {} }) {
               {!!pre && <Text style={{ color: ROLE_TEXT.mark }}>{pre}</Text>}
               <Text style={{ color: ROLE_TEXT.sub }}>{body}</Text>
             </Text>
-            <Pressable onPress={() => speakSwahili(word)} style={styles.speak} accessibilityRole="button" accessibilityLabel={`Hear ${word} spoken`}>
+            <Pressable onPress={() => speakSwahili(word)} style={styles.speak} accessibilityRole="button" accessibilityLabel={t.hear(word)}>
               <Text style={styles.speakIcon}>🔊</Text>
             </Pressable>
           </View>

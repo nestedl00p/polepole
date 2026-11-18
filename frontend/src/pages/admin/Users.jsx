@@ -51,6 +51,7 @@ export default function Users() {
         <select className="bo-input" value={course} aria-label="Course" onChange={(e) => set({ course: e.target.value })}>
           <option value="">All courses</option>
           <option value="sw">Learning Swahili</option>
+          <option value="sw-es">Learning Swahili (Spanish)</option>
           <option value="en">Learning English</option>
         </select>
         <select className="bo-input" value={status} aria-label="Status" onChange={(e) => set({ status: e.target.value })}>
@@ -94,7 +95,7 @@ export default function Users() {
                             <Link to={`/admin/users/${u.id}`} onClick={(e) => e.stopPropagation()}>{u.displayName}</Link>
                             <div className="bo-sub">{u.email}</div>
                           </td>
-                          <td>{{ en: 'English', rw: 'Kinyarwanda' }[u.courseId] || 'Swahili'}</td>
+                          <td>{{ en: 'English', rw: 'Kinyarwanda', 'sw-es': 'Swahili (Spanish)' }[u.courseId] || 'Swahili'}</td>
                           <td>{fmtDate(u.createdAt)}</td>
                           <td>{relTime(u.lastSeenAt, '—')}</td>
                           <td className="num">{u.lessonsCompleted}</td>

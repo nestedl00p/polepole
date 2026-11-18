@@ -1,6 +1,6 @@
 // UI copy for the interactive lesson pieces (tables, dialogues, quick checks,
 // vocab match). The English course is taken by Swahili speakers, so its
-// controls are labelled in Swahili. Keep in sync with frontend/src/lib/lessonStrings.js.
+// controls are labelled in Swahili; Swahili taught in Spanish gets Spanish. Keep in sync with frontend/src/lib/lessonStrings.js.
 
 const EN = {
   showAll: 'Show all',
@@ -102,11 +102,61 @@ const SW = {
   cvMicFailed: 'Imeshindikana kuanza kurekodi kwenye kifaa hiki. Unaweza kuandika.',
 };
 
-// course: the account's course ({ targetLanguage: 'sw' | 'en' | 'rw' }). The
-// strings follow the language the lessons are written in, so every course
-// taught in English shares EN.
+const ES = {
+  showAll: 'Mostrar todo',
+  hide: (col) => `Ocultar ${col}`,
+  tapToReveal: 'Toca para ver',
+  tableHint: 'Di en voz alta cada una de las ocultas y luego toca para comprobar.',
+  listen: '▶ Escuchar',
+  stop: '■ Detener',
+  hideTranslations: 'Ocultar traducciones',
+  showTranslations: 'Mostrar traducciones',
+  playRole: 'Haz el papel de:',
+  yourLine: 'Tu turno — dilo y luego toca para comprobar',
+  quickCheck: 'Repaso rápido',
+  correct: '¡Correcto!',
+  tryAgain: 'Casi — inténtalo de nuevo',
+  next: 'Siguiente →',
+  finish: 'Terminar',
+  checkDone: (n, total) => `${n} de ${total} correctas a la primera`,
+  again: 'Intentar de nuevo',
+  matchTitle: 'Empareja las palabras',
+  matchIntro: 'Toca una palabra y luego su significado.',
+  matchDone: '¡Todas emparejadas!',
+  matchMisses: (n) => (n === 0 ? 'Sin errores.' : n === 1 ? '1 error.' : `${n} errores.`),
+  newRound: 'Nueva ronda',
+  cvTitle: 'Práctica de conversación',
+  cvGoal: 'Tu objetivo:',
+  cvStart: '▶ Empezar la conversación',
+  cvSpeak: '🎤 Responder',
+  cvStop: '■ Terminé de hablar',
+  cvThinking: 'Escuchando…',
+  cvListening: 'Grabando — toca otra vez cuando termines',
+  cvOrType: '…o escribe tu respuesta',
+  cvType: 'Escribe tu respuesta',
+  cvSend: 'Enviar',
+  cvTypeOnly: 'La entrada de voz está apagada por ahora, así que escribe tus respuestas. Igual escucharás las réplicas.',
+  cvRedo: 'Eso no fue lo que dije — intentar de nuevo',
+  cvReplay: 'Escuchar otra vez',
+  cvUnclear: 'No te entendí. Inténtalo de nuevo, un poco más cerca del micrófono.',
+  cvError: 'No se pudo contactar a tu compañero de conversación. Inténtalo de nuevo.',
+  cvUnavailable: 'La práctica de conversación todavía no está activada. Aun así puedes hacer los dos papeles del diálogo de arriba.',
+  cvNoTurns: 'Eso es toda la práctica de conversación por hoy. ¡Vuelve mañana!',
+  cvDone: (n) => `Tuviste una conversación de verdad — ${n} ${n === 1 ? 'turno' : 'turnos'}.`,
+  cvAgain: 'Empezar de nuevo',
+  cvHideHelp: 'Ocultar traducciones y pistas',
+  cvShowHelp: 'Mostrar traducciones y pistas',
+  cvMicDenied: 'Se necesita permiso del micrófono para responder en voz alta. Puedes escribir en su lugar.',
+  cvMicFailed: 'No se pudo iniciar la grabación en este dispositivo. Puedes escribir en su lugar.',
+};
+
+// course: the account's course ({ targetLanguage, sourceLanguage }). The
+// strings follow the language the lessons are written in (sourceLanguage), so
+// every course taught in English shares EN. A caller that only knows the
+// target language (the taster) still gets Swahili for the English course.
 export function lessonStrings(course) {
-  return course?.targetLanguage === 'en' ? SW : EN;
+  if (course?.sourceLanguage === 'es') return ES;
+  return course?.sourceLanguage === 'sw' || course?.targetLanguage === 'en' ? SW : EN;
 }
 
 // Lesson tables are recognised by their column headers.
@@ -120,6 +170,12 @@ const TABLE_COLUMNS = {
     target: /^(swahili|kinyarwanda|stem|prefix|infix)$/i,
     known: /^(english|number|meaning)$/i,
   },
+  // Swahili taught in Spanish: the same columns as `sw`, under Spanish headers.
+  es: {
+    speak: /^(suajili|raíz|ejemplo)$/i,
+    target: /^(suajili|raíz|prefijo|infijo)$/i,
+    known: /^(español|número|significado)$/i,
+  },
   en: {
     speak: /^(kiingereza|mfano|sentensi|kauli|swali|sasa|uliopita|wingi|chakula|kazi|sauti moja|sauti nyingine)$/i,
     target: /^(kiingereza|mfano|chakula|kazi|uliopita)$/i,
@@ -130,7 +186,7 @@ const TABLE_COLUMNS = {
 // Returns the self-test pair (-1 for either when the table has no such pair)
 // and the set of columns that get audio.
 export function tableLanguageColumns(headers = [], course) {
-  const cols = TABLE_COLUMNS[course?.targetLanguage === 'en' ? 'en' : 'sw'];
+  const cols = TABLE_COLUMNS[course?.sourceLanguage === 'es' ? 'es' : course?.targetLanguage === 'en' ? 'en' : 'sw'];
   const names = headers.map((h) => h.trim());
   return {
     targetCol: names.findIndex((h) => cols.target.test(h)),

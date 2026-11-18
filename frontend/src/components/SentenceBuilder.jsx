@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { speakSwahili } from '../lib/speak';
+import { useAuth } from '../context/AuthContext';
+import { builderStrings } from '../lib/builderStrings';
 
 // Sentence builder. Reorder the scrambled word tiles into the correct Swahili
 // sentence, then Check. Correct → green pop + audio; wrong → shake.
@@ -26,6 +28,8 @@ function scramble(answer) {
 }
 
 export default function SentenceBuilder({ block = {} }) {
+  const { user } = useAuth();
+  const t = builderStrings(user?.course);
   const challenges = block.challenges || CHALLENGES;
   const [ci, setCi] = useState(0);
   const [tiles, setTiles] = useState(() => scramble(challenges[0].answer));
@@ -91,9 +95,9 @@ export default function SentenceBuilder({ block = {} }) {
         <div className="vb sb">
           <div className="sb-done">
             <div className="sb-done-emoji">🎉</div>
-            <div className="sb-done-title">Hongera! — Well done!</div>
-            <p className="sb-done-sub">You built all {challenges.length} sentences.</p>
-            <button className="btn btn-primary" onClick={restart}>Build them again</button>
+            <div className="sb-done-title">{t.g('Hongera! — Well done!')}</div>
+            <p className="sb-done-sub">{t.builtAll(challenges.length)}</p>
+            <button className="btn btn-primary" onClick={restart}>{t.g('Build them again')}</button>
           </div>
         </div>
       </div>
@@ -103,8 +107,8 @@ export default function SentenceBuilder({ block = {} }) {
   return (
     <div className="block">
       <div className="vb sb">
-        <div className="vb-title">{block.calloutTitle || 'Build the sentence'}</div>
-        <p className="vb-intro">{block.intro || 'Drag the words into the right order, then tap Check. Get it right to hear it spoken.'}</p>
+        <div className="vb-title">{block.calloutTitle || t.g('Build the sentence')}</div>
+        <p className="vb-intro">{block.intro || t.g('Drag the words into the right order, then tap Check. Get it right to hear it spoken.')}</p>
 
         <div className="sb-progress">
           {challenges.map((_, i) => (
@@ -113,7 +117,7 @@ export default function SentenceBuilder({ block = {} }) {
           <span className="sb-count">{ci + 1} / {challenges.length}</span>
         </div>
 
-        <div className="sb-prompt">Say: <strong>“{ch.en}”</strong></div>
+        <div className="sb-prompt">{t.g('Say:')} <strong>“{t.g(ch.en)}”</strong></div>
 
         <div className={`sb-row ${status}`}>
           {tiles.map((t, i) => (
@@ -136,14 +140,14 @@ export default function SentenceBuilder({ block = {} }) {
         </div>
 
         <p className="sb-hint">
-          {picked == null ? 'Drag a word, or tap it and then tap where it belongs.' : 'Now tap the word whose place it should take.'}
+          {picked == null ? t.g('Drag a word, or tap it and then tap where it belongs.') : t.g('Now tap the word whose place it should take.')}
         </p>
 
         <div className="sb-actions">
-          <button className="btn btn-gold" onClick={check} disabled={status === 'correct'}>Check ✓</button>
-          <button className="btn btn-ghost btn-sm" onClick={() => { setPicked(null); setTiles(scramble(ch.answer)); }} disabled={status === 'correct'}>Shuffle</button>
-          {status === 'wrong' && <span className="sb-msg sb-msg-wrong">Not quite — try again</span>}
-          {status === 'correct' && <span className="sb-msg sb-msg-correct">✓ Sawa! “{ch.en}”</span>}
+          <button className="btn btn-gold" onClick={check} disabled={status === 'correct'}>{t.g('Check ✓')}</button>
+          <button className="btn btn-ghost btn-sm" onClick={() => { setPicked(null); setTiles(scramble(ch.answer)); }} disabled={status === 'correct'}>{t.g('Shuffle')}</button>
+          {status === 'wrong' && <span className="sb-msg sb-msg-wrong">{t.g('Not quite — try again')}</span>}
+          {status === 'correct' && <span className="sb-msg sb-msg-correct">✓ Sawa! “{t.g(ch.en)}”</span>}
         </div>
       </div>
     </div>

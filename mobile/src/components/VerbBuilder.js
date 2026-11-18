@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { colors, shadow } from '../theme';
 import { speakSwahili } from '../lib/speak';
+import { useAuth } from '../context/AuthContext';
+import { builderStrings } from '../lib/builderStrings';
 
 // Interactive Swahili word-builder for grammar "formulas".
 // Driven by block.mode: tense | negative | subjunctive | object.
@@ -71,6 +73,8 @@ const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 const root = (stem) => stem.replace(/a$/, '');
 
 export default function VerbBuilder({ block = {} }) {
+  const { user } = useAuth();
+  const t = builderStrings(user?.course);
   const mode = block.mode || 'tense';
   const tense = block.tense || 'present';
   const marker = block.marker || DEFAULT_MARKER[tense] || 'na';
@@ -137,6 +141,10 @@ export default function VerbBuilder({ block = {} }) {
     }
   }
 
+  // A course taught in another language supplies its own translation line.
+  const own = t.verbLine?.({ mode, tense, person: si, stem: verb.stem, object: oi });
+  if (own) { english = own.main; englishAlt = own.alt; }
+
   const word = pieces.map((p) => p.text).join('');
 
   const subjStep = {
@@ -161,14 +169,14 @@ export default function VerbBuilder({ block = {} }) {
   return (
     <View style={styles.block}>
       <View style={[styles.card, { borderLeftColor: accentBorder }]}>
-        <Text style={styles.title}>{block.calloutTitle || 'Build a Swahili word'}</Text>
+        <Text style={styles.title}>{block.calloutTitle || t.g('Build a Swahili word')}</Text>
         {!!block.intro && <Text style={styles.intro}>{block.intro}</Text>}
 
         {steps.map((step, idx) => (
           <View style={styles.step} key={idx}>
             <View style={styles.stepLabel}>
               <View style={[styles.dot, { backgroundColor: ROLE_COLOR[step.accent] }]} />
-              <Text style={styles.stepLabelText}>{step.label}</Text>
+              <Text style={styles.stepLabelText}>{t.g(step.label)}</Text>
             </View>
             <View style={styles.pills}>
               {step.options.map((o, i) => {
@@ -180,7 +188,7 @@ export default function VerbBuilder({ block = {} }) {
                     style={[styles.pill, active && { borderColor: ROLE_COLOR[step.accent], backgroundColor: ROLE_COLOR[step.accent] }]}
                   >
                     <Text style={[styles.pillSw, active && styles.pillActiveText]}>{o.sw}</Text>
-                    <Text style={[styles.pillEn, active && styles.pillActiveText]}>{o.en}</Text>
+                    <Text style={[styles.pillEn, active && styles.pillActiveText]}>{t.g(o.en)}</Text>
                   </Pressable>
                 );
               })}
@@ -194,7 +202,7 @@ export default function VerbBuilder({ block = {} }) {
             <View key={i} style={styles.frag}>
               {i > 0 && <Text style={styles.op}>+</Text>}
               <View style={[styles.piece, { backgroundColor: ROLE_COLOR[p.role] }]}>
-                <Text style={styles.pieceTag}>{p.tag}</Text>
+                <Text style={styles.pieceTag}>{t.g(p.tag)}</Text>
                 <Text style={styles.pieceVal}>{p.text}</Text>
               </View>
             </View>
@@ -214,7 +222,7 @@ export default function VerbBuilder({ block = {} }) {
               onPress={() => speakSwahili(word)}
               style={styles.speak}
               accessibilityRole="button"
-              accessibilityLabel={`Hear ${word} spoken`}
+              accessibilityLabel={t.hear(word)}
             >
               <Text style={styles.speakIcon}>🔊</Text>
             </Pressable>

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { speakSwahili, isSpeechSupported } from '../lib/speak';
+import { useAuth } from '../context/AuthContext';
+import { builderStrings } from '../lib/builderStrings';
 
 // Interactive Swahili possessive builder.
 // Teaches the noun-class "link" (concord): possessive = NOUN + linkₐgᵣₑₑ + STEM.
@@ -31,6 +33,8 @@ const POSSESSORS = [
 ];
 
 export default function PossessiveBuilder({ block = {} }) {
+  const { user } = useAuth();
+  const t = builderStrings(user?.course);
   const nouns = block.nouns || NOUNS;
   const possessors = block.possessors || POSSESSORS;
 
@@ -40,7 +44,7 @@ export default function PossessiveBuilder({ block = {} }) {
   const poss = possessors[pi];
 
   const word = `${noun.noun} ${noun.concord}${poss.stem}`;
-  const english = `${poss.en} ${noun.en}`;
+  const english = t.possessive?.(pi, noun.en) ?? `${poss.en} ${noun.en}`;
 
   const steps = [
     { accent: 'stem', label: '1 · Which thing?', options: nouns.map((n) => ({ sw: n.noun, en: n.en })), index: ni, set: setNi },
@@ -48,23 +52,23 @@ export default function PossessiveBuilder({ block = {} }) {
   ];
 
   const pieces = [
-    { text: noun.noun, role: 'stem', tag: `noun · ${noun.cls}` },
-    { text: noun.concord, role: 'mark', tag: 'link' },
-    { text: poss.stem, role: 'sub', tag: 'whose' },
+    { text: noun.noun, role: 'stem', tag: `${t.g('noun')} · ${noun.cls}` },
+    { text: noun.concord, role: 'mark', tag: t.g('link') },
+    { text: poss.stem, role: 'sub', tag: t.g('whose') },
   ];
 
   return (
     <div className="block">
       <div className="vb">
-        <div className="vb-title">{block.calloutTitle || 'Build a possessive: NOUN + link + stem'}</div>
+        <div className="vb-title">{block.calloutTitle || t.g('Build a possessive: NOUN + link + stem')}</div>
         <p className="vb-intro">
           {block.intro ||
-            'A possessive has two parts: a stem that says whose it is, and a “link” that must agree with the noun’s class. The stem never changes — only the link does. Pick a noun and an owner and watch the link adjust.'}
+            t.g('A possessive has two parts: a stem that says whose it is, and a “link” that must agree with the noun’s class. The stem never changes — only the link does. Pick a noun and an owner and watch the link adjust.')}
         </p>
 
         {steps.map((step, idx) => (
           <div className="vb-step" key={idx}>
-            <div className="vb-step-label"><span className={`vb-dot vb-dot-${step.accent}`} /> {step.label}</div>
+            <div className="vb-step-label"><span className={`vb-dot vb-dot-${step.accent}`} /> {t.g(step.label)}</div>
             <div className="vb-pills">
               {step.options.map((o, i) => (
                 <button
@@ -73,7 +77,7 @@ export default function PossessiveBuilder({ block = {} }) {
                   onClick={() => step.set(i)}
                 >
                   <span className="vb-pill-sw">{o.sw}</span>
-                  <span className="vb-pill-en">{o.en}</span>
+                  <span className="vb-pill-en">{t.g(o.en)}</span>
                 </button>
               ))}
             </div>
@@ -102,7 +106,7 @@ export default function PossessiveBuilder({ block = {} }) {
               <span className="vb-t-mark">{noun.concord}</span><span className="vb-t-sub">{poss.stem}</span>
             </div>
             {isSpeechSupported() && (
-              <button type="button" className="vb-speak" onClick={() => speakSwahili(word)} title="Hear it — pole pole" aria-label={`Hear ${word} spoken`}>🔊</button>
+              <button type="button" className="vb-speak" onClick={() => speakSwahili(word)} title={t.g('Hear it — pole pole')} aria-label={t.hear(word)}>🔊</button>
             )}
           </div>
           <div className="vb-en">“{english}”</div>
