@@ -312,7 +312,7 @@
       { "english": "doctor", "swahili": "daktari" },
       { "english": "country", "swahili": "nchi" },
       { "english": "city", "swahili": "jiji" },
-      { "english": "work", "swahili": "kazi" },
+      { "english": "class", "swahili": "darasa" },
       { "english": "year", "swahili": "mwaka" },
       { "english": "child", "swahili": "mtoto" }
     ],
@@ -714,7 +714,7 @@
       { "english": "there", "swahili": "pale" },
       { "english": "happy", "swahili": "furaha" },
       { "english": "tired", "swahili": "amechoka" },
-      { "english": "hungry", "swahili": "njaa" }
+      { "english": "sad", "swahili": "huzuni" }
     ],
     "quiz": [
       {
@@ -812,8 +812,8 @@
       { "english": "but", "swahili": "lakini" },
       { "english": "very", "swahili": "sana" },
       { "english": "good", "swahili": "nzuri" },
-      { "english": "big", "swahili": "kubwa" },
-      { "english": "small", "swahili": "ndogo" }
+      { "english": "or", "swahili": "au" },
+      { "english": "also", "swahili": "pia" }
     ],
     "quiz": [
       {
@@ -894,6 +894,36 @@
         "lines": [
           "Wanafunzi husahau -s kwa he/she/it. \"She work here\" si sahihi. Ni \"She workS here\".",
           "Hii ni kanuni inayosahaulika zaidi katika Kiingereza chote."
+        ]
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          {
+            "speaker": "Rehema",
+            "swahili": "I work in a shop. And you?",
+            "english": "Ninafanya kazi dukani. Na wewe?"
+          },
+          {
+            "speaker": "Peter",
+            "swahili": "I work in a school. My wife works in a hospital.",
+            "english": "Ninafanya kazi shuleni. Mke wangu anafanya kazi hospitalini."
+          },
+          {
+            "speaker": "Rehema",
+            "swahili": "My brother works in a hospital too! He goes to work every day.",
+            "english": "Kaka yangu pia anafanya kazi hospitalini! Anaenda kazini kila siku."
+          },
+          {
+            "speaker": "Peter",
+            "swahili": "My wife speaks English and Swahili.",
+            "english": "Mke wangu anasema Kiingereza na Kiswahili."
+          },
+          {
+            "speaker": "Rehema",
+            "swahili": "I speak Swahili. I want to speak English well.",
+            "english": "Mimi ninasema Kiswahili. Ninataka kusema Kiingereza vizuri."
+          }
         ]
       },
       {
@@ -1100,11 +1130,53 @@
         ]
       },
       {
+        "type": "conversation",
+        "calloutTitle": "Sasa jaribu — zungumza na Ali",
+        "intro": "Mazungumzo halisi, kwa sauti. Hakuna maandishi ya kufuata — sema unachotaka, na tumia sentensi zilizo hapa chini ukikwama.",
+        "scenario": {
+          "setting": "Uko kwenye basi kutoka Arusha kwenda Nairobi. Ali, abiria aliyeketi karibu nawe, anaanza mazungumzo.",
+          "goal": "Jibu maswali yake, kisha muulize maswali matatu ukitumia Do, Where au What.",
+          "role": "Ali, a friendly teacher from Arusha, Tanzania, sitting next to the learner on a bus to Nairobi. You make small talk with simple present-tense questions: where they live, what they do, whether they like tea or coffee, whether they speak English at work. You live in Arusha, teach at a primary school, and like tea. Answer their questions briefly and ask one back.",
+          "opening": "Hello! Where do you live?",
+          "openingTranslation": "Habari! Unaishi wapi?",
+          "phrases": [
+            {
+              "swahili": "I live in …",
+              "english": "Ninaishi …"
+            },
+            {
+              "swahili": "What do you do?",
+              "english": "Unafanya kazi gani?"
+            },
+            {
+              "swahili": "Where do you work?",
+              "english": "Unafanya kazi wapi?"
+            },
+            {
+              "swahili": "Do you like tea?",
+              "english": "Unapenda chai?"
+            },
+            {
+              "swahili": "Yes, I do.",
+              "english": "Ndiyo."
+            },
+            {
+              "swahili": "No, I don't.",
+              "english": "Hapana."
+            },
+            {
+              "swahili": "Nice to meet you!",
+              "english": "Nafurahi kukutana nawe!"
+            }
+          ]
+        }
+      },
+      {
         "type": "quickCheck",
         "calloutTitle": "Jipime Haraka",
         "questions": [
           { "prompt": "Jaza pengo: ___ he like tea?", "options": ["Does", "Do", "Is", "Are"], "answer": "Does", "explain": "He / she / it hutumia 'Does'." },
-          { "prompt": "Ni ipi sahihi?", "options": ["Does she work here?", "Does she works here?", "Do she work here?", "She work here?"], "answer": "Does she work here?", "explain": "Baada ya Does, kitenzi hakichukui -s." },
+          { "prompt": "Ni ipi sahihi?", "options": ["Do they live here?", "Does they live here?", "Do they lives here?", "They do live here?"], "answer": "Do they live here?", "explain": "Kwa 'they' tunatumia Do, na kitenzi hakichukui -s." },
           { "prompt": "'Wapi' kwa Kiingereza ni:", "options": ["Where", "What", "When", "Why"], "answer": "Where" }
         ]
       }
@@ -1201,6 +1273,36 @@
           { "swahili": "she is reading", "english": "anasoma sasa" },
           { "swahili": "they are eating", "english": "wanakula sasa" },
           { "swahili": "we are learning English", "english": "tunajifunza Kiingereza" }
+        ]
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          {
+            "speaker": "Neema",
+            "swahili": "Hello, Baraka! What are you doing now?",
+            "english": "Habari, Baraka! Unafanya nini sasa?"
+          },
+          {
+            "speaker": "Baraka",
+            "swahili": "I am cooking. My sister is watching TV.",
+            "english": "Ninapika. Dada yangu anatazama televisheni."
+          },
+          {
+            "speaker": "Neema",
+            "swahili": "Are the children sleeping?",
+            "english": "Watoto wamelala?"
+          },
+          {
+            "speaker": "Baraka",
+            "swahili": "No, they are not sleeping. They are playing.",
+            "english": "Hapana, hawajalala. Wanacheza."
+          },
+          {
+            "speaker": "Neema",
+            "swahili": "I am coming to your house now!",
+            "english": "Ninakuja nyumbani kwako sasa!"
+          }
         ]
       },
       {
@@ -1308,7 +1410,7 @@
         "type": "quickCheck",
         "calloutTitle": "Jipime Haraka",
         "questions": [
-          { "prompt": "Ni ipi sahihi?", "options": ["a big house", "a house big", "big a house", "house a big"], "answer": "a big house", "explain": "Kivumishi hutangulia nomino." },
+          { "prompt": "Ni ipi sahihi?", "options": ["a new book", "a book new", "new a book", "book a new"], "answer": "a new book", "explain": "Kivumishi hutangulia nomino." },
           { "prompt": "'Kitabu kizuri' kwa Kiingereza ni:", "options": ["a good book", "a book good", "a bad book", "a new book"], "answer": "a good book" },
           { "prompt": "Wingi wa 'a big house' ni:", "options": ["big houses", "bigs houses", "bigs house", "houses bigs"], "answer": "big houses", "explain": "Vivumishi vya Kiingereza havibadiliki." }
         ]
@@ -1322,7 +1424,7 @@
       { "english": "new", "swahili": "mpya" },
       { "english": "old", "swahili": "kuukuu" },
       { "english": "beautiful", "swahili": "mzuri" },
-      { "english": "expensive", "swahili": "ghali" }
+      { "english": "bad", "swahili": "mbaya" }
     ],
     "quiz": [
       {
@@ -1354,8 +1456,8 @@
       {
         "id": 65,
         "type": "translate",
-        "prompt": "Tafsiri kwa Kiingereza: ghali",
-        "answer": "expensive"
+        "prompt": "Tafsiri kwa Kiingereza: mbaya",
+        "answer": "bad"
       }
     ],
     "xpReward": 100
@@ -1529,6 +1631,36 @@
         ]
       },
       {
+        "type": "dialogue",
+        "dialogue": [
+          {
+            "speaker": "Amina",
+            "swahili": "What time is it?",
+            "english": "Ni saa ngapi?"
+          },
+          {
+            "speaker": "David",
+            "swahili": "It is ten o'clock in the morning.",
+            "english": "Ni saa nne asubuhi."
+          },
+          {
+            "speaker": "Amina",
+            "swahili": "What day is it today?",
+            "english": "Leo ni siku gani?"
+          },
+          {
+            "speaker": "David",
+            "swahili": "Today is Thursday. Tomorrow is Friday.",
+            "english": "Leo ni Alhamisi. Kesho ni Ijumaa."
+          },
+          {
+            "speaker": "Amina",
+            "swahili": "I work on Friday. I don't work on Saturday.",
+            "english": "Ninafanya kazi Ijumaa. Sifanyi kazi Jumamosi."
+          }
+        ]
+      },
+      {
         "type": "quickCheck",
         "calloutTitle": "Jipime Haraka",
         "questions": [
@@ -1647,7 +1779,7 @@
       {
         "id": 77,
         "type": "fill_blank",
-        "prompt": "Jaza pengo: ___ he like tea?",
+        "prompt": "Jaza pengo: ___ she speak English?",
         "answer": "Does"
       },
       {
@@ -1912,10 +2044,48 @@
         ]
       },
       {
+        "type": "conversation",
+        "calloutTitle": "Sasa jaribu — zungumza na Neema",
+        "intro": "Mazungumzo halisi, kwa sauti. Hakuna maandishi ya kufuata — sema unachotaka, na tumia sentensi zilizo hapa chini ukikwama.",
+        "scenario": {
+          "setting": "Ni Jumatatu asubuhi kazini. Neema, mfanyakazi mwenzako, anataka kujua ulifanya nini mwishoni mwa wiki.",
+          "goal": "Mwambie mambo mawili au matatu uliyofanya na jambo moja ambalo hukufanya, kisha muulize yeye ukitumia 'Did you…?'",
+          "role": "Neema, a cheerful colleague at an office in Dar es Salaam, on a Monday morning. You ask what the learner did at the weekend, with simple past-tense follow-ups: Did you go to the market? What did you buy? Did you see your family? On your own weekend you went to the beach on Saturday, cooked fish, and did not work on Sunday.",
+          "opening": "Good morning! What did you do at the weekend?",
+          "openingTranslation": "Habari za asubuhi! Ulifanya nini mwishoni mwa wiki?",
+          "phrases": [
+            {
+              "swahili": "I went to the market.",
+              "english": "Nilienda sokoni."
+            },
+            {
+              "swahili": "I bought rice and fish.",
+              "english": "Nilinunua mchele na samaki."
+            },
+            {
+              "swahili": "I didn't work.",
+              "english": "Sikufanya kazi."
+            },
+            {
+              "swahili": "Did you go to the market?",
+              "english": "Ulienda sokoni?"
+            },
+            {
+              "swahili": "What did you buy?",
+              "english": "Ulinunua nini?"
+            },
+            {
+              "swahili": "And you?",
+              "english": "Na wewe?"
+            }
+          ]
+        }
+      },
+      {
         "type": "quickCheck",
         "calloutTitle": "Jipime Haraka",
         "questions": [
-          { "prompt": "Ni ipi sahihi?", "options": ["Did you go?", "Did you went?", "Do you went?", "Did you goes?"], "answer": "Did you go?", "explain": "Baada ya did, kitenzi hurudi kwenye umbo la msingi." },
+          { "prompt": "Ni ipi sahihi?", "options": ["Did she buy rice?", "Did she bought rice?", "Does she bought rice?", "Did she buys rice?"], "answer": "Did she buy rice?", "explain": "Baada ya 'did', kitenzi hurudi kwenye umbo la msingi: buy." },
           { "prompt": "Jaza pengo: I ___ buy meat yesterday. (kukanusha)", "options": ["didn't", "don't", "wasn't", "not"], "answer": "didn't" },
           { "prompt": "Jaza pengo: What did you ___?", "options": ["buy", "bought", "buys", "buying"], "answer": "buy" }
         ]
@@ -1926,7 +2096,7 @@
       { "english": "didn't", "swahili": "hakufanya" },
       { "english": "rice", "swahili": "mchele" },
       { "english": "bread", "swahili": "mkate" },
-      { "english": "yesterday", "swahili": "jana" },
+      { "english": "last night", "swahili": "jana usiku" },
       { "english": "morning", "swahili": "asubuhi" },
       { "english": "evening", "swahili": "jioni" },
       { "english": "last year", "swahili": "mwaka jana" }
@@ -2018,7 +2188,7 @@
     "vocabulary": [
       { "english": "will", "swahili": "ta-" },
       { "english": "won't", "swahili": "hata-" },
-      { "english": "tomorrow", "swahili": "kesho" },
+      { "english": "promise", "swahili": "ahidi" },
       { "english": "next week", "swahili": "wiki ijayo" },
       { "english": "later", "swahili": "baadaye" },
       { "english": "soon", "swahili": "hivi karibuni" },
@@ -2101,6 +2271,41 @@
         ]
       },
       {
+        "type": "dialogue",
+        "dialogue": [
+          {
+            "speaker": "Grace",
+            "swahili": "What are you going to do this weekend?",
+            "english": "Utafanya nini mwishoni mwa wiki hii?"
+          },
+          {
+            "speaker": "Omar",
+            "swahili": "I am going to visit my mother in Mwanza.",
+            "english": "Nitamtembelea mama yangu Mwanza."
+          },
+          {
+            "speaker": "Grace",
+            "swahili": "Are you going to travel by bus?",
+            "english": "Utasafiri kwa basi?"
+          },
+          {
+            "speaker": "Omar",
+            "swahili": "Yes. I am going to leave on Friday.",
+            "english": "Ndiyo. Nitaondoka Ijumaa."
+          },
+          {
+            "speaker": "Grace",
+            "swahili": "Look at the clouds! It is going to rain.",
+            "english": "Angalia mawingu! Mvua itanyesha."
+          },
+          {
+            "speaker": "Omar",
+            "swahili": "Then I am going to take an umbrella!",
+            "english": "Basi nitachukua mwavuli!"
+          }
+        ]
+      },
+      {
         "type": "quickCheck",
         "calloutTitle": "Jipime Haraka",
         "questions": [
@@ -2114,7 +2319,7 @@
       { "english": "travel", "swahili": "safiri" },
       { "english": "visit", "swahili": "tembelea" },
       { "english": "rain", "swahili": "mvua" },
-      { "english": "study", "swahili": "soma" },
+      { "english": "holiday", "swahili": "likizo" },
       { "english": "plan", "swahili": "mpango" },
       { "english": "start", "swahili": "anza" },
       { "english": "finish", "swahili": "maliza" },
@@ -2196,10 +2401,45 @@
         ]
       },
       {
+        "type": "dialogue",
+        "dialogue": [
+          {
+            "speaker": "Traveller",
+            "swahili": "Excuse me. Can you speak English?",
+            "english": "Samahani. Unaweza kusema Kiingereza?"
+          },
+          {
+            "speaker": "Clerk",
+            "swahili": "Yes, I can. Can I help you?",
+            "english": "Ndiyo, ninaweza. Naweza kukusaidia?"
+          },
+          {
+            "speaker": "Traveller",
+            "swahili": "I can't find my ticket. Could you help me, please?",
+            "english": "Siwezi kupata tiketi yangu. Ungeweza kunisaidia, tafadhali?"
+          },
+          {
+            "speaker": "Clerk",
+            "swahili": "Of course. Could you tell me your name?",
+            "english": "Bila shaka. Ungeweza kuniambia jina lako?"
+          },
+          {
+            "speaker": "Traveller",
+            "swahili": "My name is Juma Ali.",
+            "english": "Jina langu ni Juma Ali."
+          },
+          {
+            "speaker": "Clerk",
+            "swahili": "Here it is. You can go now.",
+            "english": "Hii hapa. Unaweza kwenda sasa."
+          }
+        ]
+      },
+      {
         "type": "quickCheck",
         "calloutTitle": "Jipime Haraka",
         "questions": [
-          { "prompt": "Ni ipi sahihi?", "options": ["She can swim.", "She can to swim.", "She cans swim.", "She can swims."], "answer": "She can swim.", "explain": "can + kitenzi cha msingi." },
+          { "prompt": "Ni ipi sahihi?", "options": ["He can drive.", "He can to drive.", "He cans drive.", "He can drives."], "answer": "He can drive.", "explain": "Baada ya 'can', kitenzi hubaki kama kilivyo." },
           { "prompt": "'Siwezi kuja' kwa Kiingereza ni:", "options": ["I can't come.", "I can come.", "I don't come.", "Can I come?"], "answer": "I can't come." },
           { "prompt": "Jaza pengo: ___ you help me, please? (kwa heshima)", "options": ["Could", "Do", "Are", "Does"], "answer": "Could" }
         ]
@@ -2392,7 +2632,7 @@
       { "english": "sometimes", "swahili": "wakati mwingine" },
       { "english": "often", "swahili": "mara nyingi" },
       { "english": "already", "swahili": "tayari" },
-      { "english": "still", "swahili": "bado" },
+      { "english": "usually", "swahili": "kwa kawaida" },
       { "english": "again", "swahili": "tena" },
       { "english": "together", "swahili": "pamoja" },
       { "english": "because", "swahili": "kwa sababu" }
@@ -2477,6 +2717,44 @@
           { "swahili": "I will take it", "english": "nitaichukua" },
           { "swahili": "do you have change", "english": "una chenji" }
         ]
+      },
+      {
+        "type": "conversation",
+        "calloutTitle": "Sasa jaribu — nunua sokoni",
+        "intro": "Mazungumzo halisi, kwa sauti. Hakuna maandishi ya kufuata — sema unachotaka, na tumia sentensi zilizo hapa chini ukikwama.",
+        "scenario": {
+          "setting": "Uko sokoni. Muuzaji ana matunda na mboga nyingi mezani.",
+          "goal": "Uliza bei, sema ni ghali, omba apunguze, kisha nunua.",
+          "role": "A friendly market seller at a fruit and vegetable stall in Nairobi, Kenya. You sell tomatoes, oranges, bananas and rice. Start with a price that is a little high — for example 200 shillings a kilo for tomatoes — and enjoy the haggling: come down once or twice, then agree. Keep prices to simple round numbers, and ask how many kilos they want.",
+          "opening": "Good morning! Can I help you?",
+          "openingTranslation": "Habari za asubuhi! Naweza kukusaidia?",
+          "phrases": [
+            {
+              "swahili": "How much are the tomatoes?",
+              "english": "Nyanya ni bei gani?"
+            },
+            {
+              "swahili": "It is too expensive.",
+              "english": "Ni ghali sana."
+            },
+            {
+              "swahili": "Can you reduce the price?",
+              "english": "Unaweza kupunguza bei?"
+            },
+            {
+              "swahili": "I will take two kilos.",
+              "english": "Nitachukua kilo mbili."
+            },
+            {
+              "swahili": "Do you have change?",
+              "english": "Una chenji?"
+            },
+            {
+              "swahili": "Thank you. Goodbye!",
+              "english": "Asante. Kwaheri!"
+            }
+          ]
+        }
       },
       {
         "type": "quickCheck",
@@ -2584,6 +2862,44 @@
         ]
       },
       {
+        "type": "conversation",
+        "calloutTitle": "Sasa jaribu — agiza chakula",
+        "intro": "Mazungumzo halisi, kwa sauti. Hakuna maandishi ya kufuata — sema unachotaka, na tumia sentensi zilizo hapa chini ukikwama.",
+        "scenario": {
+          "setting": "Uko mgahawani jioni. Mhudumu anakuja mezani kwako.",
+          "goal": "Agiza chakula na kinywaji kwa heshima ukitumia 'I would like…', kisha omba bili.",
+          "role": "A polite waiter at a small restaurant in Mombasa, Kenya. The menu today: rice with fish, rice with meat, vegetables and fruit; the drinks are tea, coffee and water. Take the food order, ask about a drink, and bring the bill when asked — the meal comes to 800 shillings. If they order something that is not on the menu, say sorry and offer what you have.",
+          "opening": "Good evening. What would you like?",
+          "openingTranslation": "Habari za jioni. Ungependa nini?",
+          "phrases": [
+            {
+              "swahili": "Can I have the menu?",
+              "english": "Naomba menyu?"
+            },
+            {
+              "swahili": "I would like rice and fish, please.",
+              "english": "Ningependa wali na samaki, tafadhali."
+            },
+            {
+              "swahili": "Water, please.",
+              "english": "Maji, tafadhali."
+            },
+            {
+              "swahili": "It was delicious.",
+              "english": "Kilikuwa kitamu."
+            },
+            {
+              "swahili": "The bill, please.",
+              "english": "Bili, tafadhali."
+            },
+            {
+              "swahili": "Thank you very much!",
+              "english": "Asante sana!"
+            }
+          ]
+        }
+      },
+      {
         "type": "quickCheck",
         "calloutTitle": "Jipime Haraka",
         "questions": [
@@ -2681,6 +2997,44 @@
         ]
       },
       {
+        "type": "conversation",
+        "calloutTitle": "Sasa jaribu — uliza njia",
+        "intro": "Mazungumzo halisi, kwa sauti. Hakuna maandishi ya kufuata — sema unachotaka, na tumia sentensi zilizo hapa chini ukikwama.",
+        "scenario": {
+          "setting": "Umefika mjini kwa mara ya kwanza na unatafuta kituo cha basi. Unamwona mwenyeji barabarani.",
+          "goal": "Muombe radhi, uliza kituo cha basi kiko wapi na kama ni mbali, kisha mshukuru.",
+          "role": "A helpful local resident on a street in Nairobi, Kenya. The bus station is near: go straight, turn left, and it is near the market — about ten minutes on foot. Give directions one short step at a time and check they understood. If asked, the hospital is far (they should take a bus) and the market is near the bus station.",
+          "opening": "Hello! Can I help you?",
+          "openingTranslation": "Habari! Naweza kukusaidia?",
+          "phrases": [
+            {
+              "swahili": "Excuse me, where is the bus station?",
+              "english": "Samahani, kituo cha basi kiko wapi?"
+            },
+            {
+              "swahili": "Is it far?",
+              "english": "Iko mbali?"
+            },
+            {
+              "swahili": "Left or right?",
+              "english": "Kushoto au kulia?"
+            },
+            {
+              "swahili": "How long does it take?",
+              "english": "Inachukua muda gani?"
+            },
+            {
+              "swahili": "Could you repeat that, please?",
+              "english": "Ungeweza kurudia, tafadhali?"
+            },
+            {
+              "swahili": "Thank you very much!",
+              "english": "Asante sana!"
+            }
+          ]
+        }
+      },
+      {
         "type": "quickCheck",
         "calloutTitle": "Jipime Haraka",
         "questions": [
@@ -2694,7 +3048,7 @@
       { "english": "left", "swahili": "kushoto" },
       { "english": "right", "swahili": "kulia" },
       { "english": "straight", "swahili": "moja kwa moja" },
-      { "english": "near", "swahili": "karibu" },
+      { "english": "near", "swahili": "karibu na" },
       { "english": "far", "swahili": "mbali" },
       { "english": "road", "swahili": "barabara" },
       { "english": "bus", "swahili": "basi" },
@@ -2782,6 +3136,46 @@
         "verbKeys": ["work", "want", "speak", "go"],
         "calloutTitle": "Jenga: Kuzungumza Kazini",
         "intro": "Rudia kanuni ya -s kwa he/she/it kwa vitenzi vya kazini."
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          {
+            "speaker": "Manager",
+            "swahili": "Good morning. What do you do?",
+            "english": "Habari za asubuhi. Unafanya kazi gani?"
+          },
+          {
+            "speaker": "Fatuma",
+            "swahili": "I am a driver, but I am looking for a new job.",
+            "english": "Mimi ni dereva, lakini ninatafuta kazi mpya."
+          },
+          {
+            "speaker": "Manager",
+            "swahili": "Can you work on Saturdays?",
+            "english": "Unaweza kufanya kazi Jumamosi?"
+          },
+          {
+            "speaker": "Fatuma",
+            "swahili": "Yes, I can. What time do you start?",
+            "english": "Ndiyo, ninaweza. Mnaanza saa ngapi?"
+          },
+          {
+            "speaker": "Manager",
+            "swahili": "We start at eight o'clock. The salary is good.",
+            "english": "Tunaanza saa mbili asubuhi. Mshahara ni mzuri."
+          },
+          {
+            "speaker": "Fatuma",
+            "swahili": "Thank you. When can I start?",
+            "english": "Asante. Naweza kuanza lini?"
+          },
+          {
+            "speaker": "Manager",
+            "swahili": "You can start on Monday.",
+            "english": "Unaweza kuanza Jumatatu."
+          }
+        ]
       },
       {
         "type": "quickCheck",
@@ -2878,10 +3272,48 @@
         ]
       },
       {
+        "type": "conversation",
+        "calloutTitle": "Sasa jaribu — zungumza na daktari",
+        "intro": "Mazungumzo halisi, kwa sauti. Hakuna maandishi ya kufuata — sema unachotaka, na tumia sentensi zilizo hapa chini ukikwama.",
+        "scenario": {
+          "setting": "Hujisikii vizuri, kwa hiyo umeenda kliniki. Daktari anakukaribisha.",
+          "goal": "Mweleze daktari unaumwa nini na tangu lini, jibu maswali yake, kisha mshukuru.",
+          "role": "A calm, kind doctor at a clinic in Dar es Salaam, in a language-practice role-play. Ask what the problem is, how long they have been sick, and whether they have a fever or pain anywhere. Then give simple, generic advice: rest, drink water, and take a medicine twice a day for three days. Keep it to everyday phrases — this is speaking practice, not real medical advice.",
+          "opening": "Good morning. What is the problem?",
+          "openingTranslation": "Habari za asubuhi. Tatizo ni nini?",
+          "phrases": [
+            {
+              "swahili": "I have a headache.",
+              "english": "Nina maumivu ya kichwa."
+            },
+            {
+              "swahili": "I have a fever.",
+              "english": "Nina homa."
+            },
+            {
+              "swahili": "My stomach hurts.",
+              "english": "Tumbo linauma."
+            },
+            {
+              "swahili": "Three days.",
+              "english": "Siku tatu."
+            },
+            {
+              "swahili": "I need medicine.",
+              "english": "Nahitaji dawa."
+            },
+            {
+              "swahili": "Thank you, doctor.",
+              "english": "Asante, daktari."
+            }
+          ]
+        }
+      },
+      {
         "type": "quickCheck",
         "calloutTitle": "Jipime Haraka",
         "questions": [
-          { "prompt": "Jaza pengo: I ___ a headache.", "options": ["have", "am", "do", "is"], "answer": "have", "explain": "Kwa maradhi mengi: I have a..." },
+          { "prompt": "Jaza pengo: My back ___.", "options": ["hurts", "hurt", "is hurt", "have"], "answer": "hurts", "explain": "Kwa maumivu ya sehemu ya mwili: My back hurts." },
           { "prompt": "'Tumbo linauma' kwa Kiingereza ni:", "options": ["My stomach hurts.", "My head hurts.", "I have a fever.", "I am sick."], "answer": "My stomach hurts." },
           { "prompt": "'Hospitali iko wapi?' kwa Kiingereza ni:", "options": ["Where is the hospital?", "I need a doctor.", "What is the problem?", "Take this medicine."], "answer": "Where is the hospital?" }
         ]
@@ -3084,8 +3516,8 @@
         "intro": "Sentensi hizi zinaonyesha yote uliyojifunza.",
         "prompts": [
           { "swahili": "I have learned English", "english": "nimejifunza Kiingereza" },
-          { "swahili": "she is a good teacher", "english": "yeye ni mwalimu mzuri" },
-          { "swahili": "we will meet tomorrow", "english": "tutakutana kesho" },
+          { "swahili": "I am going to practice every day", "english": "nitajizoeza kila siku" },
+          { "swahili": "I didn't understand, please repeat", "english": "sikuelewa, tafadhali rudia" },
           { "swahili": "thank you very much", "english": "asante sana" }
         ]
       },
@@ -3093,17 +3525,17 @@
         "type": "quickCheck",
         "calloutTitle": "Jipime Haraka",
         "questions": [
-          { "prompt": "Jaza pengo: She ___ speak English. (kukanusha)", "options": ["doesn't", "don't", "isn't", "not"], "answer": "doesn't" },
-          { "prompt": "Ni ipi sahihi?", "options": ["He is a good teacher.", "He is a teacher good.", "He is good a teacher.", "He a good teacher is."], "answer": "He is a good teacher." },
-          { "prompt": "Jaza pengo: I have ___ already. (eat)", "options": ["eaten", "ate", "eat", "eating"], "answer": "eaten" }
+          { "prompt": "Jaza pengo: They ___ eat meat. (kukanusha)", "options": ["don't", "doesn't", "aren't", "not"], "answer": "don't", "explain": "Kwa I / you / we / they tunatumia don't." },
+          { "prompt": "Ni ipi sahihi?", "options": ["She has a new car.", "She has a car new.", "She have a new car.", "She has new a car."], "answer": "She has a new car.", "explain": "she → has, na kivumishi hutangulia nomino." },
+          { "prompt": "Jaza pengo: We have ___ the film. (see)", "options": ["seen", "saw", "see", "seeing"], "answer": "seen", "explain": "have + umbo la tatu: see → saw → seen." }
         ]
       }
     ],
     "vocabulary": [
-      { "english": "learn", "swahili": "jifunza" },
+      { "english": "continue", "swahili": "endelea" },
       { "english": "practice", "swahili": "jizoeze" },
       { "english": "mistake", "swahili": "kosa" },
-      { "english": "easy", "swahili": "rahisi" },
+      { "english": "fear", "swahili": "woga" },
       { "english": "difficult", "swahili": "gumu" },
       { "english": "slowly", "swahili": "pole pole" },
       { "english": "congratulations", "swahili": "hongera" },
@@ -3132,8 +3564,8 @@
       {
         "id": 154,
         "type": "translate",
-        "prompt": "Wingi wa 'child' ni nini?",
-        "answer": "children"
+        "prompt": "Wingi wa 'person' ni nini?",
+        "answer": "people"
       },
       {
         "id": 155,

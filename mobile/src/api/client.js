@@ -126,6 +126,33 @@ export const api = {
     return res.json();
   },
 
+  // Conversation practice (spoken role-play with an AI partner).
+  conversationStatus: () => request('/conversation/status'),
+  // form: lessonId, history (JSON), and either file (recording) or text.
+  // multipart, so like keepVoiceTake it sets no Content-Type of its own.
+  conversationTurn: async (form) => {
+    const token = await getToken();
+    let res;
+    try {
+      res = await fetch(`${BASE}/conversation/turn`, {
+        method: 'POST',
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+        body: form,
+      });
+    } catch (networkErr) {
+      const err = new Error(`Can't reach the server at ${API_BASE_URL}.`);
+      err.status = 0;
+      throw err;
+    }
+    const data = await res.json().catch(() => null);
+    if (!res.ok) {
+      const err = new Error((data && data.message) || `Request failed (${res.status})`);
+      err.status = res.status;
+      throw err;
+    }
+    return data;
+  },
+
   // Review
   flashcards: () => request('/review/flashcards'),
   practice: (count = 10) => request(`/review/practice?count=${count}`),

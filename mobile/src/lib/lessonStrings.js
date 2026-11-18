@@ -25,6 +25,31 @@ const EN = {
   matchDone: 'All matched!',
   matchMisses: (n) => (n === 0 ? 'No mistakes.' : n === 1 ? '1 slip.' : `${n} slips.`),
   newRound: 'New round',
+
+  // Conversation practice (spoken role-play)
+  cvTitle: 'Conversation practice',
+  cvGoal: 'Your goal:',
+  cvStart: '▶ Start the conversation',
+  cvSpeak: '🎤 Answer',
+  cvStop: '■ Done speaking',
+  cvThinking: 'Listening…',
+  cvListening: 'Recording — tap again when you have finished',
+  cvOrType: '…or type your answer',
+  cvType: 'Type your answer',
+  cvSend: 'Send',
+  cvTypeOnly: 'Voice input is off right now, so type your answers. You will still hear the replies.',
+  cvRedo: "That's not what I said — try again",
+  cvReplay: 'Hear it again',
+  cvUnclear: "I didn't catch that. Try again, a little closer to the mic.",
+  cvError: "Couldn't reach your conversation partner. Try again.",
+  cvUnavailable: 'Conversation practice is not switched on yet. You can still play both roles of the dialogue above.',
+  cvNoTurns: "That's all the conversation practice for today. Come back tomorrow!",
+  cvDone: (n) => `You held a real conversation — ${n} ${n === 1 ? 'turn' : 'turns'}.`,
+  cvAgain: 'Start again',
+  cvHideHelp: 'Hide translations and hints',
+  cvShowHelp: 'Show translations and hints',
+  cvMicDenied: 'Microphone permission is needed to answer out loud. You can type instead.',
+  cvMicFailed: 'Could not start recording on this device. You can type instead.',
 };
 
 const SW = {
@@ -50,6 +75,31 @@ const SW = {
   matchDone: 'Umeoanisha yote!',
   matchMisses: (n) => (n === 0 ? 'Bila kosa.' : n === 1 ? 'Kosa 1.' : `Makosa ${n}.`),
   newRound: 'Mzunguko mpya',
+
+  // Conversation practice (spoken role-play)
+  cvTitle: 'Mazoezi ya mazungumzo',
+  cvGoal: 'Lengo lako:',
+  cvStart: '▶ Anza mazungumzo',
+  cvSpeak: '🎤 Jibu',
+  cvStop: '■ Nimemaliza kusema',
+  cvThinking: 'Ninasikiliza…',
+  cvListening: 'Inarekodi — gusa tena ukimaliza',
+  cvOrType: '…au andika jibu lako',
+  cvType: 'Andika jibu lako',
+  cvSend: 'Tuma',
+  cvTypeOnly: 'Kipaza sauti hakipatikani sasa, kwa hiyo andika majibu yako. Bado utasikia majibu.',
+  cvRedo: 'Sikusema hivyo — jaribu tena',
+  cvReplay: 'Sikiliza tena',
+  cvUnclear: 'Sikusikia vizuri. Jaribu tena, karibu zaidi na kipaza sauti.',
+  cvError: 'Imeshindikana kumpata mwenzako wa mazungumzo. Jaribu tena.',
+  cvUnavailable: 'Mazoezi ya mazungumzo bado hayajawashwa. Bado unaweza kuigiza mazungumzo yaliyo hapo juu.',
+  cvNoTurns: 'Mazoezi ya mazungumzo ya leo yameisha. Rudi kesho!',
+  cvDone: (n) => `Umefanya mazungumzo halisi — zamu ${n}.`,
+  cvAgain: 'Anza tena',
+  cvHideHelp: 'Ficha tafsiri na vidokezo',
+  cvShowHelp: 'Onyesha tafsiri na vidokezo',
+  cvMicDenied: 'Ruhusa ya kipaza sauti inahitajika ili ujibu kwa sauti. Unaweza kuandika.',
+  cvMicFailed: 'Imeshindikana kuanza kurekodi kwenye kifaa hiki. Unaweza kuandika.',
 };
 
 // course: the account's course ({ targetLanguage: 'sw' | 'en' }).
