@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate, Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
+import { useLocale } from './context/LocaleContext';
 import LandingPage from './pages/LandingPage';
 import AuthPage from './pages/AuthPage';
 import Dashboard from './pages/Dashboard';
@@ -20,6 +21,7 @@ function NavBar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const { t } = useLocale();
   if (!user) return null;
   // The taster signs the learner in partway through and then has two more
   // things to ask. A bar full of other places to go would be an exit offered
@@ -35,11 +37,11 @@ function NavBar() {
         {/* One row on a desktop. On a phone the four destinations drop to a
             tab bar along the bottom edge — the same four tabs the phone app
             has — so the header stays a single short row. */}
-        <nav className="topbar-links" aria-label="Main">
+        <nav className="topbar-links" aria-label={t.nav.main}>
           {NAV_LINKS.map((l) => (
             <NavLink key={l.to} to={l.to} end={l.to === '/app'}>
               <span className="tab-icon" aria-hidden="true">{l.icon}</span>
-              {l.label}
+              {t.nav[l.key]}
             </NavLink>
           ))}
         </nav>
@@ -48,7 +50,7 @@ function NavBar() {
           <span className="pill">⭐ {user.totalXp} XP</span>
           {user.isAdmin && <Link to="/admin" className="btn btn-sm btn-ghost">Admin</Link>}
           <button className="btn btn-sm btn-ghost" onClick={() => { logout(); navigate('/'); }}>
-            Logout
+            {t.nav.logout}
           </button>
         </div>
       </div>
@@ -57,10 +59,10 @@ function NavBar() {
 }
 
 const NAV_LINKS = [
-  { to: '/app', label: 'Dashboard', icon: '🏠' },
-  { to: '/dose', label: 'Dose', icon: '🎯' },
-  { to: '/flashcards', label: 'Flashcards', icon: '🃏' },
-  { to: '/settings', label: 'Settings', icon: '⚙️' },
+  { to: '/app', key: 'dashboard', icon: '🏠' },
+  { to: '/dose', key: 'dose', icon: '🎯' },
+  { to: '/flashcards', key: 'flashcards', icon: '🃏' },
+  { to: '/settings', key: 'settings', icon: '⚙️' },
 ];
 
 function Protected({ children }) {

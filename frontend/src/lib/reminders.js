@@ -15,6 +15,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../api/client';
+import { useLocale } from '../context/LocaleContext';
 
 // How long after the chosen time the reminder may still be shown. Matches
 // ReminderService.Window.
@@ -58,7 +59,7 @@ function todayAt(hhmm) {
   return t;
 }
 
-async function show(navigate) {
+async function show(navigate, t) {
   if (shownToday()) return;
 
   // Asked fresh rather than trusted from when the timer was set: the learner
@@ -74,10 +75,10 @@ async function show(navigate) {
   // A vocab card's key is the word being learned. Proverbs are left out of
   // the preview so they stay a surprise.
   const words = dose.items.filter((i) => i.kind === 'vocab').slice(0, 3).map((i) => i.itemKey);
-  const body = `${dose.items.length} cards, 90 seconds.${words.length ? ` ${words.join(', ')}…` : ''}`;
+  const body = `${t.reminder.notificationBody(dose.items.length)}${words.length ? ` ${words.join(', ')}…` : ''}`;
 
   markShown();
-  const n = new Notification('Dose ya leo', { body, tag: 'polepole-dose', icon: '/polepole-icon-512.png' });
+  const n = new Notification(t.dashboard.doseKicker, { body, tag: 'polepole-dose', icon: '/polepole-icon-512.png' });
   n.onclick = () => {
     window.focus();
     navigate('/dose');
@@ -92,6 +93,7 @@ async function show(navigate) {
 // Arms today's reminder for the signed-in learner. Mounted once, in App.
 export function useDoseReminder(user) {
   const navigate = useNavigate();
+  const { t } = useLocale();
   const enabled = !!user?.remindersEnabled;
   const time = user?.reminderLocalTime;
   const done = !!user?.doneToday;
@@ -103,7 +105,7 @@ export function useDoseReminder(user) {
     // More than an hour past the chosen time: dropped, not delivered late.
     if (wait < -WINDOW_MS) return undefined;
 
-    const timer = setTimeout(() => show(navigate), Math.max(wait, 0));
+    const timer = setTimeout(() => show(navigate, t), Math.max(wait, 0));
     return () => clearTimeout(timer);
-  }, [enabled, time, done, navigate]);
+  }, [enabled, time, done, navigate, t]);
 }

@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { api } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import WeekStrip from '../components/WeekStrip';
+import { useLocale } from '../context/LocaleContext';
 
 // The dashboard leads with the Dose, not the course.
 //
@@ -14,15 +15,11 @@ import WeekStrip from '../components/WeekStrip';
 //
 // See docs/DAILY-PRACTICE-LOOP.md.
 
-const WEEK_TITLES = {
-  1: 'Foundations',
-  2: 'Noun Classes, Numbers & Time',
-  3: 'Tenses & Daily Life',
-  4: 'Complex Sentences & Culture',
-};
-
 export default function Dashboard() {
   const { user } = useAuth();
+  const { t: all } = useLocale();
+  const t = all.dashboard;
+  const weekTitles = user.course?.targetLanguage === 'en' ? t.weekTitlesEnglish : t.weekTitles;
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [dose, setDose] = useState(null);
@@ -41,7 +38,7 @@ export default function Dashboard() {
   }, []);
 
   if (loading) return <div className="spinner" />;
-  if (!data) return <div className="container page"><p>Could not load lessons.</p></div>;
+  if (!data) return <div className="container page"><p>{t.couldNotLoad}</p></div>;
 
   const completed = data.lessons.filter((l) => l.quizCompleted).length;
   const pct = Math.round((completed / data.totalLessons) * 100);
@@ -56,27 +53,27 @@ export default function Dashboard() {
   return (
     <div className="container page">
       <div className="page-head">
-        <h1>Karibu, {user.displayName}! 👋</h1>
-        <p>Day {data.currentDay} of your {data.planLengthDays}-day plan.</p>
+        <h1>{t.welcome(user.displayName)}</h1>
+        <p>{t.dayOfPlan(data.currentDay, data.planLengthDays)}</p>
       </div>
 
       {/* The one primary action on the page. */}
       <div className={`dose-hero ${doseReady ? '' : 'dose-hero-done'}`}>
         <div>
-          <div className="dose-kicker">Dose ya leo</div>
-          <h2>{doseReady ? `${dose.items.length} items` : 'Nothing due yet'}</h2>
+          <div className="dose-kicker">{t.doseKicker}</div>
+          <h2>{doseReady ? t.items(dose.items.length) : t.nothingDue}</h2>
           <div className="dose-hero-sub">
             {doseReady
-              ? 'About ninety seconds. One of them you say out loud.'
-              : (dose?.message ?? 'Study a lesson and your review queue starts filling.')}
+              ? t.doseSub
+              : (dose?.message ?? t.doseEmpty)}
           </div>
           <WeekStrip week={dose?.week} light />
         </div>
         {doseReady
-          ? <button className="btn btn-gold" onClick={() => navigate('/dose')}>Anza →</button>
+          ? <button className="btn btn-gold" onClick={() => navigate('/dose')}>{t.startDose}</button>
           : nextLesson && (
             <button className="btn btn-gold" onClick={() => navigate(`/lesson/${nextLesson.id}`)}>
-              Open a lesson →
+              {t.openLesson}
             </button>
           )}
       </div>
@@ -88,29 +85,29 @@ export default function Dashboard() {
           <div className="row spread">
             <div>
               <div className="next-lesson-kicker">
-                {nextLesson.quizCompleted ? 'Last lesson' : 'Somo la leo'} · Day {nextLesson.id}
+                {nextLesson.quizCompleted ? t.lastLesson : t.todaysLesson} · {all.common.day(nextLesson.id)}
               </div>
               <strong className="next-lesson-title">{nextLesson.title}</strong>
               <div className="muted next-lesson-sub">{nextLesson.subtitle}</div>
             </div>
             <Link to={`/lesson/${nextLesson.id}`} className="btn btn-ghost btn-sm">
-              {nextLesson.lessonViewed ? 'Continue' : 'Start'} →
+              {nextLesson.lessonViewed ? t.continue : t.start} →
             </Link>
           </div>
         </div>
       )}
 
       <div className="stats">
-        <div className="stat"><div className="num">{completed}/{data.totalLessons}</div><div className="lbl">Lessons done</div></div>
-        <div className="stat"><div className="num">{user.streakCount} 🔥</div><div className="lbl">Day streak</div></div>
-        <div className="stat"><div className="num">{user.totalXp}</div><div className="lbl">Total XP</div></div>
-        <div className="stat"><div className="num">{pct}%</div><div className="lbl">Course complete</div></div>
+        <div className="stat"><div className="num">{completed}/{data.totalLessons}</div><div className="lbl">{t.lessonsDone}</div></div>
+        <div className="stat"><div className="num">{user.streakCount} 🔥</div><div className="lbl">{t.dayStreak}</div></div>
+        <div className="stat"><div className="num">{user.totalXp}</div><div className="lbl">{t.totalXp}</div></div>
+        <div className="stat"><div className="num">{pct}%</div><div className="lbl">{t.courseComplete}</div></div>
       </div>
 
       <div className="card mb">
         <div className="row spread">
-          <strong>Overall progress</strong>
-          <span className="muted">{completed} of {data.totalLessons} lessons</span>
+          <strong>{t.overall}</strong>
+          <span className="muted">{t.nOfLessons(completed, data.totalLessons)}</span>
         </div>
         <div className="progress-bar"><span style={{ width: `${pct}%` }} /></div>
       </div>
@@ -120,7 +117,7 @@ export default function Dashboard() {
         onClick={() => setShowAll((s) => !s)}
         aria-expanded={showAll}
       >
-        {showAll ? 'Hide all lessons' : `All ${data.totalLessons} lessons`}
+        {showAll ? t.hideAll : t.allLessons(data.totalLessons)}
       </button>
 
       {showAll && [1, 2, 3, 4].map((w) => {
@@ -129,7 +126,7 @@ export default function Dashboard() {
         return (
           <div className="week-group" key={w}>
             <div className="week-label">
-              <h2>Week {w} — {WEEK_TITLES[w]}</h2>
+              <h2>{t.week(w, weekTitles[w - 1])}</h2>
               <div className="line" />
             </div>
             <div className="lesson-grid">
@@ -137,7 +134,7 @@ export default function Dashboard() {
                 <div key={l.id}
                   className={`lesson-card ${l.unlocked ? '' : 'locked'}`}
                   onClick={() => l.unlocked && navigate(`/lesson/${l.id}`)}>
-                  <div className="day">Day {l.id} {l.unlocked ? '' : '🔒'}</div>
+                  <div className="day">{all.common.day(l.id)} {l.unlocked ? '' : '🔒'}</div>
                   <h3>{l.title}</h3>
                   <div className="sub">{l.subtitle}</div>
                   <div className="foot">
@@ -145,10 +142,10 @@ export default function Dashboard() {
                     {l.quizCompleted
                       ? <span className="badge badge-done">✓ {l.bestQuizScore}/{l.quizTotal}</span>
                       : l.lessonViewed
-                        ? <span className="badge badge-progress">In progress</span>
+                        ? <span className="badge badge-progress">{t.inProgress}</span>
                         : l.unlocked
-                          ? <span className="badge badge-progress">Start</span>
-                          : <span className="badge badge-lock">Locked</span>}
+                          ? <span className="badge badge-progress">{t.start}</span>
+                          : <span className="badge badge-lock">{t.locked}</span>}
                   </div>
                 </div>
               ))}

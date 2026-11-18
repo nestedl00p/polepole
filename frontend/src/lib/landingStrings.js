@@ -1,6 +1,7 @@
 // Copy for the marketing landing page, in each language a visitor can read it
-// in. This is the page's own language (picked by the visitor, or guessed from
-// the browser), not the course direction: nobody has chosen a course yet.
+// in. Each language pitches the course taught in it: English and Spanish readers
+// are offered Swahili, Swahili readers are offered English (see
+// context/LocaleContext.jsx).
 //
 // Swahili phrases that are the brand's voice ("pole pole", "Anza leo") stay in
 // Swahili in every locale.
@@ -12,7 +13,6 @@ const en = {
   myDashboard: 'My dashboard',
   goToDashboard: 'Go to my dashboard',
   tryNow: 'Try 3 words now',
-  language: 'Language',
 
   eyebrow: '🐢 Learn Swahili, the steady way',
   heroTitle: 'Learn Swahili,',
@@ -88,7 +88,6 @@ const es = {
   myDashboard: 'Mi panel',
   goToDashboard: 'Ir a mi panel',
   tryNow: 'Prueba 3 palabras ahora',
-  language: 'Idioma',
 
   eyebrow: '🐢 Aprende suajili, con paso firme',
   heroTitle: 'Aprende suajili,',
@@ -157,6 +156,8 @@ const es = {
   footerMade: 'Hecho con 🐢 y paciencia pole pole.',
 };
 
+// Swahili readers are offered the English course: a course is taught in its
+// reader's language, and the one taught in Swahili teaches English.
 const sw = {
   nav: { course: 'Kozi', curriculum: 'Mtaala', how: 'Jinsi inavyofanya kazi', pricing: 'Bei' },
   login: 'Ingia',
@@ -164,28 +165,28 @@ const sw = {
   myDashboard: 'Dashibodi yangu',
   goToDashboard: 'Nenda kwenye dashibodi yangu',
   tryNow: 'Jaribu maneno 3 sasa',
-  language: 'Lugha',
 
-  eyebrow: '🐢 Jifunze Kiswahili, hatua kwa hatua',
-  heroTitle: 'Jifunze Kiswahili,',
+  eyebrow: '🐢 Jifunze Kiingereza, hatua kwa hatua',
+  heroTitle: 'Jifunze Kiingereza,',
   heroLead: [
-    'Kozi kamili ya Kiswahili yenye mwongozo, inayokuchukua kutoka salamu yako ya kwanza hadi mazungumzo halisi — somo fupi moja kwa wakati. ',
-    ': taratibu lakini kwa uhakika.',
+    'Kozi kamili ya Kiingereza iliyoandikwa kwa Kiswahili, inayokuchukua kutoka salamu yako ya kwanza hadi mazungumzo halisi — somo fupi moja kwa wakati. ',
+    '.',
   ],
   seeCurriculum: 'Tazama mtaala',
   trust: 'Sekunde 30 · Huhitaji akaunti',
 
+  statNumbers: ['31', '4', '240+', '0→💬'],
   stats: ['Masomo yenye mwongozo', 'Mada za kila wiki', 'Maneno na misemo', 'Kutoka mwanzo hadi kuongea'],
 
   featuresTitle: 'Kila kitu unachohitaji ili kujifunza kweli',
   featuresLead: 'Si orodha za maneno tu — ni mfumo kamili uliobuniwa kujenga mazoea ya kweli na ufasaha wa kweli.',
   features: [
-    { title: 'Njia yenye mwongozo kutoka sifuri hadi mazungumzo', body: 'Mtaala uliopangwa unaokuchukua kutoka “Jambo” yako ya kwanza hadi mazungumzo halisi — bila kubahatisha cha kusoma baadaye.' },
+    { title: 'Njia yenye mwongozo kutoka sifuri hadi mazungumzo', body: 'Mtaala uliopangwa unaokuchukua kutoka “Hello” yako ya kwanza hadi mazungumzo halisi — bila kubahatisha cha kusoma baadaye.' },
     { title: 'Pole pole — kwa kasi yako', body: 'Chagua mpango wa siku 30, 60 au 90. Masomo hufunguka kwa ratiba ili ujenge mazoea thabiti badala ya kuchoka.' },
     { title: 'Kadi za maneno na mazoezi ya marudio', body: 'Kariri msamiati kwa kadi za kugeuza na majaribio mafupi yanayotokana na kila somo unalomaliza.' },
     { title: 'Majaribio yanayokupima kweli', body: 'Maswali ya kuchagua jibu na ya kuandika, yenye vidokezo na majibu ya papo hapo baada ya kila somo.' },
     { title: 'Mfululizo, XP na maendeleo', body: 'Pata XP, dumisha mfululizo wako wa kila siku, na uone upau wa maendeleo ya kozi ukijaa.' },
-    { title: 'Mazungumzo halisi na utamaduni', body: 'Jifunze Kiswahili ambacho watu hukiongea kweli — salamu, sokoni, safari, na utamaduni ulio nyuma ya maneno.' },
+    { title: 'Kiingereza cha maisha halisi', body: 'Jifunze Kiingereza ambacho watu hukiongea kweli — salamu, sokoni, mgahawani, safarini na kazini.' },
   ],
 
   howTitle: 'Jinsi PolePole inavyofanya kazi',
@@ -197,13 +198,13 @@ const sw = {
   ],
 
   curriculumTitle: 'Mtaala wenye njia iliyo wazi',
-  curriculumLead: 'Wiki nne zenye mada zinazojengana — kutoka misingi hadi mazungumzo yanayosikika kwa ufasaha.',
+  curriculumLead: 'Wiki nne zenye mada zinazojengana — kutoka misingi hadi Kiingereza cha matumizi ya kila siku.',
   week: (n) => `Wiki ya ${n}`,
   weeks: [
-    { title: 'Misingi', body: 'Salamu, matamshi, viwakilishi, na sentensi zako za kwanza kabisa.' },
-    { title: 'Ngeli, Namba na Saa', body: 'Ngeli maarufu za Kiswahili, kuhesabu, na kutaja saa.' },
-    { title: 'Nyakati na Maisha ya Kila Siku', body: 'Wakati uliopita, uliopo na ujao kupitia hali za kila siku.' },
-    { title: 'Sentensi Changamano na Utamaduni', body: 'Viunganishi, mazungumzo marefu zaidi, na muktadha wa kitamaduni ili usikike wa asili.' },
+    { title: 'Misingi', body: 'Sauti na alfabeti, salamu, kujitambulisha, “a, an, the”, na kitenzi “to be”.' },
+    { title: 'Wakati Uliopo, Maswali na Namba', body: 'Wakati uliopo, kukanusha, kuuliza maswali, vivumishi, namba, na saa na siku.' },
+    { title: 'Wakati Uliopita na Ujao', body: 'Wakati uliopita, “will” na “going to”, “can” na “could”, “have” na “has”.' },
+    { title: 'Kiingereza cha Matumizi', body: 'Sokoni, mgahawani, safarini, kazini na afya — Kiingereza utakachokitumia kweli.' },
   ],
 
   pricingTitle: 'Bei rahisi',
@@ -211,7 +212,7 @@ const sw = {
   priceTag: 'Bure',
   pricePeriod: '/ wakati wa beta',
   priceList: [
-    'Kozi kamili ya Kiswahili yenye masomo 31',
+    'Kozi kamili ya Kiingereza yenye masomo 31',
     'Kadi za maneno na majaribio ya mazoezi',
     'Mfululizo, XP na ufuatiliaji wa maendeleo',
     'Inapatikana kwenye wavuti na simu',
@@ -220,45 +221,17 @@ const sw = {
 
   faqTitle: 'Maswali na majibu',
   faqs: [
-    { q: 'Je, nahitaji kujua Kiswahili chochote kabla?', a: 'Hapana kabisa. PolePole huanza kutoka sifuri — somo lako la kwanza ni salamu na matamshi.' },
+    { q: 'Je, nahitaji kujua Kiingereza chochote kabla?', a: 'Hapana kabisa. PolePole huanza kutoka sifuri — somo lako la kwanza ni sauti na alfabeti, na kila kitu kinaelezwa kwa Kiswahili.' },
     { q: 'Kozi huchukua muda gani?', a: 'Ni juu yako. Chagua mpango wa kasi wa siku 30 au mpango tulivu wa siku 90 — unaweza kubadilisha kasi yako wakati wowote.' },
     { q: 'Inagharimu kiasi gani?', a: 'PolePole ni bure wakati iko kwenye beta. Fungua akaunti na uanze kozi kamili leo.', pricing: true },
     { q: 'Je, kuna programu ya simu?', a: 'Ndiyo — PolePole pia inapatikana kama programu ya simu, kwa hivyo unaweza kuendelea kujifunza kwenye simu yako popote ulipo.' },
   ],
 
   ctaTitle: 'Anza leo.',
-  ctaBody: 'Mazungumzo yako ya kwanza ya Kiswahili yako karibu kuliko unavyodhani. Pole pole, hatua kwa hatua.',
+  ctaBody: 'Mazungumzo yako ya kwanza ya Kiingereza yako karibu kuliko unavyodhani. Pole pole, hatua kwa hatua.',
 
-  footerTagline: 'Jifunze Kiswahili, pole pole. Njia thabiti yenye mwongozo ya kutoka sifuri hadi mazungumzo.',
+  footerTagline: 'Jifunze Kiingereza, pole pole. Njia thabiti yenye mwongozo ya kutoka sifuri hadi mazungumzo.',
   footerMade: 'Imetengenezwa kwa 🐢 na subira ya pole pole.',
 };
 
 export const LANDING_STRINGS = { en, es, sw };
-
-// Shown in the picker, each in its own language.
-export const LANDING_LOCALES = [
-  { code: 'en', label: 'English' },
-  { code: 'es', label: 'Español' },
-  { code: 'sw', label: 'Kiswahili' },
-];
-
-const STORAGE_KEY = 'polepole_locale';
-
-// The visitor's own choice wins; otherwise the first browser language we have
-// copy for; otherwise English.
-export function initialLandingLocale() {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (LANDING_STRINGS[saved]) return saved;
-  } catch { /* private mode: fall through to the browser's language */ }
-  const preferred = navigator.languages?.length ? navigator.languages : [navigator.language];
-  for (const tag of preferred) {
-    const code = (tag || '').toLowerCase().split('-')[0];
-    if (LANDING_STRINGS[code]) return code;
-  }
-  return 'en';
-}
-
-export function saveLandingLocale(code) {
-  try { localStorage.setItem(STORAGE_KEY, code); } catch { /* private mode: lasts for this visit only */ }
-}

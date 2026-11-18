@@ -6,6 +6,7 @@ import SpeakButton from '../components/SpeakButton';
 import { useMicRecorder } from '../hooks/useMicRecorder';
 import { speechEnabled, assessPronunciation } from '../lib/speechAssess';
 import WeekStrip from '../components/WeekStrip';
+import { useLocale } from '../context/LocaleContext';
 
 // "Dose ya leo" — the daily practice loop. Five items, about ninety seconds,
 // one of them spoken aloud.
@@ -23,13 +24,6 @@ import WeekStrip from '../components/WeekStrip';
 //
 // See docs/DAILY-PRACTICE-LOOP.md.
 
-const LABELS = {
-  tambua: 'What does this mean?',
-  tunga: 'Which word is this?',
-  sema: 'Say it out loud',
-  methali: 'Methali — a proverb for you',
-};
-
 // How long the learner took to answer. Feeds the strength bar and the XP
 // award, so a word answered instantly counts for more than one worked out.
 function useElapsed(key) {
@@ -43,6 +37,8 @@ const scoreClass = (s) => (s >= 80 ? 'good' : s >= 55 ? 'ok' : 'low');
 export default function DosePage() {
   const navigate = useNavigate();
   const { refreshUser } = useAuth();
+  const { t: all } = useLocale();
+  const t = all.dose;
   const [dose, setDose] = useState(null);
   const [loading, setLoading] = useState(true);
   const [idx, setIdx] = useState(0);
@@ -72,7 +68,7 @@ export default function DosePage() {
   if (!dose) {
     return (
       <div className="container page narrow">
-        <div className="card"><p>Could not load today's dose.</p></div>
+        <div className="card"><p>{t.couldNotLoad}</p></div>
       </div>
     );
   }
@@ -82,11 +78,11 @@ export default function DosePage() {
     return (
       <div className="container page narrow">
         <div className="card" style={{ textAlign: 'center' }}>
-          <div className="dose-kicker">Dose ya leo</div>
-          <h1 className="auth-title">Not yet</h1>
-          <p className="muted mt">{dose.message || 'Nothing is due today.'}</p>
+          <div className="dose-kicker">{all.dashboard.doseKicker}</div>
+          <h1 className="auth-title">{t.notYet}</h1>
+          <p className="muted mt">{dose.message || t.nothingDueToday}</p>
           <div className="row center mt">
-            <Link to="/app" className="btn btn-primary">Go to a lesson →</Link>
+            <Link to="/app" className="btn btn-primary">{t.goToLesson}</Link>
           </div>
         </div>
       </div>
@@ -133,13 +129,13 @@ export default function DosePage() {
     return (
       <div className="container page narrow">
         <div className="card result-card">
-          <div className="dose-kicker">Dose ya leo</div>
+          <div className="dose-kicker">{all.dashboard.doseKicker}</div>
           <div className="result-score">{correctCount}/{log.length}</div>
-          <div className="result-pass">Umemaliza! That's today done.</div>
+          <div className="result-pass">{t.doneTitle}</div>
           <p className="muted mt">
             {log.length === 0
-              ? 'Nothing recorded this time.'
-              : 'Each answer moved that word in your queue — tomorrow\'s dose is built from what you just did.'}
+              ? t.nothingRecorded
+              : t.eachAnswer}
           </p>
 
           {/* Arrives as news: nothing in the app counts toward these, so the
@@ -152,7 +148,7 @@ export default function DosePage() {
           ))}
 
           {closing?.xpEarned > 0 && (
-            <div className="dose-xp-total">+{closing.xpEarned} XP for finishing</div>
+            <div className="dose-xp-total">{t.xpForFinishing(closing.xpEarned)}</div>
           )}
 
           {closing?.week && <div className="row center mt"><WeekStrip week={closing.week} /></div>}
@@ -161,14 +157,13 @@ export default function DosePage() {
             <div className="dose-streak">
               <div className="dose-streak-num">{closing.streakCount} 🔥</div>
               <div className="dose-streak-lbl">
-                {closing.streakCount === 1 ? 'day' : 'days'} in a row
+                {t.daysInRow(closing.streakCount)}
               </div>
               {/* Said plainly rather than hidden: a streak the learner can't
                   account for is worse than a broken one. */}
               {closing.restDayUsed && (
                 <div className="dose-rest">
-                  Siku ya mapumziko — you missed a day and it's been covered. The next
-                  one is available in a week.
+                  {t.restDay}
                 </div>
               )}
             </div>
@@ -198,11 +193,11 @@ export default function DosePage() {
 
           <div className="row center mt" style={{ gap: 12 }}>
             <button className="btn btn-primary" onClick={() => navigate('/app')}>
-              Done for today
+              {t.doneForToday}
             </button>
             {/* Secondary and unrewarded on purpose: more practice is allowed,
                 never incentivised. */}
-            <button className="btn btn-ghost btn-sm" onClick={load}>Endelea — a few more</button>
+            <button className="btn btn-ghost btn-sm" onClick={load}>{t.more}</button>
           </div>
         </div>
       </div>
@@ -212,8 +207,8 @@ export default function DosePage() {
   return (
     <div className="container page narrow">
       <div className="dose-head">
-        <div className="dose-kicker">Dose ya leo</div>
-        <Link to="/app" className="muted dose-exit">Close</Link>
+        <div className="dose-kicker">{all.dashboard.doseKicker}</div>
+        <Link to="/app" className="muted dose-exit">{t.close}</Link>
       </div>
 
       <div className="sb-progress">
@@ -224,7 +219,7 @@ export default function DosePage() {
       </div>
 
       <div className={`question-card ${item.exercise === 'methali' ? 'dose-methali-card' : ''}`}>
-        <div className="dose-label">{LABELS[item.exercise]}</div>
+        <div className="dose-label">{all.exercise[item.exercise]}</div>
 
         {item.exercise === 'methali' ? (
           <MethaliItem item={item} result={result} onAnswered={onAnswered} />
@@ -237,11 +232,11 @@ export default function DosePage() {
         {result && item.exercise !== 'methali' && (
           <div className="dose-feedback">
             <div className={result.correct ? 'feedback-correct' : 'feedback-wrong'}>
-              {result.correct ? '✓ Sawa!' : `✗ It's "${result.correctAnswer}"`}
+              {result.correct ? all.common.right : all.common.itIs(result.correctAnswer)}
               {result.xpEarned > 0 && <span className="dose-xp">+{result.xpEarned} XP</span>}
             </div>
             <div className="dose-strength">
-              <span className="dose-strength-lbl">Strength</span>
+              <span className="dose-strength-lbl">{t.strength}</span>
               <span className="dose-strength-track">
                 <span style={{ width: `${result.strength}%` }} />
               </span>
@@ -250,14 +245,14 @@ export default function DosePage() {
             <PinButton key={item.itemKey} itemKey={item.itemKey} initial={item.pinned} />
             <div className="muted dose-when">
               {result.intervalDays === 0
-                ? 'Coming back again shortly.'
+                ? t.backShortly
                 : result.intervalDays === 1
-                  ? 'Back tomorrow.'
-                  : `Back in ${result.intervalDays} days.`}
+                  ? t.backTomorrow
+                  : t.backIn(result.intervalDays)}
             </div>
             <div className="row center mt">
               <button className="btn btn-gold" onClick={next} autoFocus>
-                {idx + 1 < items.length ? 'Next →' : 'Finish'}
+                {idx + 1 < items.length ? all.common.next : all.common.finish}
               </button>
             </div>
           </div>
@@ -269,14 +264,14 @@ export default function DosePage() {
           <div className="dose-feedback">
             {result.xpEarned > 0 && (
               <div className="feedback-correct">
-                Imehifadhiwa — saved to your deck
+                {t.savedToDeck}
                 <span className="dose-xp">+{result.xpEarned} XP</span>
               </div>
             )}
             <PinButton key={item.itemKey} itemKey={item.itemKey} initial={item.pinned} />
             <div className="row center mt">
               <button className="btn btn-gold" onClick={next} autoFocus>
-                {idx + 1 < items.length ? 'Next →' : 'Finish'}
+                {idx + 1 < items.length ? all.common.next : all.common.finish}
               </button>
             </div>
           </div>
@@ -284,7 +279,7 @@ export default function DosePage() {
       </div>
 
       <p className="muted dose-foot">
-        {items.length} items · about 90 seconds
+        {t.footer(items.length)}
       </p>
     </div>
   );
@@ -293,6 +288,8 @@ export default function DosePage() {
 // The bonus. Not a test — the learner is handed something they can use, and
 // the only thing asked of them is to read it.
 function MethaliItem({ item, result, onAnswered }) {
+  const { t: all } = useLocale();
+  const t = all.dose;
   const [busy, setBusy] = useState(false);
 
   const keep = async () => {
@@ -319,7 +316,7 @@ function MethaliItem({ item, result, onAnswered }) {
       {!result && (
         <div className="row center mt">
           <button className="btn btn-gold" onClick={keep} disabled={busy} autoFocus>
-            {busy ? 'Saving…' : 'Nimeelewa — got it'}
+            {busy ? all.common.saving : t.gotIt}
           </button>
         </div>
       )}
@@ -385,6 +382,8 @@ function TapItem({ item, result, onAnswered }) {
 // Speak: the one item per dose that asks the learner to talk. Falls back to
 // hear-only when the Whisper sidecar or the mic is unavailable.
 function SemaItem({ item, result, onAnswered, onSkip }) {
+  const { t: all } = useLocale();
+  const t = all.dose;
   const [phase, setPhase] = useState('idle'); // idle | recording | checking | error
   const [assessed, setAssessed] = useState(null);
   const [enabled, setEnabled] = useState(null);
@@ -453,10 +452,10 @@ function SemaItem({ item, result, onAnswered, onSkip }) {
       {unavailable ? (
         <div className="pd-note">
           {rec.supported === false
-            ? "Mic recording isn't supported in this browser — tap 🔊 to hear it, then carry on."
-            : 'Speak-and-check needs the pronunciation service running. Tap 🔊 to hear it, then carry on.'}
+            ? t.micUnsupported
+            : t.serviceDown}
           <div className="row center mt">
-            <button className="btn btn-ghost btn-sm" onClick={onSkip}>Skip this one →</button>
+            <button className="btn btn-ghost btn-sm" onClick={onSkip}>{t.skipThis}</button>
           </div>
         </div>
       ) : (
@@ -468,10 +467,10 @@ function SemaItem({ item, result, onAnswered, onSkip }) {
               onClick={onMic}
               disabled={phase === 'checking' || !!result}
             >
-              {phase === 'recording' ? '■ Stop' : phase === 'checking' ? 'Checking…' : '🎤 Speak'}
+              {phase === 'recording' ? t.stop : phase === 'checking' ? t.checking : t.speak}
             </button>
-            {phase === 'recording' && <span className="pd-live">● Listening…</span>}
-            {phase === 'checking' && <span className="pd-live muted">Transcribing…</span>}
+            {phase === 'recording' && <span className="pd-live">{t.listening}</span>}
+            {phase === 'checking' && <span className="pd-live muted">{t.transcribing}</span>}
             {rec.error && <span className="pd-err">{rec.error}</span>}
           </div>
 
@@ -479,7 +478,7 @@ function SemaItem({ item, result, onAnswered, onSkip }) {
             <div className="dose-sema-result">
               <div className={`pd-score ${scoreClass(assessed.score)}`}>
                 <span className="pd-score-num">{Math.round(assessed.score)}%</span>
-                <span className="pd-score-lbl">match</span>
+                <span className="pd-score-lbl">{t.match}</span>
               </div>
               {assessed.words?.length > 0 && (
                 <div className="pd-target">
@@ -493,25 +492,25 @@ function SemaItem({ item, result, onAnswered, onSkip }) {
 
           {assessed && (
             <div className="dose-voice">
-              {earlier && <PlayTake take={earlier} label="Your first take" />}
-              {take && <PlayBlob blob={take} label="Today" />}
+              {earlier && <PlayTake take={earlier} label={t.firstTake} />}
+              {take && <PlayBlob blob={take} label={t.today} />}
               <button className="btn btn-ghost btn-sm" onClick={keep} disabled={kept === 'saving' || kept === 'yes'}>
-                {kept === 'yes' ? '✓ Kept' : kept === 'saving' ? 'Saving…' : 'Hifadhi sauti — keep this take'}
+                {kept === 'yes' ? t.kept : kept === 'saving' ? all.common.saving : t.keepTake}
               </button>
-              {kept === 'error' && <span className="pd-err">Couldn't save that one.</span>}
+              {kept === 'error' && <span className="pd-err">{t.couldntSave}</span>}
             </div>
           )}
 
           {phase === 'error' && (
             <div className="pd-err">
-              Couldn't reach the pronunciation service.{' '}
-              <button className="btn btn-ghost btn-sm" onClick={onSkip}>Skip this one →</button>
+              {t.couldntReach}{' '}
+              <button className="btn btn-ghost btn-sm" onClick={onSkip}>{t.skipThis}</button>
             </div>
           )}
 
           {!result && phase === 'idle' && !assessed && (
             <div className="row center mt">
-              <button className="btn btn-ghost btn-sm" onClick={onSkip}>Skip this one →</button>
+              <button className="btn btn-ghost btn-sm" onClick={onSkip}>{t.skipThis}</button>
             </div>
           )}
         </>
@@ -523,6 +522,8 @@ function SemaItem({ item, result, onAnswered, onSkip }) {
 // "Nitakumbuka hii" — I will remember this. One tap to make a card the
 // learner's own; pinned cards are favoured when future doses are built.
 function PinButton({ itemKey, initial }) {
+  const { t: all } = useLocale();
+  const t = all.dose;
   const [pinned, setPinned] = useState(!!initial);
   const [busy, setBusy] = useState(false);
 
@@ -547,7 +548,7 @@ function PinButton({ itemKey, initial }) {
       disabled={busy}
       aria-pressed={pinned}
     >
-      📌 {pinned ? 'Pinned — it will come up more often' : 'Nitakumbuka hii — pin this'}
+      📌 {pinned ? t.pinned : t.pin}
     </button>
   );
 }
@@ -568,17 +569,19 @@ function PlayBlob({ blob, label }) {
   return <button type="button" className="btn btn-ghost btn-sm" onClick={play}>▶ {label}</button>;
 }
 
-function ago(iso) {
+function ago(iso, t) {
   const days = Math.floor((Date.now() - new Date(iso + (iso.endsWith('Z') ? '' : 'Z')).getTime()) / 86400000);
-  if (days <= 0) return 'earlier today';
-  if (days === 1) return 'yesterday';
-  if (days < 14) return `${days} days ago`;
-  return `${Math.floor(days / 7)} weeks ago`;
+  if (days <= 0) return t.earlierToday;
+  if (days === 1) return t.yesterday;
+  if (days < 14) return t.daysAgo(days);
+  return t.weeksAgo(Math.floor(days / 7));
 }
 
 // A kept take. Fetched with the token and played from a blob — the audio
 // endpoint is private to the learner, so an <audio src> cannot reach it.
 function PlayTake({ take, label }) {
+  const { t: all } = useLocale();
+  const t = all.dose;
   const [busy, setBusy] = useState(false);
   const play = async () => {
     if (busy) return;
@@ -592,7 +595,7 @@ function PlayTake({ take, label }) {
   };
   return (
     <button type="button" className="btn btn-ghost btn-sm" onClick={play} disabled={busy}>
-      ▶ {label} · {take.score}% · {ago(take.createdAt)}
+      ▶ {label} · {take.score}% · {ago(take.createdAt, t)}
     </button>
   );
 }
@@ -600,6 +603,8 @@ function PlayTake({ take, label }) {
 // The one thing the completion card may ask. Each is dismissable in a tap,
 // and none comes back: the server records an ask as made when it sends it.
 function ClosingAsk({ closing, onChanged }) {
+  const { t: all } = useLocale();
+  const t = all.dose;
   const [state, setState] = useState('open'); // open | done | dismissed
   const [answer, setAnswer] = useState('');
 
@@ -608,25 +613,25 @@ function ClosingAsk({ closing, onChanged }) {
   // A product that offers to stop notifying you is one confident it has
   // built a habit rather than rented one.
   if (closing.offerStopReminders) {
-    if (state === 'done') return <div className="dose-ask"><div className="dose-ask-done">Sawa — no more reminders. You can turn them back on in Settings.</div></div>;
+    if (state === 'done') return <div className="dose-ask"><div className="dose-ask-done">{t.stopDone}</div></div>;
     const stop = async () => {
       try { await api.updateReminders({ enabled: false }); await onChanged(); } catch { /* still on; Settings has the switch */ }
       setState('done');
     };
     return (
       <div className="dose-ask">
-        <div className="dose-ask-title">You've started on your own 14 days running.</div>
-        <div className="dose-ask-body">Want me to stop reminding you?</div>
+        <div className="dose-ask-title">{t.stopTitle}</div>
+        <div className="dose-ask-body">{t.stopBody}</div>
         <div className="row center" style={{ gap: 10 }}>
-          <button className="btn btn-primary btn-sm" onClick={stop}>Yes, stop reminding me</button>
-          <button className="btn btn-ghost btn-sm" onClick={() => setState('dismissed')}>Keep them</button>
+          <button className="btn btn-primary btn-sm" onClick={stop}>{t.stopYes}</button>
+          <button className="btn btn-ghost btn-sm" onClick={() => setState('dismissed')}>{t.stopKeep}</button>
         </div>
       </div>
     );
   }
 
   if (closing.askHabitQuestion) {
-    if (state === 'done') return <div className="dose-ask"><div className="dose-ask-done">Asante — that helps.</div></div>;
+    if (state === 'done') return <div className="dose-ask"><div className="dose-ask-done">{t.habitDone}</div></div>;
     const send = async () => {
       if (!answer.trim()) return;
       try { await api.habitAnswer(answer.trim()); } catch { /* not worth interrupting them over */ }
@@ -634,19 +639,19 @@ function ClosingAsk({ closing, onChanged }) {
     };
     return (
       <div className="dose-ask">
-        <div className="dose-ask-title">One question, once.</div>
-        <div className="dose-ask-body">What makes you open this?</div>
+        <div className="dose-ask-title">{t.habitTitle}</div>
+        <div className="dose-ask-body">{t.habitBody}</div>
         <input
           className="dose-ask-input"
           value={answer}
           maxLength={280}
-          placeholder="In your own words"
+          placeholder={t.habitPlaceholder}
           onChange={(e) => setAnswer(e.target.value)}
           onKeyDown={(e) => { if (e.key === 'Enter') send(); }}
         />
         <div className="row center" style={{ gap: 10 }}>
-          <button className="btn btn-primary btn-sm" onClick={send} disabled={!answer.trim()}>Send</button>
-          <button className="btn btn-ghost btn-sm" onClick={() => setState('dismissed')}>Skip</button>
+          <button className="btn btn-primary btn-sm" onClick={send} disabled={!answer.trim()}>{t.send}</button>
+          <button className="btn btn-ghost btn-sm" onClick={() => setState('dismissed')}>{all.common.skip}</button>
         </div>
       </div>
     );
@@ -663,6 +668,8 @@ function ClosingAsk({ closing, onChanged }) {
 // the text leave the device through the system share sheet, to whoever they
 // pick. Nothing is sent by the app.
 function ShareOffer({ offer, done, onDone, onDismiss }) {
+  const { t: all } = useLocale();
+  const t = all.dose;
   const [note, setNote] = useState('');
   const text = offer.gloss ? `${offer.text} — "${offer.gloss}"` : offer.text;
 
@@ -682,29 +689,29 @@ function ShareOffer({ offer, done, onDone, onDismiss }) {
         onDone();
       } else {
         await navigator.clipboard.writeText(text);
-        setNote('Copied — paste it to whoever you like.');
+        setNote(t.shareCopied);
         onDone();
       }
     } catch (e) {
       // Closing the share sheet is a "no", not an error.
-      if (e?.name !== 'AbortError') setNote("Couldn't open sharing here.");
+      if (e?.name !== 'AbortError') setNote(t.shareFailed);
     }
   };
 
   return (
     <div className="dose-ask">
-      <div className="dose-ask-title">You can say this now.</div>
+      <div className="dose-ask-title">{t.shareTitle}</div>
       <div className="dose-ask-quote">{offer.text}</div>
       {offer.gloss && <div className="dose-ask-body">{offer.gloss}</div>}
       {done ? (
-        <div className="dose-ask-done">{note || 'Sent on its way.'}</div>
+        <div className="dose-ask-done">{note || t.shareSent}</div>
       ) : (
         <>
           <div className="row center" style={{ gap: 10 }}>
             <button className="btn btn-primary btn-sm" onClick={send}>
-              {offer.voiceTakeId ? 'Send your recording to someone' : 'Send it to someone'}
+              {offer.voiceTakeId ? t.shareRecording : t.shareText}
             </button>
-            <button className="btn btn-ghost btn-sm" onClick={onDismiss}>Not now</button>
+            <button className="btn btn-ghost btn-sm" onClick={onDismiss}>{t.notNow}</button>
           </div>
           {note && <div className="pd-err">{note}</div>}
         </>

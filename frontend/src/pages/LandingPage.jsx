@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Logo from '../components/Logo';
 import { SUBSCRIPTIONS_ENABLED } from '../config';
-import { LANDING_STRINGS, LANDING_LOCALES, initialLandingLocale, saveLandingLocale } from '../lib/landingStrings';
+import { LANDING_STRINGS } from '../lib/landingStrings';
+import { useLocale, LocaleSelect } from '../context/LocaleContext';
 
 // Icons and numbers are the same in every language; the words come from
 // landingStrings, matched up by position.
@@ -12,37 +12,18 @@ const STAT_NUMBERS = ['31', '4', '300+', '0→💬'];
 
 export default function LandingPage() {
   const { user } = useAuth();
-  const [locale, setLocale] = useState(initialLandingLocale);
+  const { locale } = useLocale();
   const t = LANDING_STRINGS[locale];
-
-  // Tell browsers and screen readers which language the page is in, and hand
-  // the document back as English (the rest of the site) on the way out.
-  useEffect(() => {
-    document.documentElement.lang = locale;
-    return () => { document.documentElement.lang = 'en'; };
-  }, [locale]);
-
-  const chooseLocale = (code) => { setLocale(code); saveLandingLocale(code); };
   const faqs = t.faqs.filter((f) => SUBSCRIPTIONS_ENABLED || !f.pricing);
+  const statNumbers = t.statNumbers ?? STAT_NUMBERS;
 
   // In the header on wide screens; a phone's header has no room for it, so
   // there it is the copy in the footer that shows.
-  const localePicker = (
-    <select
-      className="lp-locale"
-      aria-label={t.language}
-      value={locale}
-      onChange={(e) => chooseLocale(e.target.value)}
-    >
-      {LANDING_LOCALES.map((l) => (
-        <option key={l.code} value={l.code} lang={l.code}>{l.label}</option>
-      ))}
-    </select>
-  );
+  const localePicker = <LocaleSelect className="lp-locale" />;
 
   const primaryCta = user
     ? { to: '/app', label: t.goToDashboard }
-    // Straight into three words of Swahili, not into a sign-up form: the
+    // Straight into three words of the new language, not into a sign-up form: the
     // account is offered afterwards, as a way to keep what they just did.
     : { to: '/try', label: t.tryNow };
 
@@ -96,7 +77,7 @@ export default function LandingPage() {
       {/* ---------- Stats ---------- */}
       <section className="lp-stats">
         <div className="container lp-stats-inner">
-          {STAT_NUMBERS.map((n, i) => (
+          {statNumbers.map((n, i) => (
             <div className="lp-stat" key={n}><span className="n">{n}</span><span className="l">{t.stats[i]}</span></div>
           ))}
         </div>

@@ -1,8 +1,10 @@
 import { useCallback, useRef, useState } from 'react';
+import { useLocale } from '../context/LocaleContext';
 
 // Records microphone audio via the MediaRecorder API and resolves a Blob on stop.
 // Returns { supported, recording, error, start, stop }.
 export function useMicRecorder() {
+  const { t } = useLocale();
   const [recording, setRecording] = useState(false);
   const [error, setError] = useState(null);
   const recorderRef = useRef(null);
@@ -16,7 +18,7 @@ export function useMicRecorder() {
 
   const start = useCallback(async () => {
     setError(null);
-    if (!supported) { setError('Recording is not supported in this browser.'); return false; }
+    if (!supported) { setError(t.mic.unsupported); return false; }
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       streamRef.current = stream;
@@ -28,10 +30,10 @@ export function useMicRecorder() {
       setRecording(true);
       return true;
     } catch {
-      setError('Microphone access was blocked. Allow it in your browser to practice speaking.');
+      setError(t.mic.blocked);
       return false;
     }
-  }, [supported]);
+  }, [supported, t]);
 
   const stop = useCallback(() => {
     return new Promise((resolve) => {
