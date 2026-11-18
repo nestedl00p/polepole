@@ -13,11 +13,18 @@ let voicesPromise = null;
 // The learner's course direction decides which language is spoken. Set once from
 // AuthContext so components can keep calling speakSwahili(text) without threading
 // the course through every prop chain.
-let course = { id: 'sw', ttsLocale: 'sw-KE' };
+let course = { id: 'sw', ttsLocale: 'sw-KE', hasAudio: true };
 
 export function setSpeechCourse(c) {
   if (!c) return;
-  course = { id: c.id || 'sw', ttsLocale: c.ttsLocale || 'sw-KE' };
+  course = { id: c.id || 'sw', ttsLocale: c.ttsLocale || 'sw-KE', hasAudio: c.hasAudio !== false };
+}
+
+// False for a course whose language has no voice yet (Kinyarwanda): there is
+// no cloud voice and no device voice, so the 🔊 controls hide rather than read
+// the text out in another language's accent.
+export function hasVoice() {
+  return course.hasAudio;
 }
 
 // ---- built-in Web Speech (fallback) ----
@@ -82,7 +89,7 @@ export function isSpeechSupported() {
 }
 
 export async function speakSwahili(text, { rate = 0.8 } = {}) {
-  if (!text || typeof window === 'undefined') return;
+  if (!text || typeof window === 'undefined' || !course.hasAudio) return;
 
   const url = await getBackendClip(text);
   if (url) {
@@ -102,7 +109,7 @@ export async function speakSwahili(text, { rate = 0.8 } = {}) {
 // playing — used to play a whole dialogue line by line. A timeout guards
 // against a voice that never reports its end.
 export async function speakAndWait(text, { rate = 0.8 } = {}) {
-  if (!text || typeof window === 'undefined') return;
+  if (!text || typeof window === 'undefined' || !course.hasAudio) return;
   const guard = new Promise((resolve) => setTimeout(resolve, 4000 + text.length * 150));
 
   const url = await getBackendClip(text);

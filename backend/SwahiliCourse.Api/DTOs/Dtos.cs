@@ -23,7 +23,8 @@ public record UserDto(
 // the prompt, and which language is spoken/scored.
 public record CourseDto(
     string Id, string Title, string Subtitle, string Description,
-    string TargetLanguage, string SourceLanguage, string TtsLocale, string Flag);
+    string TargetLanguage, string SourceLanguage, string TtsLocale, string Flag,
+    bool HasAudio = true);
 
 public record UpdatePaceDto(int PlanLengthDays);
 

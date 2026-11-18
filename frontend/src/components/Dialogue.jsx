@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import SpeakButton from './SpeakButton';
-import { speakSwahili, speakAndWait, stopSpeaking } from '../lib/speak';
+import { speakSwahili, speakAndWait, stopSpeaking, hasVoice } from '../lib/speak';
 import { useAuth } from '../context/AuthContext';
 import { lessonStrings } from '../lib/lessonStrings';
 
@@ -45,7 +45,7 @@ export default function Dialogue({ block }) {
   return (
     <div className="block dlg">
       <div className="dlg-bar">
-        <button type="button" className="btn btn-primary btn-sm" onClick={listen}>{playing === -1 ? t.listen : t.stop}</button>
+        {hasVoice() && <button type="button" className="btn btn-primary btn-sm" onClick={listen}>{playing === -1 ? t.listen : t.stop}</button>}
         <button type="button" className="btn btn-ghost btn-sm" onClick={() => { setHideTr((h) => !h); setShown(new Set()); }}>
           {hideTr ? t.showTranslations : t.hideTranslations}
         </button>

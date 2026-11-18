@@ -19,7 +19,7 @@ public class ReviewController : AuthedController
     // which side is the "target" (the one being learned and spoken aloud)
     // depends on the learner's course direction.
     private static (string target, string source) Sides(Models.VocabItem v, Models.Course course) =>
-        course.TargetLanguage == "en" ? (v.English, v.Swahili) : (v.Swahili, v.English);
+        Models.Courses.Sides(course, v.Swahili, v.English);
 
     // Aggregated flashcard deck from every lesson the user has unlocked/viewed.
     [HttpGet("flashcards")]

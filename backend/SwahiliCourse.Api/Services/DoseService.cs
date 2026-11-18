@@ -93,7 +93,7 @@ public class DoseService
         }
 
         var selected = Select(pool, byKey, Rng(user.Id, today));
-        var items = Compose(selected, pool, byKey, Rng(user.Id, today));
+        var items = Compose(selected, pool, byKey, Rng(user.Id, today), course.HasSpeechCheck);
 
         // The bonus goes last, so the dose still ends on something the learner
         // was not expecting rather than on another drill.
@@ -172,7 +172,7 @@ public class DoseService
     // Which side of a vocab pair is being learned depends on the course
     // direction, exactly as ReviewController does it.
     private static (string target, string source) Sides(VocabItem v, Course course) =>
-        course.TargetLanguage == "en" ? (v.English, v.Swahili) : (v.Swahili, v.English);
+        course.Sides(v.Swahili, v.English);
 
     // The bonus proverb, when the day's roll calls for one and the learner has
     // not met them all. Both the roll and the choice come from the day seed, so
@@ -229,12 +229,12 @@ public class DoseService
     // between recognising and producing.
     private static List<DoseItemDto> Compose(
         List<PoolItem> selected, List<PoolItem> pool,
-        Dictionary<string, CardState> byKey, Random rng)
+        Dictionary<string, CardState> byKey, Random rng, bool spoken = true)
     {
         // The spoken item goes to the strongest word in the dose. Saying a word
         // out loud is the hardest thing the Dose asks for, so it is asked about
         // something the learner already has a grip on.
-        var semaKey = selected
+        var semaKey = !spoken ? null : selected
             .OrderByDescending(p => byKey.TryGetValue(p.Key, out var c) ? c.Strength : 0)
             .Select(p => p.Key)
             .FirstOrDefault();

@@ -28,6 +28,7 @@ public class CoursesController : ControllerBase
             targetLanguage = c.TargetLanguage,
             sourceLanguage = c.SourceLanguage,
             flag = c.Flag,
+            hasAudio = c.HasAudio,
             totalLessons = _courses.For(c.Id).TotalLessons,
         });
         return Ok(new { courses = items });

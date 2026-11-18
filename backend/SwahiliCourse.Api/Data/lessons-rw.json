@@ -1,0 +1,294 @@
+[
+  {
+    "id": 1,
+    "week": 1,
+    "title": "Sounds & Spelling",
+    "subtitle": "Read Kinyarwanda the way it is written",
+    "theme": "Pronunciation",
+    "blocks": [
+      { "type": "heading", "heading": "The Five Vowels" },
+      { "type": "paragraph", "text": "Kinyarwanda is written with the Latin alphabet and has five vowels. Each letter keeps one sound wherever it appears, so once you know them you can read any word aloud." },
+      {
+        "type": "table",
+        "tableHeaders": ["Letter", "Sounds like", "Example"],
+        "tableRows": [
+          ["a", "father", "amata (milk)"],
+          ["e", "bed", "ejo (tomorrow / yesterday)"],
+          ["i", "see", "inka (cow)"],
+          ["o", "or", "oya (no)"],
+          ["u", "food", "umuntu (person)"]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "What the spelling does not show",
+        "lines": [
+          "Every vowel can be short or long, and every syllable is said on a high or a low tone. Neither is written, so two words can look identical on the page and still sound different.",
+          "You do not need to master this now. Listen for it whenever you hear Kinyarwanda spoken, and copy what you hear."
+        ]
+      },
+      { "type": "heading", "heading": "Consonants Worth Knowing" },
+      { "type": "paragraph", "text": "Most consonants sound as they do in English. These are the ones that will surprise you." },
+      {
+        "type": "table",
+        "tableHeaders": ["Letters", "Sounds like", "Example"],
+        "tableRows": [
+          ["c", "ch in church", "icumi (ten)"],
+          ["j", "s in measure", "ijoro (night)"],
+          ["ny", "ny in canyon", "inyama (meat)"],
+          ["sh", "sh in shoe", "ishuri (school)"],
+          ["r", "a quick tap, between r and l", "amahoro (peace)"],
+          ["rw", "r, then a light g, then w", "u Rwanda (Rwanda)"],
+          ["bw", "b, then a light g, then w", "bwiza (nice)"]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "One sound for r and l",
+        "lines": [
+          "Kinyarwanda does not tell r and l apart. Nearly every word is spelled with r, and the sound is a single light tap of the tongue."
+        ]
+      },
+      { "type": "heading", "heading": "Words Start With a Vowel" },
+      { "type": "paragraph", "text": "Look at the nouns in this lesson: amazi, inka, umuntu, igitabo. Almost all of them open with a, i or u. That opening vowel is part of the noun, and you will see later how it changes with the kind of thing being named." },
+      { "type": "paragraph", "text": "Read aloud: amazi, amata, umuntu, inka, inzu, ishuri, inshuti, igitabo, ijoro, inyama." },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Quick check",
+        "questions": [
+          { "prompt": "The 'c' in 'icumi' sounds like:", "options": ["ch in church", "k in kite", "s in sun", "c in cat"], "answer": "ch in church", "explain": "In Kinyarwanda, c is always the 'ch' sound." },
+          { "prompt": "The 'a' in 'amata' sounds like the 'a' in:", "options": ["father", "cat", "cake", "about"], "answer": "father", "explain": "Each vowel letter keeps one sound." },
+          { "prompt": "Which of these is NOT shown in Kinyarwanda spelling?", "options": ["Tone", "The vowel a", "The sound sh", "The sound ny"], "answer": "Tone", "explain": "Tone and vowel length are heard but not written." }
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "swahili": "amazi", "english": "water" },
+      { "swahili": "amata", "english": "milk" },
+      { "swahili": "umuntu", "english": "person" },
+      { "swahili": "inka", "english": "cow" },
+      { "swahili": "inzu", "english": "house" },
+      { "swahili": "ishuri", "english": "school" },
+      { "swahili": "inshuti", "english": "friend" },
+      { "swahili": "igitabo", "english": "book" },
+      { "swahili": "ijoro", "english": "night" },
+      { "swahili": "inyama", "english": "meat" }
+    ],
+    "quiz": [
+      { "id": 1, "type": "multiple_choice", "prompt": "How many vowel letters does Kinyarwanda have?", "options": ["Three", "Five", "Seven", "Ten"], "answer": "Five", "hint": null },
+      { "id": 2, "type": "multiple_choice", "prompt": "What does 'amazi' mean?", "options": ["Milk", "Water", "Meat", "Night"], "answer": "Water", "hint": null },
+      { "id": 3, "type": "multiple_choice", "prompt": "Which word means 'friend'?", "options": ["inshuti", "ishuri", "inzu", "inka"], "answer": "inshuti", "hint": null },
+      { "id": 4, "type": "multiple_choice", "prompt": "The 'j' in 'ijoro' sounds like:", "options": ["j in jam", "s in measure", "y in yes", "h in hat"], "answer": "s in measure", "hint": null },
+      { "id": 5, "type": "multiple_choice", "prompt": "What does 'igitabo' mean?", "options": ["School", "House", "Book", "Person"], "answer": "Book", "hint": null }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 2,
+    "week": 1,
+    "title": "Greetings",
+    "subtitle": "Say hello at any time of day",
+    "theme": "Greetings",
+    "blocks": [
+      { "type": "heading", "heading": "Hello, Morning to Evening" },
+      { "type": "paragraph", "text": "Greeting people matters in Rwanda: you greet first and get to your business second. The greeting you choose depends on the time of day and on how long it has been since you last met." },
+      {
+        "type": "table",
+        "tableHeaders": ["Kinyarwanda", "English"],
+        "tableRows": [
+          ["Mwaramutse", "Good morning"],
+          ["Mwiriwe", "Good afternoon / Good evening"],
+          ["Muraho", "Hello (after some time apart)"],
+          ["Bite?", "Hi / What's up? (informal)"],
+          ["Amakuru?", "How are you?"],
+          ["Ni meza", "Fine"],
+          ["Murakoze", "Thank you"]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Amakuru? — Ni meza",
+        "lines": [
+          "Amakuru means 'news', so the question is really 'What's the news?'. The standard answer, Ni meza, means 'It is good'.",
+          "Add cyane for 'very': Ni meza cyane. Murakoze cyane is 'thank you very much'."
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Muraho is not for every hello",
+        "lines": [
+          "Muraho is for someone you have not seen for a while. For a person you saw earlier today, use Mwaramutse or Mwiriwe, or Bite with a friend."
+        ]
+      },
+      { "type": "heading", "heading": "One Person or Several" },
+      { "type": "paragraph", "text": "The greetings above begin with mu- or mw-, which addresses several people, or one person you want to show respect to. With a single friend or a child, the same words start with u- or w- instead." },
+      {
+        "type": "table",
+        "tableHeaders": ["Kinyarwanda", "English"],
+        "tableRows": [
+          ["Waramutse", "Good morning (to one friend)"],
+          ["Wiriwe", "Good afternoon / evening (to one friend)"],
+          ["Uraho", "Hello (to one friend)"],
+          ["Urakoze", "Thank you (to one friend)"]
+        ]
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          { "speaker": "Keza", "swahili": "Mwaramutse, Eric!", "english": "Good morning, Eric!" },
+          { "speaker": "Eric", "swahili": "Mwaramutse, Keza. Amakuru?", "english": "Good morning, Keza. How are you?" },
+          { "speaker": "Keza", "swahili": "Ni meza, murakoze. Nawe?", "english": "Fine, thank you. And you?" },
+          { "speaker": "Eric", "swahili": "Ni meza cyane.", "english": "Very well." }
+        ]
+      },
+      { "type": "heading", "heading": "Saying Goodbye" },
+      {
+        "type": "table",
+        "tableHeaders": ["Kinyarwanda", "English"],
+        "tableRows": [
+          ["Mwirirwe", "Have a good day"],
+          ["Muramuke", "Good night"],
+          ["Ni ah'ejo", "See you tomorrow"],
+          ["Murabeho", "Goodbye (for a long time)"]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "Yes and no",
+        "lines": ["Yego is 'yes' and oya is 'no'. Both are used on their own, exactly like the English words."]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Quick check",
+        "questions": [
+          { "prompt": "It is 8 a.m. and you meet your teacher. You say:", "options": ["Mwaramutse", "Mwiriwe", "Muramuke", "Murabeho"], "answer": "Mwaramutse", "explain": "Mwaramutse is the morning greeting." },
+          { "prompt": "Someone asks 'Amakuru?'. You answer:", "options": ["Ni meza", "Oya", "Murabeho", "Bite"], "answer": "Ni meza", "explain": "Amakuru asks for your news; Ni meza says it is good." },
+          { "prompt": "Which form thanks one close friend?", "options": ["Urakoze", "Murakoze", "Uraho", "Mwiriwe"], "answer": "Urakoze", "explain": "The u- forms address one person informally." }
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "swahili": "mwaramutse", "english": "good morning" },
+      { "swahili": "mwiriwe", "english": "good afternoon / evening" },
+      { "swahili": "muraho", "english": "hello" },
+      { "swahili": "bite", "english": "hi / what's up" },
+      { "swahili": "amakuru", "english": "news / how are you" },
+      { "swahili": "ni meza", "english": "fine" },
+      { "swahili": "murakoze", "english": "thank you" },
+      { "swahili": "cyane", "english": "very / a lot" },
+      { "swahili": "mwirirwe", "english": "have a good day" },
+      { "swahili": "muramuke", "english": "good night" },
+      { "swahili": "murabeho", "english": "goodbye" },
+      { "swahili": "yego", "english": "yes" },
+      { "swahili": "oya", "english": "no" }
+    ],
+    "quiz": [
+      { "id": 6, "type": "multiple_choice", "prompt": "How do you say 'Good morning' to a group?", "options": ["Mwiriwe", "Mwaramutse", "Muramuke", "Murakoze"], "answer": "Mwaramutse", "hint": null },
+      { "id": 7, "type": "multiple_choice", "prompt": "What is the usual reply to 'Amakuru?'", "options": ["Yego", "Murabeho", "Ni meza", "Bite"], "answer": "Ni meza", "hint": null },
+      { "id": 8, "type": "multiple_choice", "prompt": "'Murakoze cyane' means:", "options": ["Good night", "Thank you very much", "See you tomorrow", "How are you?"], "answer": "Thank you very much", "hint": null },
+      { "id": 9, "type": "multiple_choice", "prompt": "Which word means 'no'?", "options": ["Yego", "Oya", "Bite", "Cyane"], "answer": "Oya", "hint": null },
+      { "id": 10, "type": "multiple_choice", "prompt": "When is 'Muraho' the right greeting?", "options": ["Every morning", "When you have not seen someone for a while", "Only at night", "Only when leaving"], "answer": "When you have not seen someone for a while", "hint": null },
+      { "id": 11, "type": "multiple_choice", "prompt": "You are leaving in the evening and want to say 'Good night':", "options": ["Muramuke", "Mwaramutse", "Muraho", "Amakuru"], "answer": "Muramuke", "hint": null }
+    ],
+    "xpReward": 100
+  },
+  {
+    "id": 3,
+    "week": 1,
+    "title": "Introducing Yourself",
+    "subtitle": "Your name, where you are from, where you live",
+    "theme": "Introductions",
+    "blocks": [
+      { "type": "heading", "heading": "Names" },
+      {
+        "type": "table",
+        "tableHeaders": ["Kinyarwanda", "English"],
+        "tableRows": [
+          ["Witwa nde?", "What is your name?"],
+          ["Nitwa Anna", "My name is Anna"],
+          ["Nishimiye kukumenya", "Pleased to meet you"],
+          ["Nanjye", "Me too"]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "The person is at the front of the verb",
+        "lines": [
+          "Kinyarwanda does not need separate words for 'I' and 'you'. The verb itself begins with n- for 'I' and u- (or w- before a vowel) for 'you'.",
+          "Nitwa — I am called. Witwa — you are called. The rest of the word stays the same."
+        ]
+      },
+      { "type": "heading", "heading": "Where You Are From, Where You Live" },
+      {
+        "type": "table",
+        "tableHeaders": ["Kinyarwanda", "English"],
+        "tableRows": [
+          ["Ukomoka he?", "Where are you from?"],
+          ["Nkomoka muri Kanada", "I am from Canada"],
+          ["Utuye he?", "Where do you live?"],
+          ["Ntuye i Kigali", "I live in Kigali"]
+        ]
+      },
+      {
+        "type": "callout",
+        "calloutTitle": "muri for countries, i for towns",
+        "lines": [
+          "Use muri (or mu) before a country and i before a town or city: muri Kanada, mu Rwanda, i Kigali, i Londoni.",
+          "He? means 'where?' and comes at the end of the question."
+        ]
+      },
+      { "type": "heading", "heading": "I Am, You Are" },
+      { "type": "paragraph", "text": "The same n- and u- appear in the verb 'to be': ndi is 'I am' and uri is 'you are'." },
+      {
+        "type": "list",
+        "lines": [
+          "Ndi umunyeshuri — I am a student",
+          "Ndi umwarimu — I am a teacher",
+          "Uri umunyeshuri? — Are you a student?"
+        ]
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          { "speaker": "Eric", "swahili": "Bite! Witwa nde?", "english": "Hi! What is your name?" },
+          { "speaker": "Anna", "swahili": "Nitwa Anna. Nawe witwa nde?", "english": "My name is Anna. And what is yours?" },
+          { "speaker": "Eric", "swahili": "Nitwa Eric. Ukomoka he?", "english": "My name is Eric. Where are you from?" },
+          { "speaker": "Anna", "swahili": "Nkomoka muri Kanada, ariko ntuye i Kigali.", "english": "I am from Canada, but I live in Kigali." },
+          { "speaker": "Eric", "swahili": "Nishimiye kukumenya, Anna.", "english": "Pleased to meet you, Anna." },
+          { "speaker": "Anna", "swahili": "Nanjye. Murakoze!", "english": "Me too. Thank you!" }
+        ]
+      },
+      {
+        "type": "quickCheck",
+        "calloutTitle": "Quick check",
+        "questions": [
+          { "prompt": "How do you say 'My name is Sam'?", "options": ["Nitwa Sam", "Witwa Sam", "Ntuye Sam", "Uri Sam"], "answer": "Nitwa Sam", "explain": "n- at the front of the verb is 'I'." },
+          { "prompt": "Which word goes before a town name?", "options": ["i", "muri", "he", "ndi"], "answer": "i", "explain": "i Kigali, but muri Kanada." },
+          { "prompt": "'Ukomoka he?' asks:", "options": ["Where are you from?", "What is your name?", "How are you?", "Where do you live?"], "answer": "Where are you from?", "explain": "Ukomoka — you come from; he? — where?" }
+        ]
+      }
+    ],
+    "vocabulary": [
+      { "swahili": "nitwa", "english": "my name is" },
+      { "swahili": "witwa nde?", "english": "what is your name?" },
+      { "swahili": "nkomoka", "english": "I am from" },
+      { "swahili": "ukomoka he?", "english": "where are you from?" },
+      { "swahili": "ntuye", "english": "I live" },
+      { "swahili": "utuye he?", "english": "where do you live?" },
+      { "swahili": "ndi", "english": "I am" },
+      { "swahili": "uri", "english": "you are" },
+      { "swahili": "umunyeshuri", "english": "student" },
+      { "swahili": "umwarimu", "english": "teacher" },
+      { "swahili": "ariko", "english": "but" },
+      { "swahili": "nanjye", "english": "me too" }
+    ],
+    "quiz": [
+      { "id": 12, "type": "multiple_choice", "prompt": "What does 'Witwa nde?' mean?", "options": ["Where do you live?", "What is your name?", "How are you?", "Are you a student?"], "answer": "What is your name?", "hint": null },
+      { "id": 13, "type": "multiple_choice", "prompt": "How do you say 'I live in Kigali'?", "options": ["Nkomoka i Kigali", "Utuye i Kigali", "Ntuye i Kigali", "Ndi i Kigali he"], "answer": "Ntuye i Kigali", "hint": null },
+      { "id": 14, "type": "multiple_choice", "prompt": "'Ndi umwarimu' means:", "options": ["You are a teacher", "I am a student", "I am a teacher", "My name is Mwarimu"], "answer": "I am a teacher", "hint": null },
+      { "id": 15, "type": "multiple_choice", "prompt": "Which letter at the front of a verb means 'you'?", "options": ["n-", "u-", "i-", "a-"], "answer": "u-", "hint": null },
+      { "id": 16, "type": "multiple_choice", "prompt": "What does 'ariko' mean?", "options": ["And", "But", "Yes", "Where"], "answer": "But", "hint": null }
+    ],
+    "xpReward": 100
+  }
+]

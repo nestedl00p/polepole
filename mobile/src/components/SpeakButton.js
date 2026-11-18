@@ -1,12 +1,12 @@
 import { Pressable, Text, StyleSheet } from 'react-native';
-import { speakSwahili } from '../lib/speak';
+import { speakSwahili, hasVoice } from '../lib/speak';
 import { colors } from '../theme';
 
 // Reusable 🔊 button that pronounces a Swahili word/phrase.
 // variant: 'light' (teal on white) | 'onDark' (translucent, for coloured cards)
 // size: 'sm' | 'md'
 export default function SpeakButton({ text, variant = 'light', size = 'md', style }) {
-  if (!text) return null;
+  if (!text || !hasVoice()) return null;
   const dim = size === 'sm' ? 26 : 40;
   const onDark = variant === 'onDark';
   return (
