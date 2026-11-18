@@ -994,3 +994,19 @@ ul.sw-list li { margin-bottom: 5px; }
 }
 .why-chip:hover { border-color: var(--teal); }
 .why-chip.active { border-color: var(--teal); background: #e3f1f1; color: var(--teal-dark); }
+
+/* Landing page language picker */
+.lp-locale {
+  font: inherit; font-size: 0.9rem; font-weight: 600; color: var(--ink);
+  background: transparent; border: 1px solid var(--line); border-radius: 999px;
+  padding: 6px 10px; cursor: pointer;
+}
+.lp-locale:hover { border-color: var(--teal-dark); }
+.lp-footer-links .lp-locale { align-self: flex-start; color: #c7d6e2; border-color: rgba(255,255,255,0.25); }
+.lp-footer-links .lp-locale option { color: var(--ink); }
+/* The footer copy is for phones, where the header has no room for one. */
+@media (min-width: 561px) { .lp-footer-links .lp-locale { display: none; } }
+@media (max-width: 560px) {
+  .lp-header-cta .lp-locale { display: none; }
+  .lp-header-cta .btn { white-space: nowrap; }
+}

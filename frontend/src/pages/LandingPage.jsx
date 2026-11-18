@@ -1,44 +1,50 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Logo from '../components/Logo';
 import { SUBSCRIPTIONS_ENABLED } from '../config';
+import { LANDING_STRINGS, LANDING_LOCALES, initialLandingLocale, saveLandingLocale } from '../lib/landingStrings';
 
-const FEATURES = [
-  { icon: '🧭', title: 'A guided 0-to-conversational path', body: 'A structured curriculum that takes you from your first “Jambo” to holding real conversations — no guessing what to study next.' },
-  { icon: '🐢', title: 'Pole pole — at your own pace', body: 'Pick a 30, 60 or 90-day plan. Lessons unlock on schedule so you build a steady habit instead of burning out.' },
-  { icon: '🃏', title: 'Flashcards & spaced practice', body: 'Lock in vocabulary with flip-card drills and quick practice quizzes built from every lesson you complete.' },
-  { icon: '✅', title: 'Quizzes that actually check you', body: 'Multiple-choice and free-typing questions with hints and instant feedback after each lesson.' },
-  { icon: '🔥', title: 'Streaks, XP & progress', body: 'Earn XP, keep your daily streak alive, and watch your course-completion bar fill as you go.' },
-  { icon: '💬', title: 'Real dialogues & culture', body: 'Learn the Swahili people actually speak — greetings, markets, travel, and the culture behind the words.' },
-];
-
-const WEEKS = [
-  { n: 1, title: 'Foundations', body: 'Greetings, pronunciation, pronouns, and your very first sentences.' },
-  { n: 2, title: 'Noun Classes, Numbers & Time', body: 'The famous Swahili noun classes, counting, and telling the time.' },
-  { n: 3, title: 'Tenses & Daily Life', body: 'Past, present and future tenses through everyday situations.' },
-  { n: 4, title: 'Complex Sentences & Culture', body: 'Connectors, fuller conversations, and cultural context to sound natural.' },
-];
-
-const STEPS = [
-  { n: '1', title: 'Try three words first', body: 'No sign-up. If you want to keep going, an account saves what you just did.' },
-  { n: '2', title: 'Learn a lesson a day', body: 'Read, listen, and absorb bite-sized lessons that unlock on schedule.' },
-  { n: '3', title: 'Practice & prove it', body: 'Drill flashcards and pass the quiz to unlock the next lesson.' },
-];
-
-const FAQS = [
-  { q: 'Do I need any prior Swahili?', a: 'None at all. PolePole starts from absolute zero — your first lesson is greetings and pronunciation.' },
-  { q: 'How long does the course take?', a: 'That’s up to you. Choose a 30-day intensive sprint or a relaxed 90-day plan — you can change your pace anytime.' },
-  { q: 'How much does it cost?', a: 'PolePole is free while in beta. Create an account and start the full course today.', pricing: true },
-  { q: 'Is there a mobile app?', a: 'Yes — PolePole also runs as a mobile app, so you can keep learning on your phone wherever you are.' },
-].filter((f) => SUBSCRIPTIONS_ENABLED || !f.pricing);
+// Icons and numbers are the same in every language; the words come from
+// landingStrings, matched up by position.
+const FEATURE_ICONS = ['🧭', '🐢', '🃏', '✅', '🔥', '💬'];
+const STAT_NUMBERS = ['31', '4', '300+', '0→💬'];
 
 export default function LandingPage() {
   const { user } = useAuth();
+  const [locale, setLocale] = useState(initialLandingLocale);
+  const t = LANDING_STRINGS[locale];
+
+  // Tell browsers and screen readers which language the page is in, and hand
+  // the document back as English (the rest of the site) on the way out.
+  useEffect(() => {
+    document.documentElement.lang = locale;
+    return () => { document.documentElement.lang = 'en'; };
+  }, [locale]);
+
+  const chooseLocale = (code) => { setLocale(code); saveLandingLocale(code); };
+  const faqs = t.faqs.filter((f) => SUBSCRIPTIONS_ENABLED || !f.pricing);
+
+  // In the header on wide screens; a phone's header has no room for it, so
+  // there it is the copy in the footer that shows.
+  const localePicker = (
+    <select
+      className="lp-locale"
+      aria-label={t.language}
+      value={locale}
+      onChange={(e) => chooseLocale(e.target.value)}
+    >
+      {LANDING_LOCALES.map((l) => (
+        <option key={l.code} value={l.code} lang={l.code}>{l.label}</option>
+      ))}
+    </select>
+  );
+
   const primaryCta = user
-    ? { to: '/app', label: 'Go to my dashboard' }
+    ? { to: '/app', label: t.goToDashboard }
     // Straight into three words of Swahili, not into a sign-up form: the
     // account is offered afterwards, as a way to keep what they just did.
-    : { to: '/try', label: 'Try 3 words now' };
+    : { to: '/try', label: t.tryNow };
 
   return (
     <div className="lp">
@@ -47,18 +53,19 @@ export default function LandingPage() {
         <div className="container lp-header-inner">
           <Link to="/" className="lp-brand"><Logo size={34} /></Link>
           <nav className="lp-nav">
-            <a href="#features">Course</a>
-            <a href="#curriculum">Curriculum</a>
-            <a href="#how">How it works</a>
-            {SUBSCRIPTIONS_ENABLED && <a href="#pricing">Pricing</a>}
+            <a href="#features">{t.nav.course}</a>
+            <a href="#curriculum">{t.nav.curriculum}</a>
+            <a href="#how">{t.nav.how}</a>
+            {SUBSCRIPTIONS_ENABLED && <a href="#pricing">{t.nav.pricing}</a>}
           </nav>
           <div className="lp-header-cta">
+            {localePicker}
             {user ? (
-              <Link to="/app" className="btn btn-primary btn-sm">My dashboard</Link>
+              <Link to="/app" className="btn btn-primary btn-sm">{t.myDashboard}</Link>
             ) : (
               <>
-                <Link to="/login" className="btn btn-ghost btn-sm">Log in</Link>
-                <Link to="/try" className="btn btn-gold btn-sm">Get started</Link>
+                <Link to="/login" className="btn btn-ghost btn-sm">{t.login}</Link>
+                <Link to="/try" className="btn btn-gold btn-sm">{t.getStarted}</Link>
               </>
             )}
           </div>
@@ -69,18 +76,16 @@ export default function LandingPage() {
       <section className="lp-hero">
         <div className="container lp-hero-inner">
           <div className="lp-hero-copy">
-            <span className="lp-eyebrow">🐢 Learn Swahili, the steady way</span>
-            <h1>Learn Swahili,<br /><span className="accent">pole pole.</span></h1>
+            <span className="lp-eyebrow">{t.eyebrow}</span>
+            <h1>{t.heroTitle}<br /><span className="accent" lang="sw">pole pole.</span></h1>
             <p className="lp-lead">
-              A complete, guided Swahili course that takes you from your first greeting to real
-              conversations — one bite-sized lesson at a time. <em>Pole pole ndiyo mwendo</em>:
-              slowly but surely is the way.
+              {t.heroLead[0]}<em lang="sw">Pole pole ndiyo mwendo</em>{t.heroLead[1]}
             </p>
             <div className="lp-hero-actions">
               <Link to={primaryCta.to} className="btn btn-gold">{primaryCta.label}</Link>
-              <a href="#curriculum" className="btn btn-ghost">See the curriculum</a>
+              <a href="#curriculum" className="btn btn-ghost">{t.seeCurriculum}</a>
             </div>
-            <p className="lp-trust">30 seconds · No account needed</p>
+            <p className="lp-trust">{t.trust}</p>
           </div>
           <div className="lp-hero-art">
             <div className="lp-hero-badge"><Logo size={150} wordmark={false} /></div>
@@ -91,10 +96,9 @@ export default function LandingPage() {
       {/* ---------- Stats ---------- */}
       <section className="lp-stats">
         <div className="container lp-stats-inner">
-          <div className="lp-stat"><span className="n">31</span><span className="l">Guided lessons</span></div>
-          <div className="lp-stat"><span className="n">4</span><span className="l">Weekly themes</span></div>
-          <div className="lp-stat"><span className="n">300+</span><span className="l">Words &amp; phrases</span></div>
-          <div className="lp-stat"><span className="n">0→💬</span><span className="l">Beginner to talking</span></div>
+          {STAT_NUMBERS.map((n, i) => (
+            <div className="lp-stat" key={n}><span className="n">{n}</span><span className="l">{t.stats[i]}</span></div>
+          ))}
         </div>
       </section>
 
@@ -102,13 +106,13 @@ export default function LandingPage() {
       <section className="lp-section" id="features">
         <div className="container">
           <div className="lp-section-head">
-            <h2>Everything you need to actually learn</h2>
-            <p>Not just word lists — a full system designed to build a real habit and real fluency.</p>
+            <h2>{t.featuresTitle}</h2>
+            <p>{t.featuresLead}</p>
           </div>
           <div className="lp-grid">
-            {FEATURES.map((f) => (
+            {t.features.map((f, i) => (
               <div className="lp-feature" key={f.title}>
-                <div className="lp-feature-icon">{f.icon}</div>
+                <div className="lp-feature-icon">{FEATURE_ICONS[i]}</div>
                 <h3>{f.title}</h3>
                 <p>{f.body}</p>
               </div>
@@ -121,13 +125,13 @@ export default function LandingPage() {
       <section className="lp-section lp-section-alt" id="how">
         <div className="container">
           <div className="lp-section-head">
-            <h2>How PolePole works</h2>
-            <p>Three simple steps. Show up a little each day, and it adds up fast.</p>
+            <h2>{t.howTitle}</h2>
+            <p>{t.howLead}</p>
           </div>
           <div className="lp-steps">
-            {STEPS.map((s) => (
-              <div className="lp-step" key={s.n}>
-                <div className="lp-step-num">{s.n}</div>
+            {t.steps.map((s, i) => (
+              <div className="lp-step" key={s.title}>
+                <div className="lp-step-num">{i + 1}</div>
                 <h3>{s.title}</h3>
                 <p>{s.body}</p>
               </div>
@@ -140,13 +144,13 @@ export default function LandingPage() {
       <section className="lp-section" id="curriculum">
         <div className="container">
           <div className="lp-section-head">
-            <h2>A curriculum with a clear path</h2>
-            <p>Four themed weeks that build on each other — from foundations to fluent-sounding conversation.</p>
+            <h2>{t.curriculumTitle}</h2>
+            <p>{t.curriculumLead}</p>
           </div>
           <div className="lp-weeks">
-            {WEEKS.map((w) => (
-              <div className="lp-week" key={w.n}>
-                <div className="lp-week-tag">Week {w.n}</div>
+            {t.weeks.map((w, i) => (
+              <div className="lp-week" key={w.title}>
+                <div className="lp-week-tag">{t.week(i + 1)}</div>
                 <h3>{w.title}</h3>
                 <p>{w.body}</p>
               </div>
@@ -160,18 +164,14 @@ export default function LandingPage() {
       <section className="lp-section lp-section-alt" id="pricing">
         <div className="container lp-pricing">
           <div className="lp-section-head">
-            <h2>Simple pricing</h2>
-            <p>The whole course, free while PolePole is in beta.</p>
+            <h2>{t.pricingTitle}</h2>
+            <p>{t.pricingLead}</p>
           </div>
           <div className="lp-price-card">
-            <div className="lp-price-tag">Free</div>
-            <div className="lp-price-amount">$0<span>/ during beta</span></div>
+            <div className="lp-price-tag">{t.priceTag}</div>
+            <div className="lp-price-amount">$0<span>{t.pricePeriod}</span></div>
             <ul className="lp-price-list">
-              <li>✓ Full 31-lesson Swahili course</li>
-              <li>✓ Flashcards &amp; practice quizzes</li>
-              <li>✓ Streaks, XP &amp; progress tracking</li>
-              <li>✓ Web &amp; mobile access</li>
-              <li>✓ Learn at your own pace</li>
+              {t.priceList.map((item) => <li key={item}>✓ {item}</li>)}
             </ul>
             <Link to={primaryCta.to} className="btn btn-gold btn-block">{primaryCta.label}</Link>
           </div>
@@ -185,9 +185,9 @@ export default function LandingPage() {
       <section className={`lp-section${SUBSCRIPTIONS_ENABLED ? '' : ' lp-section-alt'}`} id="faq">
         <div className="container lp-faq">
           <div className="lp-section-head">
-            <h2>Questions, answered</h2>
+            <h2>{t.faqTitle}</h2>
           </div>
-          {FAQS.map((f) => (
+          {faqs.map((f) => (
             <div className="lp-faq-item" key={f.q}>
               <h3>{f.q}</h3>
               <p>{f.a}</p>
@@ -199,8 +199,8 @@ export default function LandingPage() {
       {/* ---------- Final CTA ---------- */}
       <section className="lp-cta">
         <div className="container lp-cta-inner">
-          <h2>Anza leo — start today.</h2>
-          <p>Your first Swahili conversation is closer than you think. Pole pole, hatua kwa hatua.</p>
+          <h2>{t.ctaTitle}</h2>
+          <p>{t.ctaBody}</p>
           <Link to={primaryCta.to} className="btn btn-gold">{primaryCta.label}</Link>
         </div>
       </section>
@@ -210,17 +210,18 @@ export default function LandingPage() {
         <div className="container lp-footer-inner">
           <div className="lp-footer-brand">
             <Logo size={30} light />
-            <p>Learn Swahili, pole pole. The steady, guided way to go from zero to conversational.</p>
+            <p>{t.footerTagline}</p>
           </div>
           <div className="lp-footer-links">
-            <a href="#features">Course</a>
-            <a href="#curriculum">Curriculum</a>
-            {SUBSCRIPTIONS_ENABLED && <a href="#pricing">Pricing</a>}
-            <Link to="/login">Log in</Link>
+            <a href="#features">{t.nav.course}</a>
+            <a href="#curriculum">{t.nav.curriculum}</a>
+            {SUBSCRIPTIONS_ENABLED && <a href="#pricing">{t.nav.pricing}</a>}
+            <Link to="/login">{t.login}</Link>
+            {localePicker}
           </div>
         </div>
         <div className="lp-footer-bottom">
-          <div className="container">© {new Date().getFullYear()} PolePole · polepole.com · Made with 🐢 and pole pole patience.</div>
+          <div className="container">© {new Date().getFullYear()} PolePole · polepole.com · {t.footerMade}</div>
         </div>
       </footer>
     </div>
