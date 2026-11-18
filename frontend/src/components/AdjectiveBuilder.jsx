@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { speakSwahili, isSpeechSupported } from '../lib/speak';
+import { useAuth } from '../context/AuthContext';
+import { builderStrings } from '../lib/builderStrings';
 
 // Interactive Swahili adjective-agreement builder: NOUN + agreement-prefix + ADJ.
 // The adjective echoes the noun's class prefix. N-class triggers sound changes
@@ -42,6 +44,8 @@ function splitAgreed(agreed, stem) {
 }
 
 export default function AdjectiveBuilder({ block = {} }) {
+  const { user } = useAuth();
+  const t = builderStrings(user?.course);
   const nouns = block.nouns || NOUNS;
   const adjectives = block.adjectives || ADJECTIVES;
 
@@ -53,7 +57,7 @@ export default function AdjectiveBuilder({ block = {} }) {
   const agreed = agree(noun.acord, adj);
   const { pre, body } = splitAgreed(agreed, adj.stem);
   const word = `${noun.noun} ${agreed}`;
-  const english = `${adj.en} ${noun.en}`;
+  const english = t.described?.(adj.en, noun.en) ?? `${adj.en} ${noun.en}`;
 
   const steps = [
     { accent: 'stem', label: '1 · Which thing?', options: nouns.map((n) => ({ sw: n.noun, en: n.en })), index: ni, set: setNi },
@@ -61,23 +65,23 @@ export default function AdjectiveBuilder({ block = {} }) {
   ];
 
   const pieces = [
-    { text: noun.noun, role: 'stem', tag: `noun · ${noun.cls}` },
-    { text: pre || '∅', role: 'mark', tag: 'agree' },
-    { text: adj.stem, role: 'sub', tag: 'describe' },
+    { text: noun.noun, role: 'stem', tag: `${t.g('noun')} · ${noun.cls}` },
+    { text: pre || '∅', role: 'mark', tag: t.g('agree') },
+    { text: adj.stem, role: 'sub', tag: t.g('describe') },
   ];
 
   return (
     <div className="block">
       <div className="vb">
-        <div className="vb-title">{block.calloutTitle || 'Build a description: NOUN + prefix + adjective'}</div>
+        <div className="vb-title">{block.calloutTitle || t.g('Build a description: NOUN + prefix + adjective')}</div>
         <p className="vb-intro">
           {block.intro ||
-            'The adjective comes after the noun and echoes its class prefix. Pick a noun and an adjective — watch the gold prefix copy the noun’s class. (N-class nouns blend the sound a little.)'}
+            t.g('The adjective comes after the noun and echoes its class prefix. Pick a noun and an adjective — watch the gold prefix copy the noun’s class. (N-class nouns blend the sound a little.)')}
         </p>
 
         {steps.map((step, idx) => (
           <div className="vb-step" key={idx}>
-            <div className="vb-step-label"><span className={`vb-dot vb-dot-${step.accent}`} /> {step.label}</div>
+            <div className="vb-step-label"><span className={`vb-dot vb-dot-${step.accent}`} /> {t.g(step.label)}</div>
             <div className="vb-pills">
               {step.options.map((o, i) => (
                 <button
@@ -86,7 +90,7 @@ export default function AdjectiveBuilder({ block = {} }) {
                   onClick={() => step.set(i)}
                 >
                   <span className="vb-pill-sw">{o.sw}</span>
-                  <span className="vb-pill-en">{o.en}</span>
+                  <span className="vb-pill-en">{t.g(o.en)}</span>
                 </button>
               ))}
             </div>
@@ -113,7 +117,7 @@ export default function AdjectiveBuilder({ block = {} }) {
               {pre && <span className="vb-t-mark">{pre}</span>}<span className="vb-t-sub">{body}</span>
             </div>
             {isSpeechSupported() && (
-              <button type="button" className="vb-speak" onClick={() => speakSwahili(word)} title="Hear it — pole pole" aria-label={`Hear ${word} spoken`}>🔊</button>
+              <button type="button" className="vb-speak" onClick={() => speakSwahili(word)} title={t.g('Hear it — pole pole')} aria-label={t.hear(word)}>🔊</button>
             )}
           </div>
           <div className="vb-en">“{english}”</div>

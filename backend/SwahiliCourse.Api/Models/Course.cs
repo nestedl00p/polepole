@@ -15,7 +15,7 @@ public class Course
 
     // "sw" | "en" | "rw" — what the learner is learning.
     public string TargetLanguage { get; set; } = "sw";
-    // "en" | "sw" — the language the lessons are written in.
+    // "en" | "sw" | "es" — the language the lessons are written in.
     public string SourceLanguage { get; set; } = "en";
 
     // Speech settings for the TARGET language (that's what gets spoken/scored).
@@ -58,6 +58,9 @@ public static class Courses
     public const string Swahili = "sw";
     public const string English = "en";
     public const string Kinyarwanda = "rw";
+    // Swahili again, taught in Spanish. The id names both sides because "sw"
+    // was already taken by the English-taught course.
+    public const string SwahiliFromSpanish = "sw-es";
     public const string Default = Swahili;
 
     public static readonly IReadOnlyList<Course> All = new List<Course>
@@ -117,6 +120,23 @@ public static class Courses
             MethaliFile = "methali-rw.json",
             Flag = "🇷🇼",
         },
+        new Course
+        {
+            Id = SwahiliFromSpanish,
+            Title = "Aprende suajili",
+            Subtitle = "Jifunze Kiswahili, pole pole",
+            Description = "Para hispanohablantes que aprenden suajili — 31 lecciones, de los saludos a conversaciones completas.",
+            TargetLanguage = "sw",
+            SourceLanguage = "es",
+            // Same voice and recogniser as the English-taught Swahili course:
+            // TtsService shares its clips between the two.
+            TtsLocale = "sw-KE",
+            TtsVoice = "sw-KE-ZuriNeural",
+            SttLanguage = "sw",
+            LessonsFile = "lessons-sw-es.json",
+            MethaliFile = "methali-sw-es.json",
+            Flag = "🇰🇪",
+        },
     };
 
     public static Course Get(string? id) =>
@@ -126,12 +146,25 @@ public static class Courses
     {
         "sw" => "Swahili",
         "rw" => "Kinyarwanda",
+        "es" => "Spanish",
         _ => "English",
     };
 
     // (target, source) for a stored pair — the side being learned first.
     public static (string Target, string Source) Sides(this Course course, string swahili, string english) =>
         course.TargetLanguage == "en" ? (english, swahili) : (swahili, english);
+
+    // Picks the wording for the language the learner reads the course in.
+    // Server-written copy (reminders, empty states, practice prompts) exists in
+    // each source language; a course in a language without a wording of its
+    // own gets the English one.
+    public static string Say(this Course course, string english, string swahili, string spanish) =>
+        course.SourceLanguage switch
+        {
+            "sw" => swahili,
+            "es" => spanish,
+            _ => english,
+        };
 
     public static bool IsValid(string? id) =>
         All.Any(c => string.Equals(c.Id, id, StringComparison.OrdinalIgnoreCase));

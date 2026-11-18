@@ -18,6 +18,8 @@ const DEFAULT_PROMPTS = [
 const scoreColor = (s) => (s >= 80 ? colors.success : s >= 55 ? colors.gold : colors.danger);
 
 export default function PronunciationDrill({ block = {} }) {
+  const { user } = useAuth();
+  const t = builderStrings(user?.course);
   const prompts = block.prompts?.length ? block.prompts : DEFAULT_PROMPTS;
   const [pi, setPi] = useState(0);
   const [phase, setPhase] = useState('idle'); // idle | recording | checking | result | error
@@ -42,14 +44,14 @@ export default function PronunciationDrill({ block = {} }) {
     setErr(null);
     try {
       const perm = await AudioModule.requestRecordingPermissionsAsync();
-      if (!perm.granted) { setErr('Microphone permission is needed to practice speaking.'); return; }
+      if (!perm.granted) { setErr(t.g('Microphone permission is needed to practice speaking.')); return; }
       await setAudioModeAsync({ allowsRecording: true, playsInSilentMode: true });
       await recorder.prepareToRecordAsync();
       recorder.record();
       setResult(null);
       setPhase('recording');
     } catch {
-      setErr('Could not start recording on this device.');
+      setErr(t.g('Could not start recording on this device.'));
     }
   };
 
@@ -76,9 +78,9 @@ export default function PronunciationDrill({ block = {} }) {
   return (
     <View style={styles.block}>
       <View style={styles.card}>
-        <Text style={styles.title}>{block.calloutTitle || 'Say it out loud'}</Text>
+        <Text style={styles.title}>{block.calloutTitle || t.g('Say it out loud')}</Text>
         <Text style={styles.intro}>
-          {block.intro || "Tap 🔊 to hear it, then press the mic and say the phrase. We'll check what you said."}
+          {block.intro || t.g("Tap 🔊 to hear it, then press the mic and say the phrase. We'll check what you said.")}
         </Text>
 
         <View style={styles.progress}>
@@ -98,7 +100,7 @@ export default function PronunciationDrill({ block = {} }) {
 
         {unavailable ? (
           <Text style={styles.note}>
-            Speak-and-check needs the pronunciation service running. You can still tap 🔊 to hear the phrase.
+            {t.g('Speak-and-check needs the pronunciation service running. You can still tap 🔊 to hear the phrase.')}
           </Text>
         ) : (
           <>
@@ -109,10 +111,10 @@ export default function PronunciationDrill({ block = {} }) {
                 style={[styles.mic, phase === 'recording' && styles.micRec, phase === 'checking' && styles.micBusy]}
               >
                 <Text style={styles.micText}>
-                  {phase === 'recording' ? '■ Stop' : phase === 'checking' ? 'Checking…' : '🎤 Speak'}
+                  {t.g(phase === 'recording' ? '■ Stop' : phase === 'checking' ? 'Checking…' : '🎤 Speak')}
                 </Text>
               </Pressable>
-              {phase === 'recording' && <Text style={styles.live}>● Listening…</Text>}
+              {phase === 'recording' && <Text style={styles.live}>{t.g('● Listening…')}</Text>}
             </View>
             {err && <Text style={styles.err}>{err}</Text>}
 
@@ -120,7 +122,7 @@ export default function PronunciationDrill({ block = {} }) {
               <View style={styles.result}>
                 <View style={[styles.scoreBadge, { backgroundColor: scoreColor(result.score) }]}>
                   <Text style={styles.scoreNum}>{result.score}%</Text>
-                  <Text style={styles.scoreLbl}>match</Text>
+                  <Text style={styles.scoreLbl}>{t.g('match')}</Text>
                 </View>
                 <View style={styles.detail}>
                   {result.words?.length > 0 && (
@@ -130,13 +132,13 @@ export default function PronunciationDrill({ block = {} }) {
                       ))}
                     </View>
                   )}
-                  <Text style={styles.heard}>You said: “{result.transcription || '—'}”</Text>
+                  <Text style={styles.heard}>{t.g('You said:')} “{result.transcription || '—'}”</Text>
                   <View style={styles.actions}>
                     <Pressable onPress={() => { setPhase('idle'); setResult(null); }} style={styles.ghostBtn}>
-                      <Text style={styles.ghostText}>Try again</Text>
+                      <Text style={styles.ghostText}>{t.g('Try again')}</Text>
                     </Pressable>
                     <Pressable onPress={next} style={styles.goldBtn}>
-                      <Text style={styles.goldText}>{pi + 1 < prompts.length ? 'Next →' : 'Start over'}</Text>
+                      <Text style={styles.goldText}>{t.g(pi + 1 < prompts.length ? 'Next →' : 'Start over')}</Text>
                     </Pressable>
                   </View>
                 </View>
@@ -144,7 +146,7 @@ export default function PronunciationDrill({ block = {} }) {
             )}
 
             {phase === 'error' && (
-              <Text style={styles.err}>Couldn't reach the pronunciation service. Try again.</Text>
+              <Text style={styles.err}>{t.g("Couldn't reach the pronunciation service. Try again.")}</Text>
             )}
           </>
         )}

@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { colors, shadow } from '../theme';
 import { speakSwahili } from '../lib/speak';
+import { useAuth } from '../context/AuthContext';
+import { builderStrings } from '../lib/builderStrings';
 
 // Interactive question-word explorer: tap a question word to see/hear it in a
 // real sentence (highlighted) and learn where it sits.
@@ -24,6 +26,8 @@ function segments(ex) {
 }
 
 export default function QuestionBuilder({ block = {} }) {
+  const { user } = useAuth();
+  const t = builderStrings(user?.course);
   const questions = block.questions || QUESTIONS;
   const [qi, setQi] = useState(2);
   const q = questions[qi];
@@ -32,13 +36,13 @@ export default function QuestionBuilder({ block = {} }) {
   return (
     <View style={styles.block}>
       <View style={styles.card}>
-        <Text style={styles.title}>{block.calloutTitle || 'Ask a question'}</Text>
+        <Text style={styles.title}>{block.calloutTitle || t.g('Ask a question')}</Text>
         {!!block.intro && <Text style={styles.intro}>{block.intro}</Text>}
 
         <View style={styles.step}>
           <View style={styles.stepLabel}>
             <View style={[styles.dot, { backgroundColor: colors.gold }]} />
-            <Text style={styles.stepLabelText}>Tap a question word</Text>
+            <Text style={styles.stepLabelText}>{t.g('Tap a question word')}</Text>
           </View>
           <View style={styles.pills}>
             {questions.map((item, i) => {
@@ -50,7 +54,7 @@ export default function QuestionBuilder({ block = {} }) {
                   style={[styles.pill, active && { borderColor: colors.gold, backgroundColor: colors.gold }]}
                 >
                   <Text style={[styles.pillSw, active && styles.pillActiveText]}>{item.word}</Text>
-                  <Text style={[styles.pillEn, active && styles.pillActiveText]}>{item.en}</Text>
+                  <Text style={[styles.pillEn, active && styles.pillActiveText]}>{t.g(item.en)}</Text>
                 </Pressable>
               );
             })}
@@ -64,12 +68,12 @@ export default function QuestionBuilder({ block = {} }) {
                 <Text key={i} style={{ color: s.hl ? colors.gold : colors.navy }}>{s.text}</Text>
               ))}
             </Text>
-            <Pressable onPress={() => speakSwahili(plain)} style={styles.speak} accessibilityRole="button" accessibilityLabel={`Hear ${plain} spoken`}>
+            <Pressable onPress={() => speakSwahili(plain)} style={styles.speak} accessibilityRole="button" accessibilityLabel={t.hear(plain)}>
               <Text style={styles.speakIcon}>🔊</Text>
             </Pressable>
           </View>
-          <Text style={styles.en}>“{q.exEn}”</Text>
-          <Text style={styles.tip}>💡 <Text style={{ color: colors.gold, fontWeight: '800' }}>{q.word}</Text> — {q.tip}</Text>
+          <Text style={styles.en}>“{t.g(q.exEn)}”</Text>
+          <Text style={styles.tip}>💡 <Text style={{ color: colors.gold, fontWeight: '800' }}>{q.word}</Text> — {t.g(q.tip)}</Text>
         </View>
       </View>
     </View>

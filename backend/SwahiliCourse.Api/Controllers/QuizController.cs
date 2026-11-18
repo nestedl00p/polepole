@@ -91,9 +91,12 @@ public class QuizController : AuthedController
 
     private static bool IsCorrect(QuizQuestion q, string given)
     {
+        // Accents are dropped along with punctuation: a typed "adios" or
+        // "como estas" is the right answer, typed on a keyboard without them.
         string Normalize(string s) => new string(
-            s.Trim().ToLowerInvariant()
-             .Where(c => !char.IsPunctuation(c))
+            s.Trim().ToLowerInvariant().Normalize(System.Text.NormalizationForm.FormD)
+             .Where(c => !char.IsPunctuation(c)
+                 && System.Globalization.CharUnicodeInfo.GetUnicodeCategory(c) != System.Globalization.UnicodeCategory.NonSpacingMark)
              .ToArray()).Replace("  ", " ").Trim();
 
         var a = Normalize(q.Answer);

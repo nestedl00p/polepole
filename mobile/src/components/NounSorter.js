@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { colors, shadow } from '../theme';
 import { speakSwahili } from '../lib/speak';
+import { useAuth } from '../context/AuthContext';
+import { builderStrings } from '../lib/builderStrings';
 
 // Interactive noun-class explorer. Tap a noun → class, plural, and verb agreement.
 // block.mode: 'set1' (M/WA + M/MI) | 'set2' (KI/VI + N).
@@ -28,6 +30,8 @@ function segments(ex) {
 }
 
 export default function NounSorter({ block = {} }) {
+  const { user } = useAuth();
+  const t = builderStrings(user?.course);
   const nouns = block.nouns || SETS[block.mode] || SETS.set1;
   const [i, setI] = useState(0);
   const n = nouns[i];
@@ -35,13 +39,13 @@ export default function NounSorter({ block = {} }) {
   return (
     <View style={styles.block}>
       <View style={styles.card}>
-        <Text style={styles.title}>{block.calloutTitle || 'Sort the noun'}</Text>
+        <Text style={styles.title}>{block.calloutTitle || t.g('Sort the noun')}</Text>
         {!!block.intro && <Text style={styles.intro}>{block.intro}</Text>}
 
         <View style={styles.step}>
           <View style={styles.stepLabel}>
             <View style={[styles.dot, { backgroundColor: colors.navy }]} />
-            <Text style={styles.stepLabelText}>Tap a noun</Text>
+            <Text style={styles.stepLabelText}>{t.g('Tap a noun')}</Text>
           </View>
           <View style={styles.pills}>
             {nouns.map((item, idx) => {
@@ -49,7 +53,7 @@ export default function NounSorter({ block = {} }) {
               return (
                 <Pressable key={item.sing} onPress={() => setI(idx)} style={[styles.pill, active && { borderColor: colors.navy, backgroundColor: colors.navy }]}>
                   <Text style={[styles.pillSw, active && styles.pillActiveText]}>{item.sing}</Text>
-                  <Text style={[styles.pillEn, active && styles.pillActiveText]}>{item.en}</Text>
+                  <Text style={[styles.pillEn, active && styles.pillActiveText]}>{t.g(item.en)}</Text>
                 </Pressable>
               );
             })}
@@ -57,14 +61,14 @@ export default function NounSorter({ block = {} }) {
         </View>
 
         <View style={styles.result}>
-          <Text style={styles.badge}>{n.cls} · {n.note}</Text>
+          <Text style={styles.badge}>{n.cls} · {t.g(n.note)}</Text>
           <View style={styles.wordRow}>
             <Text style={styles.word}>
               <Text style={{ color: colors.navy }}>{n.sing}</Text>
               <Text style={{ color: colors.muted }}>{'  →  '}</Text>
               <Text style={{ color: colors.navy }}>{n.pl}</Text>
             </Text>
-            <Pressable onPress={() => speakSwahili(`${n.sing}, ${n.pl}`)} style={styles.speak} accessibilityRole="button" accessibilityLabel={`Hear ${n.sing}, ${n.pl}`}>
+            <Pressable onPress={() => speakSwahili(`${n.sing}, ${n.pl}`)} style={styles.speak} accessibilityRole="button" accessibilityLabel={t.hear(`${n.sing}, ${n.pl}`)}>
               <Text style={styles.speakIcon}>🔊</Text>
             </Pressable>
           </View>
@@ -73,7 +77,7 @@ export default function NounSorter({ block = {} }) {
               <Text key={k} style={s.hl ? { color: colors.gold, fontWeight: '800' } : undefined}>{s.text}</Text>
             ))}
           </Text>
-          <Text style={styles.exEn}>{n.exEn}</Text>
+          <Text style={styles.exEn}>{t.g(n.exEn)}</Text>
         </View>
       </View>
     </View>

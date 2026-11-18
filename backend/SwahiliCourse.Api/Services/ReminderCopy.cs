@@ -37,16 +37,16 @@ public static class ReminderCopy
 
     public static Message Build(Course course, IReadOnlyList<string> targets, int itemCount, string? why, int? daysSinceLastDose)
     {
-        var swahiliReader = course.SourceLanguage == "sw";
         var words = string.Join(", ", targets.Where(t => !string.IsNullOrWhiteSpace(t)).Take(WordsNamed));
         var tail = words.Length > 0 ? $" {words}…" : string.Empty;
 
-        var size = swahiliReader
-            ? $"Kadi {itemCount}, sekunde 90."
-            : $"{itemCount} cards, 90 seconds.";
+        var size = course.Say(
+            $"{itemCount} cards, 90 seconds.",
+            $"Kadi {itemCount}, sekunde 90.",
+            $"{itemCount} tarjetas, 90 segundos.");
 
         var lapsed = daysSinceLastDose is int away && away >= LapseDays;
-        var reason = lapsed ? WhyLine(why, swahiliReader) : null;
+        var reason = lapsed ? WhyLine(why, course) : null;
 
         var body = reason is null ? $"{size}{tail}" : $"{reason} {size}{tail}";
         return new Message("Dose ya leo", body);
@@ -54,14 +54,11 @@ public static class ReminderCopy
 
     // The learner's own stated reason, handed back to them. Curiosity gets no
     // line: "you started this out of curiosity" is not a reason to come back.
-    private static string? WhyLine(string? why, bool swahiliReader) => (why, swahiliReader) switch
+    private static string? WhyLine(string? why, Course course) => why switch
     {
-        (Trip, false) => "You started this for the trip.",
-        (Family, false) => "You started this for family.",
-        (Work, false) => "You started this for work.",
-        (Trip, true) => "Ulianza kwa ajili ya safari.",
-        (Family, true) => "Ulianza kwa ajili ya familia.",
-        (Work, true) => "Ulianza kwa ajili ya kazi.",
+        Trip => course.Say("You started this for the trip.", "Ulianza kwa ajili ya safari.", "Empezaste esto por el viaje."),
+        Family => course.Say("You started this for family.", "Ulianza kwa ajili ya familia.", "Empezaste esto por la familia."),
+        Work => course.Say("You started this for work.", "Ulianza kwa ajili ya kazi.", "Empezaste esto por el trabajo."),
         _ => null,
     };
 }

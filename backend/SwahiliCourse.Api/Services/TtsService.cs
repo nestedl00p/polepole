@@ -106,7 +106,11 @@ public class TtsService
         var perCourse = _config[$"Tts:Voices:{course.Id}"];
         if (!string.IsNullOrWhiteSpace(perCourse)) return perCourse;
 
-        if (course.Id == Models.Courses.Default)
+        // A second course teaching the same language in the same voice (Swahili
+        // for Spanish speakers) is treated as the default course, so both read
+        // and fill the same cached clips instead of paying for each word twice.
+        var original = Models.Courses.Get(Models.Courses.Default);
+        if (course.Id == original.Id || (!course.NeedsOwnVoice && course.TtsVoice == original.TtsVoice))
         {
             // Legacy behaviour for the original course: return the raw Tts:Voice
             // config value (usually empty) and let the provider apply its own

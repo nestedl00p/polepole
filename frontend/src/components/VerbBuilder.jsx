@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { speakSwahili, isSpeechSupported } from '../lib/speak';
+import { useAuth } from '../context/AuthContext';
+import { builderStrings } from '../lib/builderStrings';
 
 // Interactive Swahili word-builder for grammar "formulas".
 // One component drives every construction lesson via `block.mode`:
@@ -58,6 +60,8 @@ const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 const root = (stem) => stem.replace(/a$/, '');
 
 export default function VerbBuilder({ block = {} }) {
+  const { user } = useAuth();
+  const t = builderStrings(user?.course);
   const mode = block.mode || 'tense';
   const tense = block.tense || 'present';
   const marker = block.marker || DEFAULT_MARKER[tense] || 'na';
@@ -126,6 +130,10 @@ export default function VerbBuilder({ block = {} }) {
     }
   }
 
+  // A course taught in another language supplies its own translation line.
+  const own = t.verbLine?.({ mode, tense, person: si, stem: verb.stem, object: oi });
+  if (own) { english = own.main; englishAlt = own.alt; }
+
   const word = pieces.map((p) => p.text).join('');
 
   // Selection steps shown above the formula.
@@ -158,12 +166,12 @@ export default function VerbBuilder({ block = {} }) {
   return (
     <div className="block">
       <div className={`vb vb-${mode}`}>
-        <div className="vb-title">{block.calloutTitle || 'Build a Swahili word'}</div>
+        <div className="vb-title">{block.calloutTitle || t.g('Build a Swahili word')}</div>
         {block.intro && <p className="vb-intro">{block.intro}</p>}
 
         {steps.map((step, idx) => (
           <div className="vb-step" key={idx}>
-            <div className="vb-step-label"><span className={`vb-dot vb-dot-${step.accent}`} /> {step.label}</div>
+            <div className="vb-step-label"><span className={`vb-dot vb-dot-${step.accent}`} /> {t.g(step.label)}</div>
             <div className="vb-pills">
               {step.options.map((o, i) => (
                 <button
@@ -172,7 +180,7 @@ export default function VerbBuilder({ block = {} }) {
                   onClick={() => step.set(i)}
                 >
                   <span className="vb-pill-sw">{o.sw}</span>
-                  <span className="vb-pill-en">{o.en}</span>
+                  <span className="vb-pill-en">{t.g(o.en)}</span>
                 </button>
               ))}
             </div>
@@ -185,7 +193,7 @@ export default function VerbBuilder({ block = {} }) {
             <span className="vb-frag" key={i}>
               {i > 0 && <span className="vb-plus">+</span>}
               <span className={`vb-piece vb-${p.role}`}>
-                <span className="vb-piece-tag">{p.tag}</span>
+                <span className="vb-piece-tag">{t.g(p.tag)}</span>
                 <span className="vb-piece-val">{p.text}</span>
               </span>
             </span>
@@ -206,8 +214,8 @@ export default function VerbBuilder({ block = {} }) {
                 type="button"
                 className="vb-speak"
                 onClick={() => speakSwahili(word)}
-                title="Hear it — pole pole"
-                aria-label={`Hear ${word} spoken`}
+                title={t.g('Hear it — pole pole')}
+                aria-label={t.hear(word)}
               >
                 🔊
               </button>

@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import SpeakButton from './SpeakButton';
 import { useMicRecorder } from '../hooks/useMicRecorder';
 import { speechEnabled, assessPronunciation } from '../lib/speechAssess';
+import { useAuth } from '../context/AuthContext';
+import { builderStrings } from '../lib/builderStrings';
 
 // Speak-and-check pronunciation drill. The learner hears the model phrase (🔊),
 // taps the mic and says it; we transcribe (self-hosted Whisper) and score the
@@ -16,6 +18,8 @@ const DEFAULT_PROMPTS = [
 const scoreClass = (s) => (s >= 80 ? 'good' : s >= 55 ? 'ok' : 'low');
 
 export default function PronunciationDrill({ block = {} }) {
+  const { user } = useAuth();
+  const t = builderStrings(user?.course);
   const prompts = block.prompts?.length ? block.prompts : DEFAULT_PROMPTS;
   const [pi, setPi] = useState(0);
   const [phase, setPhase] = useState('idle'); // idle | recording | checking | result | error
@@ -54,9 +58,9 @@ export default function PronunciationDrill({ block = {} }) {
   return (
     <div className="block">
       <div className="vb pd">
-        <div className="vb-title">{block.calloutTitle || 'Say it out loud'}</div>
+        <div className="vb-title">{block.calloutTitle || t.g('Say it out loud')}</div>
         <p className="vb-intro">
-          {block.intro || "Tap 🔊 to hear it, then press the mic and say the phrase. We'll check what you said."}
+          {block.intro || t.g("Tap 🔊 to hear it, then press the mic and say the phrase. We'll check what you said.")}
         </p>
 
         <div className="sb-progress">
@@ -77,8 +81,8 @@ export default function PronunciationDrill({ block = {} }) {
         {unavailable ? (
           <div className="pd-note">
             {rec.supported === false
-              ? "Mic recording isn't supported in this browser — you can still tap 🔊 to hear the phrase."
-              : "Speak-and-check needs the pronunciation service running. You can still tap 🔊 to hear the phrase."}
+              ? t.g("Mic recording isn't supported in this browser — you can still tap 🔊 to hear the phrase.")
+              : t.g('Speak-and-check needs the pronunciation service running. You can still tap 🔊 to hear the phrase.')}
           </div>
         ) : (
           <>
@@ -89,10 +93,10 @@ export default function PronunciationDrill({ block = {} }) {
                 onClick={onMic}
                 disabled={phase === 'checking'}
               >
-                {phase === 'recording' ? '■ Stop' : phase === 'checking' ? 'Checking…' : '🎤 Speak'}
+                {t.g(phase === 'recording' ? '■ Stop' : phase === 'checking' ? 'Checking…' : '🎤 Speak')}
               </button>
-              {phase === 'recording' && <span className="pd-live">● Listening…</span>}
-              {phase === 'checking' && <span className="pd-live muted">Transcribing…</span>}
+              {phase === 'recording' && <span className="pd-live">{t.g('● Listening…')}</span>}
+              {phase === 'checking' && <span className="pd-live muted">{t.g('Transcribing…')}</span>}
               {rec.error && <span className="pd-err">{rec.error}</span>}
             </div>
 
@@ -100,7 +104,7 @@ export default function PronunciationDrill({ block = {} }) {
               <div className="pd-result">
                 <div className={`pd-score ${scoreClass(result.score)}`}>
                   <span className="pd-score-num">{result.score}%</span>
-                  <span className="pd-score-lbl">match</span>
+                  <span className="pd-score-lbl">{t.g('match')}</span>
                 </div>
                 <div className="pd-detail">
                   {result.words?.length > 0 && (
@@ -111,17 +115,17 @@ export default function PronunciationDrill({ block = {} }) {
                     </div>
                   )}
                   <div className="pd-heard">
-                    You said: <em>“{result.transcription || '—'}”</em>
+                    {t.g('You said:')} <em>“{result.transcription || '—'}”</em>
                   </div>
                   <div className="pd-meta">
-                    {typeof result.completeness === 'number' && <span>{result.completeness}% of words</span>}
-                    {typeof result.confidence === 'number' && <span>· {Math.round(result.confidence)}% clarity</span>}
-                    {typeof result.wpm === 'number' && result.wpm > 0 && <span>· {Math.round(result.wpm)} wpm</span>}
+                    {typeof result.completeness === 'number' && <span>{result.completeness}% {t.g('of words')}</span>}
+                    {typeof result.confidence === 'number' && <span>· {Math.round(result.confidence)}% {t.g('clarity')}</span>}
+                    {typeof result.wpm === 'number' && result.wpm > 0 && <span>· {Math.round(result.wpm)} {t.g('wpm')}</span>}
                   </div>
                   <div className="pd-actions">
-                    <button className="btn btn-ghost btn-sm" onClick={retry}>Try again</button>
+                    <button className="btn btn-ghost btn-sm" onClick={retry}>{t.g('Try again')}</button>
                     <button className="btn btn-gold btn-sm" onClick={next}>
-                      {pi + 1 < prompts.length ? 'Next →' : 'Start over'}
+                      {t.g(pi + 1 < prompts.length ? 'Next →' : 'Start over')}
                     </button>
                   </div>
                 </div>
@@ -130,8 +134,8 @@ export default function PronunciationDrill({ block = {} }) {
 
             {phase === 'error' && (
               <div className="pd-err">
-                Couldn't reach the pronunciation service.{' '}
-                <button className="btn btn-ghost btn-sm" onClick={retry}>Try again</button>
+                {t.g("Couldn't reach the pronunciation service.")}{' '}
+                <button className="btn btn-ghost btn-sm" onClick={retry}>{t.g('Try again')}</button>
               </div>
             )}
           </>

@@ -86,9 +86,10 @@ public class DoseService
 
         if (pool.Count < MinimumPool)
         {
-            var message = course.SourceLanguage == "sw"
-                ? "Soma masomo machache zaidi ili kufungua dose ya leo."
-                : "Study a few more lessons to unlock your daily dose.";
+            var message = course.Say(
+                "Study a few more lessons to unlock your daily dose.",
+                "Soma masomo machache zaidi ili kufungua dose ya leo.",
+                "Estudia algunas lecciones más para desbloquear tu dosis diaria.");
             return new DoseDto(today.ToString("yyyy-MM-dd"), 0, new List<DoseItemDto>(), message, doneToday, week);
         }
 
