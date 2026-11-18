@@ -112,10 +112,38 @@ or after rotating the key.
 
 ## Redeploy after code changes
 
-Re-run the same script — `az acr build` rebuilds the image and the app restarts.
+Re-run the same script — `az acr build` rebuilds the image, then the app is
+stopped, reconfigured and started once. The script waits for `/healthz` and
+exits non-zero if the new container does not answer within five minutes.
 Resource names are derived from your subscription id, so a re-run always targets
 the same resources and updates them in place. The existing `Jwt__Key` is reused,
 so redeploying does not sign your users out.
+
+### Site down after a deploy
+
+If the site returns 503 after a deploy and the log stream shows the container
+repeating `INSERT OR IGNORE INTO "__EFMigrationsLock"` until Azure reports
+"Container did not respond to startup probe on port 8080", a previous container
+was killed while it held the migration lock. The lock is a row in the SQLite
+database, so it survives the container, and rolling back the image does not
+help: every image runs migrations at startup.
+
+Confirm it from the startup logs:
+
+```bash
+az webapp log download -n polepole-app-a82a5661 -g polepole-rg --log-file logs.zip
+# then read LogFiles/StartupLogs/*_failure.log
+```
+
+Then delete the orphaned row. The table holds nothing but this lock. The
+command runs in the Kudu sidecar, which shares `/home` with the app:
+
+```bash
+MSYS_NO_PATHCONV=1 az rest --method post   --uri https://polepole-app-a82a5661.scm.azurewebsites.net/api/command   --resource https://management.azure.com/   --body '{"command":"sqlite3 /home/data/swahili.db \"DELETE FROM __EFMigrationsLock;\"","dir":"/home"}'
+```
+
+The container that is waiting picks the lock up on its next retry and starts by
+itself within about a minute; no further restart is needed.
 
 ---
 
