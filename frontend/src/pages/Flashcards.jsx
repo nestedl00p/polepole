@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import { api } from '../api/client';
 import SpeakButton from '../components/SpeakButton';
+import { useLocale } from '../context/LocaleContext';
 
 export default function Flashcards() {
+  const { t: all } = useLocale();
+  const t = all.flashcards;
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [i, setI] = useState(0);
@@ -35,8 +38,8 @@ export default function Flashcards() {
     return (
       <div className="container page narrow">
         <div className="card" style={{ textAlign: 'center' }}>
-          <h1 className="auth-title">Flashcards</h1>
-          <p className="muted mt">Study a lesson first to start building your flashcard deck. Every word you learn appears here automatically.</p>
+          <h1 className="auth-title">{t.title}</h1>
+          <p className="muted mt">{t.empty}</p>
         </div>
       </div>
     );
@@ -49,10 +52,10 @@ export default function Flashcards() {
         <div className="container page narrow">
           <div className="card result-card">
             <div className="result-score">{pScore}/{pq.length}</div>
-            <div className="result-pass">Practice complete! 🎉</div>
+            <div className="result-pass">{t.practiceComplete}</div>
             <div className="row center mt" style={{ gap: 12 }}>
-              <button className="btn btn-primary" onClick={startPractice}>Practice again</button>
-              <button className="btn btn-ghost" onClick={() => setMode('cards')}>Back to cards</button>
+              <button className="btn btn-primary" onClick={startPractice}>{t.practiceAgain}</button>
+              <button className="btn btn-ghost" onClick={() => setMode('cards')}>{t.backToCards}</button>
             </div>
           </div>
         </div>
@@ -70,7 +73,7 @@ export default function Flashcards() {
     };
     return (
       <div className="container page narrow">
-        <div className="quiz-progress">Practice · {pi + 1} of {pq.length}</div>
+        <div className="quiz-progress">{t.practiceProgress(pi + 1, pq.length)}</div>
         <div className="progress-bar mb"><span style={{ width: `${((pi + 1) / pq.length) * 100}%` }} /></div>
         <div className="question-card">
           <div className="question-prompt">{cur.prompt}</div>
@@ -84,7 +87,7 @@ export default function Flashcards() {
           })}
           {pSel !== null && (
             <button className="btn btn-primary mt btn-block" onClick={nextP}>
-              {pi + 1 >= pq.length ? 'See results' : 'Next →'}
+              {pi + 1 >= pq.length ? t.seeResults : all.common.next}
             </button>
           )}
         </div>
@@ -119,15 +122,15 @@ export default function Flashcards() {
   return (
     <div className="container page narrow">
       <div className="page-head" style={{ textAlign: 'center' }}>
-        <h1>Flashcards</h1>
-        <p>{deck.length} {pinnedOnly && pinnedCount > 0 ? 'pinned' : 'words from your lessons'} · Card {(i % deck.length) + 1}</p>
+        <h1>{t.title}</h1>
+        <p>{(pinnedOnly && pinnedCount > 0 ? t.deckPinned : t.deckAll)(deck.length, (i % deck.length) + 1)}</p>
         {pinnedCount > 0 && (
           <button
             className={`btn btn-ghost btn-sm deck-filter ${pinnedOnly ? 'active' : ''}`}
             aria-pressed={pinnedOnly}
             onClick={() => { setPinnedOnly((p) => !p); setI(0); setFlipped(false); }}
           >
-            📌 {pinnedOnly ? 'Showing pinned' : `Pinned only (${pinnedCount})`}
+            📌 {pinnedOnly ? t.showingPinned : t.pinnedOnly(pinnedCount)}
           </button>
         )}
       </div>
@@ -137,7 +140,7 @@ export default function Flashcards() {
           <div className="flashcard-face flashcard-front">
             <div className="flashcard-speak"><SpeakButton text={target} variant="onDark" /></div>
             <div className="big">{target}</div>
-            <div className="tiny">Tap to reveal · {card.lessonTitle}</div>
+            <div className="tiny">{t.tapToReveal} · {card.lessonTitle}</div>
           </div>
           <div className="flashcard-face flashcard-back">
             <div className="flashcard-speak"><SpeakButton text={target} variant="onDark" /></div>
@@ -148,16 +151,16 @@ export default function Flashcards() {
       </div>
 
       <div className="row center" style={{ gap: 12 }}>
-        <button className="btn btn-ghost" onClick={() => go(-1)}>← Previous</button>
+        <button className="btn btn-ghost" onClick={() => go(-1)}>{t.previous}</button>
         <button className={`dose-pin ${card.pinned ? 'on' : ''}`} aria-pressed={!!card.pinned} onClick={togglePin}>
-          📌 {card.pinned ? 'Pinned' : 'Pin'}
+          📌 {card.pinned ? t.pinned : t.pin}
         </button>
-        <button className="btn btn-ghost" onClick={() => go(1)}>Next →</button>
+        <button className="btn btn-ghost" onClick={() => go(1)}>{all.common.next}</button>
       </div>
 
       <div className="card mt" style={{ textAlign: 'center' }}>
-        <p className="mb"><strong>Test your memory</strong> with a quick 10-question mixed practice quiz.</p>
-        <button className="btn btn-gold" onClick={startPractice}>Start practice quiz →</button>
+        <p className="mb"><strong>{t.testMemory[0]}</strong>{t.testMemory[1]}</p>
+        <button className="btn btn-gold" onClick={startPractice}>{t.startPractice}</button>
       </div>
     </div>
   );

@@ -5,11 +5,14 @@ import ContentBlock from '../components/ContentBlock';
 import SpeakButton from '../components/SpeakButton';
 import VocabMatch from '../components/VocabMatch';
 import { useAuth } from '../context/AuthContext';
+import { useLocale } from '../context/LocaleContext';
 
 export default function LessonPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { t: all } = useLocale();
+  const t = all.lesson;
   // Vocab pairs are stored as {swahili, english}; which side is being learned
   // (and spoken) depends on the account's course direction.
   const learnEnglish = user?.course?.targetLanguage === 'en';
@@ -36,17 +39,17 @@ export default function LessonPage() {
   if (error) return (
     <div className="container page lesson-page">
       <div className="error-box">{error}</div>
-      <Link to="/app" className="btn btn-ghost">← Back to dashboard</Link>
+      <Link to="/app" className="btn btn-ghost">{t.backToDashboard}</Link>
     </div>
   );
   if (!lesson) return null;
 
   return (
     <div className="container page lesson-page">
-      <Link to="/app" className="muted back-link">← Dashboard</Link>
+      <Link to="/app" className="muted back-link">{t.dashboard}</Link>
       <div className="lesson-head mt">
         <div>
-          <div className="day-num">Day {lesson.id} · {lesson.theme}</div>
+          <div className="day-num">{all.common.day(lesson.id)} · {lesson.theme}</div>
           <h1>{lesson.title}</h1>
           <div className="subtitle">{lesson.subtitle}</div>
         </div>
@@ -56,7 +59,7 @@ export default function LessonPage() {
 
       {lesson.vocabulary?.length > 0 && (
         <div className="block">
-          <h2>Vocabulary</h2>
+          <h2>{t.vocabulary}</h2>
           <div className="vocab-grid mt">
             {lesson.vocabulary.map((v, i) => (
               <div className="vocab-chip" key={i}>
@@ -73,9 +76,9 @@ export default function LessonPage() {
       )}
 
       <div className="card mt" style={{ textAlign: 'center' }}>
-        <p className="mb"><strong>Ready to test yourself?</strong> Pass the quiz (70%+) to earn XP and unlock the next lesson.</p>
+        <p className="mb"><strong>{t.ready[0]}</strong>{t.ready[1]}</p>
         <button className="btn btn-gold" onClick={() => navigate(`/lesson/${lesson.id}/quiz`)}>
-          Take the quiz · {lesson.quiz.length} questions →
+          {t.takeQuiz(lesson.quiz.length)}
         </button>
       </div>
     </div>

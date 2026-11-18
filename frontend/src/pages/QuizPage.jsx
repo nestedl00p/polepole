@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { api } from '../api/client';
 import { useAuth } from '../context/AuthContext';
+import { useLocale } from '../context/LocaleContext';
 
 export default function QuizPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { refreshUser } = useAuth();
+  const { t: all } = useLocale();
+  const t = all.quiz;
 
   const [lesson, setLesson] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -21,7 +24,7 @@ export default function QuizPage() {
   }, [id]);
 
   if (loading) return <div className="spinner" />;
-  if (!lesson) return <div className="container page"><p>Quiz not found.</p></div>;
+  if (!lesson) return <div className="container page"><p>{t.notFound}</p></div>;
 
   const questions = lesson.quiz;
   const q = questions[idx];
@@ -53,20 +56,20 @@ export default function QuizPage() {
         <div className="card result-card">
           <div className="result-score">{result.score}/{result.total}</div>
           <div className={result.passed ? 'result-pass' : 'result-fail'}>
-            {result.passed ? '🎉 Umefaulu! You passed!' : 'Karibu tena — try again to pass'}
+            {result.passed ? t.passed : t.failed}
           </div>
-          <p className="muted mt">{pct}% correct {result.passed ? '(70% needed to advance)' : '— you need 70% to unlock the next lesson'}</p>
+          <p className="muted mt">{result.passed ? t.pctPassed(pct) : t.pctFailed(pct)}</p>
           {result.xpEarned > 0 && <div className="xp-pop">+{result.xpEarned} XP ⭐</div>}
 
           <div className="mt" style={{ textAlign: 'left' }}>
-            <h2 className="block" style={{ fontSize: '1.05rem' }}>Review</h2>
+            <h2 className="block" style={{ fontSize: '1.05rem' }}>{t.review}</h2>
             {result.feedback.map((f, i) => {
               const question = questions.find((x) => x.id === f.questionId);
               return (
                 <div key={i} className="dialogue-line">
                   <div className="sw">{i + 1}. {question?.prompt}</div>
                   <div className={f.correct ? 'feedback-correct' : 'feedback-wrong'}>
-                    {f.correct ? '✓ Correct' : `✗ Your answer: ${f.yourAnswer || '(blank)'} — Correct: ${f.correctAnswer}`}
+                    {f.correct ? t.correct : t.wrong(f.yourAnswer || t.blank, f.correctAnswer)}
                   </div>
                 </div>
               );
@@ -76,17 +79,17 @@ export default function QuizPage() {
           <div className="row center mt" style={{ gap: 12 }}>
             {result.passed ? (
               <>
-                <button className="btn btn-primary" onClick={() => navigate('/app')}>Back to dashboard →</button>
+                <button className="btn btn-primary" onClick={() => navigate('/app')}>{t.backToDashboard}</button>
                 {lesson.id < 31 && (
                   <button className="btn btn-gold" onClick={() => navigate(`/lesson/${lesson.id + 1}`)}>
-                    Next lesson →
+                    {t.nextLesson}
                   </button>
                 )}
               </>
             ) : (
               <>
-                <button className="btn btn-ghost" onClick={() => { setResult(null); setIdx(0); }}>Try again</button>
-                <button className="btn btn-primary" onClick={() => navigate(`/lesson/${lesson.id}`)}>Review lesson</button>
+                <button className="btn btn-ghost" onClick={() => { setResult(null); setIdx(0); }}>{t.tryAgain}</button>
+                <button className="btn btn-primary" onClick={() => navigate(`/lesson/${lesson.id}`)}>{t.reviewLesson}</button>
               </>
             )}
           </div>
@@ -100,8 +103,8 @@ export default function QuizPage() {
 
   return (
     <div className="container page narrow">
-      <Link to={`/lesson/${lesson.id}`} className="muted back-link">← Back to lesson</Link>
-      <div className="quiz-progress mt">Question {idx + 1} of {total} · {lesson.title}</div>
+      <Link to={`/lesson/${lesson.id}`} className="muted back-link">{t.backToLesson}</Link>
+      <div className="quiz-progress mt">{t.progress(idx + 1, total, lesson.title)}</div>
       <div className="progress-bar mb"><span style={{ width: `${((idx + 1) / total) * 100}%` }} /></div>
 
       <div className="question-card">
@@ -120,30 +123,30 @@ export default function QuizPage() {
         ) : (
           <div>
             <input className="text-answer" value={current}
-              placeholder="Type your answer in Swahili…"
+              placeholder={t.typeAnswer}
               onChange={(e) => setAnswer(e.target.value)}
               onKeyDown={(e) => { if (e.key === 'Enter' && idx < total - 1) next(); }}
               autoFocus />
             {q.hint && (
               <div className="hint" onClick={() => setShowHint((s) => !s)}>
-                {showHint ? `💡 ${q.hint}` : '💡 Show hint'}
+                {showHint ? `💡 ${q.hint}` : t.showHint}
               </div>
             )}
           </div>
         )}
 
         <div className="row spread mt">
-          <button className="btn btn-ghost btn-sm" onClick={prev} disabled={idx === 0}>← Prev</button>
+          <button className="btn btn-ghost btn-sm" onClick={prev} disabled={idx === 0}>{t.prev}</button>
           {idx < total - 1 ? (
-            <button className="btn btn-primary btn-sm" onClick={next}>Next →</button>
+            <button className="btn btn-primary btn-sm" onClick={next}>{all.common.next}</button>
           ) : (
             <button className="btn btn-gold" onClick={submit} disabled={!allAnswered || submitting}>
-              {submitting ? 'Grading…' : 'Submit quiz'}
+              {submitting ? t.grading : t.submit}
             </button>
           )}
         </div>
         {!allAnswered && idx === total - 1 && (
-          <p className="muted mt" style={{ fontSize: '0.85rem' }}>Answer every question before submitting.</p>
+          <p className="muted mt" style={{ fontSize: '0.85rem' }}>{t.answerAll}</p>
         )}
       </div>
     </div>

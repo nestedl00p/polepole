@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { api } from '../api/client';
 import { useAuth } from '../context/AuthContext';
+import { useLocale, COURSE_FOR_LOCALE } from '../context/LocaleContext';
 import Logo from '../components/Logo';
 import SpeakButton from '../components/SpeakButton';
 import { setSpeechCourse } from '../lib/speak';
@@ -23,16 +24,11 @@ import { askNotificationPermission, notificationsSupported } from '../lib/remind
 // See docs/DAILY-PRACTICE-LOOP.md, "Reminder time and your why".
 
 const WHYS = [
-  { id: 'trip', icon: '✈️', label: 'A trip' },
-  { id: 'family', icon: '👪', label: 'Family' },
-  { id: 'work', icon: '💼', label: 'Work' },
-  { id: 'curiosity', icon: '✨', label: 'Curiosity' },
+  { id: 'trip', icon: '✈️' },
+  { id: 'family', icon: '👪' },
+  { id: 'work', icon: '💼' },
+  { id: 'curiosity', icon: '✨' },
 ];
-
-const LABELS = {
-  tambua: 'What does this mean?',
-  tunga: 'Which word is this?',
-};
 
 function deviceTimeZone() {
   try { return Intl.DateTimeFormat().resolvedOptions().timeZone || null; } catch { return null; }
@@ -46,7 +42,11 @@ export default function TasterPage() {
   // arrival, because this page deliberately keeps going after sign-up.
   const arrivedSignedIn = useRef(!!user);
 
-  const [course, setCourse] = useState('sw');
+  // The course taught in the reader's language: three words of English for
+  // a Swahili reader, of Swahili for everyone else.
+  const { locale, t: all } = useLocale();
+  const t = all.taster;
+  const course = COURSE_FOR_LOCALE[locale];
   const [taster, setTaster] = useState(null);
   const [failed, setFailed] = useState(false);
   const [step, setStep] = useState('items'); // items | reward | account | reminder | why
@@ -66,7 +66,7 @@ export default function TasterPage() {
         // would — there is no account yet to do it.
         setSpeechCourse(course === 'en'
           ? { id: 'en', targetLanguage: 'en', ttsLocale: 'en-US' }
-          : { id: 'sw', targetLanguage: 'sw', ttsLocale: 'sw-KE' });
+          : { id: course, targetLanguage: 'sw', ttsLocale: 'sw-KE' });
       })
       .catch(() => setFailed(true));
   }, [course]);
@@ -78,16 +78,16 @@ export default function TasterPage() {
       <div className="card card-pad-lg auth-card taster-card">
         <div className="row spread" style={{ marginBottom: 14 }}>
           <Link to="/" className="brand"><Logo size={30} /></Link>
-          {step === 'items' && <Link to="/login" className="muted taster-login">Log in</Link>}
+          {step === 'items' && <Link to="/login" className="muted taster-login">{all.common.login}</Link>}
         </div>
         {children}
       </div>
     </div>
   );
 
-  if (failed) return shell(<p>Couldn't load the taster. <Link to="/login">Create an account instead</Link>.</p>);
+  if (failed) return shell(<p>{t.loadFailed} <Link to="/login">{t.createInstead}</Link>.</p>);
   if (!taster) return shell(<div className="spinner" />);
-  if (!taster.items.length) return shell(<p>Nothing to try yet. <Link to="/login">Create an account</Link>.</p>);
+  if (!taster.items.length) return shell(<p>{t.nothingYet} <Link to="/login">{all.auth.createAnAccount}</Link>.</p>);
 
   const items = taster.items;
   const item = items[idx];
@@ -113,7 +113,7 @@ export default function TasterPage() {
   if (step === 'items') {
     return shell(
       <>
-        <div className="dose-kicker">Three words · about 30 seconds</div>
+        <div className="dose-kicker">{t.kicker}</div>
         <div className="sb-progress">
           {items.map((_, i) => (
             <span key={i} className={`sb-dot ${i < idx ? 'done' : ''} ${i === idx ? 'active' : ''}`} />
@@ -121,7 +121,7 @@ export default function TasterPage() {
           <span className="sb-count">{idx + 1} / {items.length}</span>
         </div>
 
-        <div className="dose-label">{LABELS[item.exercise]}</div>
+        <div className="dose-label">{all.exercise[item.exercise]}</div>
         <div className="dose-prompt">
           <span>{item.prompt}</span>
           {item.exercise === 'tambua' && <SpeakButton text={item.prompt} />}
@@ -145,22 +145,14 @@ export default function TasterPage() {
         {result && (
           <div className="dose-feedback">
             <div className={result.correct ? 'feedback-correct' : 'feedback-wrong'}>
-              {result.correct ? '✓ Sawa!' : `✗ It's "${result.correctAnswer}"`}
+              {result.correct ? all.common.right : all.common.itIs(result.correctAnswer)}
             </div>
             <div className="row center mt">
               <button className="btn btn-gold" onClick={next} autoFocus>
-                {idx + 1 < items.length ? 'Next →' : 'Finish'}
+                {idx + 1 < items.length ? all.common.next : all.common.finish}
               </button>
             </div>
           </div>
-        )}
-
-        {idx === 0 && !result && (
-          <p className="muted taster-switch">
-            {course === 'sw'
-              ? <>Unajifunza Kiingereza? <a href="#" onClick={(e) => { e.preventDefault(); setCourse('en'); }}>Jaribu kwa Kiingereza</a></>
-              : <>Learning Swahili? <a href="#" onClick={(e) => { e.preventDefault(); setCourse('sw'); }}>Try the Swahili one</a></>}
-          </p>
         )}
       </>
     );
@@ -170,15 +162,15 @@ export default function TasterPage() {
     const right = answers.filter((a) => a.correct).length;
     return shell(
       <div style={{ textAlign: 'center' }}>
-        <div className="dose-kicker">That's a dose</div>
+        <div className="dose-kicker">{t.thatsADose}</div>
         <div className="result-score">{right}/{answers.length}</div>
         <p className="muted">
-          {course === 'sw' ? 'Three words of Swahili you did not have a minute ago.' : 'Maneno matatu ya Kiingereza ambayo hukuwa nayo dakika moja iliyopita.'}
+          {t.reward}
         </p>
 
         {taster.methali && (
           <div className="dose-methali taster-methali">
-            <div className="dose-label">And one to keep</div>
+            <div className="dose-label">{t.oneToKeep}</div>
             <div className="dose-methali-text">
               <span>{taster.methali.target}</span>
               <SpeakButton text={taster.methali.target} />
@@ -189,10 +181,10 @@ export default function TasterPage() {
         )}
 
         <div className="row center mt">
-          <button className="btn btn-gold" onClick={() => setStep('account')} autoFocus>Keep your progress →</button>
+          <button className="btn btn-gold" onClick={() => setStep('account')} autoFocus>{t.keepProgressCta}</button>
         </div>
         <p className="muted taster-switch">
-          A free account saves these words and brings them back when you are about to forget them.
+          {t.keepNote}
         </p>
       </div>
     );
@@ -224,6 +216,8 @@ export default function TasterPage() {
 }
 
 function AccountStep({ onSubmit }) {
+  const { t: all } = useLocale();
+  const t = all.taster;
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -236,43 +230,46 @@ function AccountStep({ onSubmit }) {
     try {
       await onSubmit({ displayName, email, password });
     } catch (err) {
-      setError(err.message || 'Something went wrong.');
+      setError(err.message || all.common.somethingWrong);
       setBusy(false);
     }
   };
 
   return (
     <>
-      <h1 className="auth-title">Keep your progress</h1>
-      <p className="auth-sub">Your three words and the proverb are saved to this account.</p>
+      <h1 className="auth-title">{t.accountTitle}</h1>
+      <p className="auth-sub">{t.accountSub}</p>
       {error && <div className="error-box">{error}</div>}
       <form onSubmit={submit}>
         <div className="field">
-          <label>Display name</label>
-          <input value={displayName} onChange={(e) => setDisplayName(e.target.value)} placeholder="e.g. Amani" />
+          <label>{all.common.displayName}</label>
+          <input value={displayName} onChange={(e) => setDisplayName(e.target.value)} placeholder={all.common.namePlaceholder} />
         </div>
         <div className="field">
-          <label>Email</label>
+          <label>{all.common.email}</label>
           <input type="email" value={email} required autoComplete="email"
-            onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" />
+            onChange={(e) => setEmail(e.target.value)} placeholder={all.common.emailPlaceholder} />
         </div>
         <div className="field">
-          <label>Password</label>
+          <label>{all.common.password}</label>
           <input type="password" value={password} required minLength={6} autoComplete="new-password"
-            onChange={(e) => setPassword(e.target.value)} placeholder="At least 6 characters" />
+            onChange={(e) => setPassword(e.target.value)} placeholder={all.common.passwordPlaceholder} />
         </div>
         <button className="btn btn-primary btn-block mt" disabled={busy}>
-          {busy ? 'Please wait…' : 'Create account'}
+          {busy ? all.common.pleaseWait : all.common.createAccount}
         </button>
       </form>
       <div className="switch-link">
-        Already have an account? <Link to="/login">Log in</Link>
+        {all.common.haveAccount} <Link to="/login">{all.common.login}</Link>
       </div>
     </>
   );
 }
 
 function ReminderStep({ onDone }) {
+  const { t: all } = useLocale();
+  const t = all.taster;
+  const r = all.reminder;
   const [time, setTime] = useState('08:00');
   const [busy, setBusy] = useState(false);
 
@@ -294,23 +291,25 @@ function ReminderStep({ onDone }) {
 
   return (
     <div style={{ textAlign: 'center' }}>
-      <h1 className="auth-title">When should I remind you?</h1>
-      <p className="auth-sub">One reminder a day, at a time you pick. It tells you which words are waiting — nothing else.</p>
-      <input className="taster-time" type="time" value={time} onChange={(e) => setTime(e.target.value || '08:00')} aria-label="Reminder time" />
+      <h1 className="auth-title">{t.reminderTitle}</h1>
+      <p className="auth-sub">{t.reminderSub}</p>
+      <input className="taster-time" type="time" value={time} onChange={(e) => setTime(e.target.value || '08:00')} aria-label={r.timeLabel} />
       <p className="muted taster-note">
         {notificationsSupported()
-          ? 'In a browser the reminder can only appear while PolePole is open in a tab. The phone app delivers it either way.'
-          : 'This browser cannot show notifications; the phone app will use this time.'}
+          ? r.tabOnly
+          : r.unsupported}
       </p>
       <div className="row center mt" style={{ gap: 10 }}>
-        <button className="btn btn-primary" onClick={() => save(true)} disabled={busy}>Remind me</button>
-        <button className="btn btn-ghost btn-sm" onClick={() => save(false)} disabled={busy}>No reminders</button>
+        <button className="btn btn-primary" onClick={() => save(true)} disabled={busy}>{r.remindMe}</button>
+        <button className="btn btn-ghost btn-sm" onClick={() => save(false)} disabled={busy}>{t.noReminders}</button>
       </div>
     </div>
   );
 }
 
 function WhyStep({ onDone }) {
+  const { t: all } = useLocale();
+  const t = all.taster;
   const [busy, setBusy] = useState(false);
 
   const pick = async (why) => {
@@ -324,18 +323,18 @@ function WhyStep({ onDone }) {
 
   return (
     <div style={{ textAlign: 'center' }}>
-      <h1 className="auth-title">What's your why?</h1>
-      <p className="auth-sub">So that if you ever drift away, I can remind you what this was for.</p>
+      <h1 className="auth-title">{t.whyTitle}</h1>
+      <p className="auth-sub">{t.whySub}</p>
       <div className="why-options">
         {WHYS.map((w) => (
           <button key={w.id} className="why-opt" onClick={() => pick(w.id)} disabled={busy}>
             <span className="why-icon">{w.icon}</span>
-            <span>{w.label}</span>
+            <span>{all.whys[w.id]}</span>
           </button>
         ))}
       </div>
       <div className="row center mt">
-        <button className="btn btn-ghost btn-sm" onClick={() => pick(null)} disabled={busy}>Skip</button>
+        <button className="btn btn-ghost btn-sm" onClick={() => pick(null)} disabled={busy}>{all.common.skip}</button>
       </div>
     </div>
   );
