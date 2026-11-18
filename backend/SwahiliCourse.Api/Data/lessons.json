@@ -132,8 +132,8 @@
         "english": "welcome"
       },
       {
-        "swahili": "asante",
-        "english": "thank you"
+        "swahili": "simba",
+        "english": "lion"
       },
       {
         "swahili": "rafiki",
@@ -144,12 +144,12 @@
         "english": "water"
       },
       {
-        "swahili": "chakula",
-        "english": "food"
+        "swahili": "shule",
+        "english": "school"
       },
       {
-        "swahili": "kitabu",
-        "english": "book"
+        "swahili": "baba",
+        "english": "father"
       },
       {
         "swahili": "daktari",
@@ -592,7 +592,7 @@
         "type": "quickCheck",
         "calloutTitle": "Quick check",
         "questions": [
-          { "prompt": "Which subject prefix means 'we'?", "options": ["tu-", "ni-", "wa-", "m-"], "answer": "tu-", "explain": "tunakula = we are eating." },
+          { "prompt": "Which subject prefix means 'you all' (plural)?", "options": ["m-", "u-", "tu-", "wa-"], "answer": "m-", "explain": "m- is 'you' for more than one person: mnakula — you all are eating." },
           { "prompt": "'Yeye si mgonjwa' means:", "options": ["He/She is not sick", "He/She is sick", "They are not sick", "I am not sick"], "answer": "He/She is not sick", "explain": "si is the negative of ni." },
           { "prompt": "Complete: Sisi ___ marafiki. (We are friends.)", "options": ["ni", "si", "tu", "wa"], "answer": "ni", "explain": "ni means am / is / are — the same for everyone." }
         ]
@@ -998,6 +998,40 @@
         ]
       },
       {
+        "type": "heading",
+        "heading": "Dialogue — Tea or Coffee?"
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          {
+            "speaker": "Asha",
+            "swahili": "Je, unapenda kahawa?",
+            "english": "Do you like coffee?"
+          },
+          {
+            "speaker": "Tom",
+            "swahili": "Hapana, sipendi kahawa. Ninapenda chai.",
+            "english": "No, I don't like coffee. I like tea."
+          },
+          {
+            "speaker": "Asha",
+            "swahili": "Unataka chai?",
+            "english": "Do you want some tea?"
+          },
+          {
+            "speaker": "Tom",
+            "swahili": "Ndiyo, tafadhali. Asante sana!",
+            "english": "Yes, please. Thank you very much!"
+          },
+          {
+            "speaker": "Asha",
+            "swahili": "Karibu.",
+            "english": "You're welcome."
+          }
+        ]
+      },
+      {
         "type": "quickCheck",
         "calloutTitle": "Quick check",
         "questions": [
@@ -1188,9 +1222,9 @@
         "type": "quickCheck",
         "calloutTitle": "Quick check",
         "questions": [
-          { "prompt": "The plural of 'mtoto' is:", "options": ["watoto", "mtoto", "watu", "hawa"], "answer": "watoto", "explain": "Many people-words swap m- for wa-." },
+          { "prompt": "'Hii nyumba' means:", "options": ["this house", "that house", "these houses", "this person"], "answer": "this house", "explain": "hii is 'this' for N-class things such as nyumba." },
           { "prompt": "Complete: ___ mtu (this person)", "options": ["huyu", "hiki", "hii", "hawa"], "answer": "huyu", "explain": "huyu = this (person); hiki and hii are for things." },
-          { "prompt": "'Wale watu' means:", "options": ["those people", "this person", "these people", "that person"], "answer": "those people", "explain": "wale = those (people)." }
+          { "prompt": "'Yule mtoto' means:", "options": ["that child", "this child", "those children", "these children"], "answer": "that child", "explain": "yule = that (one person); wale = those (people)." }
         ]
       }
     ],
@@ -1372,7 +1406,7 @@
         "type": "quickCheck",
         "calloutTitle": "Quick check",
         "questions": [
-          { "prompt": "'Unatoka wapi?' asks:", "options": ["Where are you from?", "What is your name?", "How are you?", "What do you like?"], "answer": "Where are you from?" },
+          { "prompt": "How do you say 'I'm from America'?", "options": ["Ninatoka Marekani", "Unatoka Marekani", "Ninapenda Marekani", "Jina langu ni Marekani"], "answer": "Ninatoka Marekani", "explain": "ni- (I) + -na- + toka (come from)." },
           { "prompt": "How do you say 'My name is Maria'?", "options": ["Jina langu ni Maria", "Ninatoka Maria", "Mimi si Maria", "Ninapenda Maria"], "answer": "Jina langu ni Maria" },
           { "prompt": "Someone greets you with 'Hujambo!'. You reply:", "options": ["Sijambo", "Marahaba", "Asante", "Kwa heri"], "answer": "Sijambo" }
         ]
@@ -1384,16 +1418,16 @@
         "english": "name"
       },
       {
-        "swahili": "langu",
-        "english": "my"
+        "swahili": "ninatoka",
+        "english": "I come from"
       },
       {
         "swahili": "unatoka",
         "english": "you come from"
       },
       {
-        "swahili": "wapi",
-        "english": "where"
+        "swahili": "Kiswahili",
+        "english": "Swahili (the language)"
       },
       {
         "swahili": "Marekani",
@@ -1745,13 +1779,6 @@
       },
       {
         "type": "callout",
-        "calloutTitle": "Quick trick — make it plural",
-        "lines": [
-          "Unsure of a class? Pluralise it. wa- = M/WA, mi- = M/MI, vi-/vy- = KI/VI, ma- = JI/MA. No change at all? It's almost always N (animals & loanwords)."
-        ]
-      },
-      {
-        "type": "callout",
         "calloutTitle": "Why Classes Matter",
         "lines": [
           "'Good' changes shape by class: mtu mzuri, kitabu kizuri, nyumba nzuri. Tomorrow you'll learn how."
@@ -1890,10 +1917,6 @@
       {
         "type": "heading",
         "heading": "Pick the Agreement"
-      },
-      {
-        "type": "paragraph",
-        "text": "For most classes the adjective prefix is simply the noun's class prefix, copied across — and singular vs plural each take their own."
       },
       {
         "type": "table",
@@ -2118,7 +2141,7 @@
         "type": "quickCheck",
         "calloutTitle": "Quick check",
         "questions": [
-          { "prompt": "What number is 'saba'?", "options": ["7", "6", "8", "9"], "answer": "7" },
+          { "prompt": "What number is 'nane'?", "options": ["8", "6", "7", "9"], "answer": "8", "explain": "sita 6, saba 7, nane 8, tisa 9." },
           { "prompt": "How do you say 25?", "options": ["ishirini na tano", "thelathini na tano", "ishirini na mbili", "hamsini na mbili"], "answer": "ishirini na tano", "explain": "Join the parts with na: ishirini (20) na tano (5)." },
           { "prompt": "'mia moja' is:", "options": ["100", "10", "50", "1000"], "answer": "100" }
         ]
@@ -2309,12 +2332,46 @@
         ]
       },
       {
+        "type": "heading",
+        "heading": "Dialogue — What Time Is It?"
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          {
+            "speaker": "Neema",
+            "swahili": "Samahani, saa ngapi?",
+            "english": "Excuse me, what time is it?"
+          },
+          {
+            "speaker": "Daudi",
+            "swahili": "Saa tatu asubuhi.",
+            "english": "Nine o'clock in the morning."
+          },
+          {
+            "speaker": "Neema",
+            "swahili": "Asante. Leo ni Ijumaa?",
+            "english": "Thanks. Is today Friday?"
+          },
+          {
+            "speaker": "Daudi",
+            "swahili": "Hapana, leo ni Alhamisi. Kesho ni Ijumaa.",
+            "english": "No, today is Thursday. Tomorrow is Friday."
+          },
+          {
+            "speaker": "Neema",
+            "swahili": "Ninafanya kazi kesho, saa mbili asubuhi.",
+            "english": "I'm working tomorrow at eight in the morning."
+          }
+        ]
+      },
+      {
         "type": "quickCheck",
         "calloutTitle": "Quick check",
         "questions": [
           { "prompt": "'Saa moja' in the morning is what time on a Western clock?", "options": ["7:00", "1:00", "6:00", "12:00"], "answer": "7:00", "explain": "The Swahili clock starts at sunrise — add 6." },
           { "prompt": "How do you say 1:00 pm?", "options": ["saa saba", "saa moja", "saa sita", "saa tatu"], "answer": "saa saba", "explain": "1 pm is the seventh hour of daylight." },
-          { "prompt": "Which day is 'Ijumaa'?", "options": ["Friday", "Thursday", "Saturday", "Sunday"], "answer": "Friday" }
+          { "prompt": "Which day is 'Jumatatu'?", "options": ["Monday", "Tuesday", "Saturday", "Sunday"], "answer": "Monday", "explain": "The week starts on Jumamosi (Saturday), so Jumatatu — 'day three' — is Monday." }
         ]
       }
     ],
@@ -2632,6 +2689,50 @@
         ]
       },
       {
+        "type": "heading",
+        "heading": "Dialogue — Getting to Know You"
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          {
+            "speaker": "Zawadi",
+            "swahili": "Unakaa wapi?",
+            "english": "Where do you live?"
+          },
+          {
+            "speaker": "Peter",
+            "swahili": "Ninakaa Arusha.",
+            "english": "I live in Arusha."
+          },
+          {
+            "speaker": "Zawadi",
+            "swahili": "Unafanya kazi gani?",
+            "english": "What work do you do?"
+          },
+          {
+            "speaker": "Peter",
+            "swahili": "Mimi ni mwalimu.",
+            "english": "I'm a teacher."
+          },
+          {
+            "speaker": "Zawadi",
+            "swahili": "Kwa nini unajifunza Kiswahili?",
+            "english": "Why are you learning Swahili?"
+          },
+          {
+            "speaker": "Peter",
+            "swahili": "Kwa sababu ninapenda Tanzania. Na wewe, unafanya nini?",
+            "english": "Because I love Tanzania. And you, what do you do?"
+          },
+          {
+            "speaker": "Zawadi",
+            "swahili": "Mimi ni daktari. Ninafanya kazi Arusha.",
+            "english": "I'm a doctor. I work in Arusha."
+          }
+        ]
+      },
+      {
         "type": "quickCheck",
         "calloutTitle": "Quick check",
         "questions": [
@@ -2734,10 +2835,96 @@
         "intro": "Drag the words into the right order, then tap Check. Get it right to hear it spoken — pole pole!"
       },
       {
+        "type": "heading",
+        "heading": "Dialogue — Talking About Family"
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          {
+            "speaker": "Juma",
+            "swahili": "Una watoto?",
+            "english": "Do you have children?"
+          },
+          {
+            "speaker": "Asha",
+            "swahili": "Ndiyo, nina watoto wawili.",
+            "english": "Yes, I have two children."
+          },
+          {
+            "speaker": "Juma",
+            "swahili": "Majina yao ni nani?",
+            "english": "What are their names?"
+          },
+          {
+            "speaker": "Asha",
+            "swahili": "Baraka na Neema. Baraka ni mrefu, Neema ni mdogo.",
+            "english": "Baraka and Neema. Baraka is tall, Neema is small."
+          },
+          {
+            "speaker": "Juma",
+            "swahili": "Wana miaka mingapi?",
+            "english": "How old are they?"
+          },
+          {
+            "speaker": "Asha",
+            "swahili": "Baraka ana miaka kumi, na Neema ana miaka sita.",
+            "english": "Baraka is ten, and Neema is six."
+          },
+          {
+            "speaker": "Juma",
+            "swahili": "Watoto wako ni wazuri sana!",
+            "english": "Your children are lovely!"
+          }
+        ]
+      },
+      {
+        "type": "conversation",
+        "calloutTitle": "Now you try — talk to Asha",
+        "intro": "A real back-and-forth, out loud. There is no script — say whatever you like, and use the phrases below if you get stuck.",
+        "scenario": {
+          "setting": "You are having tea with Asha, a teacher you met in Dar es Salaam. She is curious about the people in your life.",
+          "goal": "Tell her about your family or a friend — who they are and what they are like — and ask about her children.",
+          "role": "Asha, a warm primary-school teacher from Dar es Salaam with two young children, Baraka (10) and Neema (6). You ask the learner about their family and friends: whether they have children, brothers or sisters, their names, their ages and what they are like. You happily describe your own children when asked.",
+          "opening": "Karibu chai! Una watoto?",
+          "openingTranslation": "Have some tea! Do you have children?",
+          "phrases": [
+            {
+              "swahili": "Nina …",
+              "english": "I have …"
+            },
+            {
+              "swahili": "Sina watoto.",
+              "english": "I don't have children."
+            },
+            {
+              "swahili": "Jina lake ni …",
+              "english": "His/Her name is …"
+            },
+            {
+              "swahili": "Yeye ni mrefu.",
+              "english": "He/She is tall."
+            },
+            {
+              "swahili": "Rafiki yangu ni …",
+              "english": "My friend is …"
+            },
+            {
+              "swahili": "Na wewe?",
+              "english": "And you?"
+            },
+            {
+              "swahili": "Watoto wako ni wazuri!",
+              "english": "Your children are lovely!"
+            }
+          ]
+        }
+      },
+      {
         "type": "quickCheck",
         "calloutTitle": "Quick check",
         "questions": [
-          { "prompt": "How do you say 'I have two children'?", "options": ["Nina watoto wawili", "Ana watoto wawili", "Ni watoto wawili", "Nina mtoto mmoja"], "answer": "Nina watoto wawili", "explain": "nina = I have." },
+          { "prompt": "How do you say 'We have a car'?", "options": ["Tuna gari", "Nina gari", "Wana gari", "Ana gari"], "answer": "Tuna gari", "explain": "tu- (we) + na: tuna — we have." },
           { "prompt": "'Jina lake ni Asha' means:", "options": ["Her name is Asha", "My name is Asha", "Your name is Asha", "Their name is Asha"], "answer": "Her name is Asha", "explain": "lake = his/her." },
           { "prompt": "'Wana' means:", "options": ["they have", "we have", "he/she has", "you have"], "answer": "they have" }
         ]
@@ -2918,8 +3105,8 @@
         "english": "I went"
       },
       {
-        "swahili": "jana",
-        "english": "yesterday"
+        "swahili": "sikula",
+        "english": "I didn't eat"
       },
       {
         "swahili": "sokoni",
@@ -3043,6 +3230,50 @@
         ]
       },
       {
+        "type": "heading",
+        "heading": "Dialogue — Plans for Tomorrow"
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          {
+            "speaker": "Rehema",
+            "swahili": "Utafanya nini kesho?",
+            "english": "What will you do tomorrow?"
+          },
+          {
+            "speaker": "Musa",
+            "swahili": "Kesho nitakwenda Zanzibar.",
+            "english": "Tomorrow I'll go to Zanzibar."
+          },
+          {
+            "speaker": "Rehema",
+            "swahili": "Utakwenda na nani?",
+            "english": "Who will you go with?"
+          },
+          {
+            "speaker": "Musa",
+            "swahili": "Nitakwenda pamoja na rafiki yangu.",
+            "english": "I'll go together with my friend."
+          },
+          {
+            "speaker": "Rehema",
+            "swahili": "Mtarudi lini?",
+            "english": "When will you two come back?"
+          },
+          {
+            "speaker": "Musa",
+            "swahili": "Tutarudi Jumapili. Na wewe?",
+            "english": "We'll come back on Sunday. And you?"
+          },
+          {
+            "speaker": "Rehema",
+            "swahili": "Mimi sitasafiri. Nitasoma Kiswahili!",
+            "english": "I won't travel. I'll study Swahili!"
+          }
+        ]
+      },
+      {
         "type": "quickCheck",
         "calloutTitle": "Quick check",
         "questions": [
@@ -3062,8 +3293,8 @@
         "english": "I will travel"
       },
       {
-        "swahili": "kesho",
-        "english": "tomorrow"
+        "swahili": "sitakunywa",
+        "english": "I won't drink"
       },
       {
         "swahili": "safiri",
@@ -3189,7 +3420,7 @@
         "calloutTitle": "Quick check",
         "questions": [
           { "prompt": "'Amefika' means:", "options": ["He/She has arrived", "He/She will arrive", "He/She is arriving", "He/She didn't arrive"], "answer": "He/She has arrived", "explain": "-me- = has done." },
-          { "prompt": "'Sijala' means:", "options": ["I haven't eaten yet", "I didn't eat", "I won't eat", "I am not eating"], "answer": "I haven't eaten yet", "explain": "-ja- is the 'not yet' negative of -me-." },
+          { "prompt": "Which marker makes the negative perfect ('not yet')?", "options": ["-ja-", "-me-", "-ku-", "-ta-"], "answer": "-ja-", "explain": "si- + -ja- + stem: sijafika — I haven't arrived yet." },
           { "prompt": "Which sentence describes a habit?", "options": ["Hunywa chai kila asubuhi", "Nimekunywa chai", "Nitakunywa chai", "Nilikunywa chai"], "answer": "Hunywa chai kila asubuhi", "explain": "hu- with no subject prefix = habitual." }
         ]
       }
@@ -3381,12 +3612,50 @@
         ]
       },
       {
+        "type": "conversation",
+        "calloutTitle": "Now you try — bargain at the market",
+        "intro": "A real back-and-forth, out loud. There is no script — say whatever you like, and use the phrases below if you get stuck.",
+        "scenario": {
+          "setting": "You are at Kariakoo market in Dar es Salaam. Mama Rehema has a stall piled high with fruit and vegetables.",
+          "goal": "Ask the price of something, say it is too expensive, agree on a lower price and buy it.",
+          "role": "Mama Rehema, a cheerful market seller at Kariakoo market in Dar es Salaam. You sell bananas (ndizi), fruit, fish, rice and vegetables. Open with a price that is a little high — for example 1,000 shillings for the bananas — and enjoy the haggling: come down once or twice, then agree. Keep prices to simple round numbers.",
+          "opening": "Karibu, mteja! Unataka nini leo?",
+          "openingTranslation": "Welcome, customer! What would you like today?",
+          "phrases": [
+            {
+              "swahili": "Ndizi bei gani?",
+              "english": "How much are the bananas?"
+            },
+            {
+              "swahili": "Ghali sana!",
+              "english": "Too expensive!"
+            },
+            {
+              "swahili": "Punguza bei, tafadhali.",
+              "english": "Lower the price, please."
+            },
+            {
+              "swahili": "Nataka kilo moja.",
+              "english": "I want one kilo."
+            },
+            {
+              "swahili": "Sawa, nitanunua.",
+              "english": "OK, I'll buy it."
+            },
+            {
+              "swahili": "Asante. Kwa heri!",
+              "english": "Thank you. Goodbye!"
+            }
+          ]
+        }
+      },
+      {
         "type": "quickCheck",
         "calloutTitle": "Quick check",
         "questions": [
-          { "prompt": "You want to know what something costs. You ask:", "options": ["Bei gani?", "Saa ngapi?", "Habari gani?", "Unatoka wapi?"], "answer": "Bei gani?" },
-          { "prompt": "'Punguza bei' means:", "options": ["Lower the price", "Very expensive", "I'll buy it", "I want one kilo"], "answer": "Lower the price" },
-          { "prompt": "Which word means 'fish'?", "options": ["samaki", "nyama", "mboga", "maziwa"], "answer": "samaki" }
+          { "prompt": "You agree on a price and decide to buy. You say:", "options": ["Nitanunua", "Ghali sana!", "Punguza bei", "Bei gani?"], "answer": "Nitanunua", "explain": "ni- + -ta- + nunua: I'll buy (it)." },
+          { "prompt": "'Nataka kilo moja' means:", "options": ["I want one kilo", "I want one more", "It costs one shilling", "Give me the price"], "answer": "I want one kilo", "explain": "nataka is the everyday short form of ninataka." },
+          { "prompt": "Which word means 'bread'?", "options": ["mkate", "maziwa", "mboga", "wali"], "answer": "mkate", "explain": "maziwa = milk, mboga = vegetables, wali = cooked rice." }
         ]
       }
     ],
@@ -3568,16 +3837,89 @@
         ]
       },
       {
-        "type": "paragraph",
-        "text": "Example: Stesheni iko wapi? — Endelea moja kwa moja, kisha geukia kushoto. (Where is the station? — Keep going straight ahead, then turn left.)"
+        "type": "heading",
+        "heading": "Dialogue — Asking the Way"
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          {
+            "speaker": "Msafiri",
+            "swahili": "Samahani, stesheni iko wapi?",
+            "english": "Excuse me, where is the station?"
+          },
+          {
+            "speaker": "Mwenyeji",
+            "swahili": "Endelea moja kwa moja, kisha geuka kushoto.",
+            "english": "Keep going straight ahead, then turn left."
+          },
+          {
+            "speaker": "Msafiri",
+            "swahili": "Ni mbali?",
+            "english": "Is it far?"
+          },
+          {
+            "speaker": "Mwenyeji",
+            "swahili": "Hapana, ni karibu. Iko nyuma ya hoteli.",
+            "english": "No, it's near. It's behind the hotel."
+          },
+          {
+            "speaker": "Msafiri",
+            "swahili": "Asante sana. Tikiti ni bei gani?",
+            "english": "Thank you very much. How much is a ticket?"
+          },
+          {
+            "speaker": "Mwenyeji",
+            "swahili": "Shilingi elfu tano. Safari njema!",
+            "english": "Five thousand shillings. Safe travels!"
+          }
+        ]
+      },
+      {
+        "type": "conversation",
+        "calloutTitle": "Now you try — ask the way",
+        "intro": "A real back-and-forth, out loud. There is no script — say whatever you like, and use the phrases below if you get stuck.",
+        "scenario": {
+          "setting": "You have just got off a bus in Moshi, Tanzania, and need to find your hotel. Mama Grace is selling fruit by the roadside.",
+          "goal": "Greet her politely, ask where the hotel is and whether it is far, and thank her.",
+          "role": "Mama Grace, a kind fruit seller in her fifties in Moshi, Tanzania. The hotel the visitor wants is close: straight ahead, then left, behind the bus station — about five minutes on foot. Give directions one short step at a time and check they understood. If asked, you can also say where the bus station or the market is.",
+          "opening": "Karibu, mgeni! Unakwenda wapi?",
+          "openingTranslation": "Welcome, visitor! Where are you going?",
+          "phrases": [
+            {
+              "swahili": "Shikamoo, mama.",
+              "english": "Respectful greeting to an elder."
+            },
+            {
+              "swahili": "Hoteli iko wapi?",
+              "english": "Where is the hotel?"
+            },
+            {
+              "swahili": "Ni mbali?",
+              "english": "Is it far?"
+            },
+            {
+              "swahili": "Kushoto au kulia?",
+              "english": "Left or right?"
+            },
+            {
+              "swahili": "Tafadhali sema polepole.",
+              "english": "Please speak slowly."
+            },
+            {
+              "swahili": "Asante sana!",
+              "english": "Thank you very much!"
+            }
+          ]
+        }
       },
       {
         "type": "quickCheck",
         "calloutTitle": "Quick check",
         "questions": [
-          { "prompt": "'Geukia kushoto' tells you to turn:", "options": ["left", "right", "back", "around the station"], "answer": "left", "explain": "kushoto = left, kulia = right." },
-          { "prompt": "'Moja kwa moja' means:", "options": ["straight ahead", "one by one", "near", "behind"], "answer": "straight ahead" },
-          { "prompt": "The opposite of 'karibu' (near) is:", "options": ["mbali", "mbele", "nyuma", "kulia"], "answer": "mbali" }
+          { "prompt": "'Geuka kulia' tells you to turn:", "options": ["right", "left", "back", "straight ahead"], "answer": "right", "explain": "kulia = right, kushoto = left." },
+          { "prompt": "Which word means 'ticket'?", "options": ["tikiti", "basi", "ndege", "stesheni"], "answer": "tikiti", "explain": "basi = bus, ndege = airplane, stesheni = station." },
+          { "prompt": "'Nyuma' means:", "options": ["behind", "ahead", "near", "left"], "answer": "behind", "explain": "mbele = ahead, nyuma = behind." }
         ]
       }
     ],
@@ -3611,8 +3953,8 @@
         "english": "far"
       },
       {
-        "swahili": "karibu",
-        "english": "near"
+        "swahili": "karibu na",
+        "english": "near (to)"
       }
     ],
     "quiz": [
@@ -3740,8 +4082,8 @@
         "calloutTitle": "Quick check",
         "questions": [
           { "prompt": "How do you say 'at school'?", "options": ["shuleni", "sokoni", "mjini", "chumbani"], "answer": "shuleni", "explain": "Add -ni to the place: shule → shuleni." },
-          { "prompt": "'Hakuna maji' means:", "options": ["There is no water", "There is water", "Where is the water?", "I am in the water"], "answer": "There is no water", "explain": "kuna = there is, hakuna = there is not." },
-          { "prompt": "Complete: ___ nyumbani. (I am at home.)", "options": ["Niko", "Uko", "Kuna", "Hakuna"], "answer": "Niko", "explain": "ni- (I) + -ko (be at)." }
+          { "prompt": "'Kuna chakula mezani' means:", "options": ["There is food on the table", "There is no food on the table", "The food is at the market", "I am at the table"], "answer": "There is food on the table", "explain": "kuna = there is; meza + -ni = on the table." },
+          { "prompt": "'Uko sokoni?' asks:", "options": ["Are you at the market?", "Is there a market?", "Where is the market?", "Am I at the market?"], "answer": "Are you at the market?", "explain": "u- (you) + -ko (be at), then soko + -ni." }
         ]
       }
     ],
@@ -3755,8 +4097,8 @@
         "english": "at school"
       },
       {
-        "swahili": "sokoni",
-        "english": "at market"
+        "swahili": "mjini",
+        "english": "in town"
       },
       {
         "swahili": "kuna",
@@ -3890,10 +4232,48 @@
         "text": "(Yesterday I woke up. First I drank tea, then went to market. I bought fruit. Later I returned home and cooked. In the evening I was tired, so I slept early. Tomorrow I'll work.)"
       },
       {
+        "type": "conversation",
+        "calloutTitle": "Now you try — tell Juma about your day",
+        "intro": "A real back-and-forth, out loud. There is no script — say whatever you like, and use the phrases below if you get stuck.",
+        "scenario": {
+          "setting": "It is evening and you run into your friend Juma. He wants to hear what you did yesterday.",
+          "goal": "Tell him three or four things you did yesterday, in order — use kwanza, kisha and baadaye — and say what you will do tomorrow.",
+          "role": "Juma, a friendly university student in Arusha, Tanzania, and a friend of the learner. You are curious about what they did yesterday: ask follow-up questions such as where they went, what they ate or bought and who they were with, then ask about their plans for tomorrow. Share one or two short things about your own day if asked.",
+          "opening": "Habari za jioni, rafiki! Ulifanya nini jana?",
+          "openingTranslation": "Good evening, my friend! What did you do yesterday?",
+          "phrases": [
+            {
+              "swahili": "Kwanza niliamka asubuhi.",
+              "english": "First I woke up in the morning."
+            },
+            {
+              "swahili": "Kisha nilienda sokoni.",
+              "english": "Then I went to the market."
+            },
+            {
+              "swahili": "Baadaye nilirudi nyumbani.",
+              "english": "Later I returned home."
+            },
+            {
+              "swahili": "Nilinunua matunda.",
+              "english": "I bought fruit."
+            },
+            {
+              "swahili": "Kesho nitafanya kazi.",
+              "english": "Tomorrow I will work."
+            },
+            {
+              "swahili": "Na wewe, ulifanya nini?",
+              "english": "And you, what did you do?"
+            }
+          ]
+        }
+      },
+      {
         "type": "quickCheck",
         "calloutTitle": "Quick check",
         "questions": [
-          { "prompt": "Which connector means 'because'?", "options": ["kwa sababu", "lakini", "kisha", "kwa hiyo"], "answer": "kwa sababu" },
+          { "prompt": "Which connector means 'but'?", "options": ["lakini", "kisha", "kwanza", "na"], "answer": "lakini", "explain": "kisha = then, kwanza = first, na = and." },
           { "prompt": "In the story, what happened right after drinking tea?", "options": ["The narrator went to the market", "The narrator cooked food", "The narrator went to sleep", "The narrator went to work"], "answer": "The narrator went to the market", "explain": "Kwanza nilikunywa chai, kisha nilienda sokoni." },
           { "prompt": "'Kesho nitafanya kazi' is in which tense?", "options": ["Future", "Past", "Present", "Perfect"], "answer": "Future", "explain": "-ta- marks the future." }
         ]
@@ -4022,12 +4402,56 @@
         "text": "After taka (want) and lazima (must), the next verb is subjunctive: Nataka uende — I want you to go. Lazima tusome — We must study."
       },
       {
+        "type": "heading",
+        "heading": "Dialogue — At a Friend's House"
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          {
+            "speaker": "Mama Asha",
+            "swahili": "Karibu, Tom! Tafadhali ukae.",
+            "english": "Welcome, Tom! Please sit down."
+          },
+          {
+            "speaker": "Tom",
+            "swahili": "Asante, mama. Nipike chai?",
+            "english": "Thank you. Shall I make the tea?"
+          },
+          {
+            "speaker": "Mama Asha",
+            "swahili": "Hapana, wewe ni mgeni! Lazima upumzike.",
+            "english": "No, you are the guest! You must rest."
+          },
+          {
+            "speaker": "Tom",
+            "swahili": "Sawa. Tafadhali nipe maji.",
+            "english": "OK. Please give me some water."
+          },
+          {
+            "speaker": "Mama Asha",
+            "swahili": "Haya, maji. Sasa tule!",
+            "english": "Here you are, water. Now let's eat!"
+          },
+          {
+            "speaker": "Tom",
+            "swahili": "Asante sana. Kesho twende sokoni pamoja?",
+            "english": "Thank you very much. Shall we go to the market together tomorrow?"
+          },
+          {
+            "speaker": "Mama Asha",
+            "swahili": "Wazo zuri! Tukutane saa tatu asubuhi.",
+            "english": "Good idea! Let's meet at nine in the morning."
+          }
+        ]
+      },
+      {
         "type": "quickCheck",
         "calloutTitle": "Quick check",
         "questions": [
-          { "prompt": "'Twende' means:", "options": ["Let's go", "We went", "We are going", "We will go"], "answer": "Let's go" },
+          { "prompt": "'Nisome?' means:", "options": ["Should I read?", "I am reading", "I read (in the past)", "Read!"], "answer": "Should I read?", "explain": "ni- + som- + -e: the subjunctive asks or suggests." },
           { "prompt": "Complete: Nataka u___. (I want you to go.)", "options": ["ende", "enda", "naenda", "taenda"], "answer": "ende", "explain": "After taka the next verb ends in -e: uende." },
-          { "prompt": "How do you politely ask for water?", "options": ["Tafadhali nipe maji", "Nina maji", "Hakuna maji", "Ninakunywa maji"], "answer": "Tafadhali nipe maji", "explain": "nipe = give me." }
+          { "prompt": "After 'lazima' (must), the next verb is in the:", "options": ["subjunctive", "past tense", "future tense", "perfect tense"], "answer": "subjunctive", "explain": "Lazima twende — we must go." }
         ]
       }
     ],
@@ -4168,7 +4592,7 @@
         "type": "quickCheck",
         "calloutTitle": "Quick check",
         "questions": [
-          { "prompt": "'Ninakupenda' means:", "options": ["I love you", "You love me", "I love him/her", "They love you"], "answer": "I love you", "explain": "-ku- = you, tucked in before the stem." },
+          { "prompt": "'Ninamjua' means:", "options": ["I know him/her", "He/She knows me", "I know you", "They know him/her"], "answer": "I know him/her", "explain": "-m- is the object 'him/her', tucked in just before the stem." },
           { "prompt": "Complete: Ana___ona. (He/She sees us.)", "options": ["tu", "ni", "ku", "wa"], "answer": "tu", "explain": "-tu- = us." },
           { "prompt": "'Nilimwona jana' means:", "options": ["I saw him/her yesterday", "He/She saw me yesterday", "I saw you yesterday", "I will see him/her tomorrow"], "answer": "I saw him/her yesterday" }
         ]
@@ -4305,9 +4729,9 @@
         "type": "quickCheck",
         "calloutTitle": "Quick check",
         "questions": [
-          { "prompt": "Complete: Mtu ___ anasoma ni rafiki yangu.", "options": ["ambaye", "ambacho", "ambayo", "ambapo"], "answer": "ambaye", "explain": "A person takes ambaye." },
-          { "prompt": "Complete: Kitabu ___ nilinunua ni kizuri.", "options": ["ambacho", "ambaye", "ambao", "ambapo"], "answer": "ambacho", "explain": "A ki- thing takes ambacho." },
-          { "prompt": "'ambapo' means:", "options": ["where / when", "who", "which (plural)", "because"], "answer": "where / when" }
+          { "prompt": "Complete: Watu ___ wanasoma ni marafiki zangu.", "options": ["ambao", "ambaye", "ambacho", "ambapo"], "answer": "ambao", "explain": "watu is plural, so 'who' is ambao." },
+          { "prompt": "Complete: Nyumba ___ nilinunua ni kubwa.", "options": ["ambayo", "ambacho", "ambaye", "ambao"], "answer": "ambayo", "explain": "nyumba is N-class, so 'which' is ambayo." },
+          { "prompt": "'Mtu anayesoma' is a shorter way to say:", "options": ["Mtu ambaye anasoma", "Mtu ambacho anasoma", "Mtu ambapo anasoma", "Mtu anasoma"], "answer": "Mtu ambaye anasoma", "explain": "-ye- inside the verb does the job of ambaye." }
         ]
       }
     ],
@@ -4470,9 +4894,9 @@
         "type": "quickCheck",
         "calloutTitle": "Quick check",
         "questions": [
-          { "prompt": "Complete: Tembo ni mkubwa ___ simba. (bigger than)", "options": ["kuliko", "kama", "sana", "pamoja"], "answer": "kuliko", "explain": "kuliko = than." },
-          { "prompt": "'polepole' means:", "options": ["slowly", "quickly", "well", "together"], "answer": "slowly" },
-          { "prompt": "Which phrase means 'every day'?", "options": ["kila siku", "pamoja", "haraka", "vizuri"], "answer": "kila siku" }
+          { "prompt": "'Zaidi ya' means:", "options": ["more than", "better than", "the same as", "less than"], "answer": "more than", "explain": "zaidi ya kumi — more than ten." },
+          { "prompt": "'Haraka' means:", "options": ["quickly", "slowly", "well", "together"], "answer": "quickly", "explain": "haraka = quickly; its opposite is polepole." },
+          { "prompt": "How do you say 'She speaks well'?", "options": ["Anasema vizuri", "Anasema haraka", "Anasema sana", "Anasema pamoja"], "answer": "Anasema vizuri", "explain": "vizuri = well; the adverb follows the verb." }
         ]
       }
     ],
@@ -4666,12 +5090,98 @@
         ]
       },
       {
+        "type": "heading",
+        "heading": "Dialogue — Not Feeling Well"
+      },
+      {
+        "type": "dialogue",
+        "dialogue": [
+          {
+            "speaker": "Amina",
+            "swahili": "Mambo vipi, Juma?",
+            "english": "What's up, Juma?"
+          },
+          {
+            "speaker": "Juma",
+            "swahili": "Si poa sana. Naumwa.",
+            "english": "Not so great. I'm sick."
+          },
+          {
+            "speaker": "Amina",
+            "swahili": "Pole sana! Unaumwa nini?",
+            "english": "So sorry! What's wrong?"
+          },
+          {
+            "speaker": "Juma",
+            "swahili": "Kichwa kinauma, na nimechoka sana.",
+            "english": "My head hurts, and I'm very tired."
+          },
+          {
+            "speaker": "Amina",
+            "swahili": "Umekunywa dawa?",
+            "english": "Have you taken any medicine?"
+          },
+          {
+            "speaker": "Juma",
+            "swahili": "Bado. Nitakwenda kwa daktari kesho.",
+            "english": "Not yet. I'll go to the doctor tomorrow."
+          },
+          {
+            "speaker": "Amina",
+            "swahili": "Vizuri. Lazima upumzike. Ugua pole!",
+            "english": "Good. You must rest. Get well soon!"
+          }
+        ]
+      },
+      {
+        "type": "conversation",
+        "calloutTitle": "Now you try — small talk with Amina",
+        "intro": "A real back-and-forth, out loud. There is no script — say whatever you like, and use the phrases below if you get stuck.",
+        "scenario": {
+          "setting": "You bump into your neighbour Amina outside the shop in Nairobi. She always stops to chat.",
+          "goal": "Answer her greeting, say how you are feeling today, ask how she and her work are, and say goodbye.",
+          "role": "Amina, a chatty, kind neighbour in Nairobi, Kenya, who works as a nurse. You greet casually (Mambo vipi?), ask how the learner is feeling, and respond with sympathy (Pole sana) if they are tired, hungry or unwell, or with gladness if they are happy. You are a little tired today after a long shift but in good spirits.",
+          "opening": "Mambo vipi? Habari za leo?",
+          "openingTranslation": "What's up? How is your day?",
+          "phrases": [
+            {
+              "swahili": "Poa!",
+              "english": "Cool / fine!"
+            },
+            {
+              "swahili": "Nina furaha leo.",
+              "english": "I'm happy today."
+            },
+            {
+              "swahili": "Nimechoka.",
+              "english": "I'm tired."
+            },
+            {
+              "swahili": "Nina njaa.",
+              "english": "I'm hungry."
+            },
+            {
+              "swahili": "Habari za kazi?",
+              "english": "How's work?"
+            },
+            {
+              "swahili": "Pole sana.",
+              "english": "So sorry."
+            },
+            {
+              "swahili": "Tutaonana!",
+              "english": "See you!"
+            }
+          ]
+        }
+      },
+      {
         "type": "quickCheck",
         "calloutTitle": "Quick check",
         "questions": [
-          { "prompt": "How do you say 'I am hungry'?", "options": ["nina njaa", "nina kiu", "nimechoka", "nina furaha"], "answer": "nina njaa" },
-          { "prompt": "A friend says 'Mambo vipi?'. The casual reply is:", "options": ["Poa", "Marahaba", "Pole sana", "Naumwa"], "answer": "Poa" },
-          { "prompt": "'Kichwa kinauma' means:", "options": ["My head hurts", "I am tired", "I am angry", "I need medicine"], "answer": "My head hurts" }
+          { "prompt": "'Nina furaha' means:", "options": ["I am happy", "I am hungry", "I am tired", "I am angry"], "answer": "I am happy", "explain": "Literally 'I have happiness'." },
+          { "prompt": "'Habari za kazi?' asks about:", "options": ["your work", "your health", "your family", "your name"], "answer": "your work", "explain": "kazi = work. The usual answer is 'Nzuri'." },
+          { "prompt": "'Nimekasirika' means:", "options": ["I am angry", "I am tired", "I am sick", "I am happy"], "answer": "I am angry", "explain": "nimechoka = I am tired; nimekasirika = I am angry." }
         ]
       }
     ],
@@ -4835,9 +5345,9 @@
         "type": "quickCheck",
         "calloutTitle": "Quick check",
         "questions": [
-          { "prompt": "'Haraka haraka haina baraka' warns against:", "options": ["rushing", "laziness", "talking too much", "travelling alone"], "answer": "rushing", "explain": "Haste makes waste." },
-          { "prompt": "A friend has just passed an exam. You say:", "options": ["Hongera!", "Pole sana", "Safari njema", "Karibu tena"], "answer": "Hongera!" },
-          { "prompt": "Someone is setting off on a trip. You say:", "options": ["Safari njema", "Karibu tena", "Hongera!", "Marahaba"], "answer": "Safari njema" }
+          { "prompt": "'Haba na haba hujaza kibaba' teaches that:", "options": ["small efforts add up", "haste makes waste", "guests are always welcome", "travel is a teacher"], "answer": "small efforts add up", "explain": "Little by little fills the measure." },
+          { "prompt": "A guest is leaving your home. You say:", "options": ["Karibu tena", "Hongera!", "Pole sana", "Bahati njema"], "answer": "Karibu tena", "explain": "Karibu tena — come back again." },
+          { "prompt": "'Pole pole ndiyo mwendo' praises:", "options": ["patience", "speed", "luck", "strength"], "answer": "patience", "explain": "Slowly is indeed the way to go." }
         ]
       }
     ],
@@ -4995,11 +5505,53 @@
         ]
       },
       {
+        "type": "conversation",
+        "calloutTitle": "Now you try — catch up with Daudi",
+        "intro": "A real back-and-forth, out loud. There is no script — say whatever you like, and use the phrases below if you get stuck.",
+        "scenario": {
+          "setting": "You run into Daudi, an old friend you have not seen for months, on a street in Dar es Salaam.",
+          "goal": "Say where you have been, ask about his work, and arrange to meet for tea — agree a day and a time.",
+          "role": "Daudi, an old friend of the learner, an accountant living in Dar es Salaam, Tanzania. You have not seen each other for months and are delighted. Ask where they have been and how their work is going, say your own work is going well but is busy, then suggest meeting for tea and settle a day and a time. Use Swahili clock times (for example saa nne asubuhi for 10 am).",
+          "opening": "Eh, kumbe ni wewe! Habari za siku nyingi?",
+          "openingTranslation": "Hey, so it's you! How have you been?",
+          "phrases": [
+            {
+              "swahili": "Nzuri! Nimefurahi kukuona.",
+              "english": "Good! I'm happy to see you."
+            },
+            {
+              "swahili": "Nilikuwa Mombasa kwa kazi.",
+              "english": "I was in Mombasa for work."
+            },
+            {
+              "swahili": "Kazi inaendeleaje?",
+              "english": "How is work going?"
+            },
+            {
+              "swahili": "Tukutane kesho?",
+              "english": "Shall we meet tomorrow?"
+            },
+            {
+              "swahili": "Saa ngapi?",
+              "english": "What time?"
+            },
+            {
+              "swahili": "Wazo zuri!",
+              "english": "Good idea!"
+            },
+            {
+              "swahili": "Tutaonana kesho.",
+              "english": "See you tomorrow."
+            }
+          ]
+        }
+      },
+      {
         "type": "quickCheck",
         "calloutTitle": "Quick check",
         "questions": [
           { "prompt": "Where had Halima been?", "options": ["Mombasa", "Nairobi", "At the café", "At home"], "answer": "Mombasa", "explain": "Nilikuwa Mombasa kwa kazi." },
-          { "prompt": "In 'Tukutane kesho', what form is 'tukutane'?", "options": ["Subjunctive", "Past", "Perfect", "Future"], "answer": "Subjunctive", "explain": "The final -e makes it 'let's meet'." },
+          { "prompt": "Which word from the dialogue carries the object infix 'you'?", "options": ["kukuona", "nilirudi", "umekuwa", "tunywe"], "answer": "kukuona", "explain": "ku- (to) + -ku- (you) + ona (see)." },
           { "prompt": "What time do they agree to meet?", "options": ["10 am", "4 am", "4 pm", "Noon"], "answer": "10 am", "explain": "Saa nne asubuhi: 4 + 6 = 10." }
         ]
       }
@@ -5126,7 +5678,7 @@
         "calloutTitle": "Quick check",
         "questions": [
           { "prompt": "Which marker makes the past tense?", "options": ["-li-", "-na-", "-ta-", "-me-"], "answer": "-li-" },
-          { "prompt": "'Tomorrow we will travel' is:", "options": ["Kesho tutasafiri", "Jana tulisafiri", "Kesho nitasafiri", "Leo tunasafiri"], "answer": "Kesho tutasafiri", "explain": "kesho (tomorrow) + tu- (we) + -ta- (future)." },
+          { "prompt": "Which sentence is in the perfect tense?", "options": ["Nimefika", "Nilifika", "Nitafika", "Ninafika"], "answer": "Nimefika", "explain": "-me- marks the perfect: I have arrived." },
           { "prompt": "The plural of 'kitabu' is:", "options": ["vitabu", "vitu", "watu", "miti"], "answer": "vitabu", "explain": "KI-/VI- class: ki- becomes vi-." }
         ]
       }
@@ -5149,8 +5701,8 @@
         "english": "cook"
       },
       {
-        "swahili": "kikombe",
-        "english": "cup"
+        "swahili": "tafsiri",
+        "english": "translation"
       }
     ],
     "quiz": [
@@ -5271,16 +5823,16 @@
         "type": "quickCheck",
         "calloutTitle": "Quick check",
         "questions": [
-          { "prompt": "'Hongera sana!' means:", "options": ["Congratulations!", "Goodbye!", "So sorry!", "Welcome!"], "answer": "Congratulations!" },
-          { "prompt": "'Pole pole ndiyo mwendo' advises you to:", "options": ["go slowly but steadily", "hurry up", "travel far", "stop and rest"], "answer": "go slowly but steadily" },
-          { "prompt": "'Safari njema' wishes someone:", "options": ["a safe journey", "good health", "a good night", "a good meal"], "answer": "a safe journey" }
+          { "prompt": "'Mwisho' means:", "options": ["the end", "the beginning", "the journey", "the lesson"], "answer": "the end", "explain": "mwisho = the end — of the course, not of your Swahili!" },
+          { "prompt": "Which sentence talks about tomorrow?", "options": ["Kesho nitasoma Kiswahili", "Jana nilisoma Kiswahili", "Nimesoma Kiswahili", "Ninasoma Kiswahili"], "answer": "Kesho nitasoma Kiswahili", "explain": "kesho + -ta- = the future." },
+          { "prompt": "How do you say 'I like Swahili very much'?", "options": ["Ninapenda Kiswahili sana", "Sipendi Kiswahili sana", "Nilipenda Kiswahili", "Ninapenda Kiswahili kidogo"], "answer": "Ninapenda Kiswahili sana", "explain": "sana (very much) comes at the end." }
         ]
       }
     ],
     "vocabulary": [
       {
-        "swahili": "hongera",
-        "english": "congratulations"
+        "swahili": "mafanikio",
+        "english": "success"
       },
       {
         "swahili": "mwisho",

@@ -7,6 +7,7 @@ import AdjectiveBuilder from './AdjectiveBuilder';
 import NounSorter from './NounSorter';
 import SentenceBuilder from './SentenceBuilder';
 import PronunciationDrill from './PronunciationDrill';
+import ConversationPractice from './ConversationPractice';
 import LessonTable from './LessonTable';
 import Dialogue from './Dialogue';
 import QuickCheck from './QuickCheck';
@@ -18,9 +19,9 @@ import EnglishVerbBuilder from './EnglishVerbBuilder';
 // Renders a single lesson content block.
 // Static types: heading, paragraph, callout, list.
 // Interactive types: table, dialogue, quickCheck, verbBuilder, possessiveBuilder, questionBuilder,
-// adjectiveBuilder, nounSorter, sentenceBuilder, pronunciationDrill.
+// adjectiveBuilder, nounSorter, sentenceBuilder, pronunciationDrill, conversation.
 // New block types must be registered BOTH here and in the web ContentBlock.jsx.
-export default function ContentBlock({ block }) {
+export default function ContentBlock({ block, lessonId }) {
   switch (block.type) {
     case 'verbBuilder':
       return <VerbBuilder block={block} />;
@@ -42,6 +43,9 @@ export default function ContentBlock({ block }) {
 
     case 'pronunciationDrill':
       return <PronunciationDrill block={block} />;
+
+    case 'conversation':
+      return <ConversationPractice block={block} lessonId={lessonId} />;
 
     case 'articleBuilder':
       return <ArticleBuilder block={block} />;

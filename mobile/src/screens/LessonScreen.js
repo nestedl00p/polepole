@@ -46,7 +46,7 @@ export default function LessonScreen({ route, navigation }) {
   if (!lesson) return null;
 
   return (
-    <ScrollView contentContainerStyle={styles.page}>
+    <ScrollView contentContainerStyle={styles.page} keyboardShouldPersistTaps="handled">
       <View style={styles.head}>
         <Text style={styles.dayNum}>Day {lesson.id} · {lesson.theme}</Text>
         <Text style={styles.title}>{lesson.title}</Text>
@@ -54,7 +54,7 @@ export default function LessonScreen({ route, navigation }) {
       </View>
 
       {lesson.blocks.map((b, i) => (
-        <ContentBlock key={i} block={b} />
+        <ContentBlock key={i} block={b} lessonId={lesson.id} />
       ))}
 
       {lesson.vocabulary?.length > 0 && (
