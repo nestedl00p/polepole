@@ -996,14 +996,49 @@ ul.sw-list li { margin-bottom: 5px; }
 .why-chip.active { border-color: var(--teal); background: #e3f1f1; color: var(--teal-dark); }
 
 /* Language picker (landing header and footer, Settings) */
-.locale-select {
-  font: inherit; font-size: 0.9rem; font-weight: 600; color: var(--ink);
+.locale-select { position: relative; display: inline-block; }
+.locale-select-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  font: inherit; font-size: 0.9rem; font-weight: 600; line-height: 1.2; color: var(--ink);
   background: transparent; border: 1px solid var(--line); border-radius: 999px;
-  padding: 6px 10px; cursor: pointer;
+  padding: 7px 10px 7px 11px; cursor: pointer; white-space: nowrap;
+  transition: border-color 0.15s, background-color 0.15s, color 0.15s;
 }
-.locale-select:hover { border-color: var(--teal-dark); }
-.lp-footer-links .lp-locale { align-self: flex-start; color: #c7d6e2; border-color: rgba(255,255,255,0.25); }
-.lp-footer-links .lp-locale option { color: var(--ink); }
+.locale-select-btn:hover,
+.locale-select-btn[aria-expanded="true"] { border-color: var(--teal); background: rgba(46, 139, 139, 0.07); }
+.locale-select-btn:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+.locale-globe { color: var(--teal-dark); flex: none; }
+.locale-chevron { flex: none; opacity: 0.6; transition: transform 0.15s; }
+.locale-select-btn[aria-expanded="true"] .locale-chevron { transform: rotate(180deg); }
+
+.locale-menu {
+  position: absolute; top: calc(100% + 6px); left: 0; z-index: 70;
+  display: flex; flex-direction: column; gap: 2px;
+  min-width: max(100%, 170px); padding: 6px;
+  background: #fff; border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow-lg);
+  animation: locale-menu-in 0.12s ease-out;
+}
+@keyframes locale-menu-in { from { opacity: 0; transform: translateY(-4px); } }
+@media (prefers-reduced-motion: reduce) { .locale-menu { animation: none; } }
+.locale-option {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  font: inherit; font-size: 0.92rem; font-weight: 600; text-align: left; color: var(--ink);
+  background: none; border: 0; border-radius: 8px; padding: 9px 10px; cursor: pointer;
+}
+.locale-option:hover, .locale-option:focus-visible { background: var(--light); outline: none; }
+.locale-option[aria-checked="true"] { color: var(--teal-dark); }
+.locale-check { flex: none; visibility: hidden; }
+.locale-option[aria-checked="true"] .locale-check { visibility: visible; }
+
+/* In the landing header the picker sits at the right edge. */
+.lp-header-cta .locale-menu { left: auto; right: 0; }
+/* In the dark footer, at the bottom of the page, it opens upwards. */
+.lp-footer-links .lp-locale { align-self: flex-start; }
+.lp-footer-links .lp-locale .locale-select-btn { color: #c7d6e2; border-color: rgba(255,255,255,0.25); }
+.lp-footer-links .lp-locale .locale-select-btn:hover,
+.lp-footer-links .lp-locale .locale-select-btn[aria-expanded="true"] { color: #fff; border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.08); }
+.lp-footer-links .lp-locale .locale-globe { color: inherit; }
+.lp-footer-links .lp-locale .locale-menu { top: auto; bottom: calc(100% + 6px); }
 /* The footer copy is for phones, where the header has no room for one. */
 @media (min-width: 561px) { .lp-footer-links .lp-locale { display: none; } }
 @media (max-width: 560px) {
