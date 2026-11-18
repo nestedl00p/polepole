@@ -202,7 +202,7 @@ export default function LandingPage() {
           </div>
         </div>
         <div className="lp-footer-bottom">
-          <div className="container">© {new Date().getFullYear()} PolePole · polepole.com · {t.footerMade}</div>
+          <div className="container">© {new Date().getFullYear()} PolePole · pole-pole.app · {t.footerMade}</div>
         </div>
       </footer>
     </div>
