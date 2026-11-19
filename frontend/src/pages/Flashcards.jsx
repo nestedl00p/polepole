@@ -13,6 +13,8 @@ export default function Flashcards() {
   const [mode, setMode] = useState('cards'); // 'cards' | 'practice'
   // "Nitakumbuka hii": the learner's own deck inside the course's.
   const [pinnedOnly, setPinnedOnly] = useState(false);
+  // Words added from the reader, as a deck of their own.
+  const [ownOnly, setOwnOnly] = useState(false);
 
   // practice state
   const [pq, setPq] = useState([]);
@@ -99,7 +101,10 @@ export default function Flashcards() {
   const pinnedCount = cards.filter((c) => c.pinned).length;
   // Unpinning the last pinned card drops back to the whole deck rather than
   // leaving an empty one on screen.
-  const deck = pinnedOnly && pinnedCount > 0 ? cards.filter((c) => c.pinned) : cards;
+  const ownCount = cards.filter((c) => c.own).length;
+  const showPinned = pinnedOnly && pinnedCount > 0;
+  const showOwn = !showPinned && ownOnly && ownCount > 0;
+  const deck = showPinned ? cards.filter((c) => c.pinned) : showOwn ? cards.filter((c) => c.own) : cards;
   const card = deck[i % deck.length];
 
   const togglePin = async (e) => {
@@ -123,14 +128,23 @@ export default function Flashcards() {
     <div className="container page narrow">
       <div className="page-head" style={{ textAlign: 'center' }}>
         <h1>{t.title}</h1>
-        <p>{(pinnedOnly && pinnedCount > 0 ? t.deckPinned : t.deckAll)(deck.length, (i % deck.length) + 1)}</p>
+        <p>{(showPinned ? t.deckPinned : showOwn ? t.deckOwn : t.deckAll)(deck.length, (i % deck.length) + 1)}</p>
         {pinnedCount > 0 && (
           <button
             className={`btn btn-ghost btn-sm deck-filter ${pinnedOnly ? 'active' : ''}`}
             aria-pressed={pinnedOnly}
-            onClick={() => { setPinnedOnly((p) => !p); setI(0); setFlipped(false); }}
+            onClick={() => { setPinnedOnly((p) => !p); setOwnOnly(false); setI(0); setFlipped(false); }}
           >
             📌 {pinnedOnly ? t.showingPinned : t.pinnedOnly(pinnedCount)}
+          </button>
+        )}
+        {ownCount > 0 && (
+          <button
+            className={`btn btn-ghost btn-sm deck-filter ${showOwn ? 'active' : ''}`}
+            aria-pressed={showOwn}
+            onClick={() => { setOwnOnly((o) => !o); setPinnedOnly(false); setI(0); setFlipped(false); }}
+          >
+            📖 {showOwn ? t.showingOwn : t.ownOnly(ownCount)}
           </button>
         )}
       </div>
@@ -145,7 +159,8 @@ export default function Flashcards() {
           <div className="flashcard-face flashcard-back">
             <div className="flashcard-speak"><SpeakButton text={target} variant="onDark" /></div>
             <div className="big">{source}</div>
-            <div className="tiny">{target}</div>
+            {/* A word from the reader is remembered by the sentence it came from. */}
+            <div className="tiny">{card.own && card.context ? card.context : target}</div>
           </div>
         </div>
       </div>

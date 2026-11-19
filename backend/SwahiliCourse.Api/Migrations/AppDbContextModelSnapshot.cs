@@ -310,6 +310,50 @@ namespace SwahiliCourse.Api.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("SwahiliCourse.Api.Models.UserWord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Context")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CourseId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Note")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SeenAs")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Target")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId", "CourseId", "Target")
+                        .IsUnique();
+
+                    b.ToTable("UserWords");
+                });
+
             modelBuilder.Entity("SwahiliCourse.Api.Models.VoiceTake", b =>
                 {
                     b.Property<int>("Id")
@@ -378,6 +422,17 @@ namespace SwahiliCourse.Api.Migrations
                 });
 
             modelBuilder.Entity("SwahiliCourse.Api.Models.PracticeDay", b =>
+                {
+                    b.HasOne("SwahiliCourse.Api.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SwahiliCourse.Api.Models.UserWord", b =>
                 {
                     b.HasOne("SwahiliCourse.Api.Models.User", "User")
                         .WithMany()

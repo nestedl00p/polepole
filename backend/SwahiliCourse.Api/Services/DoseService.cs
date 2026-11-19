@@ -124,6 +124,74 @@ public class DoseService
     private static PoolItem ToPoolItem(Methali m) =>
         new(m.Key, m.Target, m.Source, ItemKinds.Methali, 0, "Methali", m.Note);
 
+    // Where a lesson title would go on a card the learner added themselves.
+    public static string OwnDeckTitle(Course course) =>
+        course.Say("My words", "Maneno yangu", "Mis palabras");
+
+    // No note: the sentence the word came from contains the word, which would
+    // give the answer away when the Dose asks the learner to produce it.
+    private static PoolItem ToPoolItem(UserWord w, Course course) =>
+        new(w.Target, w.Target, w.Source, ItemKinds.Own, 0, OwnDeckTitle(course), null);
+
+    // "Add to my words". Returns the saved word, or null when the course
+    // already teaches it — then there is nothing to store, and the existing
+    // card is pinned instead. Either way the card is pinned and due now, so it
+    // turns up in the next dose.
+    public async Task<(UserWord? Word, PoolItem Item)> AddOwnWordAsync(
+        User user, string target, string source, string seenAs, string context, string note,
+        CancellationToken ct = default)
+    {
+        var course = Courses.Get(user.CourseId);
+        var pool = await PoolAsync(user, null, ct);
+
+        // Case-insensitive: "Maji" at the start of a sentence is the lesson's "maji".
+        var existing = pool.FirstOrDefault(p =>
+            ItemKinds.IsWord(p.Kind) && string.Equals(p.Key, target, StringComparison.OrdinalIgnoreCase));
+
+        if (existing is not null && existing.Kind != ItemKinds.Own)
+        {
+            await PinAsync(user, existing, true, ct);
+            return (null, existing);
+        }
+
+        var key = existing?.Key ?? target;
+        var word = await _db.UserWords
+            .FirstOrDefaultAsync(w => w.UserId == user.Id && w.CourseId == course.Id && w.Target == key, ct);
+
+        if (word is null)
+        {
+            word = new UserWord { UserId = user.Id, CourseId = course.Id, Target = key };
+            _db.UserWords.Add(word);
+        }
+
+        // Adding a word again is how its meaning gets corrected.
+        word.Source = source;
+        word.SeenAs = seenAs;
+        word.Context = context;
+        word.Note = note;
+
+        var item = ToPoolItem(word, course);
+        await PinAsync(user, item, true, ct); // saves the word along with the card
+        return (word, item);
+    }
+
+    // Takes a learner's own word back out, with the review history it had.
+    public async Task<bool> RemoveOwnWordAsync(User user, int wordId, CancellationToken ct = default)
+    {
+        var word = await _db.UserWords.FirstOrDefaultAsync(w => w.Id == wordId && w.UserId == user.Id, ct);
+        if (word is null) return false;
+
+        var cards = await _db.CardStates
+            .Where(c => c.UserId == user.Id && c.CourseId == word.CourseId
+                        && c.ItemKey == word.Target && c.ItemKind == ItemKinds.Own)
+            .ToListAsync(ct);
+
+        _db.CardStates.RemoveRange(cards);
+        _db.UserWords.Remove(word);
+        await _db.SaveChangesAsync(ct);
+        return true;
+    }
+
     // Everything the learner has met: vocabulary from the lessons they have
     // opened, deduped by target word so a word taught twice is one card, plus
     // any proverb they have already been handed.
@@ -149,6 +217,19 @@ public class DoseService
                 if (!seen.Add(target)) continue;
                 pool.Add(new PoolItem(target, target, source, ItemKinds.Vocab, lesson.Id, lesson.Title, null));
             }
+        }
+
+        // Words the learner added from their own reading. A lesson that teaches
+        // the same word wins — it was added to `seen` above — and the card,
+        // keyed on the word, carries on with the history it has.
+        var own = await _db.UserWords.AsNoTracking()
+            .Where(w => w.UserId == user.Id && w.CourseId == course.Id)
+            .OrderBy(w => w.Id)
+            .ToListAsync(ct);
+        foreach (var word in own)
+        {
+            if (!seen.Add(word.Target)) continue;
+            pool.Add(ToPoolItem(word, course));
         }
 
         // A proverb joins the review queue once it has been handed out, so the
@@ -264,8 +345,10 @@ public class DoseService
             var exercise = tapIndex++ % 2 == 0 ? DoseExercises.Tambua : DoseExercises.Tunga;
 
             // Distractors come from items of the same kind: a proverb among
-            // single words gives itself away by length alone.
-            var sameKind = pool.Where(p => p.Kind == item.Kind);
+            // single words gives itself away by length alone. The learner's own
+            // words and the course's are both single words.
+            var sameKind = pool.Where(p =>
+                ItemKinds.IsWord(item.Kind) ? ItemKinds.IsWord(p.Kind) : p.Kind == item.Kind);
             var (prompt, answer, others) = exercise == DoseExercises.Tambua
                 ? (item.Target, item.Source, sameKind.Select(p => p.Source))
                 : (item.Source, item.Target, sameKind.Select(p => p.Target));

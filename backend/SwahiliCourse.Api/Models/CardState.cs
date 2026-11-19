@@ -60,6 +60,12 @@ public static class ItemKinds
     public const string Vocab = "vocab";
     public const string Phrase = "phrase";
     public const string Methali = "methali";
+    // A word the learner added from their own reading — see UserWord.
+    public const string Own = "own";
+
+    // Single words, whoever supplied them: the course or the learner. They
+    // can stand in for each other as wrong answers; a proverb cannot.
+    public static bool IsWord(string kind) => kind is Vocab or Own;
 }
 
 // How a single item is put to the learner in a Dose. The kind is what the item

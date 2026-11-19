@@ -9,6 +9,7 @@ import DosePage from './pages/DosePage';
 import LessonPage from './pages/LessonPage';
 import QuizPage from './pages/QuizPage';
 import Flashcards from './pages/Flashcards';
+import Reader from './pages/Reader';
 import Settings from './pages/Settings';
 import TasterPage from './pages/TasterPage';
 import { useDoseReminder } from './lib/reminders';
@@ -34,9 +35,9 @@ function NavBar() {
     <header className="topbar">
       <div className="container inner">
         <Link to="/app" className="brand"><Logo size={30} light /></Link>
-        {/* One row on a desktop. On a phone the four destinations drop to a
-            tab bar along the bottom edge — the same four tabs the phone app
-            has — so the header stays a single short row. */}
+        {/* One row on a desktop. On a phone the destinations drop to a tab
+            bar along the bottom edge, like the phone app's, so the header
+            stays a single short row. */}
         <nav className="topbar-links" aria-label={t.nav.main}>
           {NAV_LINKS.map((l) => (
             <NavLink key={l.to} to={l.to} end={l.to === '/app'}>
@@ -62,6 +63,7 @@ const NAV_LINKS = [
   { to: '/app', key: 'dashboard', icon: '🏠' },
   { to: '/dose', key: 'dose', icon: '🎯' },
   { to: '/flashcards', key: 'flashcards', icon: '🃏' },
+  { to: '/reader', key: 'reader', icon: '📖' },
   { to: '/settings', key: 'settings', icon: '⚙️' },
 ];
 
@@ -103,6 +105,7 @@ export default function App() {
         <Route path="/lesson/:id" element={<Protected><LessonPage /></Protected>} />
         <Route path="/lesson/:id/quiz" element={<Protected><QuizPage /></Protected>} />
         <Route path="/flashcards" element={<Protected><Flashcards /></Protected>} />
+        <Route path="/reader" element={<Protected><Reader /></Protected>} />
         <Route path="/settings" element={<Protected><Settings /></Protected>} />
         <Route
           path="/admin/*"

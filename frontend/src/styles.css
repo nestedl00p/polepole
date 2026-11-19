@@ -1068,3 +1068,67 @@ ul.sw-list li { margin-bottom: 5px; }
 .lang-prompt-opt span { font-size: 0.9rem; color: var(--muted, #6b7a89); }
 .lang-prompt-opt:hover, .lang-prompt-opt:focus-visible { border-color: var(--teal-dark); outline: none; }
 .lang-prompt-opt.suggested { border-color: var(--teal-dark); background: rgba(31, 122, 122, 0.06); }
+
+/* ---------- The reader ---------- */
+.reader-input {
+  width: 100%; min-height: 220px; resize: vertical; padding: 14px;
+  font: inherit; line-height: 1.6; color: var(--ink);
+  border: 1.5px solid var(--line); border-radius: 12px; background: #fff;
+}
+.reader-input:focus { outline: none; border-color: var(--teal); }
+.reader-bar { flex-wrap: wrap; margin-bottom: 14px; }
+.reader-hint { font-size: 0.9rem; }
+.reader-text { font-size: 1.15rem; line-height: 2; }
+.reader-text p { margin: 0 0 14px; }
+/* Each word is a button, but it has to read as running text. */
+.reader-word {
+  font: inherit; color: inherit; background: none; border: 0; padding: 1px 2px; margin: 0 -2px;
+  border-radius: 5px; cursor: pointer; border-bottom: 2px solid transparent;
+}
+.reader-word:hover { background: var(--light); }
+.reader-word:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
+.reader-word.known { border-bottom-color: var(--line); }
+.reader-word.kept { background: #fdf3dc; border-bottom-color: var(--gold); }
+.reader-word.sel { background: var(--teal); color: #fff; border-bottom-color: var(--teal); }
+.reader-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.8rem; margin-top: 6px; }
+.reader-swatch { display: inline-block; width: 18px; height: 10px; border-radius: 3px; vertical-align: baseline; border-bottom: 2px solid var(--line); }
+.reader-swatch.kept { background: #fdf3dc; border-bottom-color: var(--gold); }
+
+/* The tapped word's panel stays in view while the text scrolls behind it. */
+.reader-panel {
+  position: sticky; bottom: 12px; z-index: 20; margin-top: 14px; padding: 16px 18px;
+  background: #fff; border: 1.5px solid var(--teal); border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(26, 58, 92, 0.18);
+}
+.reader-panel-word { display: flex; align-items: center; gap: 8px; font-size: 1.3rem; font-weight: 800; color: var(--navy); }
+.reader-panel-hint { font-size: 0.88rem; margin: 6px 0 0; }
+.reader-close {
+  flex: none; width: 32px; height: 32px; border-radius: 50%; border: 0; cursor: pointer;
+  background: none; color: var(--muted); font-size: 1rem;
+}
+.reader-close:hover { background: var(--light); color: var(--ink); }
+.reader-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+.reader-fields label span { display: block; font-size: 0.78rem; font-weight: 700; color: var(--muted); margin-bottom: 4px; }
+.reader-fields input {
+  width: 100%; padding: 9px 11px; font: inherit; color: var(--ink);
+  border: 1.5px solid var(--line); border-radius: 9px; background: #fff;
+}
+.reader-fields input:focus { outline: none; border-color: var(--teal); }
+.reader-note { margin: 10px 0 0; font-size: 0.9rem; color: var(--ink); background: var(--light); border-radius: 9px; padding: 8px 11px; }
+.reader-panel-actions { flex-wrap: wrap; margin-top: 12px; }
+.reader-result { font-size: 0.88rem; font-weight: 600; color: var(--teal-dark); }
+
+.reader-words-title { font-size: 1.05rem; margin: 0 0 10px; color: var(--navy); }
+.reader-words { list-style: none; margin: 0; padding: 0; }
+.reader-words li {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;
+  padding: 10px 0; border-top: 1px solid var(--line);
+}
+.reader-words li:first-child { border-top: 0; padding-top: 0; }
+.reader-context { font-size: 0.85rem; margin-top: 2px; }
+
+@media (max-width: 640px) {
+  .reader-fields { grid-template-columns: 1fr; }
+  /* Clear of the tab bar along the bottom edge. */
+  .reader-panel { bottom: calc(72px + env(safe-area-inset-bottom)); }
+}

@@ -33,7 +33,7 @@ const en = {
     language: 'Language',
   },
 
-  nav: { dashboard: 'Dashboard', dose: 'Dose', flashcards: 'Flashcards', settings: 'Settings', logout: 'Logout', main: 'Main' },
+  nav: { dashboard: 'Dashboard', dose: 'Dose', flashcards: 'Flashcards', reader: 'Reader', settings: 'Settings', logout: 'Logout', main: 'Main' },
 
   pace: {
     30: { label: 'Intensive', desc: '1 lesson / day' },
@@ -211,6 +211,9 @@ const en = {
     seeResults: 'See results',
     deckPinned: (n, card) => `${n} pinned · Card ${card}`,
     deckAll: (n, card) => `${n} words from your lessons · Card ${card}`,
+    deckOwn: (n, card) => `${n} of your own words · Card ${card}`,
+    showingOwn: 'Showing my words',
+    ownOnly: (n) => `My words (${n})`,
     showingPinned: 'Showing pinned',
     pinnedOnly: (n) => `Pinned only (${n})`,
     tapToReveal: 'Tap to reveal',
@@ -219,6 +222,31 @@ const en = {
     pin: 'Pin',
     testMemory: ['Test your memory', ' with a quick 10-question mixed practice quiz.'],
     startPractice: 'Start practice quiz →',
+  },
+
+  reader: {
+    title: 'Reader',
+    intro: 'Paste something written in the language you are learning. Tap the words you don’t know and keep the ones worth remembering.',
+    placeholder: 'Paste an article, a message, a song…',
+    read: 'Read it →',
+    edit: 'Edit text',
+    clear: 'Clear',
+    tapHint: 'Tap a word you don’t know.',
+    legendKnown: 'From your lessons',
+    legendKept: 'In my words',
+    explaining: 'Looking it up…',
+    typeMeaning: 'Type what it means to keep it.',
+    limitReached: 'That’s all the look-ups for today. Type what it means to keep it.',
+    noExplanation: 'Couldn’t look that one up. Type what it means to keep it.',
+    lemma: 'Dictionary form',
+    meaning: 'Meaning',
+    add: 'Add to my words',
+    added: '✓ Added. It will be in your next dose.',
+    alreadyTaught: '📌 Your course already has this word, so it was pinned.',
+    close: 'Close',
+    myWords: (n) => `My words (${n})`,
+    noWords: 'Words you add appear here, in your flashcards, and in your daily dose.',
+    remove: (word) => `Remove ${word}`,
   },
 
   quiz: {
@@ -299,7 +327,7 @@ const es = {
     language: 'Idioma',
   },
 
-  nav: { dashboard: 'Panel', dose: 'Dosis', flashcards: 'Tarjetas', settings: 'Ajustes', logout: 'Salir', main: 'Principal' },
+  nav: { dashboard: 'Panel', dose: 'Dosis', flashcards: 'Tarjetas', reader: 'Lectura', settings: 'Ajustes', logout: 'Salir', main: 'Principal' },
 
   pace: {
     30: { label: 'Intensivo', desc: '1 lección / día' },
@@ -476,6 +504,9 @@ const es = {
     seeResults: 'Ver resultados',
     deckPinned: (n, card) => `${n} fijadas · Tarjeta ${card}`,
     deckAll: (n, card) => `${n} palabras de tus lecciones · Tarjeta ${card}`,
+    deckOwn: (n, card) => `${n} palabras tuyas · Tarjeta ${card}`,
+    showingOwn: 'Mostrando mis palabras',
+    ownOnly: (n) => `Mis palabras (${n})`,
     showingPinned: 'Mostrando las fijadas',
     pinnedOnly: (n) => `Solo las fijadas (${n})`,
     tapToReveal: 'Toca para ver',
@@ -484,6 +515,31 @@ const es = {
     pin: 'Fijar',
     testMemory: ['Pon a prueba tu memoria', ' con un cuestionario rápido de práctica de 10 preguntas mezcladas.'],
     startPractice: 'Empezar el cuestionario →',
+  },
+
+  reader: {
+    title: 'Lectura',
+    intro: 'Pega algo escrito en el idioma que estás aprendiendo. Toca las palabras que no conoces y guarda las que valga la pena recordar.',
+    placeholder: 'Pega un artículo, un mensaje, una canción…',
+    read: 'Leer →',
+    edit: 'Editar el texto',
+    clear: 'Borrar',
+    tapHint: 'Toca una palabra que no conozcas.',
+    legendKnown: 'De tus lecciones',
+    legendKept: 'En mis palabras',
+    explaining: 'Buscando…',
+    typeMeaning: 'Escribe qué significa para guardarla.',
+    limitReached: 'Esas son todas las búsquedas de hoy. Escribe qué significa para guardarla.',
+    noExplanation: 'No se pudo buscar esa palabra. Escribe qué significa para guardarla.',
+    lemma: 'Forma de diccionario',
+    meaning: 'Significado',
+    add: 'Añadir a mis palabras',
+    added: '✓ Añadida. Estará en tu próxima dosis.',
+    alreadyTaught: '📌 Tu curso ya tiene esta palabra, así que quedó fijada.',
+    close: 'Cerrar',
+    myWords: (n) => `Mis palabras (${n})`,
+    noWords: 'Las palabras que añadas aparecen aquí, en tus tarjetas y en tu dosis diaria.',
+    remove: (word) => `Quitar ${word}`,
   },
 
   quiz: {
@@ -564,7 +620,7 @@ const sw = {
     language: 'Lugha',
   },
 
-  nav: { dashboard: 'Dashibodi', dose: 'Dozi', flashcards: 'Kadi', settings: 'Mipangilio', logout: 'Ondoka', main: 'Kuu' },
+  nav: { dashboard: 'Dashibodi', dose: 'Dozi', flashcards: 'Kadi', reader: 'Kusoma', settings: 'Mipangilio', logout: 'Ondoka', main: 'Kuu' },
 
   pace: {
     30: { label: 'Kasi', desc: 'Somo 1 / siku' },
@@ -741,6 +797,9 @@ const sw = {
     seeResults: 'Ona matokeo',
     deckPinned: (n, card) => `${n} zilizobandikwa · Kadi ya ${card}`,
     deckAll: (n, card) => `Maneno ${n} kutoka masomo yako · Kadi ya ${card}`,
+    deckOwn: (n, card) => `Maneno yako ${n} · Kadi ya ${card}`,
+    showingOwn: 'Yanaonyeshwa maneno yangu',
+    ownOnly: (n) => `Maneno yangu (${n})`,
     showingPinned: 'Zinaonyeshwa zilizobandikwa',
     pinnedOnly: (n) => `Zilizobandikwa tu (${n})`,
     tapToReveal: 'Gusa ili kuona',
@@ -749,6 +808,31 @@ const sw = {
     pin: 'Bandika',
     testMemory: ['Jaribu kumbukumbu yako', ' kwa jaribio fupi la mazoezi lenye maswali 10 mchanganyiko.'],
     startPractice: 'Anza jaribio la mazoezi →',
+  },
+
+  reader: {
+    title: 'Kusoma',
+    intro: 'Bandika maandishi ya lugha unayojifunza. Gusa maneno usiyoyajua na uhifadhi yale unayotaka kuyakumbuka.',
+    placeholder: 'Bandika makala, ujumbe, wimbo…',
+    read: 'Soma →',
+    edit: 'Hariri maandishi',
+    clear: 'Futa',
+    tapHint: 'Gusa neno usilolijua.',
+    legendKnown: 'Kutoka masomo yako',
+    legendKept: 'Katika maneno yangu',
+    explaining: 'Inatafuta…',
+    typeMeaning: 'Andika maana yake ili kulihifadhi.',
+    limitReached: 'Umemaliza utafutaji wa leo. Andika maana yake ili kulihifadhi.',
+    noExplanation: 'Neno hilo halikupatikana. Andika maana yake ili kulihifadhi.',
+    lemma: 'Umbo la kamusi',
+    meaning: 'Maana',
+    add: 'Ongeza kwenye maneno yangu',
+    added: '✓ Limeongezwa. Litakuwa kwenye dozi yako ijayo.',
+    alreadyTaught: '📌 Kozi yako tayari ina neno hili, kwa hiyo limebandikwa.',
+    close: 'Funga',
+    myWords: (n) => `Maneno yangu (${n})`,
+    noWords: 'Maneno unayoongeza hujitokeza hapa, kwenye kadi zako na kwenye dozi yako ya kila siku.',
+    remove: (word) => `Ondoa ${word}`,
   },
 
   quiz: {
