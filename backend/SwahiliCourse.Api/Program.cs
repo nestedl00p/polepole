@@ -72,6 +72,10 @@ builder.Services.AddSingleton<SpeechService>();
 // Optional — disabled unless Conversation:Enabled is true and an API key is set.
 builder.Services.AddSingleton<ConversationService>();
 
+// The reader: explains a word the learner taps in a text they pasted in.
+// Optional — without an API key the learner types the meaning themselves.
+builder.Services.AddSingleton<GlossService>();
+
 builder.Services.AddControllers()
     .AddJsonOptions(o => o.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase);
 

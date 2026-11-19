@@ -10,6 +10,7 @@ public class AppDbContext : DbContext
     public DbSet<User> Users => Set<User>();
     public DbSet<LessonProgress> LessonProgress => Set<LessonProgress>();
     public DbSet<CardState> CardStates => Set<CardState>();
+    public DbSet<UserWord> UserWords => Set<UserWord>();
     public DbSet<PracticeDay> PracticeDays => Set<PracticeDay>();
     public DbSet<VoiceTake> VoiceTakes => Set<VoiceTake>();
     public DbSet<AdminAuditEntry> AdminAudit => Set<AdminAuditEntry>();
@@ -48,6 +49,17 @@ public class AppDbContext : DbContext
             .HasOne(c => c.User)
             .WithMany(u => u.Cards)
             .HasForeignKey(c => c.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // A learner's own word is one card, like any other.
+        modelBuilder.Entity<UserWord>()
+            .HasIndex(w => new { w.UserId, w.CourseId, w.Target })
+            .IsUnique();
+
+        modelBuilder.Entity<UserWord>()
+            .HasOne(w => w.User)
+            .WithMany()
+            .HasForeignKey(w => w.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
         // One row per learner per local day.

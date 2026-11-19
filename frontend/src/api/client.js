@@ -123,6 +123,15 @@ export const api = {
     return res.blob();
   },
 
+  // The reader: explain a tapped word, and keep the ones worth keeping. A 429
+  // or 503 from gloss means "no explanation" — the page then asks the learner
+  // for the meaning instead.
+  readerStatus: () => request('/reader/status'),
+  gloss: (word, sentence) => request('/reader/gloss', { method: 'POST', body: { word, sentence } }),
+  ownWords: () => request('/reader/words'),
+  addOwnWord: (payload) => request('/reader/words', { method: 'POST', body: payload }),
+  removeOwnWord: (id) => request(`/reader/words/${id}`, { method: 'DELETE' }),
+
   // Review
   flashcards: () => request('/review/flashcards'),
   practice: (count = 10) => request(`/review/practice?count=${count}`),

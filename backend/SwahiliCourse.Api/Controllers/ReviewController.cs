@@ -59,10 +59,45 @@ public class ReviewController : AuthedController
                     lessonId = l.Id,
                     lessonTitle = l.Title,
                     // The card's key is its target word — see CardState.ItemKey.
-                    pinned = pinnedKeys.Contains(target)
+                    pinned = pinnedKeys.Contains(target),
+                    // Filled only on a word the learner added from their reading.
+                    own = false,
+                    wordId = (int?)null,
+                    seenAs = (string?)null,
+                    context = (string?)null,
                 };
             }))
             .ToList();
+
+        // The learner's own words, after the course's. One a lesson already
+        // teaches is left out: it is the same card, and the lesson's copy of it
+        // is already above.
+        var taught = cards.Select(c => c.target).ToHashSet(StringComparer.Ordinal);
+        var ownWords = await _db.UserWords.AsNoTracking()
+            .Where(w => w.UserId == CurrentUserId && w.CourseId == course.Id)
+            .OrderBy(w => w.Id)
+            .ToListAsync();
+        var ownTitle = DoseService.OwnDeckTitle(course);
+
+        cards.AddRange(ownWords.Where(w => !taught.Contains(w.Target)).Select(w =>
+        {
+            // The legacy pair, the right way round for the course direction.
+            var (swahili, english) = course.TargetLanguage == "en" ? (w.Source, w.Target) : (w.Target, w.Source);
+            return new
+            {
+                target = w.Target,
+                source = w.Source,
+                swahili,
+                english,
+                lessonId = 0,
+                lessonTitle = ownTitle,
+                pinned = pinnedKeys.Contains(w.Target),
+                own = true,
+                wordId = (int?)w.Id,
+                seenAs = (string?)w.SeenAs,
+                context = (string?)w.Context,
+            }!;
+        }));
 
         return Ok(new { count = cards.Count, cards });
     }
